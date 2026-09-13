@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-anton {
+    font-family: 'Anton', sans-serif;
+  }
+  .font-syne {
+    font-family: 'Syne', sans-serif;
+  }
+  .font-space-mono {
+    font-family: 'Space Mono', monospace;
+  }
+  .font-jetbrains {
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .font-space-grotesk {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Neo-Brutalist shadow helpers */
+.brutal-shadow-lime {
+  box-shadow: 4px 4px 0px #D4FF00;
+}
+.brutal-shadow-orange {
+  box-shadow: 4px 4px 0px #FF4400;
+}
+.brutal-shadow-black {
+  box-shadow: 4px 4px 0px #000000;
+}
+.brutal-shadow-white {
+  box-shadow: 4px 4px 0px #FFFFFF;
+}
+
+.crt-overlay {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+

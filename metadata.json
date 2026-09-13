@@ -1,0 +1,6 @@
+{
+  "name": "Wacha Multimedia",
+  "description": "Plataforma oficial de Wacha Multimedia & Mr. Decrépito: Ingeniería de contenido, Sonido Decrépito, canales de YouTube, portafolio de guerrilla y AEO/SEO.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
