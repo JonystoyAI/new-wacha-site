@@ -41,7 +41,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     { href: '#soundlab', label: '[03] Sound Lab' },
     { href: '#tienda', label: '[04] Drop Store' },
     { href: '#servicios-aeo', label: '[05] AEO / SEO' },
-    { href: '#cotizador', label: '[06] Cotizador' }
+    { href: '#cotizador', label: '[06] Cotizador' },
+    { href: '#faq', label: '[07] FAQ' }
   ];
 
   return (

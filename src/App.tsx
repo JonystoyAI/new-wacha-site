@@ -8,6 +8,7 @@ import { SoundLab } from './components/SoundLab';
 import { MerchStore } from './components/MerchStore';
 import { AeoTerminal } from './components/AeoTerminal';
 import { Footer } from './components/Footer';
+import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
 import { CetesModal } from './components/CetesModal';
 import { DroAgentModal } from './components/DroAgentModal';
@@ -141,6 +142,9 @@ export default function App() {
         isOpen={isDroModalOpen}
         onClose={() => setIsDroModalOpen(false)}
       />
+
+      {/* Floating Back to Top Button */}
+      <BackToTop />
     </div>
   );
 }

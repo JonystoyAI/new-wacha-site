@@ -1,8 +1,48 @@
 import React, { useState } from 'react';
 import { QuoteFormData } from '../types';
-import { Terminal, Zap, Shield, Sparkles, Send, CheckCircle2, AlertTriangle, MessageSquare } from 'lucide-react';
+import { Terminal, Zap, Shield, Sparkles, Send, CheckCircle2, AlertTriangle, MessageSquare, ChevronDown, HelpCircle } from 'lucide-react';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+  category: string;
+}
+
+const FAQ_DATA: FaqItem[] = [
+  {
+    category: 'AEO & ESTRATEGIA',
+    question: '¿Qué es la Optimización para Motores de Respuesta IA (AEO) y cómo beneficia a mi marca?',
+    answer: 'AEO (Answer Engine Optimization) es la evolución del SEO tradicional. Estructuramos tus textos, transcripciones de audio y esquemas JSON-LD para que sistemas como Gemini, SearchGPT, Perplexity y ChatGPT extraigan tu contenido como la fuente primaria de información oficial, posicionando tu marca directamente en las respuestas sintéticas generadas por IA.'
+  },
+  {
+    category: 'PRODUCCIÓN & RETENCIÓN',
+    question: '¿Cómo funciona el proceso de producción de video y guionizado de alta retención?',
+    answer: 'Diseñamos guiones estructurados con telemetría de atención, incorporando ganchos de audición e hitos visuales cada 4.5 segundos. Nos encargamos del concepto creativo, edición cinematográfica de video, diseño de sonido ("Sonido Decrépito") y el empaquetado final listo para publicar en YouTube, Shorts o TikTok.'
+  },
+  {
+    category: 'TECNOLOGÍA & DERECHOS',
+    question: '¿La clonación de voz por IA y el diseño sonoro respetan los derechos de autor?',
+    answer: 'Absolutamente. En Wacha Multimedia operamos bajo estrictos protocolos de ética y propiedad intelectual. Las voces sintéticas e hiper-realistas se clonan a partir de modelos autorizados por el cliente o licencias exclusivas. Toda la música y el sound design cuentan con derechos comerciales totales entregados al cliente.'
+  },
+  {
+    category: 'TIEMPOS DE ENTREGA',
+    question: '¿Cuál es el tiempo de entrega promedio para un proyecto o paquete mensual?',
+    answer: 'Los paquetes mensuales Starter (4 piezas) y Pro (12 piezas) se manejan en entregas semanales programadas con un tiempo de respuesta de 48 a 72 horas por pieza finalizada. Para desarrollos integrales de marca, hardware de estudio o AEO masivo, la entrega promedio se completa en 2 a 3 semanas.'
+  },
+  {
+    category: 'COTIZACIÓN & PAGOS',
+    question: '¿Cómo funcionan la cotización y las modalidades de pago?',
+    answer: 'Al generar tu estimación en nuestra terminal interactiva y enviarla por WhatsApp, evaluamos los requerimientos técnicos específicos. Trabajamos con un 50% de anticipo para iniciar la producción y el 50% restante al entregar los másteres finales en resolución 4K y audio WAV de 24-bit.'
+  },
+  {
+    category: 'REVISIONES & GARANTÍA',
+    question: '¿Puedo solicitar revisiones en la edición de video o mezcla de audio?',
+    answer: 'Todos nuestros servicios incluyen hasta 2 rondas completas de revisiones quirúrgicas sin costo adicional. Ajustamos cualquier detalle de ritmo, mezcla, color o texto para garantizar que el entregable cumpla con los estándares más exigentes.'
+  }
+];
 
 export const AeoTerminal: React.FC = () => {
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0); // First accordion open by default
   const [formData, setFormData] = useState<QuoteFormData>({
     serviceType: 'full-production',
     scope: 'pro',
@@ -299,12 +339,75 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                     className="w-full bg-[#D4FF00] text-black font-bold py-4 border-2 border-black brutal-shadow-black hover:bg-[#FF4400] hover:text-white transition-all flex items-center justify-center gap-2 text-sm"
                   >
                     <MessageSquare className="w-5 h-5" />
-                    <span>GENERAR COTIZACIÓN EN WHATSAPP (+52 442 465 5478)</span>
+                    <span>GENERAR COTIZACIÓN EN WHATSAPP ↗</span>
                   </button>
                 </div>
               </div>
             </div>
           </form>
+        </div>
+
+        {/* FAQ Accordion Section */}
+        <div id="faq" className="mt-16 border-t-2 border-zinc-800 pt-12 scroll-mt-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b-2 border-zinc-800 pb-4">
+            <div>
+              <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-[#D4FF00]" />
+                // BASE DE CONOCIMIENTO & DUDAS FRECUENTES
+              </div>
+              <h3 className="font-anton text-3xl sm:text-4xl text-white uppercase tracking-wide">
+                PREGUNTAS FRECUENTES (FAQ)
+              </h3>
+            </div>
+            <p className="font-jetbrains text-xs text-zinc-400 max-w-sm">
+              Respuestas directas sobre nuestros procesos de AEO, producción audiovisual, sound design y términos de servicio.
+            </p>
+          </div>
+
+          <div className="space-y-3 font-jetbrains">
+            {FAQ_DATA.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div
+                  key={index}
+                  className={`border-2 transition-all ${
+                    isOpen
+                      ? 'bg-zinc-900 border-[#D4FF00] brutal-shadow-black'
+                      : 'bg-zinc-950/80 border-zinc-800 hover:border-zinc-700'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                    className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 focus:outline-none"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                      <span className="text-[10px] font-bold px-2 py-0.5 bg-black text-[#D4FF00] border border-zinc-800 self-start sm:self-auto">
+                        {faq.category}
+                      </span>
+                      <span className="font-bold text-sm sm:text-base text-white">
+                        {faq.question}
+                      </span>
+                    </div>
+                    <div className={`p-1.5 border border-zinc-700 transition-transform duration-300 shrink-0 ${
+                      isOpen ? 'rotate-180 bg-[#D4FF00] text-black border-black' : 'bg-zinc-900 text-zinc-400'
+                    }`}>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-zinc-300 leading-relaxed font-space-grotesk border-t border-zinc-800/80 pt-4">
+                      <p className="bg-black/40 p-3.5 border-l-2 border-[#D4FF00]">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
