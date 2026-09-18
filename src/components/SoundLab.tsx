@@ -388,14 +388,23 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                       (e.target as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8i70w32C0zX8sW29mY2QYJqR_bYt1tTstPZ464K_50E1GfG5Zq-k1L3D3J2P1L8hM-P8Z9q";
                     }}
                   />
-                  <div className="absolute top-2 left-2 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black">
-                    {release.type}
-                  </div>
-                  <div className={`absolute top-2 right-2 font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black ${
-                    release.status === 'Disponible' ? 'bg-[#FF4400] text-white' : 'bg-zinc-800 text-zinc-300'
-                  }`}>
-                    {release.status}
-                  </div>
+                  {/* Badges Overlay */}
+                  {release.id !== 'decrepito-papu-short' && (
+                    <>
+                      {release.type && (
+                        <div className="absolute top-2 left-2 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black">
+                          {release.type === 'Single' ? 'DESCARGA' : release.type}
+                        </div>
+                      )}
+                      {release.status && (
+                        <div className={`absolute top-2 right-2 font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black ${
+                          (release.status === 'Disponible' || release.status === 'GRATIS') ? 'bg-[#FF4400] text-white' : 'bg-zinc-800 text-zinc-300'
+                        }`}>
+                          {release.status === 'Disponible' ? 'GRATIS' : release.status}
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
 
                 {/* Release Meta */}

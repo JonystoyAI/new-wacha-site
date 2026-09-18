@@ -12,38 +12,12 @@ import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
 import { CetesModal } from './components/CetesModal';
 import { DroAgentModal } from './components/DroAgentModal';
-import { SEOHead } from './components/SEOHead';
-import { PORTFOLIO_DATA } from './data/portfolioData';
-import { CartItem, MerchItem, PortfolioItem } from './types';
+import { CartItem, MerchItem } from './types';
 
 export default function App() {
   // Global States
   const [crtEnabled, setCrtEnabled] = useState(false);
   const [audioActive, setAudioActive] = useState(true);
-  const [activeProject, setActiveProject] = useState<PortfolioItem | null>(null);
-
-  // Hash Listener for Individual Project SEO Page Previews
-  useEffect(() => {
-    const syncProjectFromHash = () => {
-      const hash = window.location.hash.toLowerCase().replace('#', '').replace('proyecto-', '');
-      if (hash) {
-        const project = PORTFOLIO_DATA.find(
-          p => p.id.toLowerCase() === hash || hash.includes(p.id.toLowerCase())
-        );
-        if (project) {
-          setActiveProject(project);
-        } else {
-          setActiveProject(null);
-        }
-      } else {
-        setActiveProject(null);
-      }
-    };
-
-    syncProjectFromHash();
-    window.addEventListener('hashchange', syncProjectFromHash);
-    return () => window.removeEventListener('hashchange', syncProjectFromHash);
-  }, []);
 
   // Global Audio Mute Handler
   useEffect(() => {
@@ -124,9 +98,6 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col bg-[#121411] text-[#E3E3DE] relative selection:bg-[#D4FF00] selection:text-black font-['Space_Grotesk',sans-serif]`}>
-      {/* Dynamic SEO, Open Graph & Twitter Head Metadata */}
-      <SEOHead project={activeProject} />
-
       {/* Optional CRT Retro Scanline Overlay */}
       {crtEnabled && (
         <div className="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-80" aria-hidden="true" />

@@ -12,7 +12,8 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     liveUrl: 'http://www.cetespremier.site',
     image: '/cetes_premier_app.jpg',
     images: ['/cetes_premier_app.jpg', '/cetes_premier_promo.jpg'],
-    tags: ['FINTECH', 'ART DÉCO', 'BANXICO API', 'AEO READY'],
+    tags: ['FINTECH', 'ART DÉCO', 'BANXICO API', 'AEO READY', 'WEB DESIGN'],
+    filterCategories: ['web-design', 'apps', 'marketing'],
     videoEmbed: 'https://www.youtube.com/embed/LZJX5EWePrA',
     hasInteractiveDemo: 'cetes'
   },
@@ -23,11 +24,12 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     category: 'DISEÑO DE IMAGEN CORPORATIVA & Agentic AI',
     client: 'JF Construcciones',
     metrics: ['45 Años Trayectoria', 'Imagen Corporativa', '+85% Lead Qualified'],
-    description: 'Sistema web para Director Responsable de Obra en Querétaro con diseño de imagen corporativa integral y manual de marca. Incluye cotizador de trámites de permisos de construcción, normatividad de urbanismo y chatbot conversacional conectado a WhatsApp.',
+    description: 'Sistema web para Director Responsable de Obra en Querétaro con diseño de imagen corporativa integral, diseño de logotipo vectorial y manual de marca. Incluye cotizador de permisos de construcción y chatbot conectado a WhatsApp.',
     liveUrl: 'https://www.jfconstrucciones.com',
     image: '/jf_construcciones_app.jpg',
     images: ['/jf_construcciones_app.jpg', '/jf_construcciones_brand.jpg'],
-    tags: ['IMAGEN CORPORATIVA', 'CONSTRUCCIÓN', 'MANUAL DE MARCA', 'AGENTIC AI'],
+    tags: ['IMAGEN CORPORATIVA', 'LOGO', 'DISEÑO GRÁFICO', 'WEB DESIGN', 'AGENTIC AI'],
+    filterCategories: ['web-design', 'logo', 'graphic-design', 'marketing'],
     videoEmbed: 'https://www.youtube.com/embed/Nu2z-pWWGIk',
     hasInteractiveDemo: 'dro'
   },
@@ -41,17 +43,58 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     description: 'Software de arquitectura avanzada para el desglose y análisis de precios unitarios mediante inteligencia artificial. Optimiza matrices de costos, insumos y generación automática de presupuestos de obra civil y arquitectónica.',
     image: '/unitia_software_app.jpg',
     images: ['/unitia_software_app.jpg', '/unitia_promo.jpg'],
-    tags: ['UNITIA', 'PRECIOS UNITARIOS', 'SOFTWARE SAAS', 'IA CONSTRUCCIÓN']
+    tags: ['UNITIA', 'PRECIOS UNITARIOS', 'SOFTWARE SAAS', 'APPS', 'WEB DESIGN'],
+    filterCategories: ['apps', 'web-design']
   },
   {
-    id: 'wacha-hardware',
-    title: 'WACHA STUDIO HARDWARE & RACK SYSTEM',
-    subtitle: 'Arquitectura de Consola Analog/Digital, Patchbays y Micro-Hardware Custom',
-    category: 'Ingeniería de Hardware & Branding',
+    id: 'sonido-decrepito-jingle',
+    title: 'SONIDO DECRÉPITO // JINGLES & AUDIO BRANDING',
+    subtitle: 'Composición de Jingles Comerciales, Firmas de Audio y Cumbia Rebajada Sound Design',
+    category: 'Jingles & Diseño Sonoro',
+    client: 'Marcas & Productoras',
+    metrics: ['+50 Jingles Creados', 'Masterización Analógica', 'Audio Branding 24-bit'],
+    description: 'Producción de jingles comerciales memorables, firmas de audio corporativas, diseño sonoro analógico y pistas de cumbia rebajada psicodélica masterizadas en cinta para campañas publicitarias.',
+    image: '/sonido_decrepito_vol1.jpg',
+    images: ['/sonido_decrepito_vol1.jpg', '/ecos_cover.jpg'],
+    tags: ['JINGLE', 'SOUND DESIGN', 'AUDIO BRANDING', 'CUMBIA REBAJADA'],
+    filterCategories: ['jingle', 'video']
+  },
+  {
+    id: 'guerrilla-video-production',
+    title: 'PRODUCCIÓN DE VIDEO & GUERRILLA YOUTUBE',
+    subtitle: 'Edición de Alto Impacto, Clonación de Voz IA y Guionismo de Retención Neuro-Visual',
+    category: 'Producción Audiovisual & Video',
+    client: 'Red de Canales Wacha',
+    metrics: ['+1.2M Reproducciones', '85% Retención Promedio', 'Clonación Voz IA'],
+    description: 'Estrategia integral de producción audiovisual para YouTube y redes sociales: edición dinámica de video, clips de alta retención, jingles comerciales de entrada y postproducción de audio.',
+    image: '/el_sonido_de_mi_cora.jpg',
+    images: ['/el_sonido_de_mi_cora.jpg', '/sigue_bailando.jpg'],
+    tags: ['VIDEO', 'YOUTUBE', 'PRODUCCIÓN AUDIOVISUAL', 'JINGLE', 'MARKETING'],
+    filterCategories: ['video', 'marketing', 'jingle'],
+    videoEmbed: 'https://www.youtube.com/embed/LZJX5EWePrA'
+  },
+  {
+    id: 'wacha-logo-branding',
+    title: 'WACHA STUDIO // LOGOTIPOS & MANUALES DE MARCA',
+    subtitle: 'Diseño de Identidad Visual Vectorial, Manuales de Uso y Branding Cyber Industrial',
+    category: 'Logotipos & Diseño Gráfico',
     client: 'Wacha Studio Labs',
-    metrics: ['Patchbay Analógico 19"', 'Bajo Ruido THD < 0.001%', 'Estética Cyber Industrial'],
-    description: 'Diseño e integración física de racks de audio analógico de 19 pulgadas, ruteo de señales de audio sin latencia, micro-interfaces personalizadas y paneles de telemetría con acrílico y metal.',
+    metrics: ['Vectorial 100% SVG', 'Manual de Marca 50+ Pág.', 'Estética Cyber Industrial'],
+    description: 'Desarrollo de logotipos icónicos, arquitectura gráfica para marcas independientes, tipografía personalizada y diseño de sistemas de identidad visual listos para impresión y medios digitales.',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBrFLUqK9-asT95CSnywMyeN2GdlRSd7PvDCNxydVj9_ondX5w_99QDFo7wzpVk-zb1HOS64M8PEortssIDfOnm6h_u3fY_-RQI9i11-sMBCF9oIXx9T6ioFnE_e_iVmgGjk3G0FbuB1rAkWNSbwWAYrQigDSPVaD1_zWb1ilv6W-MUKdaYTqSn9Ba67eZUTMEfG8XYHZdIh5YZid20DEApGKiQTy4QwSe6eYAgqUjcH1yrm1KXiBceZS8tcJZhyLeo4w',
-    tags: ['HARDWARE', 'ANALOG RACK', 'SOUND ENGINEERING', 'DECIBEL TELEMETRY']
+    tags: ['LOGO', 'DISEÑO GRÁFICO', 'GRAPHIC DESIGN', 'BRANDING', 'HARDWARE'],
+    filterCategories: ['logo', 'graphic-design']
+  },
+  {
+    id: 'aeo-seo-marketing-engine',
+    title: 'ESTRATEGIA AEO (ANSWER ENGINE OPTIMIZATION)',
+    subtitle: 'Posicionamiento Generativo en ChatGPT, Gemini, Perplexity & Google AI',
+    category: 'Marketing Digital & AEO/SEO',
+    client: 'Clientes Wacha AEO',
+    metrics: ['Indexación #1 ChatGPT', 'Esquema JSON-LD', '+400% Tráfico IA'],
+    description: 'Optimización de arquitectura de datos y esquemas estructurados JSON-LD para lograr indexación directa y recomendación orgánica en motores de búsqueda de inteligencia artificial.',
+    image: '/cetes_premier_promo.jpg',
+    tags: ['MARKETING', 'AEO READY', 'SEO GENERATIVO', 'WEB DESIGN'],
+    filterCategories: ['marketing', 'web-design']
   }
 ];

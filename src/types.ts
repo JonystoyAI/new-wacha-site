@@ -22,8 +22,8 @@ export interface MusicRelease {
   title: string;
   subtitle: string;
   year: string;
-  type: 'EP' | 'Single' | 'Album';
-  status: 'Disponible' | 'Próximo Estreno' | 'Próximamente';
+  type?: 'EP' | 'Single' | 'DESCARGA' | 'Album' | string;
+  status?: 'Disponible' | 'GRATIS' | 'Próximo Estreno' | 'Próximamente' | string;
   bandcampUrl?: string;
   soundcloudUrl?: string;
   youtubeUrl?: string;
@@ -44,6 +44,7 @@ export interface PortfolioItem {
   image: string;
   images?: string[];
   tags: string[];
+  filterCategories?: string[];
   videoEmbed?: string;
   hasInteractiveDemo?: 'cetes' | 'dro' | 'thumbnails';
 }
