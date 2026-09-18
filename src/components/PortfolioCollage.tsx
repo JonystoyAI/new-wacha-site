@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { PortfolioItem } from '../types';
-import { ExternalLink, Play, Calculator, Bot, Sparkles, CheckCircle, ArrowUpRight, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
+import { ExternalLink, Play, Calculator, Bot, Sparkles, CheckCircle, ArrowUpRight, ChevronLeft, ChevronRight, Layers, Share2, Check } from 'lucide-react';
 
 interface PortfolioCollageProps {
   onPlayVideo: (videoUrl: string, title: string) => void;
@@ -15,6 +15,17 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
   onOpenDroModal
 }) => {
   const [carouselIndexes, setCarouselIndexes] = useState<Record<string, number>>({});
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleShare = (itemId: string) => {
+    window.location.hash = `#${itemId}`;
+    const fullUrl = `${window.location.origin}${window.location.pathname}#${itemId}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(fullUrl);
+      setCopiedId(itemId);
+      setTimeout(() => setCopiedId(null), 2500);
+    }
+  };
 
   const handlePrev = (itemId: string, imagesLength: number) => {
     setCarouselIndexes(prev => {
@@ -210,6 +221,24 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                       <span>VISITAR SITIO EN VIVO ({item.liveUrl.replace('http://', '').replace('https://', '')})</span>
                     </a>
                   )}
+
+                  <button
+                    onClick={() => handleShare(item.id)}
+                    className="w-full bg-zinc-950 text-zinc-400 hover:text-[#D4FF00] hover:border-[#D4FF00] py-1.5 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 text-[11px] font-jetbrains"
+                    title="Copiar enlace con tarjeta Open Graph & Twitter Card"
+                  >
+                    {copiedId === item.id ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <span className="text-emerald-400 font-bold">¡ENLACE OPEN GRAPH COPIADO!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-3.5 h-3.5 text-[#D4FF00]" />
+                        <span>COMPARTIR TARJETA SOCIAL (#proyecto-{item.id})</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
             );

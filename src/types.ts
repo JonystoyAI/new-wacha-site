@@ -10,6 +10,11 @@ export interface YouTubeChannel {
   category: string;
   tags: string[];
   subscribers?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  soundcloudUrl?: string;
+  bandcampUrl?: string;
+  webUrl?: string;
 }
 
 export interface MusicRelease {

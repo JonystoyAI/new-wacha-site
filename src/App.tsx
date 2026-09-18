@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { Mastermind } from './components/Mastermind';
@@ -12,12 +12,67 @@ import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
 import { CetesModal } from './components/CetesModal';
 import { DroAgentModal } from './components/DroAgentModal';
-import { CartItem, MerchItem } from './types';
+import { SEOHead } from './components/SEOHead';
+import { PORTFOLIO_DATA } from './data/portfolioData';
+import { CartItem, MerchItem, PortfolioItem } from './types';
 
 export default function App() {
   // Global States
   const [crtEnabled, setCrtEnabled] = useState(false);
-  const [audioActive, setAudioActive] = useState(false);
+  const [audioActive, setAudioActive] = useState(true);
+  const [activeProject, setActiveProject] = useState<PortfolioItem | null>(null);
+
+  // Hash Listener for Individual Project SEO Page Previews
+  useEffect(() => {
+    const syncProjectFromHash = () => {
+      const hash = window.location.hash.toLowerCase().replace('#', '').replace('proyecto-', '');
+      if (hash) {
+        const project = PORTFOLIO_DATA.find(
+          p => p.id.toLowerCase() === hash || hash.includes(p.id.toLowerCase())
+        );
+        if (project) {
+          setActiveProject(project);
+        } else {
+          setActiveProject(null);
+        }
+      } else {
+        setActiveProject(null);
+      }
+    };
+
+    syncProjectFromHash();
+    window.addEventListener('hashchange', syncProjectFromHash);
+    return () => window.removeEventListener('hashchange', syncProjectFromHash);
+  }, []);
+
+  // Global Audio Mute Handler
+  useEffect(() => {
+    // Mute/Unmute any standard HTML media elements
+    const mediaElements = document.querySelectorAll('audio, video');
+    mediaElements.forEach((el) => {
+      (el as HTMLMediaElement).muted = !audioActive;
+    });
+
+    // Control iframe volumes (SoundCloud / YouTube)
+    const sendIframeVolume = () => {
+      const iframes = document.querySelectorAll('iframe');
+      const vol = audioActive ? 100 : 0;
+      iframes.forEach((iframe) => {
+        if (iframe.contentWindow) {
+          try {
+            iframe.contentWindow.postMessage(
+              JSON.stringify({ method: 'setVolume', value: vol }),
+              '*'
+            );
+          } catch (e) {
+            // Ignore cross-origin exceptions
+          }
+        }
+      });
+    };
+
+    sendIframeVolume();
+  }, [audioActive]);
 
   // Cart State
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -69,6 +124,9 @@ export default function App() {
 
   return (
     <div className={`min-h-screen flex flex-col bg-[#121411] text-[#E3E3DE] relative selection:bg-[#D4FF00] selection:text-black font-['Space_Grotesk',sans-serif]`}>
+      {/* Dynamic SEO, Open Graph & Twitter Head Metadata */}
+      <SEOHead project={activeProject} />
+
       {/* Optional CRT Retro Scanline Overlay */}
       {crtEnabled && (
         <div className="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-80" aria-hidden="true" />
@@ -103,7 +161,7 @@ export default function App() {
         />
 
         {/* 03 // Sonido Decrépito // Sound Lab Console */}
-        <SoundLab />
+        <SoundLab audioActive={audioActive} />
 
         {/* 04 // Wacha Drop Store // Merch Boutique */}
         <MerchStore

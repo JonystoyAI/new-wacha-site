@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CHANNELS_DATA } from '../data/channelsData';
 import { YouTubeChannel } from '../types';
-import { Play, ExternalLink, Youtube, Radio, Sparkles } from 'lucide-react';
+import { Play, ExternalLink, Youtube, Radio, Sparkles, Globe } from 'lucide-react';
 
 interface ChannelsGridProps {
   onPlayVideo: (videoUrl: string, title: string) => void;
@@ -131,8 +131,70 @@ export const ChannelsGrid: React.FC<ChannelsGridProps> = ({ onPlayVideo }) => {
                   className="w-full bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 py-1.5 border border-zinc-700 transition-all flex items-center justify-center gap-1.5 text-[11px]"
                 >
                   <Youtube className="w-3.5 h-3.5 text-red-500" />
-                  <span>CANAL OFICIAL ↗</span>
+                  <span>CANAL OFICIAL YOUTUBE ↗</span>
                 </a>
+
+                {/* Additional Social & Web Links */}
+                {(channel.facebookUrl || channel.instagramUrl || channel.soundcloudUrl || channel.bandcampUrl || channel.webUrl) && (
+                  <div className="grid grid-cols-2 gap-1.5 pt-1">
+                    {channel.facebookUrl && (
+                      <a
+                        href={channel.facebookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#1877F2]/15 text-[#1877F2] hover:bg-[#1877F2] hover:text-white border border-[#1877F2]/40 text-[10px] font-bold py-1 px-2 transition-all flex items-center justify-center gap-1 truncate"
+                        title="Facebook Oficial"
+                      >
+                        <span>Facebook ↗</span>
+                      </a>
+                    )}
+                    {channel.webUrl && (
+                      <a
+                        href={channel.webUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#D4FF00]/15 text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black border border-[#D4FF00]/40 text-[10px] font-bold py-1 px-2 transition-all flex items-center justify-center gap-1 truncate"
+                        title="Sitio Web CETES Premier"
+                      >
+                        <Globe className="w-3 h-3" />
+                        <span>Web Site ↗</span>
+                      </a>
+                    )}
+                    {channel.instagramUrl && (
+                      <a
+                        href={channel.instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#E4405F]/15 text-[#E4405F] hover:bg-[#E4405F] hover:text-white border border-[#E4405F]/40 text-[10px] font-bold py-1 px-2 transition-all flex items-center justify-center gap-1 truncate"
+                        title="Instagram Oficial"
+                      >
+                        <span>Instagram ↗</span>
+                      </a>
+                    )}
+                    {channel.soundcloudUrl && (
+                      <a
+                        href={channel.soundcloudUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#FF5500]/15 text-[#FF5500] hover:bg-[#FF5500] hover:text-white border border-[#FF5500]/40 text-[10px] font-bold py-1 px-2 transition-all flex items-center justify-center gap-1 truncate"
+                        title="SoundCloud Oficial"
+                      >
+                        <span>SoundCloud ↗</span>
+                      </a>
+                    )}
+                    {channel.bandcampUrl && (
+                      <a
+                        href={channel.bandcampUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="col-span-2 bg-[#629AA9]/15 text-[#629AA9] hover:bg-[#629AA9] hover:text-white border border-[#629AA9]/40 text-[10px] font-bold py-1 px-2 transition-all flex items-center justify-center gap-1 truncate"
+                        title="Bandcamp Album"
+                      >
+                        <span>Bandcamp Album Official ↗</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ))}

@@ -38,7 +38,9 @@ export const CHANNELS_DATA: YouTubeChannel[] = [
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC89geygEh6vizPQ26mMMxgdXcs524r6OVqFpn9OD3x_Q74DPWJL59usbVfNSLRNSbQ-mddS8-QK2vpg_lKI5-_rT2DBnXtccYsDSnmsPNxXa0RiETJVdWszpYYAjKZUgjTc9y_Wo1j9NABSpBa8sphOwad93prPREuKu1rQNMaAd7ojXiYsWRQ8JjGflnW6L7NDtUtxX6x1Qv3HMlQeDslQ6CU0QKmq0pk6HJp63uWE6iPgy-4T33Z6f0WSWDD0WvMMA',
     category: 'Finanzas & Inversión',
     tags: ['CETES', 'FINTECH', 'LIBERTAD FINANCIERA'],
-    subscribers: '210K+'
+    subscribers: '210K+',
+    facebookUrl: 'https://www.facebook.com/profile.php?id=61592699304444',
+    webUrl: 'https://cetespremier.site'
   },
   {
     id: 'mentes-que-producen',
@@ -103,6 +105,10 @@ export const CHANNELS_DATA: YouTubeChannel[] = [
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBrFLUqK9-asT95CSnywMyeN2GdlRSd7PvDCNxydVj9_ondX5w_99QDFo7wzpVk-zb1HOS64M8PEortssIDfOnm6h_u3fY_-RQI9i11-sMBCF9oIXx9T6ioFnE_e_iVmgGjk3G0FbuB1rAkWNSbwWAYrQigDSPVaD1_zWb1ilv6W-MUKdaYTqSn9Ba67eZUTMEfG8XYHZdIh5YZid20DEApGKiQTy4QwSe6eYAgqUjcH1yrm1KXiBceZS8tcJZhyLeo4w',
     category: 'Música & Sound Design',
     tags: ['CUMBIA REBAJADA', 'SYNTHS ANALÓGICOS', 'LO-FI URBAN'],
-    subscribers: '68K+'
+    subscribers: '68K+',
+    facebookUrl: 'https://www.facebook.com/profile.php?id=61586289176130',
+    instagramUrl: 'https://www.instagram.com/sonidodecrepito/',
+    soundcloudUrl: 'https://soundcloud.com/sonidodecrepito',
+    bandcampUrl: 'https://sonidodecrepito.bandcamp.com/album/el-sonido-decr-pito-vol-1'
   }
 ];

@@ -3,7 +3,11 @@ import { RELEASES_DATA } from '../data/releasesData';
 import { MusicRelease } from '../types';
 import { Disc, Play, Pause, Volume2, Sliders, ExternalLink, Music, Radio, Sparkles, Youtube } from 'lucide-react';
 
-export const SoundLab: React.FC = () => {
+interface SoundLabProps {
+  audioActive?: boolean;
+}
+
+export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
   const [isPlayingTape, setIsPlayingTape] = useState(false);
   const [pitch, setPitch] = useState<number>(0.85); // Slowed cumbia rebajada pitch
   const [volume, setVolume] = useState<number>(0.8);
@@ -14,6 +18,40 @@ export const SoundLab: React.FC = () => {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const isLoopingRef = useRef<boolean>(false);
   const timerRef = useRef<number | null>(null);
+
+  // SoundCloud Mute / Unmute Controller
+  useEffect(() => {
+    const iframe = document.getElementById('soundcloud-player-iframe') as HTMLIFrameElement;
+
+    const applyVolume = () => {
+      const vol = audioActive ? 100 : 0;
+      if (iframe && iframe.contentWindow) {
+        try {
+          iframe.contentWindow.postMessage(
+            JSON.stringify({ method: 'setVolume', value: vol }),
+            '*'
+          );
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      if (typeof window !== 'undefined' && (window as any).SC && (window as any).SC.Widget && iframe) {
+        try {
+          const widget = (window as any).SC.Widget(iframe);
+          if (widget && typeof widget.setVolume === 'function') {
+            widget.setVolume(vol);
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+    };
+
+    applyVolume();
+    const interval = setInterval(applyVolume, 500);
+    return () => clearInterval(interval);
+  }, [audioActive]);
 
   // Simple Web Audio API Cumbia Rebajada Beat Generator
   const startSynth = () => {
@@ -287,6 +325,7 @@ export const SoundLab: React.FC = () => {
             <div className="space-y-4">
               <div className="w-full bg-black border-2 border-zinc-800 overflow-hidden brutal-shadow-black">
                 <iframe
+                  id="soundcloud-player-iframe"
                   width="100%"
                   height="300"
                   scrolling="no"

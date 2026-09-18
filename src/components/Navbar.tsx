@@ -108,33 +108,33 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Audio Synthesizer Master Toggle */}
           <button
             onClick={onToggleAudio}
-            className={`p-2 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all ${
+            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black ${
               audioActive
-                ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
+                ? 'bg-[#D4FF00] text-black border-black font-bold'
                 : 'bg-zinc-900 text-zinc-400 border-zinc-700 hover:text-white hover:border-zinc-500'
             }`}
-            title={audioActive ? 'Desactivar Audio Master' : 'Activar Audio Master Synth'}
+            title={audioActive ? 'Silenciar todos los reproductores y audio' : 'Activar Audio Master'}
             aria-label="Toggle Sound Engine"
           >
-            {audioActive ? <Volume2 className="w-4 h-4 animate-bounce" /> : <VolumeX className="w-4 h-4" />}
-            <span className="hidden sm:inline font-bold">
-              {audioActive ? 'AUDIO ON' : 'AUDIO OFF'}
+            {audioActive ? <Volume2 className="w-4 h-4 text-black animate-bounce" /> : <VolumeX className="w-4 h-4 text-zinc-500" />}
+            <span className="font-bold text-[11px] sm:inline">
+              AUDIO {audioActive ? 'ON' : 'OFF'}
             </span>
           </button>
 
           {/* CRT Overlay Toggle */}
           <button
             onClick={onToggleCrt}
-            className={`hidden md:flex p-2 font-jetbrains text-xs items-center gap-1.5 border-2 transition-all ${
+            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black ${
               crtEnabled
-                ? 'bg-emerald-500 text-black border-black brutal-shadow-black'
+                ? 'bg-emerald-400 text-black border-black font-bold'
                 : 'bg-zinc-900 text-zinc-400 border-zinc-700 hover:text-white'
             }`}
             title="Alternar filtro CRT Telemetría"
             aria-label="Toggle CRT Effect"
           >
             <Monitor className="w-4 h-4" />
-            <span>CRT {crtEnabled ? 'ON' : 'OFF'}</span>
+            <span className="font-bold text-[11px]">CRT {crtEnabled ? 'ON' : 'OFF'}</span>
           </button>
 
           {/* Shopping Cart Button */}
