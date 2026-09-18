@@ -285,23 +285,43 @@ export const SoundLab: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="w-full bg-black border-2 border-zinc-800 overflow-hidden">
+              <div className="w-full bg-black border-2 border-zinc-800 overflow-hidden brutal-shadow-black">
                 <iframe
                   width="100%"
                   height="300"
                   scrolling="no"
                   frameBorder="no"
-                  allow="autoplay"
-                  src="https://w.soundcloud.com/player/?url=https%3A//on.soundcloud.com/au3EsNfGYvmQQ9X8VH&color=%23d4ff00&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                  allow="autoplay; encrypted-media"
+                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2108495635&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
                 ></iframe>
               </div>
-              <div className="flex justify-between items-center font-jetbrains text-xs text-zinc-400">
-                <span>SOUNDCLOUD PLAYLIST OFICIAL // SONIDO DECRÉPITO</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-jetbrains text-xs text-zinc-400 pt-1">
+                <div className="text-[11px] text-zinc-300 font-mono truncate">
+                  <a
+                    href="https://soundcloud.com/sonidodecrepito"
+                    title="Sonido Decrépito"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#D4FF00] hover:underline font-bold"
+                  >
+                    Sonido Decrépito
+                  </a>{' '}
+                  <span className="text-zinc-600">·</span>{' '}
+                  <a
+                    href="https://soundcloud.com/sonidodecrepito/sets/ecos"
+                    title="Ecos - Sonido decrépito - Cumbia Sound"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-200 hover:text-white"
+                  >
+                    Ecos - Sonido decrépito - Cumbia Sound
+                  </a>
+                </div>
                 <a
-                  href="https://on.soundcloud.com/au3EsNfGYvmQQ9X8VH"
+                  href="https://soundcloud.com/sonidodecrepito/sets/ecos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#D4FF00] hover:underline flex items-center gap-1 font-bold"
+                  className="text-[#FF4400] hover:underline flex items-center gap-1 font-bold shrink-0 text-xs"
                 >
                   ABRIR PLAYLIST EN SOUNDCLOUD ↗
                 </a>
