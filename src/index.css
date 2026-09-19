@@ -33,6 +33,19 @@
   animation-play-state: paused;
 }
 
+@keyframes vinyl-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vinyl-spin {
+  animation: vinyl-spin 7s linear infinite;
+}
+
 /* Neo-Brutalist shadow helpers */
 .brutal-shadow-lime {
   box-shadow: 4px 4px 0px #D4FF00;

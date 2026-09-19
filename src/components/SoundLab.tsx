@@ -9,6 +9,7 @@ interface SoundLabProps {
 
 export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
   const [isPlayingTape, setIsPlayingTape] = useState(false);
+  const [playingReleaseId, setPlayingReleaseId] = useState<string | null>(null);
   const [pitch, setPitch] = useState<number>(0.85); // Slowed cumbia rebajada pitch
   const [volume, setVolume] = useState<number>(0.8);
   const [tubeSaturation, setTubeSaturation] = useState(true);
@@ -142,6 +143,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
       clearTimeout(timerRef.current);
     }
     setIsPlayingTape(false);
+    setPlayingReleaseId(null);
   };
 
   const toggleTape = () => {
@@ -149,6 +151,17 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
       stopSynth();
     } else {
       startSynth();
+    }
+  };
+
+  const handleToggleReleasePlay = (releaseId: string) => {
+    if (playingReleaseId === releaseId && isPlayingTape) {
+      stopSynth();
+    } else {
+      setPlayingReleaseId(releaseId);
+      if (!isPlayingTape) {
+        startSynth();
+      }
     }
   };
 
@@ -371,41 +384,77 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
         {/* 4 Releases Quadrants */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {RELEASES_DATA.map((release) => (
-            <div
-              key={release.id}
-              className="bg-zinc-900 border-2 border-zinc-800 p-4 brutal-shadow-black hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
-            >
-              <div className="space-y-3">
-                {/* Cover Image Frame */}
-                <div className="relative aspect-square bg-black border border-zinc-800 overflow-hidden group-hover:border-[#D4FF00] transition-colors">
-                  <img
-                    src={release.coverImage}
-                    alt={release.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8i70w32C0zX8sW29mY2QYJqR_bYt1tTstPZ464K_50E1GfG5Zq-k1L3D3J2P1L8hM-P8Z9q";
-                    }}
-                  />
-                  {/* Badges Overlay */}
-                  {release.id !== 'decrepito-papu-short' && (
-                    <>
-                      {release.type && (
-                        <div className="absolute top-2 left-2 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black">
-                          {release.type === 'Single' ? 'DESCARGA' : release.type}
+          {RELEASES_DATA.map((release) => {
+            const isThisPlaying = (playingReleaseId === release.id && isPlayingTape) || (isPlayingTape && playingReleaseId === null);
+
+            return (
+              <div
+                key={release.id}
+                className="bg-zinc-900 border-2 border-zinc-800 p-4 brutal-shadow-black hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
+              >
+                <div className="space-y-3">
+                  {/* Cover Image Frame with Vinyl Rotation Effect */}
+                  <div
+                    className={`relative aspect-square bg-black border border-zinc-800 overflow-hidden transition-all duration-500 cursor-pointer group/cover ${
+                      isThisPlaying ? 'rounded-full border-2 border-[#D4FF00] brutal-shadow-lime shadow-[0_0_20px_rgba(212,255,0,0.25)]' : 'rounded-none group-hover:border-[#D4FF00]'
+                    }`}
+                    onClick={() => handleToggleReleasePlay(release.id)}
+                    title={isThisPlaying ? 'Pausar Reproducción Vinilo' : 'Reproducir Canción en Vinilo'}
+                  >
+                    <img
+                      src={release.coverImage}
+                      alt={release.title}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        isThisPlaying ? 'animate-vinyl-spin rounded-full' : 'group-hover/cover:scale-105'
+                      }`}
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://lh3.googleusercontent.com/aida-public/AB6AXuD8i70w32C0zX8sW29mY2QYJqR_bYt1tTstPZ464K_50E1GfG5Zq-k1L3D3J2P1L8hM-P8Z9q";
+                      }}
+                    />
+
+                    {/* Vinyl Record Center Spindle & Groove Overlay when Playing */}
+                    {isThisPlaying && (
+                      <>
+                        <div className="absolute inset-4 rounded-full border border-white/20 pointer-events-none animate-vinyl-spin" />
+                        <div className="absolute inset-8 rounded-full border border-white/10 pointer-events-none animate-vinyl-spin" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black border-2 border-[#D4FF00] z-20 flex items-center justify-center shadow-lg">
+                          <div className="w-2 h-2 rounded-full bg-[#D4FF00]" />
                         </div>
-                      )}
-                      {release.status && (
-                        <div className={`absolute top-2 right-2 font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black ${
-                          (release.status === 'Disponible' || release.status === 'GRATIS') ? 'bg-[#FF4400] text-white' : 'bg-zinc-800 text-zinc-300'
-                        }`}>
-                          {release.status === 'Disponible' ? 'GRATIS' : release.status}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
+                      </>
+                    )}
+
+                    {/* Hover / Playing Control Overlay */}
+                    <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${
+                      isThisPlaying ? 'opacity-100 hover:bg-black/60 z-20' : 'opacity-0 group-hover/cover:opacity-100'
+                    }`}>
+                      <div className="bg-[#D4FF00] text-black p-2.5 rounded-full border-2 border-black brutal-shadow-black transition-transform hover:scale-110">
+                        {isThisPlaying ? (
+                          <Pause className="w-5 h-5 fill-current" />
+                        ) : (
+                          <Play className="w-5 h-5 fill-current ml-0.5" />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Badges Overlay */}
+                    {release.id !== 'decrepito-papu-short' && !isThisPlaying && (
+                      <>
+                        {release.type && (
+                          <div className="absolute top-2 left-2 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black z-10">
+                            {release.type === 'Single' ? 'DESCARGA' : release.type}
+                          </div>
+                        )}
+                        {release.status && (
+                          <div className={`absolute top-2 right-2 font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black z-10 ${
+                            (release.status === 'Disponible' || release.status === 'GRATIS') ? 'bg-[#FF4400] text-white' : 'bg-zinc-800 text-zinc-300'
+                          }`}>
+                            {release.status === 'Disponible' ? 'GRATIS' : release.status}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
 
                 {/* Release Meta */}
                 <div>
@@ -459,7 +508,8 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                 )}
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
       </div>
     </section>
