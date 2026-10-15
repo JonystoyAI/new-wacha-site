@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 import { PortfolioItem } from '../types';
-import { ExternalLink, Play, Calculator, Bot, Sparkles, CheckCircle, ArrowUpRight, ChevronLeft, ChevronRight, Layers, Filter, RefreshCw } from 'lucide-react';
+import { ExternalLink, Play, Calculator, Bot, Sparkles, CheckCircle, ArrowUpRight, ChevronLeft, ChevronRight, Layers, Filter, RefreshCw, Youtube, Video } from 'lucide-react';
 
 interface PortfolioCollageProps {
   onPlayVideo: (videoUrl: string, title: string) => void;
@@ -11,11 +11,12 @@ interface PortfolioCollageProps {
 
 const FILTER_CATEGORIES = [
   { id: 'all', label: 'TODOS', icon: '⚡' },
+  { id: 'content-creation', label: 'CONTENIDO & PERSONALIDAD IA', icon: '🤖' },
+  { id: 'animation-video', label: 'ANIMACIÓN CINEMATOGRÁFICA & VIDEO', icon: '🎬' },
   { id: 'web-design', label: 'WEB DESIGN', icon: '🌐' },
   { id: 'apps', label: 'APPS & SAAS', icon: '📱' },
   { id: 'logo', label: 'LOGOTIPOS', icon: '🎯' },
   { id: 'graphic-design', label: 'DISEÑO GRÁFICO', icon: '🎨' },
-  { id: 'video', label: 'VIDEO', icon: '🎬' },
   { id: 'marketing', label: 'MARKETING & AEO', icon: '📈' },
   { id: 'jingle', label: 'JINGLES & AUDIO', icon: '🎵' },
 ];
@@ -79,18 +80,55 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between border-b-2 border-zinc-800 pb-4 mb-8 gap-4">
-          <div>
-            <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#D4FF00]"></span>
-              // SECCIÓN 02: CASOS DE ÉXITO & PROYECTOS DESTACADOS
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-black bg-black brutal-shadow-lime shrink-0 hidden sm:block">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Logotipo Oficial Wacha Multimedia"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide">
-              PORTAFOLIO MULTIDISCIPLINARIO COLLAGE
-            </h2>
+            <div>
+              <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#D4FF00]"></span>
+                // SECCIÓN 02: CASOS DE ÉXITO & PORTAFOLIO MULTIDISCIPLINARIO
+              </div>
+              <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide">
+                PORTAFOLIO MULTIDISCIPLINARIO COLLAGE
+              </h2>
+            </div>
           </div>
-          <p className="font-jetbrains text-xs text-zinc-400 max-w-md">
-            Plataformas web de alta conversión, inteligencia artificial conversacional, finanzas AEO, jingles publicitarios y arquitectura visual brutalista.
-          </p>
+          <div className="flex flex-col items-start lg:items-end gap-2">
+            <p className="font-jetbrains text-xs text-zinc-400 max-w-md">
+              Generación de contenidos y desarrollo de personalidades creativas con IA, edición de video de alto impacto, animaciones cinematográficas de marca, desarrollo web y sound design.
+            </p>
+            {/* Direct Studio Channel Badges */}
+            <div className="flex flex-wrap items-center gap-2 font-jetbrains text-xs pt-1">
+              <a
+                href="https://www.tiktok.com/@whacha.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black hover:bg-zinc-800 text-white px-3 py-1.5 border border-zinc-700 flex items-center gap-1.5 hover:text-[#00F2FE] transition-colors brutal-shadow-black font-bold"
+                title="Canal Oficial TikTok @whacha.site"
+              >
+                <svg className="w-3.5 h-3.5 fill-[#00F2FE]" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.22V8.25a6.34 6.34 0 0 0-5.18 6.18 6.34 6.34 0 1 0 11.52-3.43 8.3 8.3 0 0 0 5.48 2.07V9.6a4.84 4.84 0 0 1-1.71-2.91z"/>
+                </svg>
+                <span>TIKTOK: @whacha.site ↗</span>
+              </a>
+              <a
+                href="https://www.youtube.com/@wachanos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#CC0000] hover:bg-red-700 text-white px-3 py-1.5 border border-black flex items-center gap-1.5 transition-colors brutal-shadow-black font-bold"
+                title="Canal de YouTube Oficial del Estudio"
+              >
+                <Youtube className="w-3.5 h-3.5" />
+                <span>YOUTUBE DEL ESTUDIO ↗</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Interactive Category Filter Bar */}
@@ -153,9 +191,16 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                   <div className="space-y-4">
                     {/* Header Tag Bar */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-3 font-jetbrains text-xs">
-                      <span className="bg-[#D4FF00] text-black px-2.5 py-0.5 font-bold border border-black">
-                        {item.category}
-                      </span>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="bg-[#D4FF00] text-black px-2.5 py-0.5 font-bold border border-black">
+                          {item.category}
+                        </span>
+                        {item.featuredBadge && (
+                          <span className="bg-[#FF4400] text-white px-2 py-0.5 font-bold border border-black text-[10px] tracking-wider animate-pulse flex items-center gap-1">
+                            <span>★</span> {item.featuredBadge}
+                          </span>
+                        )}
+                      </div>
                       <span className="text-zinc-400">CLIENTE: <strong className="text-white">{item.client}</strong></span>
                     </div>
 
@@ -174,7 +219,11 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                       <img
                         src={currentImgSrc}
                         alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className={`w-full h-full ${
+                          currentImgSrc === '/wacha_logo.jpg'
+                            ? 'object-contain p-2 bg-gradient-to-b from-black via-zinc-950 to-black'
+                            : 'object-cover'
+                        } group-hover:scale-105 transition-transform duration-500`}
                         loading="lazy"
                         onError={(e) => {
                           (e.target as HTMLImageElement).src = item.image.startsWith('/') 
@@ -183,7 +232,15 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                         }}
                       />
 
-                      <div className="absolute top-2 right-2 bg-black/90 text-white font-jetbrains text-[10px] px-2.5 py-1 border border-zinc-700 flex items-center gap-1">
+                      {/* Official Logo Watermark Badge when Wacha logo is shown */}
+                      {currentImgSrc === '/wacha_logo.jpg' && (
+                        <div className="absolute top-2 left-2 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold px-2.5 py-1 border border-black z-10 flex items-center gap-1.5 brutal-shadow-black">
+                          <span className="w-1.5 h-1.5 rounded-full bg-black animate-ping"></span>
+                          <span>LOGOTIPO PORTADA: WACHA MULTIMEDIA</span>
+                        </div>
+                      )}
+
+                      <div className="absolute top-2 right-2 bg-black/90 text-white font-jetbrains text-[10px] px-2.5 py-1 border border-zinc-700 flex items-center gap-1 z-10">
                         {images.length > 1 ? (
                           <>
                             <Layers className="w-3 h-3 text-[#D4FF00]" />
@@ -199,21 +256,21 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                         <>
                           <button
                             onClick={() => handlePrev(item.id, images.length)}
-                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-[#D4FF00] hover:text-black text-white p-1.5 border border-zinc-700 transition-colors"
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-[#D4FF00] hover:text-black text-white p-1.5 border border-zinc-700 transition-colors z-10"
                             aria-label="Imagen anterior"
                           >
                             <ChevronLeft className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleNext(item.id, images.length)}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-[#D4FF00] hover:text-black text-white p-1.5 border border-zinc-700 transition-colors"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-[#D4FF00] hover:text-black text-white p-1.5 border border-zinc-700 transition-colors z-10"
                             aria-label="Siguiente imagen"
                           >
                             <ChevronRight className="w-4 h-4" />
                           </button>
 
                           {/* Carousel Dots */}
-                          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5">
+                          <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5 z-10">
                             {images.map((_, idx) => (
                               <button
                                 key={idx}
@@ -254,6 +311,34 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
 
                   {/* Action Buttons */}
                   <div className="pt-4 border-t border-zinc-800 space-y-2 font-jetbrains text-xs">
+                    {/* Direct TikTok Studio Channel Link */}
+                    {item.tiktokUrl && (
+                      <a
+                        href={item.tiktokUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-[#010101] text-white hover:bg-zinc-800 hover:text-[#00F2FE] py-2.5 px-3 border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-2 font-bold group/tiktok"
+                      >
+                        <svg className="w-4 h-4 fill-[#00F2FE] group-hover/tiktok:scale-110 transition-transform" viewBox="0 0 24 24">
+                          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.22V8.25a6.34 6.34 0 0 0-5.18 6.18 6.34 6.34 0 1 0 11.52-3.43 8.3 8.3 0 0 0 5.48 2.07V9.6a4.84 4.84 0 0 1-1.71-2.91z"/>
+                        </svg>
+                        <span>VER EN TIKTOK OFICIAL (@whacha.site) ↗</span>
+                      </a>
+                    )}
+
+                    {/* Direct YouTube Studio Channel Link */}
+                    {item.youtubeUrl && (
+                      <a
+                        href={item.youtubeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-[#CC0000] text-white hover:bg-red-700 py-2.5 px-3 border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-2 font-bold"
+                      >
+                        <Youtube className="w-4 h-4 text-white" />
+                        <span>CANAL DE YOUTUBE DEL ESTUDIO (@wachanos) ↗</span>
+                      </a>
+                    )}
+
                     {/* Interactive Special Demo Buttons */}
                     {item.hasInteractiveDemo === 'cetes' && (
                       <button
@@ -281,7 +366,7 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
                         className="w-full bg-zinc-800 text-zinc-200 hover:bg-zinc-700 py-2 border border-zinc-700 transition-all flex items-center justify-center gap-2"
                       >
                         <Play className="w-3.5 h-3.5 fill-current text-[#D4FF00]" />
-                        <span>VER VIDEO CASO DE ÉXITO</span>
+                        <span>VER VIDEO REEL / DEMO CASO DE ÉXITO</span>
                       </button>
                     )}
 

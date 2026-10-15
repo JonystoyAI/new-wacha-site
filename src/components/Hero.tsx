@@ -16,6 +16,12 @@ export const Hero: React.FC<HeroProps> = ({ onPlayVideo, onOpenWhatsAppCotizador
         {/* Top Telemetry Status Header */}
         <div className="flex flex-wrap items-center justify-between gap-4 p-3 bg-zinc-900/90 border-2 border-zinc-700 font-jetbrains text-xs mb-8 brutal-shadow-black">
           <div className="flex items-center gap-3">
+            <img
+              src="/wacha_logo.jpg"
+              alt="Logo Wacha"
+              referrerPolicy="no-referrer"
+              className="w-5 h-5 rounded-full border border-[#D4FF00] object-cover shrink-0"
+            />
             <span className="w-2.5 h-2.5 rounded-full bg-[#D4FF00] animate-pulse"></span>
             <span className="text-[#D4FF00] font-bold">STREAM CHANNEL // MASTER V3.9</span>
             <span className="text-zinc-500 hidden sm:inline">|</span>
@@ -35,20 +41,33 @@ export const Hero: React.FC<HeroProps> = ({ onPlayVideo, onOpenWhatsAppCotizador
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Hero Content */}
           <div className="lg:col-span-7 space-y-6">
-            {/* Cyber Tags Badges */}
-            <div className="flex flex-wrap gap-2 font-jetbrains text-xs">
-              <span className="bg-[#D4FF00] text-black px-2.5 py-1 font-bold border border-black flex items-center gap-1">
-                <Zap className="w-3.5 h-3.5" /> IA GENERATIVE SUITE
-              </span>
-              <span className="bg-[#FF4400] text-white px-2.5 py-1 font-bold border border-black flex items-center gap-1">
-                📼 SONIDO DECRÉPITO
-              </span>
-              <span className="bg-zinc-800 text-[#D4FF00] px-2.5 py-1 border border-zinc-700">
-                🎯 AEO / SEO OPTIMIZED
-              </span>
-              <span className="bg-zinc-900 text-zinc-300 px-2.5 py-1 border border-zinc-700 font-bold">
-                🔥 ¡PAPÚUU!
-              </span>
+            {/* Cyber Brand & Tags Badges */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex items-center gap-2 px-2.5 py-1 bg-zinc-950 border-2 border-black brutal-shadow-black">
+                <img
+                  src="/wacha_logo.jpg"
+                  alt="Logo Oficial Wacha Producciones"
+                  referrerPolicy="no-referrer"
+                  className="w-6 h-6 rounded-full border border-[#D4FF00] object-cover"
+                />
+                <span className="font-anton tracking-wider text-xs text-[#D4FF00]">
+                  WACHA PRODUCCIONES
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2 font-jetbrains text-xs">
+                <span className="bg-[#D4FF00] text-black px-2.5 py-1 font-bold border border-black flex items-center gap-1">
+                  <Zap className="w-3.5 h-3.5" /> IA GENERATIVE SUITE
+                </span>
+                <span className="bg-[#FF4400] text-white px-2.5 py-1 font-bold border border-black flex items-center gap-1">
+                  📼 SONIDO DECRÉPITO
+                </span>
+                <span className="bg-zinc-800 text-[#D4FF00] px-2.5 py-1 border border-zinc-700">
+                  🎯 AEO / SEO OPTIMIZED
+                </span>
+                <span className="bg-zinc-900 text-zinc-300 px-2.5 py-1 border border-zinc-700 font-bold">
+                  🔥 ¡PAPÚUU!
+                </span>
+              </div>
             </div>
 
             {/* Main Headline */}

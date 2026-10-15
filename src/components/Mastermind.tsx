@@ -48,8 +48,18 @@ export const Mastermind: React.FC = () => {
             </div>
 
             {/* Sticker Tag */}
-            <div className="absolute -top-4 -right-4 bg-[#FF4400] text-white font-jetbrains text-xs font-bold px-3 py-1.5 border-2 border-black brutal-shadow-black transform rotate-3">
+            <div className="absolute -top-4 -right-4 bg-[#FF4400] text-white font-jetbrains text-xs font-bold px-3 py-1.5 border-2 border-black brutal-shadow-black transform rotate-3 z-10">
               ★ 20+ AÑOS TRAYECTORIA
+            </div>
+
+            {/* Official Agency Logo Crest Seal */}
+            <div className="absolute -top-4 -left-4 w-12 h-12 rounded-full border-2 border-black bg-black brutal-shadow-lime overflow-hidden transform -rotate-6 z-10">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Sello Oficial Wacha Producciones"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 

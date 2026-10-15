@@ -34,9 +34,9 @@ export const Footer: React.FC = () => {
     },
     {
       name: 'TikTok',
-      url: 'https://www.tiktok.com/@wachamultimed.ia',
+      url: 'https://www.tiktok.com/@whacha.site',
       color: 'hover:bg-black hover:text-cyan-400 border-cyan-500/30',
-      badge: '@wachamultimed.ia',
+      badge: '@whacha.site',
       icon: (
         <svg className="w-4 h-4 fill-zinc-200 group-hover:fill-cyan-400" viewBox="0 0 24 24">
           <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.22V8.25a6.34 6.34 0 0 0-5.18 6.18 6.34 6.34 0 1 0 11.52-3.43 8.3 8.3 0 0 0 5.48 2.07V9.6a4.84 4.84 0 0 1-1.71-2.91z"/>
@@ -67,15 +67,20 @@ export const Footer: React.FC = () => {
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#D4FF00] text-black font-anton text-xl flex items-center justify-center border-2 border-black brutal-shadow-black">
-                WM
+              <div className="relative w-14 h-14 shrink-0 rounded-full overflow-hidden border-2 border-black brutal-shadow-lime bg-black flex items-center justify-center">
+                <img
+                  src="/wacha_logo.jpg"
+                  alt="Logotipo Oficial de Wacha Multimedia Producciones"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <span className="font-anton text-2xl text-white tracking-wider block leading-none">
                   WACHA MULTIMEDIA
                 </span>
-                <span className="text-[10px] text-[#D4FF00]">
-                  FOUNDED BY MR. DECRÉPITO // ¡PAPÚUU!
+                <span className="text-[10px] text-[#D4FF00] font-jetbrains block mt-1">
+                  PRODUCCIONES & SOUND LAB // ¡PAPÚUU!
                 </span>
               </div>
             </div>

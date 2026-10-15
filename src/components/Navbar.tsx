@@ -79,8 +79,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#D4FF00]"
           aria-label="Wacha Multimedia Inicio"
         >
-          <div className="w-10 h-10 bg-[#D4FF00] text-black font-anton text-xl flex items-center justify-center border-2 border-black brutal-shadow-black group-hover:bg-[#FF4400] group-hover:text-white transition-colors">
-            WM
+          <div className="relative w-11 h-11 shrink-0 rounded-full overflow-hidden border-2 border-black brutal-shadow-lime group-hover:scale-105 group-hover:border-[#D4FF00] transition-all bg-black flex items-center justify-center">
+            <img
+              src="/wacha_logo.jpg"
+              alt="Logotipo Oficial de Wacha Multimedia Producciones"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
           </div>
           <div>
             <div className="font-anton tracking-wider text-lg sm:text-xl text-white group-hover:text-[#D4FF00] transition-colors leading-none flex items-center gap-2">
@@ -91,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </span>
             </div>
             <p className="font-jetbrains text-[10px] text-zinc-400 tracking-tight">
-              PRODUCCIÓN & SOUND LAB // ¡PAPÚUU!
+              PRODUCCIONES & SOUND LAB // ¡PAPÚUU!
             </p>
           </div>
         </a>
@@ -206,8 +215,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div className="lg:hidden bg-[#121411] border-b-2 border-zinc-800 px-4 py-4 space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-zinc-800 text-xs font-jetbrains text-zinc-400">
-            <span>// NAVEGACIÓN RÁPIDA</span>
-            <span className="text-[#D4FF00]">WACHA SYSTEM</span>
+            <div className="flex items-center gap-2">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Wacha Multimedia"
+                referrerPolicy="no-referrer"
+                className="w-5 h-5 rounded-full border border-[#D4FF00] object-cover"
+              />
+              <span className="text-white font-bold tracking-wider">// WACHA MULTIMEDIA</span>
+            </div>
+            <span className="text-[#D4FF00]">MASTER V3.9</span>
           </div>
 
           {/* Mobile Quick Action Toggles Bar */}

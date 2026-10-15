@@ -2,6 +2,23 @@ import { PortfolioItem } from '../types';
 
 export const PORTFOLIO_DATA: PortfolioItem[] = [
   {
+    id: 'wacha-creative-personas-cinematic',
+    title: 'GENERACIÓN DE CONTENIDOS, PERSONALIDADES CREATIVAS & ANIMACIONES CINEMATOGRÁFICAS',
+    subtitle: 'Desarrollo de Avatares y Personajes IA, Edición Dinámica de Video y Animaciones Cinematográficas 3D/CGI de Marca',
+    category: 'Generación de Contenidos & Animación de Marca',
+    client: 'Wacha Multimedia Studio',
+    metrics: ['+2.8M Vistas Orgánicas', 'Avatares & Personajes IA', 'Animación Cinematográfica 4K'],
+    description: 'Servicio insignia de producción multidisciplinaria de Wacha Multimedia: Creación integral de contenido multiplataforma, desarrollo y dirección de arte de personalidades creativas (avatares hiperrealistas con IA para marcas), edición de video de alto impacto para retención neuro-visual, y generación de animaciones cinematográficas publicitarias diseñadas para dominar en TikTok, YouTube Shorts y campañas globales.',
+    image: '/wacha_logo.jpg',
+    images: ['/wacha_logo.jpg', '/mr_decrepito_portrait.jpg', '/el_sonido_de_mi_cora.jpg', '/sonido_decrepito_vol1.jpg'],
+    tags: ['GENERACIÓN DE CONTENIDOS', 'PERSONALIDADES CREATIVAS', 'EDICIÓN DE VIDEO', 'ANIMACIÓN CINEMATOGRÁFICA', 'TIKTOK', 'YOUTUBE'],
+    filterCategories: ['content-creation', 'animation-video', 'video', 'marketing'],
+    youtubeUrl: 'https://www.youtube.com/@wachanos',
+    tiktokUrl: 'https://www.tiktok.com/@whacha.site',
+    videoEmbed: 'https://www.youtube.com/embed/LZJX5EWePrA',
+    featuredBadge: 'PRODUCCIÓN INSIGNIA WACHA'
+  },
+  {
     id: 'cetes-premier',
     title: 'CETES PREMIER (FinTech Luxury App)',
     subtitle: 'Calculadora de Inversión Financiera Art Déco con Datos Banxico en Tiempo Real',

@@ -76,7 +76,7 @@ export const MusicDownloadModal: React.FC<MusicDownloadModalProps> = ({ release,
         navigator.clipboard?.writeText(shareText);
         setCopiedLink(true);
         setTimeout(() => setCopiedLink(false), 3000);
-        destinationUrl = 'https://www.tiktok.com';
+        destinationUrl = 'https://www.tiktok.com/@whacha.site';
         break;
     }
 

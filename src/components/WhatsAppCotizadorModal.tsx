@@ -87,13 +87,18 @@ _Enviado desde el Cotizador Exprés Wacha Multimedia_`;
         {/* Header Bar */}
         <div className="flex items-start justify-between border-b-2 border-zinc-800 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#25D366] text-black rounded-full flex items-center justify-center font-bold shadow-lg shrink-0">
-              <MessageSquare className="w-6 h-6 fill-current" />
+            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-[#25D366] bg-black shrink-0 brutal-shadow-black">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Wacha Producciones Multimedia"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <div className="font-jetbrains text-[10px] text-[#25D366] font-bold tracking-widest flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#25D366] animate-ping" />
-                COTIZADOR EXPRÉS WHATSAPP EN 1 CLIC
+                COTIZADOR EXPRÉS WHATSAPP // WACHA PRODUCCIONES
               </div>
               <h3 className="font-anton text-2xl sm:text-3xl text-white uppercase tracking-wide">
                 IMPULSA TU NEGOCIO DESDE CERO

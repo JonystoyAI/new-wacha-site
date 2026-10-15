@@ -181,17 +181,27 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between border-b-2 border-zinc-800 pb-4 mb-10 gap-4">
-          <div>
-            <div className="font-jetbrains text-xs text-[#FF4400] font-bold tracking-wider mb-1 flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#FF4400]"></span>
-              // SECCIÓN 03: SOUND LAB & MÚSICA EXPERIMENTAL
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-black bg-black brutal-shadow-orange shrink-0 hidden sm:block">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Logo Oficial Wacha Sound Lab"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex items-center gap-3">
-              SONIDO DECRÉPITO // LAB
-              <span className="text-xs font-jetbrains px-3 py-1 bg-[#FF4400] text-white border border-black font-bold">
-                CUMBIA REBAJADA
-              </span>
-            </h2>
+            <div>
+              <div className="font-jetbrains text-xs text-[#FF4400] font-bold tracking-wider mb-1 flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#FF4400]"></span>
+                // SECCIÓN 03: SOUND LAB & MÚSICA EXPERIMENTAL
+              </div>
+              <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex items-center gap-3">
+                SONIDO DECRÉPITO // LAB
+                <span className="text-xs font-jetbrains px-3 py-1 bg-[#FF4400] text-white border border-black font-bold">
+                  CUMBIA REBAJADA
+                </span>
+              </h2>
+            </div>
           </div>
           <p className="font-jetbrains text-xs text-zinc-400 max-w-md">
             Texturas analógicas, pitch frenado de 33 a 16 RPM, cumbia psicodélica y masterización de pegada monumental.

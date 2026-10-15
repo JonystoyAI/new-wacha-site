@@ -50,6 +50,9 @@ export interface PortfolioItem {
   filterCategories?: string[];
   videoEmbed?: string;
   hasInteractiveDemo?: 'cetes' | 'dro' | 'thumbnails';
+  tiktokUrl?: string;
+  youtubeUrl?: string;
+  featuredBadge?: string;
 }
 
 export interface MerchItem {

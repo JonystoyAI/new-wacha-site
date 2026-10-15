@@ -59,17 +59,27 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between border-b-2 border-zinc-800 pb-4 mb-10 gap-4">
-          <div>
-            <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#D4FF00]"></span>
-              // SECCIÓN 04: WACHA DROP STORE // MERCH BOUTIQUE
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-black bg-black brutal-shadow-lime shrink-0 hidden sm:block">
+              <img
+                src="/wacha_logo.jpg"
+                alt="Logo Oficial Wacha Drop Store"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex items-center gap-3">
-              WACHA DROP STORE
-              <span className="text-xs font-jetbrains px-3 py-1 bg-[#D4FF00] text-black border border-black font-bold">
-                EDICIÓN LIMITADA
-              </span>
-            </h2>
+            <div>
+              <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#D4FF00]"></span>
+                // SECCIÓN 04: WACHA DROP STORE // MERCH BOUTIQUE
+              </div>
+              <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex items-center gap-3">
+                WACHA DROP STORE
+                <span className="text-xs font-jetbrains px-3 py-1 bg-[#D4FF00] text-black border border-black font-bold">
+                  EDICIÓN LIMITADA
+                </span>
+              </h2>
+            </div>
           </div>
           <p className="font-jetbrains text-xs text-zinc-400 max-w-md">
             Ropa pesada, gorras con bordado 3D, stickers holográficos y mobiliario de estudio custom.
