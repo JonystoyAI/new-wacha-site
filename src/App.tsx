@@ -12,6 +12,8 @@ import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
 import { CetesModal } from './components/CetesModal';
 import { DroAgentModal } from './components/DroAgentModal';
+import { WhatsAppWidget } from './components/WhatsAppWidget';
+import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
 import { CartItem, MerchItem } from './types';
 
 export default function App() {
@@ -56,6 +58,7 @@ export default function App() {
   const [activeVideo, setActiveVideo] = useState<{ url: string; title: string } | null>(null);
   const [isCetesModalOpen, setIsCetesModalOpen] = useState(false);
   const [isDroModalOpen, setIsDroModalOpen] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   // Cart Handler Functions
   const handleAddToCart = (item: MerchItem, selectedSize: string) => {
@@ -116,7 +119,10 @@ export default function App() {
       {/* Main Content Modules */}
       <main className="flex-1">
         {/* Hero Banner Section */}
-        <Hero onPlayVideo={(url, title) => setActiveVideo({ url, title })} />
+        <Hero
+          onPlayVideo={(url, title) => setActiveVideo({ url, title })}
+          onOpenWhatsAppCotizador={() => setIsWhatsAppModalOpen(true)}
+        />
 
         {/* 00 // Mastermind // Mr. Decrépito */}
         <Mastermind />
@@ -171,6 +177,15 @@ export default function App() {
         isOpen={isDroModalOpen}
         onClose={() => setIsDroModalOpen(false)}
       />
+
+      {/* WhatsApp Express Cotizador Modal */}
+      <WhatsAppCotizadorModal
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
+
+      {/* Floating WhatsApp Action Widget */}
+      <WhatsAppWidget />
 
       {/* Floating Back to Top Button */}
       <BackToTop />

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Play, Terminal, Zap, Radio, Sparkles, CheckCircle2, ChevronRight, Volume2 } from 'lucide-react';
+import { Play, Terminal, Zap, Radio, Sparkles, CheckCircle2, ChevronRight, Volume2, MessageSquare } from 'lucide-react';
 
 interface HeroProps {
   onPlayVideo: (videoUrl: string, title: string) => void;
+  onOpenWhatsAppCotizador?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onPlayVideo }) => {
+export const Hero: React.FC<HeroProps> = ({ onPlayVideo, onOpenWhatsAppCotizador }) => {
   return (
     <section className="relative overflow-hidden pt-8 pb-16 lg:py-20 border-b-2 border-zinc-800 bg-[#121411]">
       {/* Background Subtle Grid Texture */}
@@ -61,13 +62,33 @@ export const Hero: React.FC<HeroProps> = ({ onPlayVideo }) => {
             </p>
 
             {/* Quick CTAs */}
-            <div className="pt-2 flex flex-wrap gap-4 font-jetbrains">
+            <div className="pt-2 flex flex-wrap gap-3 font-jetbrains">
+              {onOpenWhatsAppCotizador ? (
+                <button
+                  onClick={onOpenWhatsAppCotizador}
+                  className="bg-[#25D366] text-black font-bold px-6 py-3.5 border-2 border-black brutal-shadow-black hover:bg-[#1ebd59] transition-all text-sm flex items-center gap-2 group"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current" />
+                  <span>[ COTIZAR POR WHATSAPP ↗ ]</span>
+                </button>
+              ) : (
+                <a
+                  href="https://wa.me/524424655478?text=Hola%20Wacha%20Multimedia,%20quiero%20cotizar%20un%20proyecto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#25D366] text-black font-bold px-6 py-3.5 border-2 border-black brutal-shadow-black hover:bg-[#1ebd59] transition-all text-sm flex items-center gap-2 group"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current" />
+                  <span>[ COTIZAR POR WHATSAPP ↗ ]</span>
+                </a>
+              )}
+
               <a
                 href="#cotizador"
                 className="bg-[#D4FF00] text-black font-bold px-6 py-3.5 border-2 border-black brutal-shadow-black hover:bg-[#FF4400] hover:text-white transition-all text-sm flex items-center gap-2 group"
               >
                 <Terminal className="w-4 h-4" />
-                <span>[ COTIZAR EN TERMINAL ]</span>
+                <span>[ TERMINAL ]</span>
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
 
@@ -76,7 +97,7 @@ export const Hero: React.FC<HeroProps> = ({ onPlayVideo }) => {
                 className="bg-zinc-900 text-white font-bold px-6 py-3.5 border-2 border-zinc-700 hover:border-[#D4FF00] hover:text-[#D4FF00] transition-all text-sm flex items-center gap-2"
               >
                 <Radio className="w-4 h-4 text-[#D4FF00]" />
-                <span>EXPLORAR RED 8 CANALES</span>
+                <span>RED CANALES</span>
               </a>
             </div>
 

@@ -64,29 +64,36 @@ export const DroAgentModal: React.FC<DroAgentModalProps> = ({ isOpen, onClose })
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#121411] border-4 border-black w-full max-w-2xl p-6 brutal-shadow-lime text-white space-y-4">
+    <div
+      className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#121411] border-4 border-black w-full max-w-2xl p-6 brutal-shadow-lime text-white space-y-4 cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between border-b-2 border-zinc-800 pb-3 font-jetbrains">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#D4FF00] text-black font-bold flex items-center justify-center border border-black">
+            <div className="w-9 h-9 bg-[#D4FF00] text-black font-bold flex items-center justify-center border border-black shrink-0">
               <Bot className="w-5 h-5" />
             </div>
             <div>
               <h3 className="font-anton text-2xl text-white tracking-wide">
-                JF CONSTRUCCIONES // ASISTENTE IA DRO 24/7
+                JF CONSTRUCCIONES // EJEMPLO DE IMAGEN CORPORATIVA & WEB
               </h3>
               <p className="text-[10px] text-zinc-400">
-                SISTEMA AUTOMATIZADO DE CONVERSIÓN DE LEADS // QUERÉTARO 45 AÑOS
+                CASO DE ÉXITO PORTAFOLIO WACHA MULTIMEDIA // SITIO WEB Y ASISTENTE IA CREADO PARA CLIENTE
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-700"
+            className="text-zinc-300 hover:text-white bg-zinc-900 px-3 py-1.5 border border-zinc-700 hover:bg-[#FF4400] hover:border-[#FF4400] transition-colors flex items-center gap-1.5 font-jetbrains text-xs font-bold shrink-0"
             aria-label="Cerrar modal de chat"
           >
-            <X className="w-5 h-5" />
+            <span>CERRAR</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 

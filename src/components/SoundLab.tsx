@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RELEASES_DATA } from '../data/releasesData';
 import { MusicRelease } from '../types';
-import { Disc, Play, Pause, Volume2, Sliders, ExternalLink, Music, Radio, Sparkles, Youtube } from 'lucide-react';
+import { Disc, Play, Pause, Volume2, Sliders, ExternalLink, Music, Radio, Sparkles, Youtube, Download, Share2 } from 'lucide-react';
+import { MusicDownloadModal } from './MusicDownloadModal';
 
 interface SoundLabProps {
   audioActive?: boolean;
@@ -14,6 +15,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
   const [volume, setVolume] = useState<number>(0.8);
   const [tubeSaturation, setTubeSaturation] = useState(true);
   const [activeTab, setActiveTab] = useState<'synth' | 'soundcloud'>('soundcloud');
+  const [downloadRelease, setDownloadRelease] = useState<MusicRelease | null>(null);
 
   // Audio Context Ref for Web Audio API Synth Engine
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -473,12 +475,22 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
               {/* Platform Action Links */}
               <div className="pt-4 border-t border-zinc-800 mt-4 space-y-1.5 font-jetbrains text-xs">
+                {/* Download Button (Pay with a share or $1.99 USD) */}
+                <button
+                  type="button"
+                  onClick={() => setDownloadRelease(release)}
+                  className="w-full bg-[#D4FF00] hover:bg-[#FF4400] text-black hover:text-white font-bold py-2 border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-1.5 uppercase text-xs"
+                >
+                  <Download className="w-4 h-4 shrink-0" />
+                  <span>DESCARGAR MP3 + WAV ↗</span>
+                </button>
+
                 {release.bandcampUrl && (
                   <a
                     href={release.bandcampUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-[#D4FF00] text-black font-bold py-1.5 border border-black hover:bg-[#FF4400] hover:text-white transition-all flex items-center justify-center gap-1.5"
+                    className="w-full bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 py-1.5 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 text-[11px]"
                   >
                     <span>BANDCAMP ALBUM ↗</span>
                   </a>
@@ -489,21 +501,9 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                     href={release.soundcloudUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-700 py-1.5 border border-zinc-700 transition-all flex items-center justify-center gap-1.5"
+                    className="w-full bg-zinc-950 text-zinc-400 hover:text-white hover:bg-zinc-900 py-1 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 text-[10px]"
                   >
-                    <span>SOUNDCLOUD ↗</span>
-                  </a>
-                )}
-
-                {release.youtubeUrl && (
-                  <a
-                    href={release.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-zinc-900 text-zinc-400 hover:text-[#D4FF00] py-1 border border-zinc-800 transition-all flex items-center justify-center gap-1 text-[11px]"
-                  >
-                    <Youtube className="w-3 h-3 text-red-500" />
-                    <span>VER EN YOUTUBE ↗</span>
+                    <span>ESCUCHAR EN SOUNDCLOUD ↗</span>
                   </a>
                 )}
               </div>
@@ -512,6 +512,13 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
         })}
         </div>
       </div>
+
+      {/* Interactive Music Download & Social Paywall Modal */}
+      <MusicDownloadModal
+        release={downloadRelease}
+        isOpen={!!downloadRelease}
+        onClose={() => setDownloadRelease(null)}
+      />
     </section>
   );
 };

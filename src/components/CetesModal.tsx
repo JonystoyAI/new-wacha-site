@@ -20,12 +20,18 @@ export const CetesModal: React.FC<CetesModalProps> = ({ isOpen, onClose }) => {
   const totalBalance = capital + netInterest;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#111111] border-4 border-[#D4AF37] w-full max-w-2xl p-6 brutal-shadow-black text-amber-50 space-y-6">
+    <div
+      className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto cursor-pointer"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#111111] border-4 border-[#D4AF37] w-full max-w-2xl p-6 brutal-shadow-black text-amber-50 space-y-6 cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header Art Déco */}
         <div className="flex items-center justify-between border-b-2 border-[#D4AF37]/40 pb-4 font-jetbrains">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#D4AF37] text-black font-anton flex items-center justify-center border border-black font-bold">
+            <div className="w-8 h-8 bg-[#D4AF37] text-black font-anton flex items-center justify-center border border-black font-bold shrink-0">
               CP
             </div>
             <div>
@@ -39,10 +45,11 @@ export const CetesModal: React.FC<CetesModalProps> = ({ isOpen, onClose }) => {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 bg-zinc-900 text-amber-300 hover:text-white border border-[#D4AF37]/50"
+            className="text-amber-200 hover:text-white bg-zinc-900 px-3 py-1.5 border border-[#D4AF37]/60 hover:bg-[#FF4400] hover:border-[#FF4400] transition-colors flex items-center gap-1.5 font-jetbrains text-xs font-bold shrink-0"
             aria-label="Cerrar modal"
           >
-            <X className="w-5 h-5" />
+            <span>CERRAR</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 

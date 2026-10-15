@@ -27,22 +27,29 @@ export const VideoModal: React.FC<VideoModalProps> = ({ videoUrl, title, onClose
   const embedSrc = getEmbedUrl(videoUrl);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-[#121411] border-4 border-black w-full max-w-4xl p-4 sm:p-6 brutal-shadow-lime space-y-4">
+    <div
+      className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#121411] border-4 border-black w-full max-w-4xl p-4 sm:p-6 brutal-shadow-lime space-y-4 cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between border-b-2 border-zinc-800 pb-3 font-jetbrains">
           <div className="flex items-center gap-2">
-            <Youtube className="w-5 h-5 text-red-500" />
+            <Youtube className="w-5 h-5 text-red-500 shrink-0" />
             <h3 className="font-anton text-xl text-white truncate max-w-xl">
               {title || 'VIDEO DESTACADO WACHA MULTIMEDIA'}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-700 focus:outline-none"
+            className="text-zinc-300 hover:text-white bg-zinc-900 px-3 py-1.5 border border-zinc-700 hover:bg-[#FF4400] hover:border-[#FF4400] transition-colors flex items-center gap-1.5 font-jetbrains text-xs font-bold shrink-0"
             aria-label="Cerrar reproductor"
           >
-            <X className="w-5 h-5" />
+            <span>CERRAR</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 

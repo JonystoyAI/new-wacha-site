@@ -27,6 +27,9 @@ export interface MusicRelease {
   bandcampUrl?: string;
   soundcloudUrl?: string;
   youtubeUrl?: string;
+  audioUrl?: string;
+  downloadWavUrl?: string;
+  downloadMp3Url?: string;
   coverImage: string;
   tracksCount: number;
   duration?: string;
