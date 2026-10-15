@@ -3,12 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121411" />
     <title>Wacha Multimedia | Producciones & Sonido Decrépito</title>
     <meta name="description" content="Plataforma oficial de Wacha Multimedia & Mr. Decrépito: Ingeniería de contenido, Sonido Decrépito, canales de YouTube, portafolio de guerrilla y AEO/SEO." />
     <meta property="og:title" content="Wacha Multimedia | Producciones & Sonido Decrépito" />
     <meta property="og:description" content="Plataforma oficial de Wacha Multimedia & Mr. Decrépito: Ingeniería de contenido, Sonido Decrépito, canales de YouTube, portafolio de guerrilla y AEO/SEO." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Anti-flicker Theme Initialization -->
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('wacha_theme');
+          if (t === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', '#F4F4EE');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

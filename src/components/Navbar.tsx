@@ -12,7 +12,9 @@ import {
   Zap,
   Volume2,
   VolumeX,
-  Monitor
+  Monitor,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -22,6 +24,8 @@ interface NavbarProps {
   onToggleCrt: () => void;
   audioActive: boolean;
   onToggleAudio: () => void;
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -30,7 +34,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   crtEnabled,
   onToggleCrt,
   audioActive,
-  onToggleAudio
+  onToggleAudio,
+  theme,
+  onToggleTheme
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -105,10 +111,34 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-2">
+          {/* Theme Toggle (Dark / Light) */}
+          <button
+            onClick={onToggleTheme}
+            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black cursor-pointer ${
+              theme === 'dark'
+                ? 'bg-zinc-900 text-amber-300 border-zinc-700 hover:border-black hover:bg-[#D4FF00] hover:text-black font-bold'
+                : 'bg-white text-zinc-900 border-black hover:bg-black hover:text-[#D4FF00] font-bold'
+            }`}
+            title={theme === 'dark' ? 'Cambiar a Modo Claro (Editorial Paper)' : 'Cambiar a Modo Oscuro (Cyber Brutal)'}
+            aria-label={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+          >
+            {theme === 'dark' ? (
+              <>
+                <Sun className="w-4 h-4 text-amber-400" />
+                <span className="font-bold text-[11px] hidden sm:inline">LUZ</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-4 h-4 text-zinc-900" />
+                <span className="font-bold text-[11px] hidden sm:inline">NOCHE</span>
+              </>
+            )}
+          </button>
+
           {/* Audio Synthesizer Master Toggle */}
           <button
             onClick={onToggleAudio}
-            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black ${
+            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black cursor-pointer ${
               audioActive
                 ? 'bg-[#D4FF00] text-black border-black font-bold'
                 : 'bg-zinc-900 text-zinc-400 border-zinc-700 hover:text-white hover:border-zinc-500'
@@ -125,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* CRT Overlay Toggle */}
           <button
             onClick={onToggleCrt}
-            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black ${
+            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 transition-all brutal-shadow-black cursor-pointer ${
               crtEnabled
                 ? 'bg-emerald-400 text-black border-black font-bold'
                 : 'bg-zinc-900 text-zinc-400 border-zinc-700 hover:text-white'
@@ -140,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Shopping Cart Button */}
           <button
             onClick={onOpenCart}
-            className="relative bg-zinc-900 hover:bg-[#D4FF00] hover:text-black text-white p-2 border-2 border-zinc-700 hover:border-black transition-all flex items-center gap-2 font-jetbrains text-xs"
+            className="relative bg-zinc-900 hover:bg-[#D4FF00] hover:text-black text-white p-2 border-2 border-zinc-700 hover:border-black transition-all flex items-center gap-2 font-jetbrains text-xs cursor-pointer"
             aria-label={`Ver carrito de compras con ${cartCount} ítems`}
           >
             <ShoppingBag className="w-4 h-4" />
@@ -164,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 bg-zinc-900 text-white border-2 border-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#D4FF00]"
+            className="lg:hidden p-2 bg-zinc-900 text-white border-2 border-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#D4FF00] cursor-pointer"
             aria-label="Abrir menú de navegación"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -174,10 +204,35 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#121411] border-b-2 border-zinc-800 px-4 py-4 space-y-2">
+        <div className="lg:hidden bg-[#121411] border-b-2 border-zinc-800 px-4 py-4 space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-zinc-800 text-xs font-jetbrains text-zinc-400">
             <span>// NAVEGACIÓN RÁPIDA</span>
             <span className="text-[#D4FF00]">WACHA SYSTEM</span>
+          </div>
+
+          {/* Mobile Quick Action Toggles Bar */}
+          <div className="grid grid-cols-2 gap-2 pb-1">
+            <button
+              onClick={onToggleTheme}
+              className={`py-2 px-3 font-jetbrains text-xs font-bold border-2 flex items-center justify-center gap-2 brutal-shadow-black transition-all cursor-pointer ${
+                theme === 'dark'
+                  ? 'bg-zinc-900 text-amber-300 border-zinc-700 hover:bg-[#D4FF00] hover:text-black'
+                  : 'bg-white text-black border-black hover:bg-black hover:text-white'
+              }`}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-black" />}
+              <span>{theme === 'dark' ? 'MODO CLARO' : 'MODO OSCURO'}</span>
+            </button>
+
+            <button
+              onClick={onToggleAudio}
+              className={`py-2 px-3 font-jetbrains text-xs font-bold border-2 flex items-center justify-center gap-2 brutal-shadow-black transition-all cursor-pointer ${
+                audioActive ? 'bg-[#D4FF00] text-black border-black' : 'bg-zinc-900 text-zinc-400 border-zinc-700'
+              }`}
+            >
+              {audioActive ? <Volume2 className="w-4 h-4 text-black" /> : <VolumeX className="w-4 h-4" />}
+              <span>AUDIO {audioActive ? 'ON' : 'OFF'}</span>
+            </button>
           </div>
 
           <nav className="grid grid-cols-1 gap-1 font-jetbrains text-sm">

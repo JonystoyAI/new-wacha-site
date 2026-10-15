@@ -20,6 +20,42 @@ export default function App() {
   // Global States
   const [crtEnabled, setCrtEnabled] = useState(false);
   const [audioActive, setAudioActive] = useState(true);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const saved = localStorage.getItem('wacha_theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+      return 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
+
+  // Sync theme changes with DOM, meta theme-color and localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('wacha_theme', theme);
+    } catch {
+      // Ignore localStorage exceptions
+    }
+
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.documentElement.setAttribute('data-theme', 'light');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', '#F4F4EE');
+    } else {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', '#121411');
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Global Audio Mute Handler
   useEffect(() => {
@@ -100,7 +136,11 @@ export default function App() {
   const totalCartItemsCount = cart.reduce((acc, c) => acc + c.quantity, 0);
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#121411] text-[#E3E3DE] relative selection:bg-[#D4FF00] selection:text-black font-['Space_Grotesk',sans-serif]`}>
+    <div
+      className={`min-h-screen flex flex-col ${
+        theme === 'light' ? 'bg-[#F4F4EE] text-[#121411]' : 'bg-[#121411] text-[#E3E3DE]'
+      } relative selection:bg-[#D4FF00] selection:text-black font-['Space_Grotesk',sans-serif] transition-colors duration-200`}
+    >
       {/* Optional CRT Retro Scanline Overlay */}
       {crtEnabled && (
         <div className="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-80" aria-hidden="true" />
@@ -114,6 +154,8 @@ export default function App() {
         onToggleCrt={() => setCrtEnabled(!crtEnabled)}
         audioActive={audioActive}
         onToggleAudio={() => setAudioActive(!audioActive)}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Content Modules */}

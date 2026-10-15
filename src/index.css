@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer utilities {
   .font-anton {
     font-family: 'Anton', sans-serif;
@@ -66,3 +68,143 @@
   pointer-events: none;
 }
 
+/* =========================================================================
+   LIGHT MODE VARIANT: EDITORIAL PAPER BRUTALISM
+   A distinct, tactile risograph / editorial industrial aesthetic for Wacha
+   ========================================================================= */
+
+html.light {
+  color-scheme: light;
+}
+
+html.light,
+html.light body {
+  background-color: #F4F4EE !important;
+  color: #121411 !important;
+}
+
+/* Base section and canvas backgrounds */
+html.light .bg-\[\#121411\] {
+  background-color: #F4F4EE !important;
+}
+
+html.light .bg-\[\#121411\]\/95 {
+  background-color: rgba(244, 244, 238, 0.95) !important;
+}
+
+/* Elevated cards, panels & sheets */
+html.light .bg-zinc-900 {
+  background-color: #FFFFFF !important;
+}
+
+html.light .bg-zinc-900\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+html.light .bg-zinc-950 {
+  background-color: #ECECE4 !important;
+}
+
+html.light .bg-zinc-800 {
+  background-color: #E2E2D8 !important;
+}
+
+/* Borders in Light Mode */
+html.light .border-zinc-800 {
+  border-color: #D6D6CE !important;
+}
+
+html.light .border-zinc-700 {
+  border-color: #121411 !important;
+}
+
+html.light .border-zinc-600 {
+  border-color: #121411 !important;
+}
+
+/* Typography in Light Mode - High Contrast Ink Hierarchy */
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light h5.text-white,
+html.light h6.text-white {
+  color: #121411 !important;
+}
+
+html.light p.text-white,
+html.light p.text-zinc-200,
+html.light p.text-zinc-300 {
+  color: #27272A !important;
+}
+
+html.light p.text-zinc-400 {
+  color: #52525B !important;
+}
+
+html.light p.text-zinc-500 {
+  color: #71717A !important;
+}
+
+html.light .text-\[\#E3E3DE\] {
+  color: #121411 !important;
+}
+
+html.light span.text-zinc-400,
+html.light div.text-zinc-400 {
+  color: #52525B !important;
+}
+
+html.light span.text-zinc-300,
+html.light div.text-zinc-300 {
+  color: #27272A !important;
+}
+
+/* Preservation of saturated buttons & social badges text contrast */
+html.light .bg-\[\#FF4400\],
+html.light .bg-\[\#FF4400\] *,
+html.light .bg-red-600,
+html.light .bg-red-600 *,
+html.light .bg-blue-600,
+html.light .bg-blue-600 *,
+html.light .bg-blue-700,
+html.light .bg-blue-700 *,
+html.light .bg-\[\#1DA0C3\],
+html.light .bg-\[\#1DA0C3\] *,
+html.light .bg-\[\#25D366\],
+html.light .bg-\[\#25D366\] * {
+  color: #FFFFFF !important;
+}
+
+html.light .bg-\[\#D4FF00\],
+html.light .bg-\[\#D4FF00\] * {
+  color: #000000 !important;
+}
+
+/* Inputs, Textareas, Selects in Light Mode */
+html.light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html.light textarea,
+html.light select {
+  background-color: #FFFFFF !important;
+  color: #121411 !important;
+  border-color: #121411 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #71717A !important;
+}
+
+/* Preserving Dim Modal Backdrop & Full Screen Focus */
+html.light .fixed.inset-0.bg-black\/80,
+html.light .fixed.inset-0.bg-black\/75,
+html.light .fixed.inset-0.bg-black\/70,
+html.light .fixed.inset-0.bg-black\/60,
+html.light .fixed.inset-0.bg-black\/90 {
+  background-color: rgba(18, 20, 17, 0.75) !important;
+}
+
+/* Shadows in light mode remain crisp solid black */
+html.light .brutal-shadow-black {
+  box-shadow: 4px 4px 0px #121411 !important;
+}

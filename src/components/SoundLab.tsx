@@ -209,8 +209,20 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
               </div>
             </div>
 
-            {/* Console Player Switcher */}
-            <div className="flex gap-2">
+            {/* Console Player Switcher & Social Gate Trigger */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const targetSong = RELEASES_DATA.find((r) => r.id === playingReleaseId) || RELEASES_DATA[0];
+                  setDownloadRelease(targetSong);
+                }}
+                className="px-3 py-1.5 border-2 font-bold transition-all bg-[#D4FF00] text-black border-black hover:bg-[#FF4400] hover:text-white flex items-center gap-1.5 text-xs brutal-shadow-black"
+                title="Abrir Social Gate para descargar la canción actual"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>DESCARGAR PISTA // SOCIAL GATE</span>
+              </button>
               <button
                 onClick={() => setActiveTab('synth')}
                 className={`px-3 py-1.5 border-2 font-bold transition-all ${
@@ -475,14 +487,14 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
               {/* Platform Action Links */}
               <div className="pt-4 border-t border-zinc-800 mt-4 space-y-1.5 font-jetbrains text-xs">
-                {/* Download Button (Pay with a share or $1.99 USD) */}
+                {/* Download Button with Social Gate */}
                 <button
                   type="button"
                   onClick={() => setDownloadRelease(release)}
                   className="w-full bg-[#D4FF00] hover:bg-[#FF4400] text-black hover:text-white font-bold py-2 border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-1.5 uppercase text-xs"
                 >
                   <Download className="w-4 h-4 shrink-0" />
-                  <span>DESCARGAR MP3 + WAV ↗</span>
+                  <span>DESCARGAR CANCIÓN // SOCIAL GATE ↗</span>
                 </button>
 
                 {release.bandcampUrl && (
