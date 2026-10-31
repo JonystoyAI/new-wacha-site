@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd
+        http://www.google.com/schemas/sitemap-image/1.1
+        http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd">
+
+  <!-- ========================================== -->
+  <!-- URL Raíz y Página Principal                -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://whacha.site/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://whacha.site/wacha_logo.jpg</image:loc>
+      <image:title>Wacha Multimedia | Producciones, Portafolio &amp; Sonido Decrépito</image:title>
+      <image:caption>Estudio de ingeniería de contenidos, producción de video cinematográfico y AEO en Querétaro.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- Secciones Principales de la Plataforma     -->
+  <!-- ========================================== -->
+  
+  <!-- [01] Red de Canales de YouTube -->
+  <url>
+    <loc>https://whacha.site/#canales</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://whacha.site/wacha_logo.jpg</image:loc>
+      <image:title>Red Oficial de Canales de YouTube | Wacha Multimedia</image:title>
+      <image:caption>Más de 2.4 millones de impresiones diarias en contenido cinematográfico, urbano y entretenimiento.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- [02] Portafolio Multidisciplinario -->
+  <url>
+    <loc>https://whacha.site/#portafolio</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://whacha.site/unitia_promo.jpg</image:loc>
+      <image:title>Portafolio Wacha Multimedia - Unitia Software</image:title>
+      <image:caption>Campaña audiovisual y de producto para plataforma SaaS de automatización empresarial.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://whacha.site/cetes_premier_promo.jpg</image:loc>
+      <image:title>Portafolio Wacha Multimedia - CETES Premier App</image:title>
+      <image:caption>Calculadora financiera interactiva y diseño de interfaz de alto rendimiento.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://whacha.site/jf_construcciones_brand.jpg</image:loc>
+      <image:title>Portafolio Wacha Multimedia - JF Construcciones</image:title>
+      <image:caption>Identidad corporativa, modelado 3D y agente inteligente DRO para trámites de obra pública.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- [06] Radar AEO & Blog Feed -->
+  <url>
+    <loc>https://whacha.site/#blog</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://whacha.site/unitia_promo.jpg</image:loc>
+      <image:title>Radar AEO &amp; Research Blog | Wacha Multimedia</image:title>
+      <image:caption>Artículos técnicos de Answer Engine Optimization, IA Generativa, SEO Técnico y Algoritmos de Video.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- [03] Sonido Decrépito // Sound Lab -->
+  <url>
+    <loc>https://whacha.site/#soundlab</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://whacha.site/sonido_decrepito_vol1.jpg</image:loc>
+      <image:title>Sonido Decrépito Vol. 1 | Sound Lab &amp; Beatmaking</image:title>
+      <image:caption>Consola interactiva de streaming de audio urbano, mezclas experimentales y producción sonora.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://whacha.site/cumbia_del_futuro.jpg</image:loc>
+      <image:title>Cumbia del Futuro | Producción Original</image:title>
+    </image:image>
+  </url>
+
+  <!-- [05] Servicios AEO / SEO & Terminal Cotizador -->
+  <url>
+    <loc>https://whacha.site/#servicios-aeo</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- [04] Wacha Drop Store -->
+  <url>
+    <loc>https://whacha.site/#tienda</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- [00] Mastermind // Mr. Decrépito -->
+  <url>
+    <loc>https://whacha.site/#mastermind</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://whacha.site/mr_decrepito_portrait.jpg</image:loc>
+      <image:title>Mr. Decrépito - Director Creativo &amp; Head of Engineering</image:title>
+      <image:caption>Perfil del creador y mente detrás del ecosistema Wacha Multimedia y Sonido Decrépito.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- [07] Cotizador Rápido de Proyectos -->
+  <url>
+    <loc>https://whacha.site/#cotizador</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- [08] Preguntas Frecuentes (FAQ) -->
+  <url>
+    <loc>https://whacha.site/#faq</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- Artículos del Blog AEO & SEO Técnico       -->
+  <!-- ========================================== -->
+
+  <!-- Artículo 1: AEO 2026 Guía Definitiva -->
+  <url>
+    <loc>https://whacha.site/#blog-aeo-2026-guia-definitiva-gemini-perplexity</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://whacha.site/unitia_promo.jpg</image:loc>
+      <image:title>AEO 2026: La Guía Definitiva para Dominar Respuestas en Gemini, SearchGPT y Perplexity</image:title>
+      <image:caption>Cómo reestructurar el contenido semántico y las entidades de marca para ser la fuente primaria citada en motores de respuesta sintéticos.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 2: Schema.org y Grafos de Conocimiento -->
+  <url>
+    <loc>https://whacha.site/#blog-schema-grafos-conocimiento-entidades</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://whacha.site/jf_construcciones_brand.jpg</image:loc>
+      <image:title>Schema.org y Grafos de Conocimiento: De HTML Básico a Entidades Reconocidas por Google</image:title>
+      <image:caption>Por qué las meta etiquetas tradicionales ya no bastan y cómo implementar esquemas multinivel ProfessionalService y VideoObject.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 3: Algoritmo de Retención en Shorts & TikTok -->
+  <url>
+    <loc>https://whacha.site/#blog-algoritmo-retencion-youtube-shorts-tiktok</loc>
+    <lastmod>2026-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://whacha.site/cetes_premier_promo.jpg</image:loc>
+      <image:title>Algoritmo de Retención en Shorts y TikTok: El Ratio 3s / 4.5s de Wacha Studios</image:title>
+      <image:caption>Análisis de más de 450 horas de video: sincronización de ganchos de audición y cortes visuales para maximizar retención.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 4: GEO Muerte del Keyword Stuffing -->
+  <url>
+    <loc>https://whacha.site/#blog-geo-muerte-keyword-stuffing-citation-authority</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://whacha.site/unitia_software_app.jpg</image:loc>
+      <image:title>GEO (Generative Engine Optimization): La Muerte del Keyword Stuffing</image:title>
+      <image:caption>Los LLMs priorizan coherencia factual, citas cruzadas y marcas registradas verificadas.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 5: Core Web Vitals en SPAs Modernas -->
+  <url>
+    <loc>https://whacha.site/#blog-core-web-vitals-spa-inp-cls-optimizacion</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://whacha.site/cetes_premier_app.jpg</image:loc>
+      <image:title>Core Web Vitals en la Era de IA: Reduciendo INP y CLS en SPAs Modernas</image:title>
+      <image:caption>Optimizaciones prácticas para lograr 100/100 en Google Lighthouse sin sacrificar interactividad en tiempo real.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 6: Voice Engine & Síntesis Neuronal -->
+  <url>
+    <loc>https://whacha.site/#blog-voice-engine-sintesis-neuronal-asistentes</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://whacha.site/sonido_decrepito_vol1.jpg</image:loc>
+      <image:title>Voice Engine y Síntesis Neuronal: Posicionamiento en Búsquedas por Voz</image:title>
+      <image:caption>Cómo el audio estructurado, transcripciones enriquecidas y huellas vocales sintéticas alimentan las respuestas en asistentes conectados.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 7: Actualizaciones Core de Google e IA -->
+  <url>
+    <loc>https://whacha.site/#blog-actualizacion-core-google-ia-eeat</loc>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://whacha.site/MR%20DECREPITO.jpg</image:loc>
+      <image:title>El Impacto de las Actualizaciones Core de Google en Sitios con Asistencia de IA</image:title>
+      <image:caption>Directrices E-E-A-T: cómo demostrar autoría humana real detrás de flujos acelerados por modelos de lenguaje.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Artículo 8: Thumbnail CTR Matrix -->
+  <url>
+    <loc>https://whacha.site/#blog-thumbnail-ctr-matrix-psicologia-contraste</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://whacha.site/sigue_bailando.jpg</image:loc>
+      <image:title>Thumbnail CTR Matrix: Psicología del Color, Alto Contraste y Tipografía</image:title>
+      <image:caption>Deconstrucción de 80 miniaturas de alta conversión en nuestra red de canales con más de 2.4M de impresiones diarias.</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

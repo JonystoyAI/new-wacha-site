@@ -1,27 +1,107 @@
-# Robots.txt for Wacha Multimedia (https://whacha.site)
+# ==============================================================================
+# ROBOTS.TXT // WACHA MULTIMEDIA PRODUCCIONES (https://whacha.site)
+# Optimizado para Motores de Búsqueda Tradicionales y Motores de Respuesta IA (AEO/GEO)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. REGLAS GLOBALES PARA TODOS LOS RASTREADORES (DEFAULT CRAWLERS)
+# ------------------------------------------------------------------------------
 User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /sitemap.xml
+Allow: /data/articles.json
+Allow: /assets/
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.svg
+Allow: /*.webp
+
+# Secciones prioritarias de Contenido y Portafolio
+Allow: /#portafolio
+Allow: /#blog
+Allow: /#canales
+Allow: /#soundlab
+Allow: /#servicios-aeo
+Allow: /#mastermind
+Allow: /#tienda
+Allow: /#cotizador
+Allow: /#faq
+
+# Bloqueo de rutas internas, archivos de configuración y mapas de desarrollo
+Disallow: /.*
+Disallow: /*.json$
+Allow: /data/articles.json
+Disallow: /*.map$
+Disallow: /package.json
+Disallow: /tsconfig.json
+Disallow: /node_modules/
+
+# ------------------------------------------------------------------------------
+# 2. GOOGLE CRAWLERS (GOOGLE SEARCH, DISCOVER & GEMINI AEO)
+# ------------------------------------------------------------------------------
+User-agent: Googlebot
 Allow: /
 Allow: /data/articles.json
 Allow: /sitemap.xml
 
-# AI & LLM Search Engine Bots
-User-agent: Googlebot
-Allow: /
-
+# Ingesta para Resúmenes y Modelos de Lenguaje Gemini / Search Generative Experience
 User-agent: Google-Extended
 Allow: /
+Allow: /data/articles.json
 
-User-agent: Bingbot
-Allow: /
+User-agent: Googlebot-Image
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.svg
 
-User-agent: PerplexityBot
-Allow: /
-
+# ------------------------------------------------------------------------------
+# 3. OPENAI & SEARCHGPT (CHATGPT, CRAWLER DE BÚSQUEDA & BROWSING EN VIVO)
+# ------------------------------------------------------------------------------
 User-agent: GPTBot
 Allow: /
+Allow: /data/articles.json
 
+User-agent: ChatGPT-User
+Allow: /
+Allow: /data/articles.json
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /data/articles.json
+
+# ------------------------------------------------------------------------------
+# 4. PERPLEXITY AI (PERPLEXITY SONAR ENGINE & CITAS AEO)
+# ------------------------------------------------------------------------------
+User-agent: PerplexityBot
+Allow: /
+Allow: /data/articles.json
+
+# ------------------------------------------------------------------------------
+# 5. ANTHROPIC CLAUDE (CLAUDE SEARCH & WEB INGESTION)
+# ------------------------------------------------------------------------------
 User-agent: ClaudeBot
 Allow: /
+Allow: /data/articles.json
 
-# Sitemap Index Declaration
+# ------------------------------------------------------------------------------
+# 6. MICROSOFT BING & COPILOT
+# ------------------------------------------------------------------------------
+User-agent: Bingbot
+Allow: /
+Allow: /data/articles.json
+
+# ------------------------------------------------------------------------------
+# 7. APPLE INTELLIGENCE (SIRI & SPOTLIGHT SEARCH)
+# ------------------------------------------------------------------------------
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ------------------------------------------------------------------------------
+# 8. DECLARACIÓN DE SITEMAP Y DOMINIO CANÓNICO
+# ------------------------------------------------------------------------------
+Host: https://whacha.site
 Sitemap: https://whacha.site/sitemap.xml

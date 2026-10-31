@@ -105,17 +105,13 @@ html.light .skeleton-shimmer {
 }
 
 /* =========================================================================
-   LIGHT MODE VARIANT: EDITORIAL PAPER BRUTALISM
-   A distinct, tactile risograph / editorial industrial aesthetic for Wacha
-/* =========================================================================
-   LIGHT MODE VARIANT: EDITORIAL PAPER BRUTALISM
-   A distinct, tactile risograph / editorial industrial aesthetic for Wacha
-   STRICT CONTRAST RULES (WCAG AAA):
-   - Dark ink on light surfaces (>7:1 contrast)
-   - Bright white / neon yellow on dark surfaces (>12:1 contrast)
-   - Magenta ONLY on light backgrounds, NEVER on dark backgrounds
-   - Orange (#FF4400) backgrounds ALWAYS have pure white text (#FFFFFF)
-   - Never gray-on-gray or gray-on-black
+   LIGHT MODE: SISTEMA DE CONTRASTE EDITORIAL NEO-BRUTALISTA (WCAG AAA)
+   =========================================================================
+   REGLAS ABSOLUTAS:
+   1. Colores saturados (Naranja, Magenta, Rojo, Azul): BLANCO PURO (#FFFFFF)
+   2. Fondos claros (Amarillo, Verde WhatsApp, Cian claro, Blanco): NEGRO PURO (#000000)
+   3. Fondos negros: BLANCO (#FFFFFF) o AMARILLO NEÓN (#D4FF00), NUNCA gris
+   4. Pie de página: FONDO OSCURO (#121411) con textos claros en ambos modos
    ========================================================================= */
 
 html.light {
@@ -124,93 +120,163 @@ html.light {
 
 html.light,
 html.light body {
-  background-color: #F4F4EE !important;
+  background-color: #FAF9F5 !important;
   color: #121411 !important;
 }
 
-/* Base section and canvas backgrounds */
-html.light .bg-\[\#121411\] {
-  background-color: #F4F4EE !important;
+/* Superficies principales en modo claro */
+html.light .bg-\[\#121411\]:not(footer):not(footer *) {
+  background-color: #FAF9F5 !important;
 }
 
-html.light .bg-\[\#121411\]\/95 {
-  background-color: rgba(244, 244, 238, 0.95) !important;
-}
-
-/* Elevated cards, panels & sheets in light mode become crisp white */
-html.light .bg-zinc-900 {
+html.light .bg-zinc-900:not(footer):not(footer *):not([class*="bg-black"]):not([class*="bg-[#"]):not([class*="bg-emerald"]):not([class*="bg-red"]):not([class*="bg-orange"]) {
   background-color: #FFFFFF !important;
 }
 
-html.light .bg-zinc-900\/90,
-html.light .bg-zinc-900\/60 {
-  background-color: #FFFFFF !important;
-}
-
-html.light .bg-zinc-950 {
+html.light .bg-zinc-950:not(footer):not(footer *):not([class*="bg-black"]):not([class*="bg-[#"]) {
   background-color: #ECECE4 !important;
 }
 
-/* Chips and secondary tags in light mode */
-html.light .bg-zinc-800 {
+html.light .bg-zinc-800:not(footer):not(footer *):not([class*="bg-black"]):not([class*="bg-[#"]) {
   background-color: #E6E6DE !important;
-  color: #121411 !important;
-}
-
-/* Borders in Light Mode */
-html.light .border-zinc-800,
-html.light .border-zinc-700 {
-  border-color: #C8C8BE !important;
-}
-
-html.light .border-zinc-900 {
-  border-color: #121411 !important;
-}
-
-/* =========================================================================
-   1. REGISTRO DE TIPOGRAFÍA EN MODO CLARO (TINTA NEGRA DE ALTO CONTRASTE)
-   ========================================================================= */
-
-/* Por defecto en modo claro sobre fondos claros, textos son negro tinta profundo */
-html.light h1:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
-html.light h2:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
-html.light h3:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
-html.light h4:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
-html.light p:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]):not([class*="text-[#D4FF00]"]):not([class*="text-[#B8006E]"]),
-html.light .text-zinc-700,
-html.light .text-zinc-600,
-html.light .text-zinc-500,
-html.light .text-zinc-400,
-html.light .text-zinc-300,
-html.light .text-zinc-200,
-html.light .text-zinc-100 {
   color: #000000 !important;
 }
 
-/* Forzar que cualquier texto blanco o gris sobre fondos claros sea negro absoluto */
-html.light .bg-white p,
-html.light .bg-white span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
-html.light .bg-white div:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+/* Bordes en Modo Claro */
+html.light .border-zinc-800:not(footer):not(footer *),
+html.light .border-zinc-700:not(footer):not(footer *) {
+  border-color: #000000 !important;
+}
+
+/* =========================================================================
+   SECCIÓN 1: FONDOS CLAROS Y SUPERFICIES GENERALES EN MODO CLARO
+   -> TEXTO NEGRO PURO (#000000 !important)
+   ========================================================================= */
+
+/* Títulos y párrafos generales en superficies claras */
+html.light main h1:not([class*="bg-"]):not([class*="text-"]):not(footer *),
+html.light main h2:not([class*="bg-"]):not([class*="text-"]):not(footer *),
+html.light main h3:not([class*="bg-"]):not([class*="text-"]):not(footer *),
+html.light main h4:not([class*="bg-"]):not([class*="text-"]):not(footer *),
+html.light main p:not([class*="bg-"]):not([class*="text-[#"]):not(footer *),
+html.light .bg-white:not([class*="hover:bg-[#FF"]):not([class*="hover:bg-[#D9"]):not([class*="hover:bg-[#CC"]):not([class*="hover:bg-[#18"]) p,
 html.light .bg-zinc-50 p,
-html.light .bg-zinc-50 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
 html.light .bg-zinc-100 p,
-html.light .bg-zinc-100 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
-html.light .bg-zinc-200 p,
-html.light .bg-zinc-200 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
 html.light .bg-\[\#FAF9F5\] p,
-html.light .bg-\[\#FAF9F5\] span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
-html.light .bg-\[\#ECECE4\] p,
-html.light .bg-\[\#ECECE4\] span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]) {
+html.light .bg-\[\#ECECE4\] p {
+  color: #000000 !important;
+}
+
+/* Forzar que textos grises o apagados sobre superficies claras sean negro tinta */
+html.light .text-zinc-700:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *),
+html.light .text-zinc-600:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *),
+html.light .text-zinc-500:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *),
+html.light .text-zinc-400:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *),
+html.light .text-zinc-300:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *),
+html.light .text-zinc-200:not([class*="bg-[#"]):not([class*="bg-black"]):not(footer *) {
   color: #000000 !important;
 }
 
 /* =========================================================================
-   2. REGLA INMUTABLE: FONDOS NARANJA (#FF4400) SIEMPRE LLEVAN TEXTO BLANCO
+   SECCIÓN 2: REGLA INMUTABLE PARA FONDOS AMARILLOS (#D4FF00) Y VERDES/CIAN
+   -> TEXTO E ICONOS NEGRO PURO (#000000 !important)
    ========================================================================= */
+
+/* Fondos estáticos amarillos y verdes */
+.bg-\[\#D4FF00\],
+.bg-\[\#D4FF00\] *,
+html.light .bg-\[\#D4FF00\],
+html.light .bg-\[\#D4FF00\] *,
+.bg-lime-400,
+.bg-lime-400 *,
+html.light .bg-lime-400,
+html.light .bg-lime-400 *,
+.bg-\[\#25D366\],
+.bg-\[\#25D366\] *,
+html.light .bg-\[\#25D366\],
+html.light .bg-\[\#25D366\] * {
+  color: #000000 !important;
+}
+
+/* Fondos dinámicos en Hover / Active que cambian a Amarillo (#D4FF00) */
+.hover\:bg-\[\#D4FF00\]:hover,
+.hover\:bg-\[\#D4FF00\]:hover *,
+.active\:bg-\[\#D4FF00\]:active,
+.active\:bg-\[\#D4FF00\]:active *,
+html.light .hover\:bg-\[\#D4FF00\]:hover,
+html.light .hover\:bg-\[\#D4FF00\]:hover *,
+html.light .active\:bg-\[\#D4FF00\]:active,
+html.light .active\:bg-\[\#D4FF00\]:active * {
+  color: #000000 !important;
+}
+
+/* Fondos dinámicos en Hover a Cian TikTok (#00F2FE) y Bandcamp (#1DA0C3) */
+.hover\:bg-\[\#00F2FE\]:hover,
+.hover\:bg-\[\#00F2FE\]:hover *,
+html.light .hover\:bg-\[\#00F2FE\]:hover,
+html.light .hover\:bg-\[\#00F2FE\]:hover *,
+.hover\:bg-\[\#1DA0C3\]:hover,
+.hover\:bg-\[\#1DA0C3\]:hover *,
+html.light .hover\:bg-\[\#1DA0C3\]:hover,
+html.light .hover\:bg-\[\#1DA0C3\]:hover * {
+  color: #000000 !important;
+}
+
+/* Iconos SVG sobre fondos amarillos, cian y verde WhatsApp */
+.bg-\[\#D4FF00\] svg,
+.bg-\[\#25D366\] svg,
+.hover\:bg-\[\#D4FF00\]:hover svg,
+.active\:bg-\[\#D4FF00\]:active svg,
+.hover\:bg-\[\#00F2FE\]:hover svg,
+.hover\:bg-\[\#1DA0C3\]:hover svg,
+html.light .bg-\[\#D4FF00\] svg,
+html.light .bg-\[\#25D366\] svg,
+html.light .hover\:bg-\[\#D4FF00\]:hover svg,
+html.light .active\:bg-\[\#D4FF00\]:active svg,
+html.light .hover\:bg-\[\#00F2FE\]:hover svg,
+html.light .hover\:bg-\[\#1DA0C3\]:hover svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
+.bg-\[\#D4FF00\] svg[fill="currentColor"],
+.bg-\[\#25D366\] svg[fill="currentColor"],
+.hover\:bg-\[\#D4FF00\]:hover svg[fill="currentColor"],
+.active\:bg-\[\#D4FF00\]:active svg[fill="currentColor"],
+.hover\:bg-\[\#00F2FE\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#1DA0C3\]:hover svg[fill="currentColor"],
+html.light .bg-\[\#D4FF00\] svg[fill="currentColor"],
+html.light .bg-\[\#25D366\] svg[fill="currentColor"],
+html.light .hover\:bg-\[\#D4FF00\]:hover svg[fill="currentColor"],
+html.light .active\:bg-\[\#D4FF00\]:active svg[fill="currentColor"],
+html.light .hover\:bg-\[\#00F2FE\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#1DA0C3\]:hover svg[fill="currentColor"] {
+  fill: #000000 !important;
+}
+
+/* =========================================================================
+   SECCIÓN 3: REGLA INMUTABLE PARA FONDOS SATURADOS
+   (NARANJA #FF4400, MAGENTA #D9008F / #B8006E, ROJO #CC0000, AZUL #1877F2)
+   -> TEXTO E ICONOS BLANCO PURO (#FFFFFF !important)
+   ========================================================================= */
+
+/* Fondos estáticos saturados */
 .bg-\[\#FF4400\],
 .bg-\[\#FF4400\] *,
 html.light .bg-\[\#FF4400\],
 html.light .bg-\[\#FF4400\] *,
+.bg-\[\#D9008F\],
+.bg-\[\#D9008F\] *,
+html.light .bg-\[\#D9008F\],
+html.light .bg-\[\#D9008F\] *,
+.bg-\[\#B8006E\],
+.bg-\[\#B8006E\] *,
+html.light .bg-\[\#B8006E\],
+html.light .bg-\[\#B8006E\] *,
+.bg-\[\#CC0000\],
+.bg-\[\#CC0000\] *,
+html.light .bg-\[\#CC0000\],
+html.light .bg-\[\#CC0000\] *,
 .bg-orange-500,
 .bg-orange-500 *,
 .bg-orange-600,
@@ -223,34 +289,66 @@ html.light .bg-orange-600 *,
 .bg-red-600 *,
 html.light .bg-red-600,
 html.light .bg-red-600 *,
-[class*="bg-\[\#FF4400\]"],
-[class*="bg-\[\#FF4400\]"] *,
-html.light [class*="bg-\[\#FF4400\]"],
-html.light [class*="bg-\[\#FF4400\]"] * {
+.bg-\[\#1877F2\],
+.bg-\[\#1877F2\] *,
+html.light .bg-\[\#1877F2\],
+html.light .bg-\[\#1877F2\] *,
+.bg-\[\#E4405F\],
+.bg-\[\#E4405F\] *,
+html.light .bg-\[\#E4405F\],
+html.light .bg-\[\#E4405F\] *,
+.bg-\[\#FF5500\],
+.bg-\[\#FF5500\] *,
+html.light .bg-\[\#FF5500\],
+html.light .bg-\[\#FF5500\] *,
+.bg-blue-600,
+.bg-blue-600 *,
+html.light .bg-blue-600,
+html.light .bg-blue-600 * {
   color: #FFFFFF !important;
 }
 
-/* Cuando un botón o elemento cambia a naranja o magenta en hover: TEXTO CAMBIA A BLANCO */
+/* Fondos dinámicos en Hover / Active que cambian a Naranja, Magenta, Rojo o Azul */
 .hover\:bg-\[\#FF4400\]:hover,
 .hover\:bg-\[\#FF4400\]:hover *,
+.active\:bg-\[\#FF4400\]:active,
+.active\:bg-\[\#FF4400\]:active *,
 html.light .hover\:bg-\[\#FF4400\]:hover,
 html.light .hover\:bg-\[\#FF4400\]:hover *,
+html.light .active\:bg-\[\#FF4400\]:active,
+html.light .active\:bg-\[\#FF4400\]:active *,
 .hover\:bg-\[\#D9008F\]:hover,
 .hover\:bg-\[\#D9008F\]:hover *,
+.active\:bg-\[\#D9008F\]:active,
+.active\:bg-\[\#D9008F\]:active *,
 html.light .hover\:bg-\[\#D9008F\]:hover,
 html.light .hover\:bg-\[\#D9008F\]:hover *,
+html.light .active\:bg-\[\#D9008F\]:active,
+html.light .active\:bg-\[\#D9008F\]:active *,
+.hover\:bg-\[\#CC0000\]:hover,
+.hover\:bg-\[\#CC0000\]:hover *,
+html.light .hover\:bg-\[\#CC0000\]:hover,
+html.light .hover\:bg-\[\#CC0000\]:hover *,
+.hover\:bg-\[\#1877F2\]:hover,
+.hover\:bg-\[\#1877F2\]:hover *,
+html.light .hover\:bg-\[\#1877F2\]:hover,
+html.light .hover\:bg-\[\#1877F2\]:hover *,
+.hover\:bg-\[\#E4405F\]:hover,
+.hover\:bg-\[\#E4405F\]:hover *,
+html.light .hover\:bg-\[\#E4405F\]:hover,
+html.light .hover\:bg-\[\#E4405F\]:hover *,
+.hover\:bg-\[\#FF5500\]:hover,
+.hover\:bg-\[\#FF5500\]:hover *,
+html.light .hover\:bg-\[\#FF5500\]:hover,
+html.light .hover\:bg-\[\#FF5500\]:hover *,
 .hover\:bg-orange-600:hover,
 .hover\:bg-orange-600:hover *,
 html.light .hover\:bg-orange-600:hover,
-html.light .hover\:bg-orange-600:hover *,
-button:hover.hover\:bg-\[\#FF4400\],
-button:hover.hover\:bg-\[\#FF4400\] *,
-button:hover.hover\:bg-\[\#D9008F\],
-button:hover.hover\:bg-\[\#D9008F\] *,
-a:hover.hover\:bg-\[\#FF4400\],
-a:hover.hover\:bg-\[\#FF4400\] *,
-a:hover.hover\:bg-\[\#D9008F\],
-a:hover.hover\:bg-\[\#D9008F\] *,
+html.light .hover\:bg-orange-600:hover * {
+  color: #FFFFFF !important;
+}
+
+/* Modificadores group-hover en hover a fondos saturados */
 .group:hover .group-hover\:text-white,
 .group\/btn:hover .group-hover\/btn\:text-white,
 .group\/yt:hover .group-hover\/yt\:text-white,
@@ -259,6 +357,10 @@ a:hover.hover\:bg-\[\#D9008F\] *,
 .group\/cot:hover .group-hover\/cot\:text-white,
 .group\/sg:hover .group-hover\/sg\:text-white,
 .group\/bc:hover .group-hover\/bc\:text-white,
+.group\/fb:hover .group-hover\/fb\:text-white,
+.group\/ig:hover .group-hover\/ig\:text-white,
+.group\/sc:hover .group-hover\/sc\:text-white,
+.group\/web:hover .group-hover\/web\:text-white,
 html.light .group:hover .group-hover\:text-white,
 html.light .group\/btn:hover .group-hover\/btn\:text-white,
 html.light .group\/yt:hover .group-hover\/yt\:text-white,
@@ -266,98 +368,82 @@ html.light .group\/cta:hover .group-hover\/cta\:text-white,
 html.light .group\/red:hover .group-hover\/red\:text-white,
 html.light .group\/cot:hover .group-hover\/cot\:text-white,
 html.light .group\/sg:hover .group-hover\/sg\:text-white,
-html.light .group\/bc:hover .group-hover\/bc\:text-white {
+html.light .group\/bc:hover .group-hover\/bc\:text-white,
+html.light .group\/fb:hover .group-hover\/fb\:text-white,
+html.light .group\/ig:hover .group-hover\/ig\:text-white,
+html.light .group\/sc:hover .group-hover\/sc\:text-white,
+html.light .group\/web:hover .group-hover\/web\:text-white {
   color: #FFFFFF !important;
 }
 
-/* Otros botones saturados con texto blanco */
-.bg-blue-600,
-.bg-blue-600 *,
-.bg-blue-700,
-.bg-blue-700 *,
-.bg-\[\#1877F2\],
-.bg-\[\#1877F2\] *,
-.bg-\[\#E4405F\],
-.bg-\[\#E4405F\] *,
-.bg-\[\#FF5500\],
-.bg-\[\#FF5500\] *,
-.bg-\[\#1DA0C3\],
-.bg-\[\#1DA0C3\] *,
-.bg-\[\#B8006E\],
-.bg-\[\#B8006E\] * {
+/* Iconos SVG sobre fondos saturados */
+.bg-\[\#FF4400\] svg,
+.bg-\[\#D9008F\] svg,
+.bg-\[\#B8006E\] svg,
+.bg-\[\#CC0000\] svg,
+.hover\:bg-\[\#FF4400\]:hover svg,
+.hover\:bg-\[\#D9008F\]:hover svg,
+.hover\:bg-\[\#CC0000\]:hover svg,
+.hover\:bg-\[\#1877F2\]:hover svg,
+.hover\:bg-\[\#E4405F\]:hover svg,
+.hover\:bg-\[\#FF5500\]:hover svg,
+html.light .bg-\[\#FF4400\] svg,
+html.light .bg-\[\#D9008F\] svg,
+html.light .bg-\[\#B8006E\] svg,
+html.light .bg-\[\#CC0000\] svg,
+html.light .hover\:bg-\[\#FF4400\]:hover svg,
+html.light .hover\:bg-\[\#D9008F\]:hover svg,
+html.light .hover\:bg-\[\#CC0000\]:hover svg,
+html.light .hover\:bg-\[\#1877F2\]:hover svg,
+html.light .hover\:bg-\[\#E4405F\]:hover svg,
+html.light .hover\:bg-\[\#FF5500\]:hover svg {
   color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
+}
+
+.bg-\[\#FF4400\] svg[fill="currentColor"],
+.bg-\[\#D9008F\] svg[fill="currentColor"],
+.bg-\[\#B8006E\] svg[fill="currentColor"],
+.bg-\[\#CC0000\] svg[fill="currentColor"],
+.hover\:bg-\[\#FF4400\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#D9008F\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#CC0000\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#1877F2\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#E4405F\]:hover svg[fill="currentColor"],
+.hover\:bg-\[\#FF5500\]:hover svg[fill="currentColor"],
+html.light .bg-\[\#FF4400\] svg[fill="currentColor"],
+html.light .bg-\[\#D9008F\] svg[fill="currentColor"],
+html.light .bg-\[\#B8006E\] svg[fill="currentColor"],
+html.light .bg-\[\#CC0000\] svg[fill="currentColor"],
+html.light .hover\:bg-\[\#FF4400\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#D9008F\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#CC0000\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#1877F2\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#E4405F\]:hover svg[fill="currentColor"],
+html.light .hover\:bg-\[\#FF5500\]:hover svg[fill="currentColor"] {
+  fill: #FFFFFF !important;
 }
 
 /* =========================================================================
-   3. REGLA INMUTABLE: FONDOS AMARILLOS (#D4FF00) LLEVAN TEXTO NEGRO
-   (EXCEPTO CUANDO SE HACE HOVER Y CAMBIAN A NARANJA)
+   SECCIÓN 4: REGLA INMUTABLE PARA FONDOS NEGROS (BG-BLACK)
+   -> TEXTOS Y ELEMENTOS SON BLANCO O AMARILLO NEÓN (#D4FF00), NUNCA GRIS
    ========================================================================= */
-.bg-\[\#D4FF00\]:not(:hover),
-.bg-\[\#D4FF00\]:not(:hover) *:not(.keep-white),
-html.light .bg-\[\#D4FF00\]:not(:hover),
-html.light .bg-\[\#D4FF00\]:not(:hover) *:not(.keep-white),
-.bg-\[\#25D366\]:not(:hover),
-.bg-\[\#25D366\]:not(:hover) *,
-html.light .bg-\[\#25D366\]:not(:hover),
-html.light .bg-\[\#25D366\]:not(:hover) * {
-  color: #000000 !important;
-}
 
-/* =========================================================================
-   4. REGLA INMUTABLE: TEXTOS EN FONDOS NEGROS
-   - Textos grises sobre fondo negro se cambian a amarillo neón (#D4FF00)
-   - Títulos y textos principales son blanco o amarillo neón
-   ========================================================================= */
-.bg-black .text-zinc-300,
-.bg-black .text-zinc-400,
 .bg-black .text-zinc-500,
 .bg-black .text-zinc-600,
-.bg-black\/90 .text-zinc-300,
-.bg-black\/90 .text-zinc-400,
-.bg-black\/90 .text-zinc-500,
-.bg-black\/90 .text-zinc-600,
-.bg-black\/80 .text-zinc-300,
-.bg-black\/80 .text-zinc-400,
-.bg-black\/80 .text-zinc-500,
-.bg-black\/80 .text-zinc-600,
-[class*="bg-black"] .text-zinc-300,
-[class*="bg-black"] .text-zinc-400,
-[class*="bg-black"] .text-zinc-500,
-[class*="bg-black"] .text-zinc-600,
-html.light .bg-black .text-zinc-300,
-html.light .bg-black .text-zinc-400,
+.bg-black .text-zinc-700,
 html.light .bg-black .text-zinc-500,
 html.light .bg-black .text-zinc-600,
-html.light .bg-black\/90 .text-zinc-300,
-html.light .bg-black\/90 .text-zinc-400,
-html.light .bg-black\/90 .text-zinc-500,
-html.light [class*="bg-black"] .text-zinc-300,
-html.light [class*="bg-black"] .text-zinc-400,
-html.light [class*="bg-black"] .text-zinc-500,
-html.light [class*="bg-black"] .text-zinc-600 {
-  color: #D4FF00 !important;
-}
-
-/* Prohibido texto magenta sobre fondo negro */
-.bg-black .text-\[\#D4FF00\],
-.bg-black\/90 .text-\[\#D4FF00\],
-.bg-black\/80 .text-\[\#D4FF00\],
-[class*="bg-black"] .text-\[\#D4FF00\],
-html.light .bg-black .text-\[\#D4FF00\],
-html.light .bg-black\/90 .text-\[\#D4FF00\],
-html.light .bg-black\/80 .text-\[\#D4FF00\],
-html.light [class*="bg-black"] .text-\[\#D4FF00\] {
+html.light .bg-black .text-zinc-700 {
   color: #D4FF00 !important;
 }
 
 .bg-black .text-white,
 .bg-black\/90 .text-white,
 .bg-black\/80 .text-white,
-[class*="bg-black"] .text-white,
 html.light .bg-black .text-white,
 html.light .bg-black\/90 .text-white,
 html.light .bg-black\/80 .text-white,
-html.light [class*="bg-black"] .text-white,
 html.light .bg-black h1,
 html.light .bg-black h2,
 html.light .bg-black h3,
@@ -365,16 +451,71 @@ html.light .bg-black h4 {
   color: #FFFFFF !important;
 }
 
-/* =========================================================================
-   5. CONTRASTE DE ESTADOS VERDES EN MODO CLARO (NUNCA VERDE CLARO SOBRE BLANCO)
-   ========================================================================= */
-html.light .text-emerald-400 {
-  color: #064E3B !important; /* Verde bosque profundo para contraste AAA */
-  font-weight: 700 !important;
+.bg-black .text-\[\#D4FF00\],
+html.light .bg-black .text-\[\#D4FF00\] {
+  color: #D4FF00 !important;
 }
 
 /* =========================================================================
-   6. INPUTS, TEXTAREAS & SELECTS EN MODO CLARO
+   SECCIÓN 5: PIE DE PÁGINA (FOOTER) OSCURO EN AMBOS MODOS
+   -> FONDO #121411 CON TEXTOS CLAROS LEGIBLES
+   ========================================================================= */
+
+footer,
+html.light footer {
+  background-color: #121411 !important;
+  color: #FFFFFF !important;
+  border-top-color: #000000 !important;
+}
+
+footer h1, footer h2, footer h3, footer h4,
+html.light footer h1, html.light footer h2, html.light footer h3, html.light footer h4 {
+  color: #FFFFFF !important;
+}
+
+footer p,
+html.light footer p {
+  color: #D4D4D8 !important;
+}
+
+footer a:not([class*="bg-[#25D366]"]):not([class*="bg-"]),
+html.light footer a:not([class*="bg-[#25D366]"]):not([class*="bg-"]) {
+  color: #D4D4D8 !important;
+}
+
+footer a:hover,
+html.light footer a:hover {
+  color: #D4FF00 !important;
+}
+
+/* Botón de WhatsApp en el Footer */
+footer a[class*="bg-[#25D366]"],
+footer a[class*="bg-[#25D366]"] *,
+html.light footer a[class*="bg-[#25D366]"],
+html.light footer a[class*="bg-[#25D366]"] * {
+  color: #000000 !important;
+  fill: #000000 !important;
+}
+
+/* Tarjetas de Redes Sociales en el Footer */
+footer .bg-zinc-900,
+html.light footer .bg-zinc-900 {
+  background-color: #18181b !important;
+  border-color: #27272a !important;
+}
+
+footer .bg-zinc-900 .text-white,
+html.light footer .bg-zinc-900 .text-white {
+  color: #FFFFFF !important;
+}
+
+footer .bg-zinc-900 .text-zinc-400,
+html.light footer .bg-zinc-900 .text-zinc-400 {
+  color: #A1A1AA !important;
+}
+
+/* =========================================================================
+   SECCIÓN 6: INPUTS, TEXTAREAS & SELECTS EN MODO CLARO
    ========================================================================= */
 html.light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 html.light textarea,
@@ -386,11 +527,11 @@ html.light select {
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #374151 !important;
+  color: #4B5563 !important;
 }
 
 /* =========================================================================
-   7. MODALS, BACKDROPS & SOMBRAS
+   SECCIÓN 7: MODALES, OVERLAYS Y SOMBRAS BRUTALISTAS
    ========================================================================= */
 html.light .fixed.inset-0.bg-black\/80,
 html.light .fixed.inset-0.bg-black\/85,
@@ -398,7 +539,7 @@ html.light .fixed.inset-0.bg-black\/75,
 html.light .fixed.inset-0.bg-black\/70,
 html.light .fixed.inset-0.bg-black\/60,
 html.light .fixed.inset-0.bg-black\/90 {
-  background-color: rgba(18, 20, 17, 0.75) !important;
+  background-color: rgba(18, 20, 17, 0.8) !important;
 }
 
 html.light .brutal-shadow-black {
