@@ -209,13 +209,13 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
         </div>
 
         {/* Console Deck & Tape Deck Module */}
-        <div className="bg-zinc-900 border-4 border-black p-6 mb-12 brutal-shadow-lime">
-          <div className="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-zinc-800 pb-4 mb-6 gap-4 font-jetbrains text-xs">
+        <div className="bg-white dark:bg-zinc-900 border-4 border-black p-6 mb-12 brutal-shadow-black">
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b-2 border-zinc-200 dark:border-zinc-800 pb-4 mb-6 gap-4 font-jetbrains text-xs">
             <div className="flex items-center gap-3">
-              <Disc className={`w-6 h-6 text-[#D4FF00] ${isPlayingTape ? 'animate-spin' : ''}`} />
+              <Disc className={`w-6 h-6 text-[#B8006E] dark:text-[#D4FF00] ${isPlayingTape ? 'animate-spin' : ''}`} />
               <div>
-                <h3 className="font-anton text-xl text-white">CONSOLA ANALÓGICA REBAJADA V3.0</h3>
-                <p className="text-zinc-400 text-[10px]">WEB AUDIO HARDWARE SYNTH ENGINE // DECRÉPITO STEREO</p>
+                <h3 className="font-anton text-xl text-black dark:text-white">CONSOLA ANALÓGICA REBAJADA V3.0</h3>
+                <p className="text-zinc-700 dark:text-zinc-400 text-[10px] font-bold">WEB AUDIO HARDWARE SYNTH ENGINE // DECRÉPITO STEREO</p>
               </div>
             </div>
 
@@ -227,31 +227,33 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                   const targetSong = RELEASES_DATA.find((r) => r.id === playingReleaseId) || RELEASES_DATA[0];
                   setDownloadRelease(targetSong);
                 }}
-                className="px-3 py-1.5 border-2 font-bold transition-all bg-[#D4FF00] text-black border-black hover:bg-[#FF4400] hover:text-white flex items-center gap-1.5 text-xs brutal-shadow-black"
+                className="px-3 py-1.5 border-2 font-bold transition-all duration-150 bg-[#D4FF00] text-black border-black hover:bg-[#D9008F] hover:text-white flex items-center gap-1.5 text-xs brutal-shadow-black hover:-translate-y-1 active:translate-y-0 active:scale-95 group/sg cursor-pointer"
                 title="Abrir Social Gate para descargar la canción actual"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>DESCARGAR PISTA // SOCIAL GATE</span>
+                <Download className="w-3.5 h-3.5 text-black group-hover/sg:text-white" />
+                <span className="text-black group-hover/sg:text-white font-bold">DESCARGAR PISTA // SOCIAL GATE</span>
               </button>
               <button
                 onClick={() => setActiveTab('synth')}
-                className={`px-3 py-1.5 border-2 font-bold transition-all ${
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center gap-1.5 ${
                   activeTab === 'synth'
                     ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
-                    : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100'
                 }`}
               >
-                🎛️ SYNTH ENGINE
+                <Sliders className="w-3.5 h-3.5" />
+                <span>SYNTH ENGINE</span>
               </button>
               <button
                 onClick={() => setActiveTab('soundcloud')}
-                className={`px-3 py-1.5 border-2 font-bold transition-all ${
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center gap-1.5 ${
                   activeTab === 'soundcloud'
                     ? 'bg-[#FF4400] text-white border-black brutal-shadow-black'
-                    : 'bg-zinc-800 text-zinc-400 border-zinc-700'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100'
                 }`}
               >
-                ☁️ SOUNDCLOUD EMBED
+                <Radio className="w-3.5 h-3.5" />
+                <span>SOUNDCLOUD EMBED</span>
               </button>
             </div>
           </div>
@@ -371,24 +373,24 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                   src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2108495635&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
                 ></iframe>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-jetbrains text-xs text-zinc-400 pt-1">
-                <div className="text-[11px] text-zinc-300 font-mono truncate">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-jetbrains text-xs p-3 bg-zinc-100 dark:bg-black border-2 border-black dark:border-zinc-800">
+                <div className="text-xs text-black dark:text-zinc-200 font-mono truncate font-bold">
                   <a
                     href="https://soundcloud.com/sonidodecrepito"
                     title="Sonido Decrépito"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#D4FF00] hover:underline font-bold"
+                    className="text-[#B8006E] dark:text-[#D4FF00] hover:underline font-bold"
                   >
                     Sonido Decrépito
                   </a>{' '}
-                  <span className="text-zinc-600">·</span>{' '}
+                  <span className="text-zinc-400">·</span>{' '}
                   <a
                     href="https://soundcloud.com/sonidodecrepito/sets/ecos"
                     title="Ecos - Sonido decrépito - Cumbia Sound"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-zinc-200 hover:text-white"
+                    className="text-black dark:text-zinc-200 hover:underline font-bold"
                   >
                     Ecos - Sonido decrépito - Cumbia Sound
                   </a>
@@ -397,9 +399,9 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                   href="https://soundcloud.com/sonidodecrepito/sets/ecos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#FF4400] hover:underline flex items-center gap-1 font-bold shrink-0 text-xs"
+                  className="bg-[#FF4400] text-white px-3 py-1 font-bold hover:bg-orange-600 transition-colors flex items-center gap-1 shrink-0 text-xs border border-black"
                 >
-                  ABRIR PLAYLIST EN SOUNDCLOUD ↗
+                  ABRIR EN SOUNDCLOUD ↗
                 </a>
               </div>
             </div>
@@ -414,7 +416,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
             return (
               <div
                 key={release.id}
-                className="bg-zinc-900 border-2 border-zinc-800 p-4 brutal-shadow-black hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
+                className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 brutal-shadow-black hover:border-[#B8006E] dark:hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
               >
                 <div className="space-y-3">
                   {/* Cover Image Frame with Vinyl Rotation Effect */}
@@ -454,9 +456,9 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                     }`}>
                       <div className="bg-[#D4FF00] text-black p-2.5 rounded-full border-2 border-black brutal-shadow-black transition-transform hover:scale-110">
                         {isThisPlaying ? (
-                          <Pause className="w-5 h-5 fill-current" />
+                          <Pause className="w-5 h-5 fill-current text-black" />
                         ) : (
-                          <Play className="w-5 h-5 fill-current ml-0.5" />
+                          <Play className="w-5 h-5 fill-current ml-0.5 text-black" />
                         )}
                       </div>
                     </div>
@@ -471,7 +473,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                         )}
                         {release.status && (
                           <div className={`absolute top-2 right-2 font-jetbrains text-[10px] font-bold px-2 py-0.5 border border-black z-10 ${
-                            (release.status === 'Disponible' || release.status === 'GRATIS') ? 'bg-[#FF4400] text-white' : 'bg-zinc-800 text-zinc-300'
+                            (release.status === 'Disponible' || release.status === 'GRATIS') ? 'bg-[#FF4400] text-white' : 'bg-black text-white'
                           }`}>
                             {release.status === 'Disponible' ? 'GRATIS' : release.status}
                           </div>
@@ -482,29 +484,29 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
                 {/* Release Meta */}
                 <div>
-                  <div className="flex justify-between items-center font-jetbrains text-[10px] text-zinc-500 mb-1">
+                  <div className="flex justify-between items-center font-jetbrains text-[10px] text-zinc-700 dark:text-zinc-400 font-bold mb-1">
                     <span>AÑO: {release.year}</span>
                     <span>{release.tracksCount} TRACKS ({release.duration || 'EP'})</span>
                   </div>
-                  <h4 className="font-anton text-lg text-white group-hover:text-[#D4FF00] transition-colors">
+                  <h4 className="font-anton text-lg text-black dark:text-white group-hover:text-[#B8006E] dark:group-hover:text-[#D4FF00] transition-colors">
                     {release.title}
                   </h4>
-                  <p className="font-space-grotesk text-xs text-zinc-400 mt-1">
+                  <p className="font-space-grotesk text-xs text-zinc-800 dark:text-zinc-300 font-medium mt-1">
                     {release.subtitle}
                   </p>
                 </div>
               </div>
 
               {/* Platform Action Links */}
-              <div className="pt-4 border-t border-zinc-800 mt-4 space-y-1.5 font-jetbrains text-xs">
+              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 mt-4 space-y-1.5 font-jetbrains text-xs">
                 {/* Download Button with Social Gate */}
                 <button
                   type="button"
                   onClick={() => setDownloadRelease(release)}
-                  className="w-full bg-[#D4FF00] hover:bg-[#FF4400] text-black hover:text-white font-bold py-2 border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-1.5 uppercase text-xs"
+                  className="w-full bg-[#D4FF00] hover:bg-[#D9008F] text-black hover:text-white font-bold py-2 border-2 border-black brutal-shadow-black transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-1.5 uppercase text-xs group/btn cursor-pointer"
                 >
-                  <Download className="w-4 h-4 shrink-0" />
-                  <span>DESCARGAR CANCIÓN // SOCIAL GATE ↗</span>
+                  <Download className="w-4 h-4 shrink-0 text-black group-hover/btn:text-white" />
+                  <span className="text-black group-hover/btn:text-white font-bold">DESCARGAR CANCIÓN // SOCIAL GATE ↗</span>
                 </button>
 
                 {release.bandcampUrl && (
@@ -512,9 +514,9 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                     href={release.bandcampUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 py-1.5 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 text-[11px]"
+                    className="w-full bg-black text-[#D4FF00] hover:bg-[#FF4400] hover:text-white py-1.5 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-1.5 text-[11px] font-bold brutal-shadow-black group/bc cursor-pointer"
                   >
-                    <span>BANDCAMP ALBUM ↗</span>
+                    <span className="text-[#D4FF00] group-hover/bc:text-white font-bold">BANDCAMP ALBUM ↗</span>
                   </a>
                 )}
 
@@ -523,9 +525,9 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                     href={release.soundcloudUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-zinc-950 text-zinc-400 hover:text-white hover:bg-zinc-900 py-1 border border-zinc-800 transition-all flex items-center justify-center gap-1.5 text-[10px]"
+                    className="w-full bg-[#FF4400] text-white hover:bg-orange-600 py-1.5 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-1.5 text-[11px] font-bold brutal-shadow-black cursor-pointer"
                   >
-                    <span>ESCUCHAR EN SOUNDCLOUD ↗</span>
+                    <span className="text-white font-bold">ESCUCHAR EN SOUNDCLOUD ↗</span>
                   </a>
                 )}
               </div>

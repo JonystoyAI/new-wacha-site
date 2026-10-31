@@ -116,10 +116,10 @@ _Enviado desde el Cotizador Exprés Wacha Multimedia_`;
         </div>
 
         {/* Free Sample Incentive Banner for New Businesses */}
-        <div className="bg-[#25D366]/10 border-2 border-[#25D366] p-3.5 flex items-center gap-3 font-jetbrains text-xs text-white">
-          <Gift className="w-6 h-6 text-[#25D366] shrink-0" />
+        <div className="bg-[#25D366]/15 border-2 border-[#25D366] p-3.5 flex items-center gap-3 font-jetbrains text-xs text-black dark:text-white font-medium">
+          <Gift className="w-6 h-6 text-[#15803d] dark:text-[#25D366] shrink-0" />
           <div>
-            <span className="font-bold text-[#25D366] block">BONO DE BIENVENIDA PARA NUEVOS EMPRENDEDORES:</span>
+            <span className="font-bold text-[#15803d] dark:text-[#25D366] block">BONO DE BIENVENIDA PARA NUEVOS EMPRENDEDORES:</span>
             <span>Incluye **asesoría inicial gratis** y propuesta visual previa al iniciar tu proyecto.</span>
           </div>
         </div>
@@ -138,7 +138,7 @@ _Enviado desde el Cotizador Exprés Wacha Multimedia_`;
 
           {/* Step 1: Select Services */}
           <div>
-            <label className="block font-jetbrains text-xs font-bold text-[#D4FF00] uppercase mb-2">
+            <label className="block font-jetbrains text-xs font-bold text-[#D9008F] dark:text-[#D4FF00] uppercase mb-2">
               1. Selecciona los Servicios para tu Negocio:
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 font-jetbrains text-xs">
@@ -151,16 +151,16 @@ _Enviado desde el Cotizador Exprés Wacha Multimedia_`;
                     onClick={() => toggleService(srv.id)}
                     className={`p-3 text-left border-2 transition-all flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-[#25D366]/15 border-[#25D366] text-white scale-[1.01]'
-                        : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                        ? 'bg-[#25D366]/20 border-[#25D366] text-black dark:text-white scale-[1.01]'
+                        : 'bg-white dark:bg-zinc-900 border-black dark:border-zinc-800 text-zinc-900 dark:text-zinc-400 hover:border-black hover:text-black dark:hover:text-zinc-200'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <span className="font-bold text-white text-[11px] leading-tight">{srv.title}</span>
-                      <CheckCircle className={`w-4 h-4 shrink-0 ${isSelected ? 'text-[#25D366]' : 'text-zinc-700'}`} />
+                      <span className="font-bold text-black dark:text-white text-[11px] leading-tight">{srv.title}</span>
+                      <CheckCircle className={`w-4 h-4 shrink-0 ${isSelected ? 'text-[#15803d] dark:text-[#25D366]' : 'text-zinc-400 dark:text-zinc-700'}`} />
                     </div>
-                    <p className="text-[10px] text-zinc-400 mt-1 leading-snug">{srv.desc}</p>
-                    <div className="mt-2 text-[10px] font-bold text-[#25D366] flex justify-between border-t border-zinc-800/80 pt-1">
+                    <p className="text-[10px] text-zinc-700 dark:text-zinc-400 mt-1 leading-snug">{srv.desc}</p>
+                    <div className="mt-2 text-[10px] font-bold text-[#15803d] dark:text-[#25D366] flex justify-between border-t border-zinc-300 dark:border-zinc-800/80 pt-1">
                       <span>DESDE:</span>
                       <span>${srv.priceMxn.toLocaleString()} MXN / ${srv.priceUsd} USD</span>
                     </div>

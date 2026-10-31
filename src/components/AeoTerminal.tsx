@@ -123,40 +123,40 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
   };
 
   return (
-    <section id="servicios-aeo" className="py-16 bg-[#121411] border-b-2 border-zinc-800 scroll-mt-20">
+    <section id="servicios-aeo" className="py-16 bg-[#FAF9F5] dark:bg-[#121411] border-b-2 border-black dark:border-zinc-800 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Architectural Explanation Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
           <div className="lg:col-span-6 space-y-4">
-            <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider flex items-center gap-2">
-              <span className="w-2 h-2 bg-[#D4FF00]"></span>
+            <div className="font-jetbrains text-xs text-[#FF4400] dark:text-[#D4FF00] font-bold tracking-wider flex items-center gap-2">
+              <span className="w-2.5 h-2.5 bg-[#FF4400] dark:bg-[#D4FF00] inline-block border border-black"></span>
               // SECCIÓN 05: AEO & SEO GENERATIVO
             </div>
-            <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide">
+            <h2 className="font-anton text-4xl sm:text-5xl text-black dark:text-white uppercase tracking-wide">
               OPTIMIZACIÓN PARA MOTORES DE RESPUESTA IA (AEO)
             </h2>
-            <p className="font-space-grotesk text-zinc-300 text-sm leading-relaxed">
+            <p className="font-space-grotesk text-zinc-800 dark:text-zinc-300 text-sm leading-relaxed font-medium">
               Los motores de búsqueda tradicionales están cambiando por asistentes de IA como Gemini, ChatGPT y Perplexity. En Wacha Multimedia estructuramos el guionizado, metadatos JSON-LD y audio transcrito para que tu contenido sea extraído como la fuente primaria de verdad.
             </p>
           </div>
 
           <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4 font-jetbrains text-xs">
-            <div className="bg-zinc-900 border border-zinc-800 p-4 space-y-2 brutal-shadow-black">
-              <div className="flex items-center gap-2 text-[#D4FF00]">
-                <Zap className="w-4 h-4" />
-                <span className="font-bold">INDEXACIÓN EN SEARCHGPT</span>
+            <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2 brutal-shadow-black">
+              <div className="flex items-center gap-2 text-black dark:text-[#D4FF00]">
+                <Zap className="w-4 h-4 text-[#FF4400] dark:text-[#D4FF00]" />
+                <span className="font-bold text-black dark:text-white">INDEXACIÓN EN SEARCHGPT</span>
               </div>
-              <p className="text-zinc-400 text-[11px] leading-relaxed">
+              <p className="text-zinc-800 dark:text-zinc-400 text-[11px] leading-relaxed font-medium">
                 Estructura de párrafos con premisas empíricas directo a los modelos de lenguaje de última generación.
               </p>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 p-4 space-y-2 brutal-shadow-black">
-              <div className="flex items-center gap-2 text-[#FF4400]">
-                <Sparkles className="w-4 h-4" />
-                <span className="font-bold">RETENCIÓN ALGORÍTMICA</span>
+            <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2 brutal-shadow-black">
+              <div className="flex items-center gap-2 text-black dark:text-[#FF4400]">
+                <Sparkles className="w-4 h-4 text-[#FF4400]" />
+                <span className="font-bold text-black dark:text-white">RETENCIÓN ALGORÍTMICA</span>
               </div>
-              <p className="text-zinc-400 text-[11px] leading-relaxed">
+              <p className="text-zinc-800 dark:text-zinc-400 text-[11px] leading-relaxed font-medium">
                 Ganchos de audio y cambios visuales cada 4.5 segundos previenen la deserción de audiencia en YouTube.
               </p>
             </div>
@@ -164,13 +164,13 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
         </div>
 
         {/* Cotizador Terminal Console */}
-        <div id="cotizador" className="bg-zinc-900 border-4 border-black p-6 sm:p-8 brutal-shadow-lime scroll-mt-24">
-          <div className="flex items-center justify-between border-b-2 border-zinc-800 pb-4 mb-6 font-jetbrains text-xs">
-            <div className="flex items-center gap-2 text-white font-bold">
-              <Terminal className="w-5 h-5 text-[#D4FF00]" />
+        <div id="cotizador" className="bg-white dark:bg-zinc-900 border-4 border-black p-6 sm:p-8 brutal-shadow-black scroll-mt-24">
+          <div className="flex items-center justify-between border-b-2 border-zinc-200 dark:border-zinc-800 pb-4 mb-6 font-jetbrains text-xs">
+            <div className="flex items-center gap-2 text-black dark:text-white font-bold">
+              <Terminal className="w-5 h-5 text-[#B8006E] dark:text-[#D4FF00]" />
               <span>TERMINAL DE COTIZACIÓN INTERACTIVA // WACHA ESTIMATOR V2.4</span>
             </div>
-            <span className="text-emerald-400 hidden sm:inline">[ STATUS: READY FOR CALCULATOR ]</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold hidden sm:inline">[ STATUS: READY FOR CALCULATOR ]</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -193,11 +193,11 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
               <div className="lg:col-span-7 space-y-5 font-jetbrains text-xs">
                 {/* Service Selection */}
                 <div>
-                  <label className="block text-zinc-300 font-bold mb-2">1. SELECCIONA EL TIPO DE SERVICIO:</label>
+                  <label className="block text-black dark:text-zinc-200 font-bold mb-2">1. SELECCIONA EL TIPO DE SERVICIO:</label>
                   <select
                     value={formData.serviceType}
                     onChange={(e) => handleInputChange('serviceType', e.target.value)}
-                    className="w-full bg-black text-white p-3 border-2 border-zinc-700 focus:border-[#D4FF00] outline-none"
+                    className="w-full bg-white dark:bg-black text-black dark:text-white p-3 border-2 border-black dark:border-zinc-700 focus:border-[#B8006E] dark:focus:border-[#D4FF00] outline-none font-bold"
                   >
                     <option value="full-production">Producción Integral de Video & Contenido ($1,200 USD/mes base)</option>
                     <option value="ai-video-scripts">Guiones de Alta Retención & Clonación IA ($650 USD/mes base)</option>
@@ -209,7 +209,7 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
 
                 {/* Scope Selection */}
                 <div>
-                  <label className="block text-zinc-300 font-bold mb-2">2. ALCANCE MENSUAL O VOLUMEN DE PRODUCCIÓN:</label>
+                  <label className="block text-black dark:text-zinc-200 font-bold mb-2">2. ALCANCE MENSUAL O VOLUMEN DE PRODUCCIÓN:</label>
                   <div className="grid grid-cols-3 gap-2">
                     {[
                       { id: 'starter', label: 'STARTER (4 PZS)' },
@@ -220,10 +220,10 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                         type="button"
                         key={scopeItem.id}
                         onClick={() => handleInputChange('scope', scopeItem.id)}
-                        className={`p-3 border-2 font-bold text-center transition-all ${
+                        className={`p-3 border-2 font-bold text-center transition-all duration-150 hover:-translate-y-1 active:scale-95 ${
                           formData.scope === scopeItem.id
                             ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
-                            : 'bg-black text-zinc-400 border-zinc-800 hover:text-white'
+                            : 'bg-white dark:bg-black text-black dark:text-zinc-300 border-black dark:border-zinc-800 hover:bg-[#D4FF00] hover:text-black'
                         }`}
                       >
                         {scopeItem.label}
@@ -234,36 +234,36 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
 
                 {/* Add-on Features Toggles */}
                 <div>
-                  <label className="block text-zinc-300 font-bold mb-2">3. MÓDULOS Y SERVICIOS ADICIONALES:</label>
+                  <label className="block text-black dark:text-zinc-200 font-bold mb-2">3. MÓDULOS Y SERVICIOS ADICIONALES:</label>
                   <div className="space-y-2">
-                    <label className="flex items-center gap-3 bg-black p-3 border border-zinc-800 cursor-pointer">
+                    <label className="flex items-center gap-3 bg-zinc-50 dark:bg-black p-3 border-2 border-zinc-300 dark:border-zinc-800 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={formData.aiVoiceClone}
                         onChange={(e) => handleInputChange('aiVoiceClone', e.target.checked)}
-                        className="accent-[#D4FF00] w-4 h-4"
+                        className="accent-[#B8006E] dark:accent-[#D4FF00] w-4 h-4"
                       />
-                      <span className="text-zinc-200">Clonación y Síntesis de Voz IA Hiper-Realista (+$250 USD)</span>
+                      <span className="text-black dark:text-zinc-200 font-medium">Clonación y Síntesis de Voz IA Hiper-Realista (+$250 USD)</span>
                     </label>
 
-                    <label className="flex items-center gap-3 bg-black p-3 border border-zinc-800 cursor-pointer">
+                    <label className="flex items-center gap-3 bg-zinc-50 dark:bg-black p-3 border-2 border-zinc-300 dark:border-zinc-800 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={formData.soundDesign}
                         onChange={(e) => handleInputChange('soundDesign', e.target.checked)}
-                        className="accent-[#D4FF00] w-4 h-4"
+                        className="accent-[#B8006E] dark:accent-[#D4FF00] w-4 h-4"
                       />
-                      <span className="text-zinc-200">Sound Design 'Sonido Decrépito' & Mezcla Subterránea (+$200 USD)</span>
+                      <span className="text-black dark:text-zinc-200 font-medium">Sound Design 'Sonido Decrépito' & Mezcla Subterránea (+$200 USD)</span>
                     </label>
 
-                    <label className="flex items-center gap-3 bg-black p-3 border border-zinc-800 cursor-pointer">
+                    <label className="flex items-center gap-3 bg-zinc-50 dark:bg-black p-3 border-2 border-zinc-300 dark:border-zinc-800 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={formData.retentionScripting}
                         onChange={(e) => handleInputChange('retentionScripting', e.target.checked)}
-                        className="accent-[#D4FF00] w-4 h-4"
+                        className="accent-[#B8006E] dark:accent-[#D4FF00] w-4 h-4"
                       />
-                      <span className="text-zinc-200">Guionizado con Hooks de Retención y Referencias Científicas (+$180 USD)</span>
+                      <span className="text-black dark:text-zinc-200 font-medium">Guionizado con Hooks de Retención y Referencias Científicas (+$180 USD)</span>
                     </label>
                   </div>
                 </div>
@@ -271,64 +271,64 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                 {/* Contact & Link Details */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                   <div>
-                    <label className="block text-zinc-400 text-[10px] mb-1">CORREO O TELEGRAM DE CONTACTO:</label>
+                    <label className="block text-zinc-800 dark:text-zinc-400 text-[10px] font-bold mb-1">CORREO O TELEGRAM DE CONTACTO:</label>
                     <input
                       type="text"
                       required
                       placeholder="ejemplo@wacha.media"
                       value={formData.contact}
                       onChange={(e) => handleInputChange('contact', e.target.value)}
-                      className="w-full bg-black text-white p-2.5 border border-zinc-700 focus:border-[#D4FF00] outline-none"
+                      className="w-full bg-white dark:bg-black text-black dark:text-white p-2.5 border-2 border-black dark:border-zinc-700 focus:border-[#B8006E] dark:focus:border-[#D4FF00] outline-none font-medium"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-zinc-400 text-[10px] mb-1">CANAL DE YOUTUBE / PROYECTO (OPCIONAL):</label>
+                    <label className="block text-zinc-800 dark:text-zinc-400 text-[10px] font-bold mb-1">CANAL DE YOUTUBE / PROYECTO (OPCIONAL):</label>
                     <input
                       type="text"
                       placeholder="https://youtube.com/@mi_canal"
                       value={formData.channelOrProject}
                       onChange={(e) => handleInputChange('channelOrProject', e.target.value)}
-                      className="w-full bg-black text-white p-2.5 border border-zinc-700 focus:border-[#D4FF00] outline-none"
+                      className="w-full bg-white dark:bg-black text-black dark:text-white p-2.5 border-2 border-black dark:border-zinc-700 focus:border-[#B8006E] dark:focus:border-[#D4FF00] outline-none font-medium"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Right Output Budget Display */}
-              <div className="lg:col-span-5 flex flex-col justify-between bg-black p-6 border-2 border-zinc-800 font-jetbrains">
+              <div className="lg:col-span-5 flex flex-col justify-between bg-zinc-100 dark:bg-black p-6 border-2 border-black dark:border-zinc-800 font-jetbrains">
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center text-xs text-zinc-400 border-b border-zinc-800 pb-2">
+                  <div className="flex justify-between items-center text-xs text-black dark:text-zinc-400 border-b-2 border-black dark:border-zinc-800 pb-2 font-bold">
                     <span>RESUMEN DE ESTIMACIÓN</span>
-                    <span className="text-[#D4FF00] font-bold">PRESUPUESTO EN VIVO</span>
+                    <span className="text-[#B8006E] dark:text-[#D4FF00]">PRESUPUESTO EN VIVO</span>
                   </div>
 
-                  <div className="space-y-2 text-xs text-zinc-300">
+                  <div className="space-y-2 text-xs text-black dark:text-zinc-300 font-medium">
                     <div className="flex justify-between">
-                      <span>BASE DE SERVICIO:</span>
-                      <span>${basePrice} USD</span>
+                      <span className="font-bold">BASE DE SERVICIO:</span>
+                      <span className="font-bold">${basePrice} USD</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>MULTIPLICADOR ALCANCE:</span>
-                      <span>x{scopeMult}</span>
+                      <span className="font-bold">MULTIPLICADOR ALCANCE:</span>
+                      <span className="font-bold">x{scopeMult}</span>
                     </div>
-                    <div className="flex justify-between text-zinc-400">
+                    <div className="flex justify-between text-zinc-700 dark:text-zinc-400">
                       <span>MÓDULOS EXTRAS:</span>
-                      <span>+${addons} USD</span>
+                      <span className="font-bold">+${addons} USD</span>
                     </div>
                   </div>
 
-                  <div className="bg-zinc-900 p-4 border border-zinc-700 mt-4 text-center space-y-1">
-                    <span className="text-zinc-400 text-[10px] block">ESTIMADO INVERSIÓN MENSUAL:</span>
-                    <p className="font-anton text-4xl text-[#D4FF00]">
-                      ${estimatedUsd} <span className="text-lg text-white">USD</span>
+                  <div className="bg-white dark:bg-zinc-900 p-4 border-2 border-black dark:border-zinc-700 mt-4 text-center space-y-1 brutal-shadow-black">
+                    <span className="text-zinc-700 dark:text-zinc-400 text-[10px] block font-bold uppercase">ESTIMADO INVERSIÓN MENSUAL:</span>
+                    <p className="font-anton text-4xl text-[#B8006E] dark:text-[#D4FF00]">
+                      ${estimatedUsd} <span className="text-lg text-black dark:text-white">USD</span>
                     </p>
-                    <p className="text-xs text-zinc-400 font-bold">
+                    <p className="text-xs text-zinc-800 dark:text-zinc-400 font-bold">
                       (~${estimatedMxn.toLocaleString()} MXN)
                     </p>
                   </div>
 
-                  <p className="text-[10px] text-zinc-500 text-center">
+                  <p className="text-[10px] text-zinc-600 dark:text-zinc-500 text-center font-medium">
                     *El valor final puede ajustarse según complejidad técnica o entregables adicionales.
                   </p>
                 </div>
@@ -336,10 +336,10 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                 <div className="pt-6">
                   <button
                     type="submit"
-                    className="w-full bg-[#D4FF00] text-black font-bold py-4 border-2 border-black brutal-shadow-black hover:bg-[#FF4400] hover:text-white transition-all flex items-center justify-center gap-2 text-sm"
+                    className="w-full bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white font-bold py-4 border-2 border-black brutal-shadow-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-2 text-sm group/btn cursor-pointer"
                   >
-                    <MessageSquare className="w-5 h-5" />
-                    <span>GENERAR COTIZACIÓN EN WHATSAPP ↗</span>
+                    <MessageSquare className="w-5 h-5 text-black group-hover/btn:text-white" />
+                    <span className="text-black group-hover/btn:text-white font-bold">GENERAR COTIZACIÓN EN WHATSAPP ↗</span>
                   </button>
                 </div>
               </div>
@@ -348,18 +348,18 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
         </div>
 
         {/* FAQ Accordion Section */}
-        <div id="faq" className="mt-16 border-t-2 border-zinc-800 pt-12 scroll-mt-24">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b-2 border-zinc-800 pb-4">
+        <div id="faq" className="mt-16 border-t-2 border-zinc-200 dark:border-zinc-800 pt-12 scroll-mt-24">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b-2 border-zinc-200 dark:border-zinc-800 pb-4">
             <div>
-              <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
-                <HelpCircle className="w-4 h-4 text-[#D4FF00]" />
+              <div className="font-jetbrains text-xs text-[#B8006E] dark:text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-[#B8006E] dark:text-[#D4FF00]" />
                 // BASE DE CONOCIMIENTO & DUDAS FRECUENTES
               </div>
-              <h3 className="font-anton text-3xl sm:text-4xl text-white uppercase tracking-wide">
+              <h3 className="font-anton text-3xl sm:text-4xl text-black dark:text-white uppercase tracking-wide">
                 PREGUNTAS FRECUENTES (FAQ)
               </h3>
             </div>
-            <p className="font-jetbrains text-xs text-zinc-400 max-w-sm">
+            <p className="font-jetbrains text-xs text-zinc-700 dark:text-zinc-400 max-w-sm font-medium">
               Respuestas directas sobre nuestros procesos de AEO, producción audiovisual, sound design y términos de servicio.
             </p>
           </div>
@@ -372,8 +372,8 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                   key={index}
                   className={`border-2 transition-all ${
                     isOpen
-                      ? 'bg-zinc-900 border-[#D4FF00] brutal-shadow-black'
-                      : 'bg-zinc-950/80 border-zinc-800 hover:border-zinc-700'
+                      ? 'bg-white dark:bg-zinc-900 border-black dark:border-[#D4FF00] brutal-shadow-black'
+                      : 'bg-white dark:bg-zinc-950/80 border-zinc-300 dark:border-zinc-800 hover:border-black dark:hover:border-zinc-700'
                   }`}
                 >
                   <button
@@ -383,23 +383,23 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
                     className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 focus:outline-none"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-                      <span className="text-[10px] font-bold px-2 py-0.5 bg-black text-[#D4FF00] border border-zinc-800 self-start sm:self-auto">
+                      <span className="text-[10px] font-bold px-2.5 py-0.5 bg-zinc-100 dark:bg-black text-[#B8006E] dark:text-[#D4FF00] border border-zinc-300 dark:border-zinc-800 self-start sm:self-auto">
                         {faq.category}
                       </span>
-                      <span className="font-bold text-sm sm:text-base text-white">
+                      <span className="font-bold text-sm sm:text-base text-black dark:text-white">
                         {faq.question}
                       </span>
                     </div>
-                    <div className={`p-1.5 border border-zinc-700 transition-transform duration-300 shrink-0 ${
-                      isOpen ? 'rotate-180 bg-[#D4FF00] text-black border-black' : 'bg-zinc-900 text-zinc-400'
+                    <div className={`p-1.5 border border-zinc-400 dark:border-zinc-700 transition-transform duration-300 shrink-0 ${
+                      isOpen ? 'rotate-180 bg-[#D4FF00] text-black border-black' : 'bg-zinc-100 dark:bg-zinc-900 text-black dark:text-zinc-400'
                     }`}>
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className="w-4 h-4 text-black dark:text-inherit" />
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-zinc-300 leading-relaxed font-space-grotesk border-t border-zinc-800/80 pt-4">
-                      <p className="bg-black/40 p-3.5 border-l-2 border-[#D4FF00]">
+                    <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-zinc-800 dark:text-zinc-300 leading-relaxed font-space-grotesk border-t border-zinc-200 dark:border-zinc-800/80 pt-4">
+                      <p className="bg-zinc-100 dark:bg-black/40 text-black dark:text-zinc-200 p-3.5 border-l-2 border-[#B8006E] dark:border-[#D4FF00] font-medium leading-relaxed">
                         {faq.answer}
                       </p>
                     </div>
@@ -409,6 +409,7 @@ ESTIMADO: $${estimatedUsd} USD / $${estimatedMxn} MXN`
             })}
           </div>
         </div>
+
       </div>
     </section>
   );

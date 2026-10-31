@@ -62,6 +62,42 @@
   box-shadow: 4px 4px 0px #FFFFFF;
 }
 
+/* Skeleton Shimmer Animation for Images & Cards */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #18181b 0%,
+    #27272a 25%,
+    #3f3f46 50%,
+    #27272a 75%,
+    #18181b 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+html.light .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #e4e4e7 0%,
+    #d4d4d8 25%,
+    #ffffff 50%,
+    #d4d4d8 75%,
+    #e4e4e7 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .crt-overlay {
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
   background-size: 100% 3px, 6px 100%;
@@ -71,6 +107,15 @@
 /* =========================================================================
    LIGHT MODE VARIANT: EDITORIAL PAPER BRUTALISM
    A distinct, tactile risograph / editorial industrial aesthetic for Wacha
+/* =========================================================================
+   LIGHT MODE VARIANT: EDITORIAL PAPER BRUTALISM
+   A distinct, tactile risograph / editorial industrial aesthetic for Wacha
+   STRICT CONTRAST RULES (WCAG AAA):
+   - Dark ink on light surfaces (>7:1 contrast)
+   - Bright white / neon yellow on dark surfaces (>12:1 contrast)
+   - Magenta ONLY on light backgrounds, NEVER on dark backgrounds
+   - Orange (#FF4400) backgrounds ALWAYS have pure white text (#FFFFFF)
+   - Never gray-on-gray or gray-on-black
    ========================================================================= */
 
 html.light {
@@ -92,111 +137,263 @@ html.light .bg-\[\#121411\]\/95 {
   background-color: rgba(244, 244, 238, 0.95) !important;
 }
 
-/* Elevated cards, panels & sheets */
+/* Elevated cards, panels & sheets in light mode become crisp white */
 html.light .bg-zinc-900 {
   background-color: #FFFFFF !important;
 }
 
-html.light .bg-zinc-900\/90 {
-  background-color: rgba(255, 255, 255, 0.95) !important;
+html.light .bg-zinc-900\/90,
+html.light .bg-zinc-900\/60 {
+  background-color: #FFFFFF !important;
 }
 
 html.light .bg-zinc-950 {
   background-color: #ECECE4 !important;
 }
 
+/* Chips and secondary tags in light mode */
 html.light .bg-zinc-800 {
-  background-color: #E2E2D8 !important;
+  background-color: #E6E6DE !important;
+  color: #121411 !important;
 }
 
 /* Borders in Light Mode */
-html.light .border-zinc-800 {
-  border-color: #D6D6CE !important;
-}
-
+html.light .border-zinc-800,
 html.light .border-zinc-700 {
+  border-color: #C8C8BE !important;
+}
+
+html.light .border-zinc-900 {
   border-color: #121411 !important;
 }
 
-html.light .border-zinc-600 {
-  border-color: #121411 !important;
-}
+/* =========================================================================
+   1. REGISTRO DE TIPOGRAFÍA EN MODO CLARO (TINTA NEGRA DE ALTO CONTRASTE)
+   ========================================================================= */
 
-/* Typography in Light Mode - High Contrast Ink Hierarchy */
-html.light h1.text-white,
-html.light h2.text-white,
-html.light h3.text-white,
-html.light h4.text-white,
-html.light h5.text-white,
-html.light h6.text-white {
-  color: #121411 !important;
-}
-
-html.light p.text-white,
-html.light p.text-zinc-200,
-html.light p.text-zinc-300 {
-  color: #27272A !important;
-}
-
-html.light p.text-zinc-400 {
-  color: #52525B !important;
-}
-
-html.light p.text-zinc-500 {
-  color: #71717A !important;
-}
-
-html.light .text-\[\#E3E3DE\] {
-  color: #121411 !important;
-}
-
-html.light span.text-zinc-400,
-html.light div.text-zinc-400 {
-  color: #52525B !important;
-}
-
-html.light span.text-zinc-300,
-html.light div.text-zinc-300 {
-  color: #27272A !important;
-}
-
-/* Preservation of saturated buttons & social badges text contrast */
-html.light .bg-\[\#FF4400\],
-html.light .bg-\[\#FF4400\] *,
-html.light .bg-red-600,
-html.light .bg-red-600 *,
-html.light .bg-blue-600,
-html.light .bg-blue-600 *,
-html.light .bg-blue-700,
-html.light .bg-blue-700 *,
-html.light .bg-\[\#1DA0C3\],
-html.light .bg-\[\#1DA0C3\] *,
-html.light .bg-\[\#25D366\],
-html.light .bg-\[\#25D366\] * {
-  color: #FFFFFF !important;
-}
-
-html.light .bg-\[\#D4FF00\],
-html.light .bg-\[\#D4FF00\] * {
+/* Por defecto en modo claro sobre fondos claros, textos son negro tinta profundo */
+html.light h1:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
+html.light h2:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
+html.light h3:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
+html.light h4:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]),
+html.light p:not(.keep-white):not([class*="bg-black"]):not([class*="bg-[#FF4400]"]):not([class*="text-[#D4FF00]"]):not([class*="text-[#B8006E]"]),
+html.light .text-zinc-700,
+html.light .text-zinc-600,
+html.light .text-zinc-500,
+html.light .text-zinc-400,
+html.light .text-zinc-300,
+html.light .text-zinc-200,
+html.light .text-zinc-100 {
   color: #000000 !important;
 }
 
-/* Inputs, Textareas, Selects in Light Mode */
+/* Forzar que cualquier texto blanco o gris sobre fondos claros sea negro absoluto */
+html.light .bg-white p,
+html.light .bg-white span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-white div:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-zinc-50 p,
+html.light .bg-zinc-50 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-zinc-100 p,
+html.light .bg-zinc-100 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-zinc-200 p,
+html.light .bg-zinc-200 span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-\[\#FAF9F5\] p,
+html.light .bg-\[\#FAF9F5\] span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]),
+html.light .bg-\[\#ECECE4\] p,
+html.light .bg-\[\#ECECE4\] span:not([class*="bg-"]):not([class*="text-[#"]):not([class*="text-emerald"]):not([class*="text-red"]) {
+  color: #000000 !important;
+}
+
+/* =========================================================================
+   2. REGLA INMUTABLE: FONDOS NARANJA (#FF4400) SIEMPRE LLEVAN TEXTO BLANCO
+   ========================================================================= */
+.bg-\[\#FF4400\],
+.bg-\[\#FF4400\] *,
+html.light .bg-\[\#FF4400\],
+html.light .bg-\[\#FF4400\] *,
+.bg-orange-500,
+.bg-orange-500 *,
+.bg-orange-600,
+.bg-orange-600 *,
+html.light .bg-orange-500,
+html.light .bg-orange-500 *,
+html.light .bg-orange-600,
+html.light .bg-orange-600 *,
+.bg-red-600,
+.bg-red-600 *,
+html.light .bg-red-600,
+html.light .bg-red-600 *,
+[class*="bg-\[\#FF4400\]"],
+[class*="bg-\[\#FF4400\]"] *,
+html.light [class*="bg-\[\#FF4400\]"],
+html.light [class*="bg-\[\#FF4400\]"] * {
+  color: #FFFFFF !important;
+}
+
+/* Cuando un botón o elemento cambia a naranja o magenta en hover: TEXTO CAMBIA A BLANCO */
+.hover\:bg-\[\#FF4400\]:hover,
+.hover\:bg-\[\#FF4400\]:hover *,
+html.light .hover\:bg-\[\#FF4400\]:hover,
+html.light .hover\:bg-\[\#FF4400\]:hover *,
+.hover\:bg-\[\#D9008F\]:hover,
+.hover\:bg-\[\#D9008F\]:hover *,
+html.light .hover\:bg-\[\#D9008F\]:hover,
+html.light .hover\:bg-\[\#D9008F\]:hover *,
+.hover\:bg-orange-600:hover,
+.hover\:bg-orange-600:hover *,
+html.light .hover\:bg-orange-600:hover,
+html.light .hover\:bg-orange-600:hover *,
+button:hover.hover\:bg-\[\#FF4400\],
+button:hover.hover\:bg-\[\#FF4400\] *,
+button:hover.hover\:bg-\[\#D9008F\],
+button:hover.hover\:bg-\[\#D9008F\] *,
+a:hover.hover\:bg-\[\#FF4400\],
+a:hover.hover\:bg-\[\#FF4400\] *,
+a:hover.hover\:bg-\[\#D9008F\],
+a:hover.hover\:bg-\[\#D9008F\] *,
+.group:hover .group-hover\:text-white,
+.group\/btn:hover .group-hover\/btn\:text-white,
+.group\/yt:hover .group-hover\/yt\:text-white,
+.group\/cta:hover .group-hover\/cta\:text-white,
+.group\/red:hover .group-hover\/red\:text-white,
+.group\/cot:hover .group-hover\/cot\:text-white,
+.group\/sg:hover .group-hover\/sg\:text-white,
+.group\/bc:hover .group-hover\/bc\:text-white,
+html.light .group:hover .group-hover\:text-white,
+html.light .group\/btn:hover .group-hover\/btn\:text-white,
+html.light .group\/yt:hover .group-hover\/yt\:text-white,
+html.light .group\/cta:hover .group-hover\/cta\:text-white,
+html.light .group\/red:hover .group-hover\/red\:text-white,
+html.light .group\/cot:hover .group-hover\/cot\:text-white,
+html.light .group\/sg:hover .group-hover\/sg\:text-white,
+html.light .group\/bc:hover .group-hover\/bc\:text-white {
+  color: #FFFFFF !important;
+}
+
+/* Otros botones saturados con texto blanco */
+.bg-blue-600,
+.bg-blue-600 *,
+.bg-blue-700,
+.bg-blue-700 *,
+.bg-\[\#1877F2\],
+.bg-\[\#1877F2\] *,
+.bg-\[\#E4405F\],
+.bg-\[\#E4405F\] *,
+.bg-\[\#FF5500\],
+.bg-\[\#FF5500\] *,
+.bg-\[\#1DA0C3\],
+.bg-\[\#1DA0C3\] *,
+.bg-\[\#B8006E\],
+.bg-\[\#B8006E\] * {
+  color: #FFFFFF !important;
+}
+
+/* =========================================================================
+   3. REGLA INMUTABLE: FONDOS AMARILLOS (#D4FF00) LLEVAN TEXTO NEGRO
+   (EXCEPTO CUANDO SE HACE HOVER Y CAMBIAN A NARANJA)
+   ========================================================================= */
+.bg-\[\#D4FF00\]:not(:hover),
+.bg-\[\#D4FF00\]:not(:hover) *:not(.keep-white),
+html.light .bg-\[\#D4FF00\]:not(:hover),
+html.light .bg-\[\#D4FF00\]:not(:hover) *:not(.keep-white),
+.bg-\[\#25D366\]:not(:hover),
+.bg-\[\#25D366\]:not(:hover) *,
+html.light .bg-\[\#25D366\]:not(:hover),
+html.light .bg-\[\#25D366\]:not(:hover) * {
+  color: #000000 !important;
+}
+
+/* =========================================================================
+   4. REGLA INMUTABLE: TEXTOS EN FONDOS NEGROS
+   - Textos grises sobre fondo negro se cambian a amarillo neón (#D4FF00)
+   - Títulos y textos principales son blanco o amarillo neón
+   ========================================================================= */
+.bg-black .text-zinc-300,
+.bg-black .text-zinc-400,
+.bg-black .text-zinc-500,
+.bg-black .text-zinc-600,
+.bg-black\/90 .text-zinc-300,
+.bg-black\/90 .text-zinc-400,
+.bg-black\/90 .text-zinc-500,
+.bg-black\/90 .text-zinc-600,
+.bg-black\/80 .text-zinc-300,
+.bg-black\/80 .text-zinc-400,
+.bg-black\/80 .text-zinc-500,
+.bg-black\/80 .text-zinc-600,
+[class*="bg-black"] .text-zinc-300,
+[class*="bg-black"] .text-zinc-400,
+[class*="bg-black"] .text-zinc-500,
+[class*="bg-black"] .text-zinc-600,
+html.light .bg-black .text-zinc-300,
+html.light .bg-black .text-zinc-400,
+html.light .bg-black .text-zinc-500,
+html.light .bg-black .text-zinc-600,
+html.light .bg-black\/90 .text-zinc-300,
+html.light .bg-black\/90 .text-zinc-400,
+html.light .bg-black\/90 .text-zinc-500,
+html.light [class*="bg-black"] .text-zinc-300,
+html.light [class*="bg-black"] .text-zinc-400,
+html.light [class*="bg-black"] .text-zinc-500,
+html.light [class*="bg-black"] .text-zinc-600 {
+  color: #D4FF00 !important;
+}
+
+/* Prohibido texto magenta sobre fondo negro */
+.bg-black .text-\[\#D4FF00\],
+.bg-black\/90 .text-\[\#D4FF00\],
+.bg-black\/80 .text-\[\#D4FF00\],
+[class*="bg-black"] .text-\[\#D4FF00\],
+html.light .bg-black .text-\[\#D4FF00\],
+html.light .bg-black\/90 .text-\[\#D4FF00\],
+html.light .bg-black\/80 .text-\[\#D4FF00\],
+html.light [class*="bg-black"] .text-\[\#D4FF00\] {
+  color: #D4FF00 !important;
+}
+
+.bg-black .text-white,
+.bg-black\/90 .text-white,
+.bg-black\/80 .text-white,
+[class*="bg-black"] .text-white,
+html.light .bg-black .text-white,
+html.light .bg-black\/90 .text-white,
+html.light .bg-black\/80 .text-white,
+html.light [class*="bg-black"] .text-white,
+html.light .bg-black h1,
+html.light .bg-black h2,
+html.light .bg-black h3,
+html.light .bg-black h4 {
+  color: #FFFFFF !important;
+}
+
+/* =========================================================================
+   5. CONTRASTE DE ESTADOS VERDES EN MODO CLARO (NUNCA VERDE CLARO SOBRE BLANCO)
+   ========================================================================= */
+html.light .text-emerald-400 {
+  color: #064E3B !important; /* Verde bosque profundo para contraste AAA */
+  font-weight: 700 !important;
+}
+
+/* =========================================================================
+   6. INPUTS, TEXTAREAS & SELECTS EN MODO CLARO
+   ========================================================================= */
 html.light input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
 html.light textarea,
 html.light select {
   background-color: #FFFFFF !important;
-  color: #121411 !important;
-  border-color: #121411 !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
 }
 
 html.light input::placeholder,
 html.light textarea::placeholder {
-  color: #71717A !important;
+  color: #374151 !important;
 }
 
-/* Preserving Dim Modal Backdrop & Full Screen Focus */
+/* =========================================================================
+   7. MODALS, BACKDROPS & SOMBRAS
+   ========================================================================= */
 html.light .fixed.inset-0.bg-black\/80,
+html.light .fixed.inset-0.bg-black\/85,
 html.light .fixed.inset-0.bg-black\/75,
 html.light .fixed.inset-0.bg-black\/70,
 html.light .fixed.inset-0.bg-black\/60,
@@ -204,7 +401,10 @@ html.light .fixed.inset-0.bg-black\/90 {
   background-color: rgba(18, 20, 17, 0.75) !important;
 }
 
-/* Shadows in light mode remain crisp solid black */
 html.light .brutal-shadow-black {
-  box-shadow: 4px 4px 0px #121411 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+html.light .brutal-shadow-lime {
+  box-shadow: 4px 4px 0px #B8006E !important;
 }

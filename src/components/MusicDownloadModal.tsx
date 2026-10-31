@@ -425,7 +425,7 @@ ENLACES DIRECTOS DE TRANSMISIÓN Y DESCARGA:
               <button
                 type="button"
                 onClick={() => handleDownloadSong('both')}
-                className="w-full bg-[#D4FF00] hover:bg-[#bce400] text-black font-anton tracking-wide text-lg sm:text-xl py-4 px-6 border-2 border-black brutal-shadow-black flex items-center justify-center gap-3 uppercase transition-transform hover:scale-[1.01] active:scale-[0.99]"
+                className="w-full bg-[#D4FF00] hover:bg-[#D9008F] text-black hover:text-white font-anton tracking-wide text-lg sm:text-xl py-4 px-6 border-2 border-black brutal-shadow-black flex items-center justify-center gap-3 uppercase transition-all duration-150 hover:-translate-y-1 active:scale-95 cursor-pointer"
               >
                 <Download className="w-6 h-6 stroke-[2.5]" />
                 <span>DESCARGAR CANCIÓN AHORA (MP3 320 KBPS + WAV 24-BIT)</span>

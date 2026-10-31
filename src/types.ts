@@ -85,3 +85,28 @@ export interface QuoteFormData {
   notes: string;
   honeypot: string; // Anti-bot
 }
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string[];
+  keyTakeaways: string[];
+  category: 'AEO' | 'SEO Técnico' | 'Video SEO' | 'IA Generativa' | 'Algoritmos';
+  tags: string[];
+  author: {
+    name: string;
+    role: string;
+    avatar: string;
+  };
+  publishedAt: string;
+  readTime: string;
+  image: string;
+  stats?: {
+    views?: string;
+    impact?: string;
+  };
+  externalSourceUrl?: string;
+  isFeatured?: boolean;
+}

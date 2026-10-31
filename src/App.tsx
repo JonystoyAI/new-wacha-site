@@ -7,6 +7,7 @@ import { PortfolioCollage } from './components/PortfolioCollage';
 import { SoundLab } from './components/SoundLab';
 import { MerchStore } from './components/MerchStore';
 import { AeoTerminal } from './components/AeoTerminal';
+import { BlogFeed } from './components/BlogFeed';
 import { Footer } from './components/Footer';
 import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
@@ -194,6 +195,9 @@ export default function App() {
 
         {/* 05 // Servicios AEO/SEO & Terminal Cotizador Interactivo */}
         <AeoTerminal />
+
+        {/* 06 // Radar AEO & Blog Feed */}
+        <BlogFeed />
       </main>
 
       {/* Footer */}

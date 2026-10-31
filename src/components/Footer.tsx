@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-black border-t-4 border-[#D4FF00] text-zinc-400 font-jetbrains text-xs py-12">
+    <footer className="bg-[#121411] border-t-4 border-black text-white font-jetbrains text-xs py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Top Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
@@ -79,24 +79,24 @@ export const Footer: React.FC = () => {
                 <span className="font-anton text-2xl text-white tracking-wider block leading-none">
                   WACHA MULTIMEDIA
                 </span>
-                <span className="text-[10px] text-[#D4FF00] font-jetbrains block mt-1">
+                <span className="text-[10px] text-[#D4FF00] font-jetbrains font-bold block mt-1">
                   PRODUCCIONES & SOUND LAB // ¡PAPÚUU!
                 </span>
               </div>
             </div>
 
-            <p className="font-space-grotesk text-xs text-zinc-400 leading-relaxed max-w-sm">
+            <p className="font-space-grotesk text-xs text-zinc-300 leading-relaxed max-w-sm font-medium">
               Productora de medios digitales de alto impacto, ingeniería de contenido para retención algorítmica, guionizado AEO/SEO generativo y sound design de vanguardia.
             </p>
 
-            <div className="flex flex-wrap gap-2 text-[10px]">
-              <span className="bg-zinc-900 text-[#D4FF00] px-2 py-1 border border-zinc-800">
+            <div className="flex flex-wrap gap-2 text-[10px] font-bold">
+              <span className="bg-black text-white px-2 py-1 border border-zinc-700">
                 REC ⏺ 48KHZ 32-BIT
               </span>
-              <span className="bg-zinc-900 text-emerald-400 px-2 py-1 border border-zinc-800">
+              <span className="bg-emerald-950 text-emerald-400 px-2 py-1 border border-emerald-600">
                 STATUS: 100% ONLINE
               </span>
-              <span className="bg-zinc-900 text-zinc-300 px-2 py-1 border border-zinc-800">
+              <span className="bg-black text-white px-2 py-1 border border-zinc-700">
                 WCAG 2.1 AA COMPLIANT
               </span>
             </div>
@@ -104,24 +104,25 @@ export const Footer: React.FC = () => {
 
           {/* Quick Nav */}
           <div className="lg:col-span-3 space-y-3">
-            <h4 className="font-anton text-lg text-white tracking-wider border-b border-zinc-800 pb-1">
+            <h4 className="font-anton text-lg text-white tracking-wider border-b-2 border-zinc-800 pb-1">
               // NAVEGACIÓN RÁPIDA
             </h4>
-            <ul className="space-y-1.5 text-zinc-300">
+            <ul className="space-y-1.5 text-zinc-300 font-semibold">
               <li><a href="#mastermind" className="hover:text-[#D4FF00] transition-colors">[00] Mastermind (Mr. Decrépito)</a></li>
-              <li><a href="#canales" className="hover:text-[#D4FF00] transition-colors">[01] Red 8 Canales YouTube</a></li>
+              <li><a href="#canales" className="hover:text-[#D4FF00] transition-colors">[01] Red de Canales YouTube</a></li>
               <li><a href="#portafolio" className="hover:text-[#D4FF00] transition-colors">[02] Portafolio Collage</a></li>
               <li><a href="#soundlab" className="hover:text-[#D4FF00] transition-colors">[03] Sound Lab (Sonido Decrépito)</a></li>
               <li><a href="#tienda" className="hover:text-[#D4FF00] transition-colors">[04] Wacha Drop Store</a></li>
               <li><a href="#servicios-aeo" className="hover:text-[#D4FF00] transition-colors">[05] Servicios AEO & SEO</a></li>
-              <li><a href="#cotizador" className="hover:text-[#D4FF00] transition-colors">[06] Terminal Cotizador</a></li>
-              <li><a href="#faq" className="hover:text-[#D4FF00] transition-colors">[07] Preguntas Frecuentes</a></li>
+              <li><a href="#blog" className="hover:text-[#D4FF00] transition-colors">[06] Radar AEO & Blog Feed</a></li>
+              <li><a href="#cotizador" className="hover:text-[#D4FF00] transition-colors">[07] Terminal Cotizador</a></li>
+              <li><a href="#faq" className="hover:text-[#D4FF00] transition-colors">[08] Preguntas Frecuentes</a></li>
             </ul>
           </div>
 
           {/* Direct WhatsApp Contact Card */}
           <div className="lg:col-span-4 space-y-4">
-            <h4 className="font-anton text-lg text-white tracking-wider border-b border-zinc-800 pb-1">
+            <h4 className="font-anton text-lg text-white tracking-wider border-b-2 border-zinc-800 pb-1">
               // CONTACTO DIRECTO
             </h4>
             <div className="space-y-2">
@@ -129,11 +130,15 @@ export const Footer: React.FC = () => {
                 href="https://wa.me/524424655478?text=Hola%20mi%20nombre%20es%20,%20visite%20tu%20sitio%20y%20me%20interesa%20cotizar%20un%20servicio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block bg-[#FF4400] text-white font-bold p-3 text-center border-2 border-black brutal-shadow-lime hover:bg-orange-600 transition-all font-jetbrains text-sm"
+                className="w-full bg-[#25D366] hover:bg-[#1ebd59] text-black font-bold p-3 text-center border-2 border-black brutal-shadow-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 font-jetbrains text-sm flex items-center justify-center gap-2.5 cursor-pointer"
+                title="Contactar vía WhatsApp"
               >
-                🔥 COTIZAR VÍA WHATSAPP OFICIAL ↗
+                <svg className="w-5 h-5 fill-current text-black shrink-0" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.771.82 2.791.82 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.766-5.768-5.766zm9.969 5.766c0 5.514-4.486 10-10 10-1.823 0-3.531-.492-5.002-1.353l-6.998 1.83 1.875-6.849c-.943-1.523-1.488-3.318-1.488-5.231 0-5.514 4.486-10 10-10 5.514 0 10 4.486 10 10z"/>
+                </svg>
+                <span className="text-black font-bold tracking-wide">Whatsapp</span>
               </a>
-              <p className="text-[11px] text-zinc-500 italic text-center">
+              <p className="text-[11px] text-zinc-400 italic text-center font-medium">
                 Respuesta inmediata en menos de 15 minutos en horario de estudio.
               </p>
             </div>
@@ -147,7 +152,7 @@ export const Footer: React.FC = () => {
               <span className="w-2 h-2 bg-[#D4FF00]"></span>
               REDES SOCIALES & PLATAFORMAS OFICIALES
             </h4>
-            <span className="text-[11px] text-zinc-500 font-mono">
+            <span className="text-[11px] text-zinc-400 font-mono font-bold">
               SÍGUENOS EN NUESTROS CANALES OFICIALES
             </span>
           </div>
@@ -159,19 +164,19 @@ export const Footer: React.FC = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`group bg-zinc-900 border border-zinc-800 p-3 flex flex-col justify-between transition-all duration-200 brutal-shadow-black ${social.color}`}
+                className={`group bg-zinc-900 border-2 border-zinc-800 hover:border-[#D4FF00] p-3 flex flex-col justify-between transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 brutal-shadow-black cursor-pointer ${social.color}`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="p-1.5 bg-black border border-zinc-800 group-hover:border-transparent">
                     {social.icon}
                   </div>
-                  <ExternalLink className="w-3 h-3 text-zinc-600 group-hover:text-white" />
+                  <ExternalLink className="w-3 h-3 text-zinc-400 group-hover:text-white" />
                 </div>
                 <div>
                   <span className="font-anton text-sm text-white block group-hover:text-white">
                     {social.name}
                   </span>
-                  <span className="text-[10px] text-zinc-500 group-hover:text-zinc-200 font-mono block truncate">
+                  <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200 font-mono block truncate font-bold">
                     {social.badge}
                   </span>
                 </div>
@@ -181,11 +186,11 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Rights Bar */}
-        <div className="border-t border-zinc-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-500 gap-4">
+        <div className="border-t border-zinc-800 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-zinc-400 gap-4 font-medium">
           <p>
             © {new Date().getFullYear()} WACHA MULTIMEDIA & MR. DECRÉPITO. TODOS LOS DERECHOS RESERVADOS.
           </p>
-          <p className="flex items-center gap-1 text-zinc-400">
+          <p className="flex items-center gap-1 text-zinc-400 font-semibold">
             <span>DISEÑADO CON NEO-BRUTALISMO TÉCNICO & IA EN GOOGLE AI STUDIO</span>
           </p>
         </div>

@@ -1,0 +1,27 @@
+# Robots.txt for Wacha Multimedia (https://whacha.site)
+User-agent: *
+Allow: /
+Allow: /data/articles.json
+Allow: /sitemap.xml
+
+# AI & LLM Search Engine Bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Sitemap Index Declaration
+Sitemap: https://whacha.site/sitemap.xml
