@@ -1,0 +1,13 @@
+/* Reserva de espacio para una imagen responsive dentro de una ruta SPA */
+.imagen-producto {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  /* El navegador calcula la caja antes de descargar la imagen */
+}
+
+/* Placeholder para un embed que se carga tras la navegación interna */
+.embed-diferido {
+  min-height: 320px;
+  contain-intrinsic-size: 320px;
+}

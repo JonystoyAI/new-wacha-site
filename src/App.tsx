@@ -15,6 +15,7 @@ import { CetesModal } from './components/CetesModal';
 import { DroAgentModal } from './components/DroAgentModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
+import { Admin } from './components/Admin';
 import { CartItem, MerchItem } from './types';
 
 export default function App() {
@@ -96,6 +97,31 @@ export default function App() {
   const [isCetesModalOpen, setIsCetesModalOpen] = useState(false);
   const [isDroModalOpen, setIsDroModalOpen] = useState(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // Deep Link listener for #admin and Alt+A shortcut
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#admin') {
+        setIsAdminOpen(true);
+      }
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.altKey && (e.key === 'a' || e.key === 'A')) {
+        e.preventDefault();
+        setIsAdminOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   // Cart Handler Functions
   const handleAddToCart = (item: MerchItem, selectedSize: string) => {
@@ -157,6 +183,7 @@ export default function App() {
         onToggleAudio={() => setAudioActive(!audioActive)}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onOpenAdmin={() => setIsAdminOpen(true)}
       />
 
       {/* Main Content Modules */}
@@ -201,7 +228,13 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
+
+      {/* Admin Panel & Google Analytics Telemetry Modal */}
+      <Admin
+        isOpen={isAdminOpen}
+        onClose={() => setIsAdminOpen(false)}
+      />
 
       {/* Video Overlay Modal */}
       {activeVideo && (

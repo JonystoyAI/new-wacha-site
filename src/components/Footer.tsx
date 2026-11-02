@@ -1,7 +1,11 @@
 import React from 'react';
-import { Youtube, Linkedin, Facebook, Disc, Radio, Terminal, ExternalLink, ShieldCheck, Heart, Music, Share2 } from 'lucide-react';
+import { Youtube, Linkedin, Facebook, Disc, Radio, Terminal, ExternalLink, ShieldCheck, Heart, Music, Share2, Lock, BarChart3 } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAdmin?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
   const SOCIAL_LINKS = [
     {
       name: 'YouTube',
@@ -190,9 +194,20 @@ export const Footer: React.FC = () => {
           <p>
             © {new Date().getFullYear()} WACHA MULTIMEDIA & MR. DECRÉPITO. TODOS LOS DERECHOS RESERVADOS.
           </p>
-          <p className="flex items-center gap-1 text-zinc-400 font-semibold">
-            <span>DISEÑADO CON NEO-BRUTALISMO TÉCNICO & IA EN GOOGLE AI STUDIO</span>
-          </p>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onOpenAdmin}
+              className="px-2.5 py-1 bg-black text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black border border-zinc-700 hover:border-black font-jetbrains text-[10px] font-bold transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black"
+              title="Acceso al panel administrativo con telemetría de Google Analytics"
+            >
+              <Lock className="w-3 h-3 text-[#D4FF00] group-hover:text-black" />
+              <BarChart3 className="w-3 h-3 text-[#D4FF00] group-hover:text-black" />
+              <span>[ PANEL ADMIN // GA4 ]</span>
+            </button>
+            <span className="text-zinc-600 hidden sm:inline">•</span>
+            <span className="hidden sm:inline">DISEÑADO CON NEO-BRUTALISMO TÉCNICO & IA</span>
+          </div>
         </div>
       </div>
     </footer>

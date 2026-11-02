@@ -14,7 +14,9 @@ import {
   VolumeX,
   Monitor,
   Sun,
-  Moon
+  Moon,
+  Lock,
+  ShieldCheck
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -26,6 +28,7 @@ interface NavbarProps {
   onToggleAudio: () => void;
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
+  onOpenAdmin?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -36,7 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   audioActive,
   onToggleAudio,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  onOpenAdmin
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -190,6 +194,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
+          {/* Admin Panel Access */}
+          {onOpenAdmin && (
+            <button
+              onClick={onOpenAdmin}
+              className="bg-white text-black p-2 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 font-jetbrains text-xs cursor-pointer font-bold brutal-shadow-black hover:bg-[#D4FF00]"
+              title="Panel Administrativo & Telemetría Google Analytics (IAM)"
+              aria-label="Abrir panel administrativo"
+            >
+              <Lock className="w-4 h-4 text-black" />
+              <span className="font-bold text-black hidden xl:inline">ADMIN</span>
+            </button>
+          )}
+
           {/* Cotizar Direct CTA: Fondo anaranjado texto e icono blanco */}
           <a
             href="#cotizador"
@@ -266,6 +283,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           <div className="pt-2 flex flex-col gap-2">
+            {onOpenAdmin && (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenAdmin();
+                }}
+                className="w-full text-center bg-black text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black font-jetbrains font-bold text-xs py-2.5 border-2 border-black dark:border-zinc-700 brutal-shadow-black flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                <Lock className="w-4 h-4" />
+                <span>[ ACCESO PANEL ADMIN // GA4 ]</span>
+              </button>
+            )}
             <a
               href="https://wa.me/524424655478?text=Hola%20mi%20nombre%20es%20,%20visite%20tu%20sitio%20y%20me%20interesa%20cotizar%20un%20servicio"
               target="_blank"

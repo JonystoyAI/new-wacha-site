@@ -144,11 +144,11 @@
   <!-- Artículo 1: AEO 2026 Guía Definitiva -->
   <url>
     <loc>https://whacha.site/#blog-aeo-2026-guia-definitiva-gemini-perplexity</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/unitia_promo.jpg</image:loc>
+      <image:loc>https://whacha.site/aeo_2026_guide_cover.jpg</image:loc>
       <image:title>AEO 2026: La Guía Definitiva para Dominar Respuestas en Gemini, SearchGPT y Perplexity</image:title>
       <image:caption>Cómo reestructurar el contenido semántico y las entidades de marca para ser la fuente primaria citada en motores de respuesta sintéticos.</image:caption>
     </image:image>
@@ -157,11 +157,11 @@
   <!-- Artículo 2: Schema.org y Grafos de Conocimiento -->
   <url>
     <loc>https://whacha.site/#blog-schema-grafos-conocimiento-entidades</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/jf_construcciones_brand.jpg</image:loc>
+      <image:loc>https://whacha.site/schema_org_knowledge_graph.png</image:loc>
       <image:title>Schema.org y Grafos de Conocimiento: De HTML Básico a Entidades Reconocidas por Google</image:title>
       <image:caption>Por qué las meta etiquetas tradicionales ya no bastan y cómo implementar esquemas multinivel ProfessionalService y VideoObject.</image:caption>
     </image:image>
@@ -170,11 +170,11 @@
   <!-- Artículo 3: Algoritmo de Retención en Shorts & TikTok -->
   <url>
     <loc>https://whacha.site/#blog-algoritmo-retencion-youtube-shorts-tiktok</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/cetes_premier_promo.jpg</image:loc>
+      <image:loc>https://whacha.site/retencion_shorts_tiktok_cover.jpg</image:loc>
       <image:title>Algoritmo de Retención en Shorts y TikTok: El Ratio 3s / 4.5s de Wacha Studios</image:title>
       <image:caption>Análisis de más de 450 horas de video: sincronización de ganchos de audición y cortes visuales para maximizar retención.</image:caption>
     </image:image>
@@ -193,42 +193,42 @@
     </image:image>
   </url>
 
-  <!-- Artículo 5: Core Web Vitals en SPAs Modernas -->
+  <!-- Artículo 5: Core Web Vitals en SPAs -->
   <url>
-    <loc>https://whacha.site/#blog-core-web-vitals-spa-inp-cls-optimizacion</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://whacha.site/#blog-core-web-vitals-spa-inp-cls</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/cetes_premier_app.jpg</image:loc>
-      <image:title>Core Web Vitals en la Era de IA: Reduciendo INP y CLS en SPAs Modernas</image:title>
-      <image:caption>Optimizaciones prácticas para lograr 100/100 en Google Lighthouse sin sacrificar interactividad en tiempo real.</image:caption>
+      <image:loc>https://whacha.site/assets/aistudio/Core_web_4a9d509c.jpg</image:loc>
+      <image:title>Core Web Vitals en SPAs: mejorar INP y CLS sin romper la interactividad</image:title>
+      <image:caption>Guía práctica para mejorar INP y CLS en SPAs con Chrome 151: soft navigations, scheduler.yield y reserva de espacio.</image:caption>
     </image:image>
   </url>
 
-  <!-- Artículo 6: Voice Engine & Síntesis Neuronal -->
+  <!-- Artículo 6: SEO para búsqueda por voz -->
   <url>
-    <loc>https://whacha.site/#blog-voice-engine-sintesis-neuronal-asistentes</loc>
-    <lastmod>2026-10-10</lastmod>
+    <loc>https://whacha.site/#blog-seo-busqueda-por-voz-contenido-conversacional</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/sonido_decrepito_vol1.jpg</image:loc>
-      <image:title>Voice Engine y Síntesis Neuronal: Posicionamiento en Búsquedas por Voz</image:title>
-      <image:caption>Cómo el audio estructurado, transcripciones enriquecidas y huellas vocales sintéticas alimentan las respuestas en asistentes conectados.</image:caption>
+      <image:loc>https://whacha.site/assets/aistudio/image_8ef8e7bb_daf9c4dd.jpg</image:loc>
+      <image:title>SEO para búsqueda por voz: contenido conversacional, respuestas claras y accesibilidad de audio</image:title>
+      <image:caption>Speech-to-Retrieval cambia la búsqueda por voz: menos dependencia de transcripción, más intención.</image:caption>
     </image:image>
   </url>
 
-  <!-- Artículo 7: Actualizaciones Core de Google e IA -->
+  <!-- Artículo 7: Actualizaciones Core de Google y contenido asistido por IA -->
   <url>
-    <loc>https://whacha.site/#blog-actualizacion-core-google-ia-eeat</loc>
-    <lastmod>2026-10-05</lastmod>
+    <loc>https://whacha.site/#blog-google-core-updates-contenido-asistido-ia</loc>
+    <lastmod>2026-10-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://whacha.site/MR%20DECREPITO.jpg</image:loc>
-      <image:title>El Impacto de las Actualizaciones Core de Google en Sitios con Asistencia de IA</image:title>
-      <image:caption>Directrices E-E-A-T: cómo demostrar autoría humana real detrás de flujos acelerados por modelos de lenguaje.</image:caption>
+      <image:loc>https://whacha.site/assets/aistudio/Core_update_b5a1b387.jpg</image:loc>
+      <image:title>Actualizaciones Core de Google y contenido asistido por IA: experiencia, precisión y responsabilidad editorial</image:title>
+      <image:caption>Google no prohíbe la IA. Exige revisión humana, autoría real y contenido principal con esfuerzo, originalidad y precisión.</image:caption>
     </image:image>
   </url>
 

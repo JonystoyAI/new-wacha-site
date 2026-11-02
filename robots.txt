@@ -29,6 +29,8 @@ Allow: /#cotizador
 Allow: /#faq
 
 # Bloqueo de rutas internas, archivos de configuración y mapas de desarrollo
+Disallow: /admin
+Disallow: /#admin
 Disallow: /.*
 Disallow: /*.json$
 Allow: /data/articles.json

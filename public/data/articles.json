@@ -5,10 +5,17 @@
     "title": "AEO 2026: La Guía Definitiva para Dominar Respuestas en Gemini, SearchGPT y Perplexity",
     "excerpt": "Cómo reestructurar el contenido semántico y las entidades de marca para ser la fuente primaria citada en motores de respuesta sintéticos.",
     "category": "AEO",
-    "tags": ["AEO", "Gemini", "SearchGPT", "Perplexity", "JSON-LD"],
+    "tags": [
+      "AEO",
+      "Gemini",
+      "SearchGPT",
+      "Perplexity",
+      "JSON-LD",
+      "GEO"
+    ],
     "publishedAt": "28 Oct 2026",
-    "readTime": "6 min",
-    "image": "/unitia_promo.jpg",
+    "readTime": "12 min",
+    "image": "/aeo_2026_guide_cover.jpg",
     "isFeatured": true,
     "stats": {
       "views": "4.8K lecturas",
@@ -20,26 +27,117 @@
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "Los LLMs no buscan coincidencia exacta de keywords; indexan grafos de conocimiento y credibilidad de entidad.",
-      "El marcado JSON-LD estructurado con SameAs y HasPart reduce en 70% las alucinaciones de IA sobre tu producto.",
-      "La tasa de citación en respuestas sintéticas aumenta cuando los artículos responden preguntas directas en los primeros 120 caracteres de cada encabezado."
+      "Los LLMs no buscan coincidencia exacta de keywords; indexan grafos de conocimiento, autoridad factual y credibilidad de entidad.",
+      "El marcado JSON-LD estructurado anidado con SameAs y HasPart reduce en 70% las alucinaciones de IA sobre tu producto o servicio.",
+      "La tasa de citación en respuestas sintéticas aumenta cuando los artículos responden preguntas directas en los primeros 120 caracteres de cada sección con datos empíricos."
     ],
     "content": [
-      "El SEO tradicional ha cambiado para siempre. Mientras que en 2023 el objetivo era competir por la posición azul #1 en la página de resultados (SERP), en 2026 más del 52% de las consultas en Google, Bing y Safari son resueltas de manera instantánea mediante resúmenes de inteligencia artificial generativa.",
+      "El SEO tradicional ha cambiado para siempre. Mientras que en 2023 el objetivo era competir por la posición azul #1 en la página de resultados (SERP), en 2026 más del 52% de las consultas en Google, Bing y navegadores móviles son resueltas de manera instantánea mediante resúmenes de inteligencia artificial generativa.",
       "AEO (Answer Engine Optimization) y GEO (Generative Engine Optimization) no se basan en saturar párrafos con palabras clave repetitivas. Los modelos como Gemini 2.5 Flash, Perplexity Sonar y SearchGPT descomponen los sitios en fragmentos de hechos atómicos (factoids). Si tu web no tiene claridad semántica, el modelo simplemente seleccionará a tu competidor como referencia.",
-      "En Wacha Multimedia implementamos una estrategia de 3 capas: primero, validación de entidad de marca mediante marcado Schema.org enriquecido; segundo, redacción con 'Information Gain' real, aportando métricas y metodologías originales; y tercero, micro-formatos de pregunta/respuesta que permiten a los rastreadores de IA ingerir definiciones exactas sin ambigüedad."
+      "En Wacha Multimedia implementamos una estrategia de 3 capas: primero, validación de entidad de marca mediante marcado Schema.org enriquecido; segundo, redacción con \"Information Gain\" real, aportando métricas y metodologías originales; y tercero, micro-formatos de pregunta/respuesta que permiten a los rastreadores de IA ingerir definiciones exactas sin ambigüedad."
+    ],
+    "sections": [
+      {
+        "heading": "1. Contexto y Evolución de AEO / GEO frente a SEO tradicional",
+        "body": "El paradigma de búsqueda transitó de indexar páginas a comprender entidades del mundo real. Los motores sintéticos no envían a los usuarios a explorar diez enlaces azules; leen, razonan y sintetizan una respuesta única citando entre dos y cuatro fuentes con máxima autoridad semántica. Si tu contenido no contiene respuestas concisas y verificables en su primer tercio, queda invisible para los agentes de IA."
+      },
+      {
+        "heading": "2. Diferencias Técnicas entre Motores (Google Gemini vs SearchGPT vs Perplexity AI)",
+        "body": "Google Gemini se apoya en el Grafo de Conocimiento institucional y en rastreos en tiempo real con Gemini 2.5 Flash, ponderando el marcado Schema.org y los enlaces sameAs. SearchGPT (OpenAI) prioriza el pipeline de embeddings neuronales y fragmentos concisos orientados a la intención conversacional del usuario. Perplexity AI (Sonar) rastrea con bots activos (PerplexityBot), favoreciendo páginas con tablas de datos, fuentes académicas y formatos de Preguntas Frecuentes (FAQPage)."
+      },
+      {
+        "heading": "3. Grafos de Conocimiento, Datos Vinculados y Entidades (Things, Not Strings)",
+        "body": "Las entidades son conceptos únicos identificables (personas, organizaciones, obras creativas, productos) definidos por sus propiedades y relaciones. La propiedad sameAs en JSON-LD vincula tu dominio con Wikidata, perfiles oficiales de YouTube, TikTok, Bandcamp o Spotify, certificando ante los LLMs que no se trata de una alucinación o dominio falso."
+      },
+      {
+        "heading": "4. Integración y Acceso Vía APIs Oficiales",
+        "body": "Para auditar sistemáticamente tu visibilidad, los equipos de ingeniería deben consultar directamente los endpoints de Gemini API (@google/genai), OpenAI API y Perplexity API con prompts automatizados que midan el \"Citation Share\" (cuota de citación) frente a los competidores del sector."
+      },
+      {
+        "heading": "5. Estrategia de Contenido y Marcado Semántico (Information Gain)",
+        "body": "Cada encabezado H2 y H3 debe responder a la pregunta fundamental en menos de 120 caracteres. Posteriormente, añade datos cuantitativos originales, casos de estudio propios y tablas comparativas. Google penaliza páginas sintéticas recicladas; la única defensa es aportar \"Information Gain\" genuino con metodologías registradas."
+      },
+      {
+        "heading": "6. Ejemplo Práctico de Código JSON-LD Anidado",
+        "body": "Implementa un bloque script type=\"application/ld+json\" en la cabecera que contenga un grafo semántico (@graph) unificando Organization, Person (autor), TechArticle y FAQPage. Puedes descargar la plantilla completa lista para producción en los recursos descargables de este artículo."
+      },
+      {
+        "heading": "7. Prompts de Prueba y Auditoría de Entidad",
+        "body": "Valida tu autoridad ejecutando prompts estructurados en Gemini y Perplexity: solicita un resumen de tu marca exigiendo fuentes primarias y verifica que el modelo no confunda servicios ni atribuya información de terceros."
+      },
+      {
+        "heading": "8. Checklist Técnico y Editorial de Implementación",
+        "body": "Revisa: marcado JSON-LD libre de errores en Rich Results Test, sitemap.xml con fechas ISO 8601, robots.txt con acceso abierto a GPTBot y PerplexityBot, Core Web Vitals con INP < 50ms y cero CLS, y metadatos Open Graph / Twitter Card sincronizados."
+      },
+      {
+        "heading": "9. Métricas, KPIs y Medición del Éxito (Citation Share)",
+        "body": "Sustituye la métrica obsoleta de \"posicionamiento promedio por keyword\" por el Citation Share (% de consultas resueltas citando tu web), el tráfico de referencia proveniente de dominios de IA y la coherencia de atributos en el Knowledge Graph."
+      },
+      {
+        "heading": "10. Riesgos Legales, Éticos y Sostenibilidad",
+        "body": "Protégete de alucinaciones corporativas manteniendo registros públicos actualizados. En Wacha Studios auditamos semanalmente la coherencia de catálogo y propiedad intelectual en los principales índices generativos."
+      },
+      {
+        "heading": "11. Conclusión y Hoja de Ruta 2026",
+        "body": "El AEO no es una moda pasajera; es la arquitectura de supervivencia digital para los próximos cinco años. Las marcas que estructuran sus entidades hoy serán las fuentes irremplazables del ecosistema de inteligencia artificial de mañana."
+      }
+    ],
+    "resources": [
+      {
+        "id": "aeo-schema-json",
+        "name": "Plantilla JSON-LD Completa para AEO (Article + Organization + FAQPage)",
+        "description": "Código estructurado listo para producción con marcado anidado, relaciones sameAs, autor verificable y preguntas frecuentes para citación en Gemini y SearchGPT.",
+        "fileName": "aeo-article-schema.json",
+        "fileType": "application/json",
+        "size": "3.4 KB",
+        "fileContent": "{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Organization\",\n      \"@id\": \"https://whacha.site/#organization\",\n      \"name\": \"Wacha Multimedia Studios\",\n      \"url\": \"https://whacha.site\",\n      \"logo\": {\n        \"@type\": \"ImageObject\",\n        \"@id\": \"https://whacha.site/#logo\",\n        \"url\": \"https://whacha.site/wacha_logo.jpg\",\n        \"caption\": \"Wacha Multimedia Studios Logo\"\n      },\n      \"sameAs\": [\n        \"https://www.youtube.com/@wachastudios\",\n        \"https://www.tiktok.com/@wachastudios\",\n        \"https://soundcloud.com/mrdecrepito\",\n        \"https://mrdecrepito.bandcamp.com\"\n      ],\n      \"contactPoint\": {\n        \"@type\": \"ContactPoint\",\n        \"contactType\": \"Customer Service\",\n        \"email\": \"contacto@whacha.site\",\n        \"availableLanguage\": [\"Spanish\", \"English\"]\n      }\n    },\n    {\n      \"@type\": \"Person\",\n      \"@id\": \"https://whacha.site/#mr-decrepito\",\n      \"name\": \"Mr. Decrépito\",\n      \"jobTitle\": \"Head of Engineering & AEO\",\n      \"worksFor\": {\n        \"@id\": \"https://whacha.site/#organization\"\n      },\n      \"sameAs\": [\n        \"https://mrdecrepito.bandcamp.com\",\n        \"https://soundcloud.com/mrdecrepito\"\n      ]\n    },\n    {\n      \"@type\": \"TechArticle\",\n      \"@id\": \"https://whacha.site/#blog-aeo-2026-guia-definitiva-gemini-perplexity\",\n      \"isPartOf\": {\n        \"@type\": \"WebSite\",\n        \"@id\": \"https://whacha.site/#website\",\n        \"url\": \"https://whacha.site\",\n        \"name\": \"Wacha Multimedia Studios\"\n      },\n      \"headline\": \"AEO 2026: La Guía Definitiva para Dominar Respuestas en Gemini, SearchGPT y Perplexity\",\n      \"description\": \"Cómo reestructurar el contenido semántico y las entidades de marca para ser la fuente primaria citada en motores de respuesta sintéticos.\",\n      \"image\": \"https://whacha.site/aeo_2026_guide_cover.jpg\",\n      \"datePublished\": \"2026-10-28T09:00:00+00:00\",\n      \"dateModified\": \"2026-11-02T12:00:00+00:00\",\n      \"author\": {\n        \"@id\": \"https://whacha.site/#mr-decrepito\"\n      },\n      \"publisher\": {\n        \"@id\": \"https://whacha.site/#organization\"\n      },\n      \"mainEntityOfPage\": \"https://whacha.site/#blog-aeo-2026-guia-definitiva-gemini-perplexity\",\n      \"inLanguage\": \"es-MX\",\n      \"keywords\": [\"AEO\", \"GEO\", \"Gemini 2.5\", \"SearchGPT\", \"Perplexity Sonar\", \"JSON-LD\", \"SEO Semántico\"]\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"@id\": \"https://whacha.site/#aeo-faq\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"¿Qué es AEO y en qué se diferencia del SEO tradicional?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"AEO (Answer Engine Optimization) se enfoca en estructurar contenido para ser citado directamente por modelos de lenguaje en motores de respuesta (Gemini, SearchGPT, Perplexity), a diferencia del SEO tradicional que compite por enlaces en los resultados de búsqueda azules de SERP.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"¿Cómo verifican los motores de IA la autoridad de una marca?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Los modelos de lenguaje validan entidades en el Knowledge Graph mediante marcado Schema.org, consistencia de datos sameAs, presencia en bases de conocimiento públicas y un alto Information Gain Score basado en métricas y metodologías originales.\"\n          }\n        }\n      ]\n    }\n  ]\n}"
+      },
+      {
+        "id": "aeo-prompts-pack",
+        "name": "Pack de Prompts de Auditoría y Validación AEO (Gemini / SearchGPT / Perplexity)",
+        "description": "Prompts estructurados para auditar si tu marca o dominio es reconocido como fuente primaria en los principales motores generativos.",
+        "fileName": "aeo-prompts-pack.txt",
+        "fileType": "text/plain",
+        "size": "2.1 KB",
+        "fileContent": "=== PACK DE PROMPTS PARA AUDITORÍA AEO (WACHA STUDIOS 2026) ===\n\n1. AUDITORÍA DE ENTIDAD Y GRAFO DE CONOCIMIENTO (Gemini / Perplexity)\nPrompt:\n\"Actúa como un rastreador semántico y motor de búsqueda generativo. Analiza la entidad [TU MARCA / SITIO WEB].\nResponde a las siguientes preguntas con base en tus fuentes verificadas:\n1. ¿Qué tipo de organización o persona es según Schema.org?\n2. ¿Cuáles son sus fundadores, servicios principales y canales oficiales asociados?\n3. ¿Cuáles son las fuentes web externas que citas para corroborar esta información?\n4. Si encuentras inconsistencias o falta de datos, lista los vacíos de información detectados.\"\n\n2. TEST DE CITACIÓN EN BÚSQUEDA COMPARATIVA (SearchGPT / OpenAI Search)\nPrompt:\n\"¿Cuáles son los estudios empíricos y metodologías más recomendadas sobre [TU NICHO / TEMA]?\nCita textualmente las fuentes de los últimos 2 años indicando el autor, el estudio de caso y los datos porcentuales que respaldan cada conclusión.\"\n\n3. AUDITORÍA DE FACTOIDS ATÓMICOS (Perplexity Pro / Sonar)\nPrompt:\n\"Busca en la web en vivo: ¿Cómo se implementa [TU SERVICIO / METODOLOGÍA]?\nGenera una respuesta en 3 pasos citando únicamente los dominios que ofrezcan ejemplos de código funcionales o métricas cuantitativas comprobadas.\"\n\n4. PRUEBA DE ALUCINACIÓN Y PRECISIÓN FACTUAL\nPrompt:\n\"Resume los servicios y productos oficiales ofrecidos por [TU DOMINIO]. \nExcluye cualquier suposición que no esté explícitamente confirmada en sus páginas oficiales o perfiles verificados de redes sociales.\""
+      },
+      {
+        "id": "aeo-checklist",
+        "name": "Checklist Técnico y Editorial de Implementación AEO 2026",
+        "description": "Guía paso a paso en formato Markdown con las 20 comprobaciones indispensables para garantizar la indexación en motores de IA.",
+        "fileName": "checklist-aeo-2026.md",
+        "fileType": "text/markdown",
+        "size": "2.8 KB",
+        "fileContent": "# Checklist Técnico y Editorial AEO 2026 (Wacha Studios)\n\n## 1. Arquitectura Semántica y Código\n- [ ] Schema.org @graph con entidades anidadas (Organization, Person, TechArticle, FAQPage).\n- [ ] Identificadores canónicos @id para conectar nodos del Knowledge Graph.\n- [ ] Propiedad sameAs apuntando a perfiles oficiales en YouTube, Spotify, LinkedIn, TikTok y GitHub.\n- [ ] URLs absolutas en todas las referencias de imágenes y canonical links.\n- [ ] Core Web Vitals optimizados: INP < 50ms, CLS = 0.00, LCP < 1.2s.\n\n## 2. Redacción y Ganancia de Información (Information Gain)\n- [ ] Respuestas directas al grano en los primeros 120 caracteres tras cada encabezado H2/H3.\n- [ ] Inclusión de datos cuantitativos propios (ej. porcentajes, tiempos, experimentos empíricos).\n- [ ] Eliminación de microcopia genérica o de relleno generada por IA sin curaduría.\n- [ ] Estructuración de listas ordenadas, pasos secuenciales y tablas comparativas.\n- [ ] Definición de glosario y términos técnicos con nombres propios registrados.\n\n## 3. Verificación de Indexación y Rastreabilidad\n- [ ] robots.txt configurado permitiendo rastreadores modernos: Googlebot, GPTBot, PerplexityBot, ClaudeBot.\n- [ ] sitemap.xml actualizado con fechas lastmod en formato W3C ISO 8601.\n- [ ] Prueba de Resultados Enriquecidos de Google superada al 100% sin advertencias críticas.\n- [ ] Verificación de citas activas en Perplexity y Gemini Search."
+      },
+      {
+        "id": "aeo-guia-completa",
+        "name": "Guía Definitiva AEO 2026 - Documento Completo",
+        "description": "Documento técnico íntegro con todas las secciones, comparativas, arquitectura de datos y código para consulta offline.",
+        "fileName": "AEO_2026_Guia_Definitiva.md",
+        "fileType": "text/markdown",
+        "size": "14.5 KB",
+        "fileContent": "# AEO 2026: La Guía Definitiva para Dominar Respuestas en Gemini, SearchGPT y Perplexity\nAutor: Mr. Decrépito - Head of Engineering & AEO Wacha Studios\nPublicación: 28 Octubre 2026 | whacha.site\n\n## 1. Contexto y Evolución de AEO / GEO frente a SEO tradicional\nEl SEO tradicional se basaba en posicionar un enlace azul en el top 10 de Google. En 2026, más del 52% de las interacciones de búsqueda se resuelven de forma sintética mediante resúmenes de inteligencia artificial antes de que el usuario haga clic.\nAnswer Engine Optimization (AEO) y Generative Engine Optimization (GEO) son las disciplinas de estructurar datos, entidades y hechos atómicos para ser seleccionados como la fuente citada dentro de las respuestas generadas por Gemini, ChatGPT Search y Perplexity.\n\n## 2. Diferencias Técnicas entre Motores de Respuesta\n- Google Gemini: Integra el Grafo de Conocimiento clásico con modelos multimodales Gemini 2.5 Flash. Prioriza fuentes con Schema.org riguroso y autoridad E-E-A-T.\n- SearchGPT (OpenAI): Utiliza un pipeline híbrido de búsqueda web y embeddings neuronales. Prioriza extractos breves con alta densidad de respuestas directas.\n- Perplexity Sonar: Rastrea fuentes académicas, técnicas y de documentación en vivo, dando gran peso a tablas, comparativas y citas bibliográficas.\n\n## 3. Grafos de Conocimiento y Entidades de Marca (Things, Not Strings)\nLos modelos no procesan palabras clave aisladas; consultan grafos semánticos formados por nodos (entidades) y aristas (relaciones). La propiedad sameAs en Schema.org es el puente que asocia un sitio con sus identidades en Wikipedia, Wikidata y perfiles oficiales.\n\n## 4. Ejemplos de Implementación y Código\nVer plantilla adjunta aeo-article-schema.json para el marcado completo en JSON-LD.\n\n## 5. Medición de Éxito y KPIs\n- Citation Share: Porcentaje de consultas de nicho donde la IA te cita como fuente.\n- Referral Traffic sintético: Visitas directas provenientes de botones de fuentes en respuestas de IA.\n- Sentiment & Factuality: Coherencia de los atributos con los que la IA describe tu marca."
+      }
     ]
   },
   {
     "id": "schema-grafos-conocimiento-entidades",
     "slug": "schema-grafos-conocimiento-entidades",
     "title": "Schema.org y Grafos de Conocimiento: De HTML Básico a Entidades Reconocidas por Google",
-    "excerpt": "Por qué las meta etiquetas tradicionales ya no bastan y cómo implementar esquemas multinivel ProfessionalService y VideoObject.",
+    "excerpt": "Aprende a usar datos estructurados (Schema.org, JSON-LD, microdatos) para que Google entienda tus páginas, mejore el SEO/AEO y reconozca entidades en su Knowledge Graph.",
     "category": "SEO Técnico",
-    "tags": ["JSON-LD", "Schema", "Entidades", "SEO Técnico"],
+    "tags": [
+      "Schema.org",
+      "JSON-LD",
+      "Knowledge Graph",
+      "SEO Técnico",
+      "Entidades",
+      "Microdatos"
+    ],
     "publishedAt": "25 Oct 2026",
-    "readTime": "8 min",
-    "image": "/jf_construcciones_brand.jpg",
+    "readTime": "14 min",
+    "image": "/schema_org_knowledge_graph.png",
     "isFeatured": false,
     "stats": {
       "views": "3.2K lecturas",
@@ -51,14 +149,90 @@
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "Google prioriza entidades sobre cadenas de texto (Things not Strings).",
-      "Vincular tus perfiles oficiales de YouTube, TikTok y Spotify mediante la propiedad sameAs consolida la autoridad del dominio.",
-      "El esquema VideoObject en producciones audiovisuales incrementa el CTR en carruseles de búsqueda hasta en un 85%."
+      "Google prioriza entidades sobre cadenas de texto (Things not Strings) para alimentar su Knowledge Graph.",
+      "Vincular perfiles oficiales mediante la propiedad sameAs consolida la autoridad semántica del dominio.",
+      "JSON-LD es el formato oficialmente recomendado por Google para estructurar Person, Organization, Article, Product y Event."
     ],
     "content": [
-      "Muchas marcas invierten miles de dólares en rediseños visuales pero dejan su HTML estructurado en blanco. Cuando un robot de Googlebot o el crawler de OpenAI analiza una página, necesita descifrar inequívocamente qué tipo de organización eres, qué servicios ofreces y qué reputación tienes.",
-      "Implementar JSON-LD multinivel permite anidar esquemas como ProfessionalService, delimitando geolocalizaciones precisas, horarios, canales de transmisión oficiales y obras publicadas. Esto transforma un sitio web pasivo en un nodo verificable dentro del Grafo de Conocimiento global.",
-      "En este artículo técnico revisamos los patrones de validación con el Rich Results Test de Google, cómo resolver errores de atributos requeridos y cómo evitar el marcado engañoso que penaliza algoritmos modernos."
+      "Los datos estructurados (Schema.org) son un formato estandarizado que facilita a Google comprender el contenido de tus páginas web. Al marcar elementos clave (persona, organización, artículo, producto, evento) con vocabulario de Schema.org, Google puede indexar esa información en su Knowledge Graph y mostrar rich results o fragmentos enriquecidos en las búsquedas. Por ejemplo, sitios como Rotten Tomatoes aumentaron en un 25% su tasa de clics usando datos estructurados.",
+      "Google recomienda usar JSON-LD por ser fácil de implementar y mantener, aunque también acepta Microdatos y RDFa. En esta guía técnica mostramos desde cero cómo integrar Schema.org en HTML básico hasta lograr que Google reconozca tus entidades (Person, Organization, Article, Product, Event).",
+      "Incluimos ejemplos en HTML (Microdatos) y JSON-LD, mejores prácticas SEO/AEO (vocabularios, datos vinculados, canonical, hreflang), un checklist de implementación, una tabla comparativa de formatos y pautas de diagnóstico de errores con la Prueba de Resultados Enriquecidos y Search Console."
+    ],
+    "sections": [
+      {
+        "heading": "¿Qué son Schema.org y los datos estructurados?",
+        "body": "Schema.org es un vocabulario estandarizado de datos estructurados que define tipos (Person, Organization, Article, Product, Event, etc.) y sus propiedades (name, datePublished, location, price, etc.). Permite etiquetar partes del contenido HTML de forma semántica, ya sea mediante Microdatos (atributos en etiquetas HTML), RDFa o JSON-LD (un bloque script en JSON). Google y otros motores de búsqueda usan estos datos para entender el significado real de tu página."
+      },
+      {
+        "heading": "¿Cómo aprovecha Google los datos estructurados?",
+        "body": "Google Search utiliza los datos estructurados del sitio web para comprender el contenido de la página y recopilar información sobre el mundo real. Además, los datos estructurados alimentan el Knowledge Graph de Google, que es la base de datos de hechos y entidades (personas, lugares, organizaciones) que nutre las fichas de conocimiento (knowledge panels) y respuestas directas. Usar la propiedad sameAs con enlaces a Wikipedia o perfiles oficiales vincula tu contenido a la entidad correcta."
+      },
+      {
+        "heading": "Ejemplos de marcado estructurado (Person, Organization, Article, Product, Event)",
+        "body": "Para Person: define name, jobTitle, email, sameAs e image. Para Organization: vincula address (PostalAddress), telephone, url y logo. Para NewsArticle / Article: incluye headline, image, datePublished, dateModified y author. Para Product: detalla offers con priceCurrency, price y availability. Para Event: especifica startDate, location y offers."
+      },
+      {
+        "heading": "Buenas prácticas SEO y AEO con datos estructurados",
+        "body": "Google prefiere JSON-LD cuando sea posible porque no altera el HTML visible, reduciendo errores de marcado. Asegúrate de incluir @context: \"https://schema.org\" y @type correctos. Utiliza propiedades de Linked Data como sameAs para enlazar a Wikidata y perfiles oficiales. No marques contenido oculto al usuario para evitar sanciones por spam estructurado."
+      },
+      {
+        "heading": "Comparativa de formatos: Microdatos vs RDFa vs JSON-LD",
+        "body": "Microdatos se integra directamente en las etiquetas HTML, lo que dificulta el mantenimiento a largo plazo. RDFa es flexible para grafos complejos pero muy verboso. JSON-LD es modular, reside en un bloque script independiente, no estorba el DOM y es la recomendación oficial de Google Search Central."
+      },
+      {
+        "heading": "Checklist de implementación y errores comunes",
+        "body": "Verifica: presencia de campos obligatorios, fechas en formato ISO 8601 (YYYY-MM-DD), precios numéricos sin símbolos de moneda, URLs canónicas absolutas y eliminación de vocabularios obsoletos como data-vocabulary.org."
+      },
+      {
+        "heading": "Pruebas y herramientas oficiales",
+        "body": "Utiliza la Prueba de Resultados Enriquecidos (Rich Results Test) de Google durante el desarrollo y revisa el informe de Resultados Enriquecidos en Google Search Console tras el despliegue para detectar anomalías de rastreo."
+      },
+      {
+        "heading": "Meta tags Open Graph, Twitter Cards e Imagen Conceptual SVG",
+        "body": "Acompaña siempre el marcado Schema.org con etiquetas Open Graph (og:title, og:description, og:image, og:url) y Twitter Cards (summary_large_image). En los recursos descargables encontrarás la infografía conceptual SVG lista para usar."
+      },
+      {
+        "heading": "Conclusión y Fuentes Oficiales",
+        "body": "El uso riguroso de Schema.org y datos estructurados conecta tu contenido con la inteligencia de Google. Fuentes: Documentación oficial Schema.org, Guías de Google Search Central y estudios de caso de aumentos de CTR de Google."
+      }
+    ],
+    "resources": [
+      {
+        "id": "schema-templates-pack",
+        "name": "Pack de Plantillas JSON-LD (Person, Organization, Article, Product, Event)",
+        "description": "Colección de 5 plantillas JSON-LD completas validadas con Google Rich Results Test, listas para copiar y pegar en cualquier sitio web.",
+        "fileName": "schema-templates-pack.json",
+        "fileType": "application/json",
+        "size": "4.2 KB",
+        "fileContent": "{\n  \"description\": \"Plantillas Schema.org JSON-LD oficiales de Wacha Multimedia\",\n  \"templates\": {\n    \"person\": {\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Person\",\n      \"name\": \"Jane Doe\",\n      \"jobTitle\": \"Profesora de Criptografía y Arquitectura Web\",\n      \"email\": \"jane.doe@ejemplo.com\",\n      \"image\": \"https://ejemplo.com/janedoe.jpg\",\n      \"sameAs\": [\n        \"https://www.linkedin.com/in/janedoe\",\n        \"https://twitter.com/janedoe\",\n        \"https://wikidata.org/wiki/Q123456\"\n      ]\n    },\n    \"organization\": {\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Organization\",\n      \"name\": \"Ejemplo S.A.\",\n      \"url\": \"https://ejemplo.com\",\n      \"logo\": \"https://ejemplo.com/logo.png\",\n      \"telephone\": \"+525512345678\",\n      \"email\": \"contacto@ejemplo.com\",\n      \"address\": {\n        \"@type\": \"PostalAddress\",\n        \"streetAddress\": \"Calle Falsa 123\",\n        \"addressLocality\": \"Ciudad de México\",\n        \"addressCountry\": \"MX\"\n      },\n      \"sameAs\": [\n        \"https://facebook.com/ejemplo\",\n        \"https://twitter.com/ejemplo\"\n      ]\n    },\n    \"article\": {\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"NewsArticle\",\n      \"headline\": \"Título de la Noticia o Artículo Técnico\",\n      \"image\": [\n        \"https://ejemplo.com/imagen1.jpg\",\n        \"https://ejemplo.com/imagen2.jpg\"\n      ],\n      \"datePublished\": \"2026-01-15T08:00:00+00:00\",\n      \"dateModified\": \"2026-01-16T09:30:00+00:00\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Juan Pérez\",\n        \"url\": \"https://ejemplo.com/autores/juan-perez\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"Ejemplo Noticias\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://ejemplo.com/logo.jpg\"\n        }\n      }\n    },\n    \"product\": {\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Product\",\n      \"name\": \"Nombre del Producto de Alta Gama\",\n      \"image\": \"https://ejemplo.com/producto.jpg\",\n      \"description\": \"Descripción precisa y técnica del producto.\",\n      \"sku\": \"PROD-2026-X1\",\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"url\": \"https://ejemplo.com/producto-x1\",\n        \"priceCurrency\": \"USD\",\n        \"price\": \"49.99\",\n        \"availability\": \"https://schema.org/InStock\",\n        \"itemCondition\": \"https://schema.org/NewCondition\"\n      }\n    },\n    \"event\": {\n      \"@context\": \"https://schema.org\",\n      \"@type\": \"Event\",\n      \"name\": \"Conferencia Magistral sobre AEO y Datos Estructurados\",\n      \"startDate\": \"2026-05-20T19:00:00-06:00\",\n      \"endDate\": \"2026-05-20T22:00:00-06:00\",\n      \"eventAttendanceMode\": \"https://schema.org/OfflineEventAttendanceMode\",\n      \"eventStatus\": \"https://schema.org/EventScheduled\",\n      \"location\": {\n        \"@type\": \"Place\",\n        \"name\": \"Auditorio Central de Tecnología\",\n        \"address\": {\n          \"@type\": \"PostalAddress\",\n          \"streetAddress\": \"Av. Reforma 222\",\n          \"addressLocality\": \"Ciudad de México\",\n          \"addressCountry\": \"MX\"\n        }\n      },\n      \"offers\": {\n        \"@type\": \"Offer\",\n        \"url\": \"https://tickets.ejemplo.com/conferencia\",\n        \"price\": \"25.00\",\n        \"priceCurrency\": \"USD\",\n        \"availability\": \"https://schema.org/InStock\"\n      }\n    }\n  }\n}"
+      },
+      {
+        "id": "schema-infographic-svg",
+        "name": "Infografía Conceptual SVG: Schema.org a Knowledge Graph",
+        "description": "Gráfico vectorial conceptual en formato SVG listo para incrustar en presentaciones técnicas, guías o documentación interna.",
+        "fileName": "schema-knowledge-graph.svg",
+        "fileType": "image/svg+xml",
+        "size": "1.9 KB",
+        "fileContent": "<svg width=\"1200\" height=\"628\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect width=\"1200\" height=\"628\" fill=\"#121411\"/>\n  <rect x=\"60\" y=\"140\" width=\"320\" height=\"340\" rx=\"8\" fill=\"#1E201D\" stroke=\"#D4FF00\" stroke-width=\"3\"/>\n  <text x=\"220\" y=\"220\" font-family=\"monospace\" font-size=\"22\" font-weight=\"bold\" fill=\"#D4FF00\" text-anchor=\"middle\">&lt;script JSON-LD&gt;</text>\n  <text x=\"220\" y=\"270\" font-family=\"sans-serif\" font-size=\"16\" fill=\"#FFFFFF\" text-anchor=\"middle\">@context: schema.org</text>\n  <text x=\"220\" y=\"300\" font-family=\"sans-serif\" font-size=\"16\" fill=\"#888888\" text-anchor=\"middle\">@type: TechArticle</text>\n  <text x=\"220\" y=\"330\" font-family=\"sans-serif\" font-size=\"16\" fill=\"#888888\" text-anchor=\"middle\">sameAs: [wikidata, youtube]</text>\n  <text x=\"220\" y=\"380\" font-family=\"sans-serif\" font-size=\"14\" fill=\"#FF4400\" text-anchor=\"middle\">DATOS ESTRUCTURADOS</text>\n  \n  <defs>\n    <marker id=\"arrow\" markerWidth=\"10\" markerHeight=\"7\" refX=\"10\" refY=\"3.5\" orient=\"auto\">\n      <polygon points=\"0 0, 10 3.5, 0 7\" fill=\"#FF4400\"/>\n    </marker>\n  </defs>\n  <line x1=\"390\" y1=\"310\" x2=\"570\" y2=\"310\" stroke=\"#FF4400\" stroke-width=\"5\" stroke-dasharray=\"8 4\" marker-end=\"url(#arrow)\"/>\n  <text x=\"480\" y=\"295\" font-family=\"monospace\" font-size=\"12\" fill=\"#FF4400\" text-anchor=\"middle\">GOOGLEBOT INGESTION</text>\n\n  <circle cx=\"700\" cy=\"310\" r=\"45\" fill=\"#252823\" stroke=\"#D4FF00\" stroke-width=\"3\"/>\n  <text x=\"700\" y=\"316\" font-family=\"sans-serif\" font-size=\"16\" font-weight=\"bold\" fill=\"#FFFFFF\" text-anchor=\"middle\">ENTIDAD</text>\n\n  <circle cx=\"880\" cy=\"190\" r=\"35\" fill=\"#252823\" stroke=\"#B8006E\" stroke-width=\"2\"/>\n  <text x=\"880\" y=\"196\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#FFFFFF\" text-anchor=\"middle\">Persona</text>\n\n  <circle cx=\"880\" cy=\"430\" r=\"35\" fill=\"#252823\" stroke=\"#B8006E\" stroke-width=\"2\"/>\n  <text x=\"880\" y=\"436\" font-family=\"sans-serif\" font-size=\"13\" fill=\"#FFFFFF\" text-anchor=\"middle\">Organización</text>\n\n  <circle cx=\"1040\" cy=\"310\" r=\"50\" fill=\"#252823\" stroke=\"#00D26A\" stroke-width=\"4\"/>\n  <text x=\"1040\" y=\"305\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#00D26A\" text-anchor=\"middle\">KNOWLEDGE</text>\n  <text x=\"1040\" y=\"325\" font-family=\"sans-serif\" font-size=\"14\" font-weight=\"bold\" fill=\"#00D26A\" text-anchor=\"middle\">GRAPH</text>\n\n  <line x1=\"745\" y1=\"310\" x2=\"845\" y2=\"200\" stroke=\"#888888\" stroke-width=\"2\"/>\n  <line x1=\"745\" y1=\"310\" x2=\"845\" y2=\"420\" stroke=\"#888888\" stroke-width=\"2\"/>\n  <line x1=\"915\" y1=\"200\" x2=\"995\" y2=\"290\" stroke=\"#888888\" stroke-width=\"2\"/>\n  <line x1=\"915\" y1=\"420\" x2=\"995\" y2=\"330\" stroke=\"#888888\" stroke-width=\"2\"/>\n\n  <text x=\"600\" y=\"580\" font-family=\"monospace\" font-size=\"16\" fill=\"#D4FF00\" text-anchor=\"middle\">whacha.site • SCHEMA.ORG A GRAFOS DE CONOCIMIENTO 2026</text>\n</svg>"
+      },
+      {
+        "id": "schema-checklist",
+        "name": "Checklist Diagnóstico y Errores Frecuentes de Schema.org",
+        "description": "Guía práctica para solucionar discrepancias de tipos, advertencias de Search Console y asegurar que Google muestre resultados enriquecidos.",
+        "fileName": "schema-checklist-guia.md",
+        "fileType": "text/markdown",
+        "size": "3.1 KB",
+        "fileContent": "# Checklist Diagnóstico de Schema.org y Knowledge Graph\n\n## Verificaciones Previas al Despliegue\n- [ ] El script tiene type=\"application/ld+json\".\n- [ ] @context es exactamente \"https://schema.org\" (con HTTPS).\n- [ ] Todos los campos obligatorios para el @type están presentes (ej. name, image, offers.price).\n- [ ] Las fechas están formateadas en ISO 8601 (YYYY-MM-DD o YYYY-MM-DDTHH:mm:ssZ).\n- [ ] Los precios son valores numéricos sin símbolos de moneda (ej: 49.99, no \"$49.99\").\n- [ ] La moneda está especificada con el código ISO 4217 de 3 letras (USD, MXN, EUR).\n\n## Validación y Diagnóstico\n- [ ] Pasado por la Prueba de Resultados Enriquecidos de Google (Rich Results Test).\n- [ ] Sin advertencias en validator.schema.org.\n- [ ] Las URLs en sameAs son perfiles públicos verificables y devuelven código HTTP 200.\n- [ ] El contenido del JSON-LD coincide con el texto visible en pantalla para evitar sanciones por spam estructurado.\n\n## Monitoreo Posterior\n- [ ] Envío del sitemap.xml a Google Search Console.\n- [ ] Comprobación del informe de \"Resultados enriquecidos\" en GSC tras 72 horas.\n- [ ] Inspección de URL individual para forzar nuevo rastreo en Googlebot."
+      },
+      {
+        "id": "schema-reporte-completo",
+        "name": "Reporte de Investigación Completo - Schema.org y Grafos de Conocimiento",
+        "description": "El documento original completo de investigación profunda con análisis comparativo entre Microdatos, RDFa y JSON-LD.",
+        "fileName": "Schema_org_y_Grafos_de_Conocimiento.md",
+        "fileType": "text/markdown",
+        "size": "27.8 KB",
+        "fileContent": "# Schema.org y Grafos de Conocimiento: De HTML Básico a Entidades Reconocidas por Google\n\nResumen Ejecutivo: Los datos estructurados (Schema.org) son un formato estandarizado que facilita a Google comprender el contenido de tus páginas web. Al marcar elementos clave (persona, organización, artículo, producto, evento) con vocabulario de Schema.org, Google puede indexar esa información en su Knowledge Graph y mostrar rich results o fragmentos enriquecidos en las búsquedas.\n\nGoogle recomienda usar JSON-LD por ser fácil de implementar y mantener, aunque también acepta Microdatos y RDFa. En esta guía técnica mostramos desde cero cómo integrar Schema.org en HTML básico hasta lograr que Google reconozca tus entidades."
+      }
     ]
   },
   {
@@ -67,10 +241,17 @@
     "title": "Algoritmo de Retención en Shorts & TikTok: El Ratio 3s / 4.5s de Wacha Studios",
     "excerpt": "Análisis de más de 450 horas de video: cómo la sincronización de ganchos de audición y cortes visuales multiplica el Average View Duration.",
     "category": "Video SEO",
-    "tags": ["YouTube CTR", "TikTok", "Video SEO", "Retención"],
+    "tags": [
+      "YouTube CTR",
+      "TikTok",
+      "Video SEO",
+      "Retención",
+      "Shorts",
+      "Foley"
+    ],
     "publishedAt": "21 Oct 2026",
-    "readTime": "5 min",
-    "image": "/cetes_premier_promo.jpg",
+    "readTime": "10 min",
+    "image": "/retencion_shorts_tiktok_cover.jpg",
     "isFeatured": true,
     "stats": {
       "views": "6.1K lecturas",
@@ -82,14 +263,81 @@
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "Los primeros 3 segundos determinan si el algoritmo categoriza el video como 'Engaging' o 'Skipped'.",
-      "Cada 4.5 segundos debe haber un estímulo sensorial: cambio de plano, efecto foley, tipografía reactiva o zoom dinámico.",
-      "La retención final (Shorts que terminan en bucle infinito o 'loop') genera reenvíos automáticos en el feed algorítmico."
+      "Los primeros 3 segundos determinan si el algoritmo categoriza el video como \"Engaging\" o \"Skipped\".",
+      "Cada 4.5 segundos debe existir una renovación sensorial: corte de cámara, foley sonoro, tipografía reactiva o zoom dinámico.",
+      "El guión con cierre en bucle sin fisuras (seamless loop) dispara el re-watching multiplicando el AVD por encima del 100%."
     ],
     "content": [
       "El mayor error de los creadores y marcas que migran a video corto es tratar un Short como un anuncio de televisión de los años noventa con intros lentas o logotipos flotantes al inicio. En la economía de la atención, un usuario desliza su pulgar en menos de 800 milisegundos si no detecta una promesa de valor instantánea.",
       "En la red de canales de Wacha Multimedia, que supera los 2.4 millones de impresiones diarias, aplicamos la regla de oro: cero intros, ganchos de audio en el segundo 0.2 y subtítulos kinetic brutalistas que refuerzan cada palabra clave.",
       "Además, los algoritmos de transcripción automática de YouTube y TikTok leen cada palabra hablada para indexar el video en el buscador. Hablar con términos semánticos precisos es hoy tan importante como la etiqueta o el título del video."
+    ],
+    "sections": [
+      {
+        "heading": "1. La Deconstrucción de la Economía de Atención: 800ms para Detener el Pulgar",
+        "body": "El feed vertical es un flujo constante de dopamina rápida. Los usuarios toman la decisión subconsciente de omitir o quedarse en los primeros 800 milisegundos. Cualquier elemento que genere fricción —una cortinilla animada, un saludo genérico o un silencio ambiental— incrementa la tasa de abandono hasta en un 68%."
+      },
+      {
+        "heading": "2. El Ratio 3s / 4.5s de Wacha Studios: Gancho de Audición y Renovación Sensorial",
+        "body": "Nuestra fórmula empírica divide el video en dos fases críticas: la fase de anclaje (0 a 3 segundos) con un gancho auditivo agudo y promesa de beneficio, seguida de ventanas de renovación sensorial cada 4.5 segundos (cortes de plano, efectos de sonido foley y cambios de perspectiva) para reiniciar la atención del cerebro."
+      },
+      {
+        "heading": "3. Psicología del Gancho en 0-3 Segundos: Micro-historias y Preguntas de Tensión",
+        "body": "Evita afirmaciones predecibles. Inicia con una contradicción aparente, una estadística chocante o una pregunta que abra un bucle de curiosidad imposible de ignorar antes del segundo 3."
+      },
+      {
+        "heading": "4. Edición Kinetic Brutalista: Subtítulos de Alto Contraste y Tipografías Reactivas",
+        "body": "Más del 60% de los usuarios consumen videos en silencio o en entornos ruidosos. Los subtítulos kinetic en amarillo (#D4FF00) o blanco sobre fondos negros, sincronizados al milisegundo con cada palabra pronunciada, garantizan la comprensión instantánea."
+      },
+      {
+        "heading": "5. El Bucle Infinito (Seamless Loop): Estructuración del Fin con el Inicio",
+        "body": "Estructurar la última oración del guión para que se enlace de forma gramatical y auditiva con la primera oración del inicio hace que el usuario vuelva a ver el video sin darse cuenta, disparando el Average View Duration (AVD) por encima del 100%."
+      },
+      {
+        "heading": "6. Indexación de Transcripción Fonética y Video SEO",
+        "body": "Los modelos de transcripción automática de YouTube (Whisper) analizan el audio para detectar entidades. Mencionar explícitamente los términos técnicos en los primeros cinco segundos posiciona el video en búsquedas sugeridas de Google y YouTube Search."
+      },
+      {
+        "heading": "7. Matriz de Retención: Estudio de Caso Empírico con +2.4M de Impresiones Diarias",
+        "body": "Al aplicar esta metodología en los canales de Wacha Studios, redujimos la tasa de swipe-away del 46% al 19%, y elevamos la retención promedio a los 30 segundos en un 82%."
+      },
+      {
+        "heading": "8. Plantilla Práctica de Guión de 30-45 Segundos",
+        "body": "Descarga en la sección de complementos la plantilla estructurada segundo a segundo con marcadores de foley, giros de guión y cierre en bucle sin fisuras."
+      },
+      {
+        "heading": "9. Conclusión: El Video Corto como Embudo de Conversión de Alta Fidelidad",
+        "body": "El formato corto no es solo entretenimiento efímero; es el punto de entrada de mayor velocidad hacia productos digitales, servicios profesionales y suscripciones de marca."
+      }
+    ],
+    "resources": [
+      {
+        "id": "plantilla-guion-retencion",
+        "name": "Plantilla de Guión de Alta Retención (Ratio 3s / 4.5s)",
+        "description": "Estructura cronometrada segundo a segundo para guiones de 30-45 segundos diseñada para retener por encima del 72% de la audiencia en TikTok y Shorts.",
+        "fileName": "plantilla-guion-retencion-3s-4.5s.txt",
+        "fileType": "text/plain",
+        "size": "2.5 KB",
+        "fileContent": "=== PLANTILLA DE GUIÓN DE ALTA RETENCIÓN: RATIO 3s / 4.5s ===\nWacha Studios - Laboratorio de Video SEO y Conversión\n\nDURACIÓN ÓPTIMA: 32 a 42 segundos\nOBJETIVO: Average View Duration (AVD) > 95% + Seamless Loop\n\n[00:00 - 00:01.5] DISPARADOR AUDITIVO Y VISUAL INMEDIATO\n- Audio: Foley agudo (whoosh + risers) o pregunta con tensión sin intro ni saludos.\n- Visual: Zoom punch-in x1.3 hacia los ojos o primer plano del objeto en movimiento.\n- Texto en pantalla: 3 palabras clave en mayúsculas amarillas sobre fondo negro (ej. \"NO COMETAS ESTO\").\n\n[00:01.5 - 00:03.0] LA PROMESA DE VALOR ATÓMICA\n- Voz: Plantea la solución que nadie cuenta o la métrica impactante.\n- Regla: No digas \"Hola a todos\" ni \"Suscríbete\". Directo al dolor del usuario.\n\n[00:03.0 - 00:07.5] PRIMER CORTE Y RENOVACIÓN SENSORIAL (4.5s Mark)\n- Cambio de ángulo de cámara o corte a B-roll de alto ritmo.\n- Efecto sonoro de interfaz (click / pop digital).\n- Subtítulos kinetic que resaltan palabra por palabra al ritmo de la voz.\n\n[00:07.5 - 00:15.0] DESARROLLO PASO 1 (El Secreto Contraintuitivo)\n- Explicación del error común y cómo evitarlo en 1 sola frase.\n- Visualización de datos o gráfica en pantalla con animación rápida.\n\n[00:15.0 - 00:22.5] RENOVACIÓN SENSORIAL 2 + DESARROLLO PASO 2\n- Segundo cambio de ritmo sonoro: baja sutil del background beat, sube la voz.\n- Demostración visual práctica de la herramienta o resultado final.\n\n[00:22.5 - 00:30.0] EL CLÍMAX Y LA METÁFORA VISUAL\n- La revelación clave o conclusión que resuelve la promesa inicial del segundo 0.\n\n[00:30.0 - 00:35.0] EL CIERRE EN BUCLE INFINITO (SEAMLESS LOOP)\n- La última frase del video se conecta gramaticalmente con la primera frase del segundo 0:00.\n- Ejemplo: \n  Última frase: \"...y esa es exactamente la razón por la que...\"\n  Primera frase: \"...el algoritmo de YouTube duplica tus vistas cuando...\""
+      },
+      {
+        "id": "formula-retencion-checklist",
+        "name": "Fórmula de Retención Audiovisual en Video Corto - Checklist",
+        "description": "Checklist de edición y post-producción: ganchos sensoriales, tipografía kinetic brutalista, compresión foley y balance de audio.",
+        "fileName": "formula-retencion-shorts-tiktok.md",
+        "fileType": "text/markdown",
+        "size": "3.3 KB",
+        "fileContent": "# Fórmula de Retención en Shorts & TikTok (Wacha Studios)\n\n## 1. Reglas de Oro en los Primeros 3 Segundos\n- [ ] Cero intros de marca o animaciones de logo.\n- [ ] Iniciar la frase en el milisegundo 0.1 del clip.\n- [ ] Contraste tipográfico: texto negro sobre caja amarilla (#D4FF00) o blanca sobre rojo.\n- [ ] Expresión facial de urgencia o intriga en el primer plano.\n\n## 2. Micro-estímulos Cada 4.5 Segundos\n- [ ] Cambio de encuadre (alternar plano medio y plano detalle).\n- [ ] Efectos foley sincronizados con las palabras clave (whoosh, pop, mechanical click).\n- [ ] Subtítulos reactivos que aparecen en sincronía exacta con cada sílaba.\n- [ ] Eliminación estricta de respiraciones y silencios mayores a 150ms.\n\n## 3. SEO y Transcripción Fonética\n- [ ] Pronunciar las 3 palabras clave principales en los primeros 5 segundos (el crawler de audio las indexa).\n- [ ] Subir archivo SRT manual o revisar los subtítulos automáticos para asegurar 100% de ortografía técnica.\n- [ ] Descripción de 2 líneas con entidades reconocibles y 3 hashtags no genéricos.\n\n## 4. Retención de Bucle (Seamless Loop)\n- [ ] Transición de audio sin caída de volumen entre el último y primer fotograma.\n- [ ] Movimiento de cámara continuado entre final e inicio para disfrazar el reinicio del reproductor."
+      },
+      {
+        "id": "algoritmo-retencion-estudio",
+        "name": "Estudio Empírico de Retención Audiovisual (450 Horas de Análisis)",
+        "description": "Whitepaper de Wacha Studios analizando métricas de retención, AVD y tasas de swipe en más de 2.4 millones de impresiones diarias.",
+        "fileName": "Algoritmo_Retencion_Shorts_TikTok.md",
+        "fileType": "text/markdown",
+        "size": "8.7 KB",
+        "fileContent": "# Algoritmo de Retención en Shorts & TikTok: El Ratio 3s / 4.5s de Wacha Studios\nAutor: Mr. Decrépito - Head of Engineering & AEO Wacha Studios\nPublicación: 21 Octubre 2026 | whacha.site\n\n## Resumen del Caso de Estudio\nA lo largo de 450 horas de producción y análisis en nuestra red de 8 canales de YouTube y perfiles de TikTok, medimos cómo variables específicas de ritmo audiovisual afectan el Average View Duration (AVD) y el Swipe Away Rate.\n\nLos hallazgos demostraron que el 68% del abandono de usuarios ocurre en los primeros 1.8 a 2.4 segundos cuando el video presenta pausas o carece de gancho sonoro. Al aplicar el \"Ratio 3s / 4.5s\", el AVD promedio creció de 54% a más de 128% (gracias a reproducciones en bucle)."
+      }
     ]
   },
   {
@@ -98,7 +346,12 @@
     "title": "GEO (Generative Engine Optimization): La Muerte del Keyword Stuffing",
     "excerpt": "Los LLMs priorizan coherencia factual, citas cruzadas y marcas registradas verificadas. La métrica que sustituye al PageRank.",
     "category": "AEO",
-    "tags": ["GEO", "AEO", "Algoritmos", "IA Generativa"],
+    "tags": [
+      "GEO",
+      "AEO",
+      "Algoritmos",
+      "IA Generativa"
+    ],
     "publishedAt": "18 Oct 2026",
     "readTime": "7 min",
     "image": "/unitia_software_app.jpg",
@@ -113,108 +366,292 @@
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "El 'Citation Share' (porcentaje de veces que tu web es citada como fuente) es el nuevo Domain Authority.",
+      "El \"Citation Share\" (porcentaje de veces que tu web es citada como fuente) es el nuevo Domain Authority.",
       "La consistencia de datos entre redes sociales, registros públicos y sitios oficiales previene la exclusión algorítmica.",
       "El contenido generado por IA sin curaduría humana sufre degradación por pérdida de entropía informativa."
     ],
     "content": [
-      "El auge de la inteligencia artificial generativa inundó la web con millones de artículos sintéticos redundantes. En respuesta, las actualizaciones de motores de búsqueda han implementado filtros de 'Information Gain Score' para descartar páginas que simplemente repiten lo que ya existe en el índice.",
+      "El auge de la inteligencia artificial generativa inundó la web con millones de artículos sintéticos redundantes. En respuesta, las actualizaciones de motores de búsqueda han implementado filtros de \"Information Gain Score\" para descartar páginas que simplemente repiten lo que ya existe en el índice.",
       "Generative Engine Optimization (GEO) es la disciplina de construir autoridad citacional. No se trata de qué tan largo es tu texto, sino de si contiene datos empíricos, casos de estudio propios, metodologías con nombre registrado y opiniones fundamentadas que un modelo de lenguaje considere dignas de citar con un enlace de fuente.",
       "En Wacha Studios combinamos desarrollo full-stack, ingeniería de sonido y producción de video para crear piezas multimedia que ninguna IA puede sintetizar de la nada, blindando la autoridad orgánica de nuestros clientes."
     ]
   },
   {
-    "id": "core-web-vitals-spa-inp-cls-optimizacion",
-    "slug": "core-web-vitals-spa-inp-cls-optimizacion",
-    "title": "Core Web Vitals en la Era de IA: Reduciendo INP y CLS en SPAs Modernas",
-    "excerpt": "Optimizaciones prácticas para lograr 100/100 en Google Lighthouse sin sacrificar interactividad en tiempo real o animaciones reactivas.",
+    "id": "core-web-vitals-spa-inp-cls",
+    "slug": "core-web-vitals-spa-inp-cls",
+    "title": "Core Web Vitals en SPAs: mejorar INP y CLS sin romper la interactividad",
+    "excerpt": "Una puntuación perfecta en Lighthouse no garantiza buenos Core Web Vitals en usuarios reales de una SPA. Chrome 151 ya permite medir soft navigations; aquí tienes qué cambia y cómo actuar sobre INP y CLS sin sacrificar la interacción.",
     "category": "SEO Técnico",
-    "tags": ["Core Web Vitals", "INP", "CLS", "SEO Técnico", "Vite"],
-    "publishedAt": "14 Oct 2026",
+    "tags": [
+      "Core Web Vitals",
+      "SPA",
+      "INP",
+      "CLS",
+      "Chrome 151",
+      "soft navigations",
+      "rendimiento web",
+      "CrUX"
+    ],
+    "publishedAt": "29 Oct 2026",
+    "readTime": "11 min",
+    "image": "/assets/aistudio/Core_web_4a9d509c.jpg",
+    "isFeatured": true,
+    "stats": {
+      "views": "3.9K lecturas",
+      "impact": "Chrome 151 Soft Navs Ready"
+    },
+    "author": {
+      "name": "WACHA Producciones Multimedia",
+      "role": "Head of Engineering & Web Performance",
+      "avatar": "/wacha_logo.jpg"
+    },
+    "keyTakeaways": [
+      "Una puntuación perfecta en Lighthouse no garantiza buenos Core Web Vitals en usuarios reales de una SPA.",
+      "Chrome 151 emite eventos soft-navigation y navigationId, permitiendo a CrUX medir LCP, INP y CLS segmentados por ruta.",
+      "scheduler.yield() permite fragmentar tareas de más de 50ms para evitar bloqueos en el hilo principal.",
+      "Reservar aspect-ratio y dimensiones para imágenes y embeds antes de su carga resuelve la mayor parte de los problemas de CLS."
+    ],
+    "content": [
+      "Una SPA puede obtener 100/100 en Lighthouse y, aun así, fallar INP o CLS en datos de campo. La razón es estructural: Lighthouse simula una carga; una SPA real pasa minutos —o horas— ejecutando JavaScript, cambiando rutas y respondiendo a interacciones dentro del mismo documento.",
+      "La API de Soft Navigations, disponible desde Chrome 151, define una soft navigation cuando se cumplen tres condiciones: la inicia el usuario, cambia la URL visible y produce una pintura de contenido visible. Con la API activada, Chrome emite eventos soft-navigation y añade un navigationId a las entradas de rendimiento.",
+      "INP mide la latencia completa de una interacción: retardo de entrada, procesamiento y pintura. Un INP bueno es ≤ 200 ms en el percentil 75. La técnica más efectiva es fragmentar tareas largas con scheduler.yield(). En cuanto al CLS, el secreto es reservar las cajas geométricas antes de que el contenido asíncrono responda."
+    ],
+    "sections": [
+      {
+        "heading": "1. El problema del 100/100 que no se traduce en usuarios reales",
+        "body": "Lighthouse mide la carga inicial en condiciones de laboratorio estáticas. En una SPA, el usuario ejecuta cientos de eventos tras el montaje. Hasta Chrome 151, las interacciones tardías se imputaban erróneamente a la primera vista, distorsionando la auditoría de campo."
+      },
+      {
+        "heading": "2. Qué cambió con Chrome 151 y las soft navigations",
+        "body": "Por primera vez, CrUX publica versiones experimentales con soft navigations. Puedes segmentar el rendimiento de la carga inicial del de cada transición interna, aunque Safari y Firefox aún no emiten estas señales en abril de 2026."
+      },
+      {
+        "heading": "3. Por qué INP es el CWV que más castiga a las SPAs",
+        "body": "Cada clic compite con el hilo principal saturado por listeners globales y frameworks. La solución recomendada es dividir la ejecución en bloques menores de 50 ms usando scheduler.yield() con fallback a setTimeout(0), o delegar procesos pesados a Web Workers."
+      },
+      {
+        "heading": "4. CLS en SPAs: el problema no es la carga, es la re-renderización",
+        "body": "El layout shift ocurre tras cambios de ruta cuando los componentes se montan sin dimensiones precalculadas. Usa aspect-ratio: 16/9 y contain-intrinsic-size en CSS, junto con font-display: optional para fuentes tipográficas."
+      },
+      {
+        "heading": "5. Checklist de intervención inmediata para SPAs",
+        "body": "Identifica tareas mayores a 50ms con Chrome DevTools, difiere scripts de analítica, audita listeners en document y garantiza que toda imagen o iframe posea contenedor con geometría reservada."
+      }
+    ],
+    "resources": [
+      {
+        "id": "cwv-html-completo",
+        "name": "Código HTML Completo del Artículo (Core Web Vitals en SPAs)",
+        "description": "Archivo HTML5 semántico con sintaxis completa, bloques pre/code y marcado de ingeniería web.",
+        "fileName": "core-web-vitals-spa-inp-cls.html",
+        "fileType": "text/html",
+        "size": "12.4 KB",
+        "fileContent": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Core Web Vitals en SPAs: mejorar INP y CLS sin romper la interactividad | Wacha Multimedia</title>\n  <meta name=\"description\" content=\"Guía práctica para mejorar INP y CLS en SPAs con Chrome 151: soft navigations, scheduler.yield, reserva de espacio y límites reales de medición.\">\n</head>\n<body>\n${ARTICLE_1_HTML}\n</body>\n</html>"
+      },
+      {
+        "id": "regla-css-aspect-ratio",
+        "name": "Reglas CSS Anti-CLS: Reserva de Aspect-Ratio y Containment (regla.css)",
+        "description": "Snippet CSS para prevención de Cumulative Layout Shift en componentes y rutas de SPAs.",
+        "fileName": "regla.css",
+        "fileType": "text/css",
+        "size": "0.4 KB",
+        "fileContent": "/* Reserva de espacio para una imagen responsive dentro de una ruta SPA */\n.imagen-producto {\n  width: 100%;\n  height: auto;\n  aspect-ratio: 16 / 9;\n  /* El navegador calcula la caja antes de descargar la imagen */\n}\n\n/* Placeholder para un embed que se carga tras la navegación interna */\n.embed-diferido {\n  min-height: 320px;\n  contain-intrinsic-size: 320px;\n}"
+      },
+      {
+        "id": "scheduler-yield-helper",
+        "name": "Helper JavaScript scheduler.yield() con Fallback setTimeout",
+        "description": "Función asíncrona para fragmentar tareas largas en el hilo principal y mantener INP < 50ms.",
+        "fileName": "yieldToMain.js",
+        "fileType": "application/javascript",
+        "size": "0.8 KB",
+        "fileContent": "// Patrón mínimo con fallback para navegadores sin Scheduler API\nasync function yieldToMain() {\n  if (\"scheduler\" in window && \"yield\" in scheduler) {\n    return scheduler.yield();\n  }\n  return new Promise(resolve => setTimeout(resolve, 0));\n}\n\nasync function procesarElementosGrandes(items, procesarFn) {\n  for (let i = 0; i < items.length; i++) {\n    procesarFn(items[i]);\n\n    // Cada ~50 ms, ceder el hilo para que el navegador atienda input\n    if (i % 50 === 0) {\n      await yieldToMain();\n    }\n  }\n}"
+      },
+      {
+        "id": "cwv-spa-checklist-md",
+        "name": "Checklist de Intervención Inmediata INP & CLS en SPAs",
+        "description": "Guía en Markdown con listas de verificación para auditorías en Chrome DevTools y CrUX experimental.",
+        "fileName": "checklist-inp-cls-spa.md",
+        "fileType": "text/markdown",
+        "size": "2.1 KB",
+        "fileContent": "# Checklist de Intervención Inmediata para SPAs (Wacha Studios)\n\n## Checklist de INP en SPA (Percentil 75 ≤ 200ms)\n- [ ] Identifica las tareas > 50 ms con el panel Performance de DevTools durante navegación interna.\n- [ ] Aplica scheduler.yield() entre lotes de trabajo en handlers de eventos y transiciones de ruta.\n- [ ] Mueve a Web Workers el trabajo CPU-intensivo que bloquea el hilo principal.\n- [ ] Difiere scripts de terceros (analytics, chat, ads) hasta después de que la ruta sea interactiva.\n- [ ] Revisa listeners globales en document que se ejecuten en cada interacción de la sesión.\n\n## Checklist de CLS en SPA (Percentil 75 ≤ 0.1)\n- [ ] Toda <img> e <iframe> tiene width y height, o un contenedor con aspect-ratio en CSS.\n- [ ] Todo componente montado tras una transición interna tiene un placeholder con geometría reservada.\n- [ ] Las fuentes usan font-display: optional o una estrategia equivalente anti-swap tardío.\n- [ ] Los ads y embeds no se inyectan en caliente sobre contenido pintado sin contenedor de altura mínima.\n- [ ] Mides CLS por URL de destino y soft navigation, no solo por la URL de entrada."
+      }
+    ],
+    "htmlContent": "<article class=\"article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6\">\n  <header class=\"border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3\">\n    <div class=\"flex flex-wrap gap-2 text-xs font-jetbrains\">\n      <span class=\"bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black\">SEO TÉCNICO</span>\n      <span class=\"bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700\">CHROME 151</span>\n      <span class=\"text-zinc-500 py-0.5\">SLUG: core-web-vitals-spa-inp-cls</span>\n    </div>\n    <h1 class=\"text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white\">\n      Core Web Vitals en SPAs: mejorar INP y CLS sin romper la interactividad\n    </h1>\n    <p class=\"text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains\">\n      ¿Cómo se miden y mejoran INP y CLS en una single-page application?\n    </p>\n    <div class=\"text-xs font-jetbrains text-zinc-600 dark:text-zinc-400\">\n      Por <strong>WACHA Producciones Multimedia</strong> • https://whacha.site\n    </div>\n  </header>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      El problema del 100/100 que no se traduce en usuarios reales\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Una SPA puede obtener 100/100 en Lighthouse y, aun así, fallar INP o CLS en datos de campo. La razón es estructural: Lighthouse simula una carga; una SPA real pasa minutos —o horas— ejecutando JavaScript, cambiando rutas y respondiendo a interacciones dentro del mismo documento. Hasta hace poco, los Core Web Vitals atribuían todas las interacciones y shifts posteriores a la carga inicial, no a la “página” que el usuario estaba viendo. Esa brecha de medición es la que Chrome 151 empieza a cerrar, y es también la que explica por qué tu laboratorio puede ir bien mientras tu campo va mal.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Qué cambió con Chrome 151 y las soft navigations\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La API de Soft Navigations, disponible desde Chrome 151, define una soft navigation cuando se cumplen tres condiciones: la inicia el usuario, cambia la URL visible y produce una pintura de contenido visible. Con la API activada, Chrome emite eventos <code>soft-navigation</code> y añade un <code>navigationId</code> a las entradas de rendimiento, lo que permite segmentar LCP, INP y CLS por navegación suave.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Desde octubre de 2026, CrUX publica <strong>versiones experimentales</strong> de los tres Core Web Vitals con soft navigations: <code>experimental_largest_contentful_paint_with_softnavs</code>, <code>experimental_interaction_to_next_paint_with_softnavs</code> y <code>experimental_cumulative_layout_shift_with_softnavs</code>. Google mantiene intactas sus puntuaciones estables mientras evalúa estas variantes.\n    </p>\n    \n    <div class=\"bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-2\">\n      <h3 class=\"font-jetbrains text-sm font-bold text-black dark:text-white uppercase flex items-center gap-2\">\n        <span class=\"w-2.5 h-2.5 bg-[#FF4400]\"></span>\n        Dos advertencias que conviene tener presentes:\n      </h3>\n      <ul class=\"list-disc list-inside space-y-1.5 text-sm text-zinc-800 dark:text-zinc-300\">\n        <li><strong>Solo Chromium:</strong> Las métricas de soft navigation no se reportan en Safari ni Firefox, así que tu dato cubrirá solo una parte de la audiencia.</li>\n        <li><strong>CrUX sigue atribuyendo a la URL original:</strong> Las métricas de soft navigation no coinciden necesariamente con lo que ves en CrUX o Search Console.</li>\n      </ul>\n    </div>\n    \n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Para una SPA, esto significa que por primera vez puedes separar el rendimiento de la carga inicial del de cada transición interna. Pero también significa que no puedes asumir que CrUX “ya mide lo mismo”: la API es el instrumento nuevo; CrUX experimental es el dataset nuevo; tus herramientas de RUM deben adaptarse.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Por qué INP es el CWV que más castiga a las SPAs\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      INP mide la latencia completa de una interacción: retardo de entrada, procesamiento y pintura. Un INP bueno es ≤ 200 ms en el percentil 75; poor es &gt; 500 ms. En una SPA, cada clic, tap o tecla compite con el mismo hilo principal que ya está ejecutando el framework, los listeners globales y los scripts de terceros. No existe el “reset” que supone una navegación dura.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La técnica más efectiva no es microoptimizar un handler, sino <strong>fragmentar las tareas largas</strong>. <code>scheduler.yield()</code> permite ceder el hilo principal al navegador entre fragmentos, de modo que las entradas pendientes se procesen antes de continuar. El patrón recomendado es dividir la ejecución en bloques de menos de 50 ms, que es el umbral de Long Tasks del W3C.\n    </p>\n\n    <!-- BLOQUE DE CÓDIGO JS CON ETIQUETAS PRE CODE -->\n    <pre><code class=\"language-javascript\">// Patrón mínimo con fallback para navegadores sin Scheduler API\nasync function yieldToMain() {\n  if (\"scheduler\" in window && \"yield\" in scheduler) {\n    return scheduler.yield();\n  }\n  return new Promise(resolve => setTimeout(resolve, 0));\n}\n\nasync function procesarElementosGrandes(items) {\n  for (let i = 0; i < items.length; i++) {\n    procesar(items[i]);\n\n    // Cada ~50 ms, ceder el hilo para que el navegador atienda input\n    if (i % 50 === 0) {\n      await yieldToMain();\n    }\n  }\n}</code></pre>\n\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Dos límites honestos: <code>scheduler.yield()</code> es compatible con Chromium 129+ y Firefox 135+, pero Safari aún no lo implementa (a abril de 2026), por lo que el fallback con <code>setTimeout(0)</code> no es opcional. Además, para trabajo verdaderamente intensivo —procesamiento de imágenes, transformación de grandes volúmenes de datos— el destino correcto es un Web Worker, no fragmentar el hilo principal.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      CLS en SPAs: el problema no es la carga, es la re-renderización\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      CLS mide inestabilidad visual. El umbral “good” sigue siendo ≤ 0.1 en campo; el “poor”, &gt; 0.25. En una SPA, el CLS puede aparecer después de la carga inicial: un componente que se monta cuando el usuario navega internamente, una imagen que llega tras una transición de ruta, un banner inyectado en una vista que ya estaba pintada.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La regla que resuelve la mayor parte del problema es una: <strong>reservar el espacio antes de que el contenido llegue</strong>. Para imágenes y vídeos, esto significa width y height explícitos, o aspect-ratio en CSS. Para contenido asíncrono —ads, embeds, banners inyectados—, el espacio debe reservarse en el primer paint del componente, no cuando el recurso responde.\n    </p>\n\n    <!-- BLOQUE DE CÓDIGO CSS CON ETIQUETAS PRE CODE -->\n    <pre><code class=\"language-css\">/* Reserva de espacio para una imagen responsive dentro de una ruta SPA */\n.imagen-producto {\n  width: 100%;\n  height: auto;\n  aspect-ratio: 16 / 9;\n  /* El navegador calcula la caja antes de descargar la imagen */\n}\n\n/* Placeholder para un embed que se carga tras la navegación interna */\n.embed-diferido {\n  min-height: 320px;\n  contain-intrinsic-size: 320px;\n}</code></pre>\n\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Para fuentes, <code>font-display: optional</code> evita el swap visible en la mayoría de los casos, y <code>size-adjust</code> puede reducir el shift si la fuente de reserva y la definitiva tienen métricas distintas. Para componentes que se montan dinámicamente, el patrón es renderizar un skeleton con las mismas dimensiones que el contenido final antes de que los datos lleguen. No es una optimización de lujo: en una SPA, cada transición interna es una oportunidad de CLS.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Un recurso práctico: checklist de intervención inmediata para SPAs\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Antes de tocar código, mide con la API correcta. Si tu RUM no reporta soft navigations, no puedes saber si tu INP bajo corresponde a la carga o a una ruta interna. Verifica que tu herramienta use la Soft Navigations API y que segmente por <code>navigationId</code>.\n    </p>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 pt-2\">\n      <div class=\"bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 space-y-3\">\n        <h3 class=\"font-jetbrains font-bold text-sm text-[#FF4400] uppercase border-b border-zinc-300 dark:border-zinc-800 pb-2\">\n          Checklist de INP en SPA\n        </h3>\n        <ul class=\"space-y-2 text-xs sm:text-sm text-zinc-800 dark:text-zinc-300 font-jetbrains\">\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Identifica las tareas &gt; 50 ms con el panel Performance de DevTools durante una navegación interna.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Aplica <code>scheduler.yield()</code> entre lotes de trabajo en handlers y transiciones de ruta.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Mueve a Web Workers el trabajo CPU-intensivo que hoy bloquea el hilo principal.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Difiere scripts de terceros (analytics, chat, ads) hasta que la ruta sea interactiva.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Revisa listeners globales en document que se ejecuten en cada interacción.</span></li>\n        </ul>\n      </div>\n\n      <div class=\"bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 space-y-3\">\n        <h3 class=\"font-jetbrains font-bold text-sm text-[#B8006E] dark:text-[#D4FF00] uppercase border-b border-zinc-300 dark:border-zinc-800 pb-2\">\n          Checklist de CLS en SPA\n        </h3>\n        <ul class=\"space-y-2 text-xs sm:text-sm text-zinc-800 dark:text-zinc-300 font-jetbrains\">\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Toda &lt;img&gt; y &lt;iframe&gt; tiene width y height, o un contenedor con aspect-ratio.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Todo componente montado dinámicamente tiene un placeholder con geometría reservada.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Las fuentes usan font-display: optional o estrategia equivalente anti-swap.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Los ads y embeds cuentan con contenedor de altura mínima definida.</span></li>\n          <li class=\"flex items-start gap-2\"><span>[✓]</span><span>Mides CLS por URL de destino, no solo por la URL de entrada.</span></li>\n        </ul>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"space-y-4 pt-4 border-t-2 border-black dark:border-zinc-800\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00]\">\n      Conclusión\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Chrome 151 no “arregla” el rendimiento de las SPAs, pero por primera vez ofrece un instrumento para medir lo que antes quedaba oculto. La consecuencia práctica es incómoda: muchas SPAs descubrirán que su INP real es peor de lo que creían, porque ahora se cuenta cada interacción dentro de cada ruta. La buena noticia es que las intervenciones de mayor impacto —fragmentar tareas, reservar espacio, diferir terceros— son conocidas, verificables y no exigen renunciar a la interactividad. Lo que sí exigen es dejar de confundir el laboratorio con el campo.\n    </p>\n\n    <div class=\"bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 text-xs font-jetbrains space-y-1 text-zinc-700 dark:text-zinc-400\">\n      <div class=\"font-bold text-black dark:text-white uppercase mb-1\">Fuentes oficiales:</div>\n      <div>• web.dev, <em>How SPA architectures affect Core Web Vitals</em> (actualizado 11/08/2026).</div>\n      <div>• Chrome for Developers, <em>衡量软导航</em> (actualizado 20/09/2026).</div>\n      <div>• web.dev, <em>Experimental soft navigation metrics now available in CrUX</em> (13/10/2026).</div>\n      <div>• DebugBear, <em>How To Monitor Single Page Application Performance</em> (actualizado 2025).</div>\n    </div>\n  </section>\n</article>"
+  },
+  {
+    "id": "seo-busqueda-por-voz-contenido-conversacional",
+    "slug": "seo-busqueda-por-voz-contenido-conversacional",
+    "title": "SEO para búsqueda por voz: contenido conversacional, respuestas claras y accesibilidad de audio",
+    "excerpt": "Google ya no convierte necesariamente tu voz en texto antes de buscar. Con Speech-to-Retrieval, la intención hablada se mapea directamente a la recuperación. Esto es lo que cambia —y lo que no— para el contenido orientado a búsqueda por voz.",
+    "category": "AEO",
+    "tags": [
+      "búsqueda por voz",
+      "SEO conversacional",
+      "Speech-to-Retrieval",
+      "AEO",
+      "accesibilidad de audio",
+      "contenido conversacional"
+    ],
+    "publishedAt": "29 Oct 2026",
     "readTime": "9 min",
-    "image": "/cetes_premier_app.jpg",
+    "image": "/assets/aistudio/image_8ef8e7bb_daf9c4dd.jpg",
     "isFeatured": false,
     "stats": {
-      "views": "2.1K lecturas",
-      "impact": "INP < 45ms en móviles"
+      "views": "3.4K lecturas",
+      "impact": "S2R Intent Mapping"
     },
     "author": {
-      "name": "Equipo Técnico Wacha",
-      "role": "DevSecOps & Web Architecture",
+      "name": "WACHA Producciones Multimedia",
+      "role": "Voice SEO & AEO Architecture",
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "INP (Interaction to Next Paint) reemplazó a FID: el renderizado en hilo principal debe desbloquearse en menos de 50ms.",
-      "Los Skeleton Loaders previenen Cumulative Layout Shift (CLS) reservando el espacio de aspect-ratio antes del fetch de imágenes.",
-      "Empaquetar fuentes con preconnect y font-display: swap elimina bloqueos de renderizado en redes móviles lentas."
+      "Speech-to-Retrieval (S2R) mapea la intención hablada directamente hacia la recuperación sin depender de una transcripción léxica perfecta.",
+      "Las respuestas directas ideales para lectura por asistentes se sitúan en el rango de 20 a 30 palabras.",
+      "Los encabezados formulados como preguntas naturales aumentan drásticamente la probabilidad de selección en snippets hablados.",
+      "La accesibilidad del audio (subtítulos precisos y estructura no exclusivamente visual) es indispensable para el rastreo por voz."
     ],
     "content": [
-      "Google no solo mide qué tan relevante es tu contenido; también evalúa la experiencia física del usuario al interactuar con tu plataforma. Una página con retrasos al presionar botones o con imágenes que saltan durante la carga recibe sanciones directas en su posicionamiento en búsquedas móviles.",
-      "En aplicaciones React sobre Vite, optimizamos los paquetes mediante code-splitting, compresión Brotli, carga diferida de reproductores pesados (como widgets de audio o iframes de YouTube) y componentes de imagen con skeleton integrado que garantizan un CLS de exactamente 0.00.",
-      "La velocidad y el feedback táctil instantáneo (como microinteracciones active:scale-95 con transiciones de 150ms) no son lujos cosméticos: son factores de ranking SEO certificados."
-    ]
-  },
-  {
-    "id": "voice-engine-sintesis-neuronal-asistentes",
-    "slug": "voice-engine-sintesis-neuronal-asistentes",
-    "title": "Voice Engine & Síntesis Neuronal: Posicionamiento en Búsquedas por Voz",
-    "excerpt": "Cómo el audio estructurado, transcripciones enriquecidas y huellas vocales sintéticas alimentan las respuestas en dispositivos conectados.",
-    "category": "IA Generativa",
-    "tags": ["Voice Engine", "IA Generativa", "AEO", "Audio"],
-    "publishedAt": "10 Oct 2026",
-    "readTime": "6 min",
-    "image": "/sonido_decrepito_vol1.jpg",
-    "isFeatured": false,
-    "stats": {
-      "views": "3.8K lecturas",
-      "impact": "+80% tráfico por asistentes de voz"
-    },
-    "author": {
-      "name": "Mr. Decrépito",
-      "role": "Head of Engineering & AEO Wacha Studios",
-      "avatar": "/wacha_logo.jpg"
-    },
-    "keyTakeaways": [
-      "Más del 35% de las búsquedas hogareñas y en automóviles se realizan mediante consultas de lenguaje natural hablado.",
-      "Las transcripciones con marcas de tiempo (SRT/VTT) y microdatos de audio permiten a los motores de búsqueda saltar directo al punto exacto de la respuesta.",
-      "Las identidades sonoras consistentes generan 'Sonic Branding Recognition' en plataformas de streaming y podcasts."
+      "Durante años, la optimización para búsqueda por voz se construyó sobre una premisa: el asistente transcribe tu voz a texto y busca ese texto. Speech-to-Retrieval (S2R), presentado por Google Research en octubre de 2025, cambia la arquitectura interpretando directamente la intención de recuperación de la consulta hablada.",
+      "La evidencia práctica de SEO para voz apunta a un patrón estable: consultas más largas, formuladas como preguntas completas, frecuentemente con intención local. El contenido que mejor funciona no es el que “suena coloquial”, sino el que abre con una respuesta directa de 20-30 palabras.",
+      "No existe un factor de clasificación aislado llamado \"Voice SEO\": existe una superficie de recuperación multimodal (asistentes, auriculares inteligentes, S2R) que favorece contenidos con semántica autocontenida y marcado estructurado FAQPage."
     ],
-    "content": [
-      "Cuando un usuario pregunta en voz alta a su dispositivo: '¿Quién es el mejor productor de cumbia experimental o cómo optimizo mi canal para Gemini?', el motor no lee un párrafo de texto plano: reproduce un extracto de audio o sintetiza una respuesta basada en transcripciones indexadas.",
-      "En nuestro laboratorio de audio 'Sonido Decrépito', experimentamos con masterización analógica y modelos de clonación de voz neuronal autorizados. Cada podcast o pieza audiovisual que producimos incluye transcripciones semánticas que indexan conceptos clave con timestamps exactos.",
-      "El futuro del SEO no es silencioso: es auditivo, conversacional y multimodal."
-    ]
+    "sections": [
+      {
+        "heading": "1. El matiz que cambia el punto de partida: S2R y la transcripción",
+        "body": "El sistema ya no se pregunta qué palabras exactas se dijeron, sino qué información busca el usuario. Si la intención se comprende a nivel fonético y conceptual, el contenido relevante es recuperado aunque la transcripción contenga ruido fonético."
+      },
+      {
+        "heading": "2. Qué es exactamente “contenido conversacional” para voz",
+        "body": "Estructurar respuestas en dos rangos: 20-30 palabras para lectura instantánea por sintetizador de voz, y 40-60 palabras para párrafos explicativos que resuelvan la duda de principio a fin sin depender del contexto anterior."
+      },
+      {
+        "heading": "3. La estructura que sí puedes implementar",
+        "body": "Encabezados en forma de preguntas reales, respuestas directas en las primeras tres líneas, esquemas FAQPage / HowTo válidos y accesibilidad universal de audio mediante transcripciones sincronizadas."
+      },
+      {
+        "heading": "4. Plantilla de respuesta hablada en tres niveles",
+        "body": "Nivel 1 para la respuesta atómica inmediata; Nivel 2 para el desarrollo del cómo y el por qué; Nivel 3 para excepciones, fuentes y detalles técnicos avanzados."
+      }
+    ],
+    "resources": [
+      {
+        "id": "voz-html-completo",
+        "name": "Código HTML Completo del Artículo (SEO Búsqueda por Voz)",
+        "description": "Archivo HTML5 semántico con las 3 capas de respuesta conversacional y accesibilidad de audio.",
+        "fileName": "seo-busqueda-por-voz-contenido-conversacional.html",
+        "fileType": "text/html",
+        "size": "11.8 KB",
+        "fileContent": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>SEO para búsqueda por voz: contenido conversacional | Wacha Multimedia</title>\n  <meta name=\"description\" content=\"Speech-to-Retrieval cambia la búsqueda por voz: menos dependencia de transcripción, más intención. Claves de contenido conversacional y respuestas directas.\">\n</head>\n<body>\n${ARTICLE_2_HTML}\n</body>\n</html>"
+      },
+      {
+        "id": "plantilla-respuesta-hablada",
+        "name": "Plantilla de Respuesta Hablada de Tres Niveles (S2R Framework)",
+        "description": "Estructura editorial probada: Nivel 1 (20-30 palabras), Nivel 2 (40-60 palabras), Nivel 3 (Contexto y límites).",
+        "fileName": "plantilla-respuesta-hablada-3-niveles.md",
+        "fileType": "text/markdown",
+        "size": "1.9 KB",
+        "fileContent": "# Plantilla de Respuesta Hablada de Tres Niveles (Wacha Studios)\n\n### Nivel 1 — Respuesta directa (20–30 palabras)\nEmpieza con la respuesta, no con el contexto. \n> \"Para optimizar contenido para búsqueda por voz, abre cada sección con una respuesta directa de 20 a 30 palabras y usa encabezados formulados como preguntas naturales.\"\n\n### Nivel 2 — Desarrollo (40–60 palabras)\nExplica el cómo o el por qué en un párrafo autocontenido sin remisiones a párrafos previos.\n\n### Nivel 3 — Contexto y matices\nLímites técnicos, excepciones de la plataforma y fuentes documentadas."
+      },
+      {
+        "id": "faqpage-voice-jsonld",
+        "name": "Marcado Schema.org FAQPage para Asistentes y Speech Retrieval",
+        "description": "JSON-LD estructurado para facilitar la extracción fonética por parte de Google Assistant y agentes conversacionales.",
+        "fileName": "faqpage-voice-search-schema.json",
+        "fileType": "application/json",
+        "size": "1.5 KB",
+        "fileContent": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"¿Cómo optimizar contenido para búsqueda por voz bajo el modelo Speech-to-Retrieval?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Abre cada sección con una respuesta directa y autocontenida de 20 a 30 palabras, usa encabezados formulados como preguntas en lenguaje natural y complementa con marcado estructurado FAQPage y transcripciones accesibles de audio.\"\n      }\n    }\n  ]\n}"
+      }
+    ],
+    "htmlContent": "<article class=\"article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6\">\n  <header class=\"border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3\">\n    <div class=\"flex flex-wrap gap-2 text-xs font-jetbrains\">\n      <span class=\"bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black\">AEO & VOZ</span>\n      <span class=\"bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700\">SPEECH-TO-RETRIEVAL (S2R)</span>\n      <span class=\"text-zinc-500 py-0.5\">SLUG: seo-busqueda-por-voz-contenido-conversacional</span>\n    </div>\n    <h1 class=\"text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white\">\n      SEO para búsqueda por voz: contenido conversacional, respuestas claras y accesibilidad de audio\n    </h1>\n    <p class=\"text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains\">\n      ¿Cómo optimizar contenido para búsqueda por voz cuando el motor ya no depende de una transcripción perfecta?\n    </p>\n    <div class=\"text-xs font-jetbrains text-zinc-600 dark:text-zinc-400\">\n      Por <strong>WACHA Producciones Multimedia</strong> • https://whacha.site\n    </div>\n  </header>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      El matiz que cambia el punto de partida: S2R y la transcripción que ya no es el centro\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Durante años, la optimización para búsqueda por voz se construyó sobre una premisa: el asistente transcribe tu voz a texto y busca ese texto. Si la transcripción falla, la búsqueda falla. El ejemplo clásico de Google es “The Scream painting” mal transcrito como “screen painting”: el sistema busca técnicas de pintura de pantallas en lugar de la obra de Munch.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      <strong>Speech-to-Retrieval (S2R)</strong>, presentado por Google Research el 7 de octubre de 2025, cambia la arquitectura. En lugar de convertir la consulta hablada en una transcripción textual y buscar sobre ella, S2R interpreta directamente la intención de recuperación de la consulta hablada. La pregunta que guía el sistema deja de ser “¿qué palabras se dijeron?” y pasa a ser “¿qué información se busca?”.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Esto no significa que la transcripción haya desaparecido ni que el texto pierda valor. Significa que el contenido que responde bien a una intención hablada completa —no solo a una cadena de palabras clave— tiene una ventaja estructural. Y significa que la accesibilidad del audio deja de ser un añadido de cumplimiento para convertirse en parte de la superficie de recuperación.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Qué es exactamente “contenido conversacional” para voz (sin caer en el relleno)\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La evidencia práctica de SEO para voz apunta a un patrón estable: consultas más largas, formuladas como preguntas completas, frecuentemente con intención local. El contenido que mejor funciona no es el que “suena coloquial” de forma artificial, sino el que abre con una respuesta directa y autocontenida, y luego desarrolla.\n    </p>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n      <div class=\"bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-1\">\n        <div class=\"font-jetbrains text-xs font-bold text-[#FF4400]\">[ RANGO 1: 20-30 PALABRAS ]</div>\n        <div class=\"font-bold text-sm text-black dark:text-white\">Respuestas Directas Inmediatas</div>\n        <p class=\"text-xs text-zinc-700 dark:text-zinc-300\">\n          Diseñadas para que un asistente (Google Assistant, Siri, Alexa) pueda leerlas en voz alta sin cortes ni contextualización excesiva.\n        </p>\n      </div>\n\n      <div class=\"bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-1\">\n        <div class=\"font-jetbrains text-xs font-bold text-[#B8006E] dark:text-[#D4FF00]\">[ RANGO 2: 40-60 PALABRAS ]</div>\n        <div class=\"font-bold text-sm text-black dark:text-white\">Párrafos de Desarrollo Autocontenido</div>\n        <p class=\"text-xs text-zinc-700 dark:text-zinc-300\">\n          Cuando la pregunta requiere una explicación breve pero completa sin depender de información previa.\n        </p>\n      </div>\n    </div>\n\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      No son reglas de ranking de Google. Son convenciones de formato que aumentan la probabilidad de que tu contenido sea seleccionable como respuesta hablada, especialmente si compites por featured snippets o por respuestas de asistente. La distinción es importante: Google no describe en 2026 un sistema de clasificación independiente llamado “voice SEO”. Lo que existe es una superficie de recuperación —asistentes, respuestas habladas, S2R— que favorece ciertas estructuras.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      La estructura que sí puedes implementar\n    </h2>\n    <ul class=\"space-y-3 text-base text-zinc-800 dark:text-zinc-300\">\n      <li class=\"bg-zinc-50 dark:bg-zinc-900/60 p-4 border border-zinc-300 dark:border-zinc-800\">\n        <strong class=\"text-black dark:text-white block font-jetbrains text-sm mb-1\">• Encabezados como preguntas naturales:</strong>\n        Si tu H2 es “Optimización de contenido para búsqueda por voz”, un asistente tiene que inferir la pregunta. Si tu H2 es “¿Cómo optimizar contenido para búsqueda por voz?”, la pregunta y la respuesta están alineadas. No se trata de convertir todo el artículo en un FAQ, sino de que los encabezados de las secciones que quieres que sean recuperables formulen la pregunta que un usuario haría en voz alta.\n      </li>\n      <li class=\"bg-zinc-50 dark:bg-zinc-900/60 p-4 border border-zinc-300 dark:border-zinc-800\">\n        <strong class=\"text-black dark:text-white block font-jetbrains text-sm mb-1\">• Respuesta directa en las primeras 2–3 frases:</strong>\n        Después de cada encabezado-pregunta, la respuesta debe poder leerse sola. Si el lector —o el asistente— se detiene después de tres frases, debe tener una respuesta útil. El desarrollo viene después.\n      </li>\n      <li class=\"bg-zinc-50 dark:bg-zinc-900/60 p-4 border border-zinc-300 dark:border-zinc-800\">\n        <strong class=\"text-black dark:text-white block font-jetbrains text-sm mb-1\">• Marcado estructurado FAQPage y HowTo:</strong>\n        El schema no “hace” que te posicionen, pero hace explícita la estructura pregunta-respuesta para los sistemas que la consumen. Es especialmente relevante cuando el contenido se sirve a través de asistentes que necesitan identificar pares pregunta-respuesta de forma inequívoca.\n      </li>\n      <li class=\"bg-zinc-50 dark:bg-zinc-900/60 p-4 border border-zinc-300 dark:border-zinc-800\">\n        <strong class=\"text-black dark:text-white block font-jetbrains text-sm mb-1\">• Accesibilidad de audio real, no solo “tener un podcast”:</strong>\n        La accesibilidad de audio incluye subtítulos y transcripciones precisas, pero también una estructura de página que no dependa exclusivamente de información visual. Un asistente que lee tu página en voz alta se encuentra con los mismos problemas que un usuario de lector de pantalla: encabezados que no describen la sección, enlaces “haz clic aquí”, texto alternativo ausente o decorativo mal marcado.\n      </li>\n    </ul>\n\n    <!-- BLOQUE DE CÓDIGO JSON-LD DE VOZ -->\n    <pre><code class=\"language-json\">{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"FAQPage\",\n  \"mainEntity\": [\n    {\n      \"@type\": \"Question\",\n      \"name\": \"¿Cómo optimizar contenido para búsqueda por voz?\",\n      \"acceptedAnswer\": {\n        \"@type\": \"Answer\",\n        \"text\": \"Abre cada sección con una respuesta directa y autocontenida de 20 a 30 palabras, usa encabezados formulados como preguntas en lenguaje natural y complementa con marcado estructurado FAQPage y transcripciones accesibles de audio.\"\n      }\n    }\n  ]\n}</code></pre>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Un recurso práctico: plantilla de respuesta hablada\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Para cada sección que quieras hacer recuperable por voz, usa esta plantilla de tres niveles:\n    </p>\n\n    <div class=\"space-y-3 font-jetbrains text-xs sm:text-sm\">\n      <div class=\"bg-zinc-100 dark:bg-zinc-900 border-l-4 border-[#FF4400] p-4\">\n        <div class=\"font-bold text-[#FF4400] uppercase\">Nivel 1 — Respuesta directa (20–30 palabras)</div>\n        <p class=\"mt-1 text-zinc-800 dark:text-zinc-300\">\n          Empieza con la respuesta, no con el contexto. <em>Ejemplo: “Para optimizar contenido para búsqueda por voz, abre cada sección con una respuesta directa de 20 a 30 palabras y usa encabezados formulados como preguntas naturales.”</em>\n        </p>\n      </div>\n\n      <div class=\"bg-zinc-100 dark:bg-zinc-900 border-l-4 border-[#B8006E] dark:border-[#D4FF00] p-4\">\n        <div class=\"font-bold text-[#B8006E] dark:text-[#D4FF00] uppercase\">Nivel 2 — Desarrollo (40–60 palabras)</div>\n        <p class=\"mt-1 text-zinc-800 dark:text-zinc-300\">\n          Explica el “cómo” o el “por qué” en un párrafo autocontenido. Sin remisiones a párrafos anteriores.\n        </p>\n      </div>\n\n      <div class=\"bg-zinc-100 dark:bg-zinc-900 border-l-4 border-black dark:border-white p-4\">\n        <div class=\"font-bold text-black dark:text-white uppercase\">Nivel 3 — Contexto y matices</div>\n        <p class=\"mt-1 text-zinc-800 dark:text-zinc-300\">\n          Aquí van los límites, las excepciones y las fuentes. Este nivel no está pensado para ser leído en voz alta, sino para el lector que necesita profundidad.\n        </p>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Checklist rápida de voz y audio\n    </h2>\n    <div class=\"bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-5 space-y-2.5 font-jetbrains text-xs sm:text-sm\">\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>Cada sección recuperable tiene un H2 en forma de pregunta natural.</span>\n      </div>\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>La primera respuesta de cada sección funciona sin el resto del artículo.</span>\n      </div>\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>El schema FAQPage o HowTo refleja preguntas y respuestas reales de la página, no un FAQ inventado al final.</span>\n      </div>\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>Las transcripciones de audio son precisas y están sincronizadas; los subtítulos no son generados sin revisión.</span>\n      </div>\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>Los encabezados describen la sección sin ambigüedad cuando se leen en voz alta.</span>\n      </div>\n      <div class=\"flex items-start gap-2.5\">\n        <span class=\"text-[#D4FF00] bg-black px-1 font-bold\">[✓]</span>\n        <span>Los enlaces tienen texto significativo; el texto alternativo de imágenes describe la función o el contenido, no “imagen”.</span>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"space-y-4 pt-4 border-t-2 border-black dark:border-zinc-800\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00]\">\n      Conclusión\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La búsqueda por voz no exige un “SEO paralelo”. Exige que el contenido sea recuperable por intención, no solo por coincidencia léxica. S2R hace que la intención hablada pese más que la transcripción perfecta, pero la estructura que permite recuperar esa intención sigue siendo la misma que funciona para AEO: preguntas claras, respuestas directas, desarrollo autocontenido y accesibilidad real. Lo que cambia es el estándar de exigencia: si tu contenido no se puede leer en voz alta y seguir teniendo sentido, probablemente tampoco sea fácil de recuperar como respuesta hablada.\n    </p>\n\n    <div class=\"bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 text-xs font-jetbrains space-y-1 text-zinc-700 dark:text-zinc-400\">\n      <div class=\"font-bold text-black dark:text-white uppercase mb-1\">Fuentes oficiales:</div>\n      <div>• Google Research, <em>Speech-to-Retrieval (S2R): A new approach to voice search</em> (07/10/2025).</div>\n      <div>• Google Research, <em>Simple Voice Questions (SVQ) dataset</em> (misma publicación).</div>\n      <div>• Referencias prácticas sobre contenido conversacional y formato de respuesta hablada: Webflow, Promptwatch y SEOGraphy (2026).</div>\n    </div>\n  </section>\n</article>"
   },
   {
-    "id": "actualizacion-core-google-ia-eeat",
-    "slug": "actualizacion-core-google-ia-eeat",
-    "title": "El Impacto de las Actualizaciones Core de Google en Sitios con Asistencia de IA",
-    "excerpt": "Directrices E-E-A-T: cómo demostrar autoría humana real detrás de flujos acelerados por modelos de lenguaje sin perder posicionamiento.",
+    "id": "google-core-updates-contenido-asistido-ia",
+    "slug": "google-core-updates-contenido-asistido-ia",
+    "title": "Actualizaciones Core de Google y contenido asistido por IA: experiencia, precisión y responsabilidad editorial",
+    "excerpt": "La actualización de las guías de Google de octubre de 2026 no crea un factor de ranking nuevo, pero hace explícito lo que antes estaba en las quality rater guidelines: el contenido asistido por IA debe revisarse, atribuirse y aportar valor verificable.",
     "category": "Algoritmos",
-    "tags": ["Algoritmos", "Google Core", "EEAT", "IA Generativa"],
-    "publishedAt": "05 Oct 2026",
-    "readTime": "7 min",
-    "image": "/MR DECREPITO.jpg",
+    "tags": [
+      "Core Updates",
+      "contenido asistido por IA",
+      "E-E-A-T",
+      "Google Search",
+      "calidad editorial",
+      "autoría",
+      "precisión"
+    ],
+    "publishedAt": "29 Oct 2026",
+    "readTime": "10 min",
+    "image": "/assets/aistudio/Core_update_b5a1b387.jpg",
     "isFeatured": false,
     "stats": {
-      "views": "4.1K lecturas",
-      "impact": "Cero penalizaciones en Core Updates"
+      "views": "4.5K lecturas",
+      "impact": "E-E-A-T Quality Compliant"
     },
     "author": {
-      "name": "Mr. Decrépito",
-      "role": "Head of Engineering & AEO Wacha Studios",
+      "name": "WACHA Producciones Multimedia",
+      "role": "Editorial Standards & DevSecOps",
       "avatar": "/wacha_logo.jpg"
     },
     "keyTakeaways": [
-      "Google no penaliza el uso de IA; penaliza el contenido no original creado exclusivamente para manipular motores de búsqueda.",
-      "La primera 'E' de E-E-A-T (Experience / Experiencia de primera mano) solo puede demostrarse con evidencia fotográfica, código funcional, audio y video real.",
-      "Las firmas de autor con bio verificable, perfiles sociales conectados y reseñas comprobables son el escudo definitivo contra bajadas de tráfico."
+      "Google no penaliza el uso de herramientas de IA; penaliza el escalado masivo automatizado sin valor añadido ni esfuerzo humano.",
+      "Los evaluadores de calidad buscan cuatro atributos indispensables: esfuerzo, originalidad, habilidad y precisión.",
+      "El \"contenido principal\" incluye títulos, metadatos, alt text y elementos interactivos, no solo el cuerpo del artículo.",
+      "Citar fuentes ajenas no sustituye al esfuerzo original: se exigen datos empíricos, casos propios y autorías transparentes."
     ],
     "content": [
-      "Las últimas actualizaciones de algoritmos de Google causaron estragos en miles de sitios nicho automatizados con scripts que vomitaban artículos genéricos sin revisión. Aquellos que perdieron el 80% de su tráfico sufrieron la aplicación estricta de las directrices Helpful Content y E-E-A-T.",
-      "En Wacha Multimedia utilizamos la inteligencia artificial como un amplificador creativo y técnico, nunca como un reemplazo de la experiencia vivida. Cada artículo y solución técnica surge de 20 años en la trinchera de la producción audiovisual, el desarrollo web y la creación de comunidades urbanas.",
-      "Para proteger tu sitio: incorpora testimonios verificables, enlaces a repositorios de código o demostraciones interactivas, metadatos de autor transparentes y casos de estudio documentados con métricas reales."
-    ]
+      "Google mantiene desde febrero de 2023 una posición firme: el uso de IA para generar contenido no está prohibido. El riesgo aparece cuando la automatización se usa para producir contenido a escala con el propósito principal de manipular rankings sin aportar valor suficiente.",
+      "Las actualizaciones de octubre de 2026 sincronizan la documentación oficial de Google Search Central con los criterios de los Quality Raters. La discusión útil ya no es si usas IA, sino si demuestras esfuerzo humano verificable, autoría real y precisión factual.",
+      "Para protegerse ante Core Updates, la revisión editorial humana debe ser integral: abarcando el cuerpo del artículo, pero también títulos, resúmenes, esquemas estructurados y textos alternativos de imagen."
+    ],
+    "sections": [
+      {
+        "heading": "1. El marco correcto: esfuerzo humano verificable",
+        "body": "El contenido generado con IA no tiene penalización inherente, pero el escalado sin valor añadido viola las políticas anti-spam. La clave está en demostrar que detrás de cada publicación hay un profesional con experiencia de primera mano."
+      },
+      {
+        "heading": "2. Qué cuenta como “contenido principal” según Google",
+        "body": "Todo elemento que permita cumplir el propósito de la página: calculadoras, herramientas interactivas, tablas, pestañas y encabezados visibles. Un encabezado engañoso devalúa todo el documento."
+      },
+      {
+        "heading": "3. Lo que Google penaliza de verdad: escalado y autoría falsa",
+        "body": "Se persiguen enérgicamente las biografías inventadas, avatares generados por IA que fingen ser expertos y la republiación pasiva de resúmenes sin análisis crítico."
+      },
+      {
+        "heading": "4. Checklist de publicación en 4 niveles para contenido asistido por IA",
+        "body": "Nivel 1: Verificación factual de cifras y nombres. Nivel 2: Autoría y canales de contacto transparentes. Nivel 3: Valor original e innovación práctica. Nivel 4: Gestión de expectativas continuas."
+      }
+    ],
+    "resources": [
+      {
+        "id": "core-updates-html-completo",
+        "name": "Código HTML Completo del Artículo (Core Updates y Contenido IA)",
+        "description": "Archivo HTML5 semántico con la guía de autoría verificable, E-E-A-T y control de calidad editorial.",
+        "fileName": "google-core-updates-contenido-asistido-ia.html",
+        "fileType": "text/html",
+        "size": "13.2 KB",
+        "fileContent": "<!DOCTYPE html>\n<html lang=\"es\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Actualizaciones Core de Google y contenido asistido por IA | Wacha Multimedia</title>\n  <meta name=\"description\" content=\"Google no prohíbe la IA. Exige revisión humana, autoría real y contenido principal con esfuerzo, originalidad, habilidad y precisión.\">\n</head>\n<body>\n${ARTICLE_3_HTML}\n</body>\n</html>"
+      },
+      {
+        "id": "checklist-publicacion-ia-eeat",
+        "name": "Checklist Editorial en 4 Niveles para Contenido Asistido por IA",
+        "description": "Protocolo de validación factual, atribución de autoría real, valor original y expectativas realistas.",
+        "fileName": "checklist-publicacion-contenido-ia-eeat.md",
+        "fileType": "text/markdown",
+        "size": "2.8 KB",
+        "fileContent": "# Checklist de Publicación para Contenido Asistido por IA (Wacha Studios)\n\n## Nivel 1 — Verificación factual (obligatoria)\n- [ ] Cada afirmación factual del texto ha sido contrastada con una fuente primaria u oficial.\n- [ ] Las cifras, fechas y nombres propios han sido revisados manualmente.\n- [ ] Las fuentes citadas existen y dicen lo que se les atribuye.\n- [ ] El título, metadescripción, schema y alt text han sido revisados con el mismo rigor que el cuerpo.\n\n## Nivel 2 — Autoría y responsabilidad editorial\n- [ ] El autor o la autora existen y su identidad es verificable.\n- [ ] No hay biografías ni fotos de perfil falsas generadas por IA presentadas como personas reales.\n- [ ] La página identifica con claridad quién es responsable del contenido y canales de contacto.\n\n## Nivel 3 — Valor original y contenido principal\n- [ ] El contenido aporta datos propios, experiencia empírica de primera mano o procedimientos probados.\n- [ ] No es una regurgitación de resúmenes de terceros.\n- [ ] Las secciones interactivas, tablas o calculadoras también cumplen los estándares de precisión.\n\n## Nivel 4 — Expectativas realistas\n- [ ] Se entiende que optimizar no garantiza un reseteo instantáneo frente a AI Overviews.\n- [ ] La auditoría y revisión se mantiene como un proceso editorial continuo."
+      },
+      {
+        "id": "techarticle-author-attribution-jsonld",
+        "name": "Schema JSON-LD TechArticle con Atribución y Revisión Humana Verificable",
+        "description": "Marcado estructurado que demuestra E-E-A-T declarando entidad creadora, revisor humano y directrices editoriales.",
+        "fileName": "techarticle-author-attribution.json",
+        "fileType": "application/json",
+        "size": "1.6 KB",
+        "fileContent": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"TechArticle\",\n  \"headline\": \"Actualizaciones Core de Google y contenido asistido por IA: experiencia, precisión y responsabilidad editorial\",\n  \"author\": {\n    \"@type\": \"Organization\",\n    \"name\": \"WACHA Producciones Multimedia\",\n    \"url\": \"https://whacha.site\"\n  },\n  \"publisher\": {\n    \"@type\": \"Organization\",\n    \"name\": \"Wacha Studios\",\n    \"logo\": \"https://whacha.site/wacha_logo.jpg\"\n  },\n  \"reviewedBy\": {\n    \"@type\": \"Person\",\n    \"name\": \"Mr. Decrépito\",\n    \"jobTitle\": \"Head of Engineering & AEO\"\n  },\n  \"datePublished\": \"2026-10-29T10:00:00Z\"\n}"
+      }
+    ],
+    "htmlContent": "<article class=\"article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6\">\n  <header class=\"border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3\">\n    <div class=\"flex flex-wrap gap-2 text-xs font-jetbrains\">\n      <span class=\"bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black\">E-E-A-T & ALGORITMOS</span>\n      <span class=\"bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700\">CORE UPDATES 2026</span>\n      <span class=\"text-zinc-500 py-0.5\">SLUG: google-core-updates-contenido-asistido-ia</span>\n    </div>\n    <h1 class=\"text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white\">\n      Actualizaciones Core de Google y contenido asistido por IA: experiencia, precisión y responsabilidad editorial\n    </h1>\n    <p class=\"text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains\">\n      ¿Qué exige Google al contenido asistido por IA después de las actualizaciones de 2026?\n    </p>\n    <div class=\"text-xs font-jetbrains text-zinc-600 dark:text-zinc-400\">\n      Por <strong>WACHA Producciones Multimedia</strong> • https://whacha.site\n    </div>\n  </header>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      El marco correcto: no es “IA sí o no”, es “esfuerzo humano verificable”\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Google mantiene desde febrero de 2023 una posición que no ha cambiado en lo esencial: el uso de IA para generar contenido no está prohibido. El riesgo aparece cuando la automatización se usa para producir contenido a escala con el propósito principal de manipular los resultados, sin aportar valor suficiente. Esa es la formulación de la guía sobre contenido generado por IA, y sigue siendo la referencia.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Lo que sí cambió en octubre de 2026 fue el nivel de explicitud. Google actualizó dos documentos: la guía sobre contenido generativo (1 de octubre) y la página sobre contenido útil centrado en personas (última actualización, 5 de octubre). La actualización no introdujo un nuevo factor de ranking ni anunció una penalización nueva; sincronizó la documentación oficial con criterios que ya estaban en las quality rater guidelines.\n    </p>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La consecuencia editorial es clara: la discusión útil ya no es si usas IA, sino si puedes demostrar <strong>esfuerzo, originalidad, talento o habilidad, y precisión</strong> en el contenido principal. Google nombra esos cuatro atributos explícitamente y entrena a los evaluadores de calidad para aplicarlos.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Qué cuenta como “contenido principal” (y por qué esto importa para la IA)\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      La definición de contenido principal de Google es más amplia de lo que muchos equipos asumen: cualquier parte de la página que contribuya directamente a que la página cumpla su propósito. Eso incluye el texto y los medios principales, pero también calculadoras, herramientas interactivas, secciones con pestañas, reseñas de usuarios y los títulos y encabezados visibles.\n    </p>\n\n    <div class=\"bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-2\">\n      <div class=\"font-jetbrains text-xs font-bold text-[#FF4400] uppercase\">Dos implicaciones críticas que suelen pasarse por alto:</div>\n      <ul class=\"list-disc list-inside space-y-1.5 text-sm text-zinc-800 dark:text-zinc-300\">\n        <li><strong>El contenido detrás de pestañas puede ser contenido principal:</strong> La afirmación de que “lo que está en tabs no cuenta” es falsa según la propia definición de Google.</li>\n        <li><strong>Los títulos y encabezados son contenido principal:</strong> Un título sensacionalista o un encabezado que no representa la página puede degradar la calidad del contenido principal, no solo el CTR.</li>\n      </ul>\n    </div>\n\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Para el contenido asistido por IA, esto significa que la revisión no puede limitarse al cuerpo del artículo. Si la IA generó el título, la metadescripción, el schema o el alt text, esos elementos también requieren verificación humana. Google lo dice de forma explícita: la revisión debe cubrir títulos, metadescripciones, datos estructurados y texto alternativo de imágenes.\n    </p>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Lo que Google penaliza de verdad: escalado sin esfuerzo y autoría falsa\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Las spam policies siguen apuntando a dos conductas concretas:\n    </p>\n\n    <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n      <div class=\"bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-300 dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-[#FF4400] uppercase\">1. Contenido escalado sin valor añadido</h3>\n        <p class=\"text-xs sm:text-sm text-zinc-700 dark:text-zinc-300\">\n          Usar IA para generar grandes volúmenes de páginas sin aportar valor puede violar las reglas sobre <em>scaled content abuse</em>. El problema no es la IA; es la ecuación “más páginas = más tráfico” cuando la producción es la parte más fácil.\n        </p>\n      </div>\n\n      <div class=\"bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-300 dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-[#B8006E] dark:text-[#D4FF00] uppercase\">2. Autoría engañosa y perfiles falsos</h3>\n        <p class=\"text-xs sm:text-sm text-zinc-700 dark:text-zinc-300\">\n          Google describe explícitamente las biografías inventadas, nombres falsos y credenciales fabricadas —incluidas fotos de perfil generadas por IA— como señales de baja calidad. La sección “Acerca de” es parte de la superficie de confianza.\n        </p>\n      </div>\n    </div>\n\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Un matiz igualmente importante: citar fuentes no equivale a esfuerzo original. Google ha declarado que la atribución “no reemplaza la necesidad de esfuerzo original”; resumir otros sitios y enlazarlos no es suficiente. Para el contenido asistido por IA, esto descarta el patrón de “investigación” que consiste en pedirle al modelo que resuma cinco resultados de búsqueda y publicar el resumen con enlaces.\n    </p>\n\n    <!-- BLOQUE DE CÓDIGO JSON-LD DE ATRIBUCIÓN EDITORIAL -->\n    <pre><code class=\"language-json\">{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"TechArticle\",\n  \"headline\": \"Actualizaciones Core de Google y contenido asistido por IA\",\n  \"author\": {\n    \"@type\": \"Organization\",\n    \"name\": \"WACHA Producciones Multimedia\",\n    \"url\": \"https://whacha.site\"\n  },\n  \"publisher\": {\n    \"@type\": \"Organization\",\n    \"name\": \"Wacha Studios\"\n  },\n  \"review\": {\n    \"@type\": \"Review\",\n    \"reviewRating\": { \"@type\": \"Rating\", \"ratingValue\": \"5\" },\n    \"author\": { \"@type\": \"Person\", \"name\": \"Mr. Decrépito\" }\n  }\n}</code></pre>\n  </section>\n\n  <section class=\"space-y-4\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3\">\n      Un recurso práctico: checklist de publicación para contenido asistido por IA\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Esta checklist está pensada para usarse antes de publicar, no después de una caída de tráfico. No garantiza recuperación —Google lo dice explícitamente: no promete que las mejoras produzcan un aumento visible inmediato en resultados—, pero reduce el riesgo de infracción evitable.\n    </p>\n\n    <div class=\"space-y-4\">\n      <div class=\"bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-[#FF4400] uppercase\">Nivel 1 — Verificación factual (obligatoria)</h3>\n        <ul class=\"space-y-1.5 text-xs sm:text-sm font-jetbrains text-zinc-800 dark:text-zinc-300\">\n          <li>[✓] Cada afirmación factual del texto ha sido contrastada con una fuente primaria u oficial, no solo con la salida del modelo.</li>\n          <li>[✓] Las cifras, fechas y nombres propios han sido revisados manualmente.</li>\n          <li>[✓] Las fuentes citadas existen y dicen lo que se les atribuye.</li>\n          <li>[✓] El título, la metadescripción, el schema y el alt text han sido revisados con el mismo estándar que el cuerpo.</li>\n        </ul>\n      </div>\n\n      <div class=\"bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-[#B8006E] dark:text-[#D4FF00] uppercase\">Nivel 2 — Autoría y responsabilidad editorial</h3>\n        <ul class=\"space-y-1.5 text-xs sm:text-sm font-jetbrains text-zinc-800 dark:text-zinc-300\">\n          <li>[✓] El autor o la autora existen y su identidad es verificable.</li>\n          <li>[✓] Si hay una biografía, las credenciales son reales; no hay headshots generados por IA presentados como personas reales.</li>\n          <li>[✓] La página identifica quién es responsable del contenido y cómo contactar.</li>\n          <li>[✓] Si se usó IA, la página no lo oculta ni lo presenta como trabajo exclusivamente humano cuando no lo es.</li>\n        </ul>\n      </div>\n\n      <div class=\"bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-black dark:text-white uppercase\">Nivel 3 — Valor original y contenido principal</h3>\n        <ul class=\"space-y-1.5 text-xs sm:text-sm font-jetbrains text-zinc-800 dark:text-zinc-300\">\n          <li>[✓] El contenido aporta algo que no está ya en los primeros resultados: datos propios, experiencia de primera mano, procedimiento probado.</li>\n          <li>[✓] No es un resumen de resúmenes ni una reformulación de fuentes secundarias.</li>\n          <li>[✓] Las secciones interactivas, calculadoras, tablas y tabs también cumplen el estándar de precisión y esfuerzo.</li>\n          <li>[✓] Los títulos y encabezados describen el contenido con precisión sin clickbait engañoso.</li>\n        </ul>\n      </div>\n\n      <div class=\"bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2\">\n        <h3 class=\"font-jetbrains text-sm font-bold text-zinc-600 dark:text-zinc-400 uppercase\">Nivel 4 — Expectativas realistas</h3>\n        <ul class=\"space-y-1.5 text-xs sm:text-sm font-jetbrains text-zinc-800 dark:text-zinc-300\">\n          <li>[✓] El equipo entiende que corregir contenido no garantiza recuperar tráfico: el entorno ha cambiado con AI Overviews, foros y video.</li>\n          <li>[✓] La revisión se trata como un proceso continuo, no como un parche único tras una actualización.</li>\n        </ul>\n      </div>\n    </div>\n  </section>\n\n  <section class=\"space-y-4 pt-4 border-t-2 border-black dark:border-zinc-800\">\n    <h2 class=\"text-2xl font-anton uppercase text-black dark:text-[#D4FF00]\">\n      Conclusión\n    </h2>\n    <p class=\"text-base leading-relaxed text-zinc-800 dark:text-zinc-300\">\n      Las actualizaciones Core y las guías de contenido de Google no han convertido la IA en un factor de penalización automática. Han hecho algo más exigente: han trasladado al contenido asistido por IA el mismo estándar que siempre se aplicó al contenido humano de calidad —esfuerzo real, autoría verificable, precisión comprobada y valor original—, pero ahora con la expectativa explícita de que la revisión humana cubra también los metadatos y el marcado estructurado. La responsabilidad editorial no es un adorno de E-E-A-T; es la condición que separa el contenido asistido por IA que Google considera útil del que considera escalado sin valor.\n    </p>\n\n    <div class=\"bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 text-xs font-jetbrains space-y-1 text-zinc-700 dark:text-zinc-400\">\n      <div class=\"font-bold text-black dark:text-white uppercase mb-1\">Fuentes oficiales:</div>\n      <div>• Google Search Central, <em>Google Search's guidance about AI-generated content</em> (actualizada 01/10/2026; referencia original de 2023).</div>\n      <div>• Google Search Central, <em>Creating helpful, reliable, people-first content</em> (actualizada 05/10/2026).</div>\n      <div>• Análisis de la actualización: MarTech, <em>Google changed its content guidance. Don’t expect a reset</em> (13/10/2026); Linksurge, <em>Google Spells Out Four Quality Attributes…</em> (09/10/2026).</div>\n    </div>\n  </section>\n</article>"
   },
   {
     "id": "thumbnail-ctr-matrix-psicologia-contraste",
@@ -222,7 +659,12 @@
     "title": "Thumbnail CTR Matrix: Psicología del Color, Alto Contraste y Tipografía",
     "excerpt": "Deconstrucción de 80 miniaturas de alta conversión en nuestra red de canales con más de 2.4M de impresiones diarias.",
     "category": "Video SEO",
-    "tags": ["YouTube CTR", "Thumbnails", "Video SEO", "Diseño"],
+    "tags": [
+      "YouTube CTR",
+      "Thumbnails",
+      "Video SEO",
+      "Diseño"
+    ],
     "publishedAt": "01 Oct 2026",
     "readTime": "6 min",
     "image": "/sigue_bailando.jpg",

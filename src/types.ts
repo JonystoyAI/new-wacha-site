@@ -86,6 +86,16 @@ export interface QuoteFormData {
   honeypot: string; // Anti-bot
 }
 
+export interface BlogDownloadResource {
+  id: string;
+  name: string;
+  description: string;
+  fileName: string;
+  fileContent: string;
+  fileType: string;
+  size: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -109,4 +119,32 @@ export interface BlogPost {
   };
   externalSourceUrl?: string;
   isFeatured?: boolean;
+  sections?: { heading: string; body: string }[];
+  resources?: BlogDownloadResource[];
+  fullMarkdown?: string;
+  htmlContent?: string;
 }
+
+export interface GoogleAnalyticsMetrics {
+  activeUsersRealtime: number;
+  totalSessions: number;
+  totalPageviews: number;
+  avgSessionDuration: string;
+  bounceRate: string;
+  engagementRate: string;
+  topPages: { page: string; activeUsers: number; pageviews: number }[];
+  trafficSources: { source: string; percentage: number; sessions: number }[];
+  lastUpdated: string;
+  propertyId: string;
+  apiConnected: boolean;
+}
+
+export interface AdminAuditLog {
+  id: string;
+  timestamp: string;
+  eventType: 'LOGIN_SUCCESS' | 'LOGIN_FAILED' | 'BOT_HONEYPOT_TRIGGERED' | 'TOKEN_REFRESH' | 'GA4_SYNC' | 'LOGOUT';
+  ipAddress: string;
+  details: string;
+  severity: 'INFO' | 'WARN' | 'DANGER';
+}
+

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { BlogPost } from '../types';
+import { BlogPost, BlogDownloadResource } from '../types';
 import { loadBlogArticles } from '../data/blogData';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
 import { 
@@ -17,8 +17,107 @@ import {
   Eye, 
   TrendingUp,
   RefreshCw,
-  BookOpen
+  BookOpen,
+  Download,
+  Layers,
+  FileCode,
+  FileText
 } from 'lucide-react';
+
+interface ArticleHtmlRendererProps {
+  html: string;
+}
+
+export const ArticleHtmlRenderer: React.FC<ArticleHtmlRendererProps> = ({ html }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const container = containerRef.current;
+    const preElements = container.querySelectorAll('pre');
+
+    preElements.forEach((pre) => {
+      if (pre.getAttribute('data-code-enhanced') === 'true') return;
+      pre.setAttribute('data-code-enhanced', 'true');
+
+      const codeEl = pre.querySelector('code');
+      const className = codeEl?.className || '';
+      let lang = 'CÓDIGO';
+      if (className.includes('javascript') || className.includes('js')) {
+        lang = 'JAVASCRIPT';
+      } else if (className.includes('css')) {
+        lang = 'CSS';
+      } else if (className.includes('json')) {
+        lang = 'JSON-LD / SCHEMA';
+      } else if (className.includes('html')) {
+        lang = 'HTML5';
+      }
+
+      // Create high-contrast control bar
+      const topBar = document.createElement('div');
+      topBar.className = 'flex items-center justify-between px-3.5 py-2 bg-black text-[#D4FF00] border-2 border-black dark:border-zinc-700 border-b-0 font-jetbrains text-xs font-bold';
+
+      const langInfo = document.createElement('div');
+      langInfo.className = 'flex items-center gap-2';
+      langInfo.innerHTML = `
+        <span class="w-2.5 h-2.5 rounded-full bg-[#00E599] inline-block animate-pulse"></span>
+        <span class="text-white text-[11px] font-mono tracking-wider">[ ${lang} ]</span>
+      `;
+      topBar.appendChild(langInfo);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'px-3 py-1 bg-white text-black hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer';
+      copyBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+        <span>COPIAR</span>
+      `;
+
+      copyBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const codeText = codeEl ? (codeEl.textContent || codeEl.innerText) : (pre.textContent || pre.innerText);
+        if (!codeText) return;
+
+        navigator.clipboard.writeText(codeText.trim()).then(() => {
+          copyBtn.className = 'px-3 py-1 bg-[#00E599] text-black border border-black font-jetbrains text-xs font-bold transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer';
+          copyBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>COPIADO ✔</span>
+          `;
+          setTimeout(() => {
+            copyBtn.className = 'px-3 py-1 bg-white text-black hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer';
+            copyBtn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              <span>COPIAR</span>
+            `;
+          }, 2500);
+        }).catch(err => {
+          console.error('Failed to copy code: ', err);
+        });
+      };
+
+      topBar.appendChild(copyBtn);
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'my-5 brutal-shadow-black';
+      
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(topBar);
+      wrapper.appendChild(pre);
+
+      pre.className = 'bg-[#0d1117] text-[#e6edf3] border-2 border-black dark:border-zinc-700 p-4 font-jetbrains text-xs overflow-x-auto leading-relaxed selection:bg-[#D4FF00] selection:text-black m-0';
+    });
+  }, [html]);
+
+  return (
+    <div 
+      ref={containerRef}
+      className="article-html-body prose prose-invert max-w-none space-y-4"
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+};
 
 export const BlogFeed: React.FC = () => {
   const [articles, setArticles] = useState<BlogPost[]>([]);
@@ -28,9 +127,32 @@ export const BlogFeed: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('TODAS');
   const [sortBy, setSortBy] = useState<'recent' | 'views'>('recent');
   const [activeArticle, setActiveArticle] = useState<BlogPost | null>(null);
+  const [readerTab, setReaderTab] = useState<'reading' | 'html'>('reading');
+  const [copiedHtml, setCopiedHtml] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [downloadedResourceId, setDownloadedResourceId] = useState<string | null>(null);
   const [dataSource, setDataSource] = useState<string>('/data/articles.json');
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDownloadResource = (resource: BlogDownloadResource) => {
+    try {
+      const blob = new Blob([resource.fileContent], { type: resource.fileType || 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = resource.fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setDownloadedResourceId(resource.id);
+      setTimeout(() => {
+        setDownloadedResourceId(null);
+      }, 2500);
+    } catch (err) {
+      console.error('Error downloading resource:', err);
+    }
+  };
 
   // Load articles on mount
   useEffect(() => {
@@ -390,11 +512,18 @@ export const BlogFeed: React.FC = () => {
                           [ {article.category} ]
                         </span>
                         
-                        {article.stats?.impact && (
-                          <span className="px-2 py-0.5 bg-[#FF4400] text-white text-[10px] font-jetbrains font-bold border border-black flex items-center gap-1">
-                            <TrendingUp className="w-3 h-3 text-white" /> {article.stats.impact}
-                          </span>
-                        )}
+                        <div className="flex items-center gap-1.5">
+                          {article.resources && article.resources.length > 0 && (
+                            <span className="px-2 py-0.5 bg-[#D4FF00] text-black text-[10px] font-jetbrains font-bold border border-black flex items-center gap-1 shadow-sm">
+                              <Download className="w-3 h-3 text-black" /> {article.resources.length} DESCARGAS
+                            </span>
+                          )}
+                          {article.stats?.impact && (
+                            <span className="px-2 py-0.5 bg-[#FF4400] text-white text-[10px] font-jetbrains font-bold border border-black flex items-center gap-1">
+                              <TrendingUp className="w-3 h-3 text-white" /> {article.stats.impact}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       {/* Read Time & Views Overlay */}
@@ -448,7 +577,11 @@ export const BlogFeed: React.FC = () => {
                   {/* Card Footer Actions */}
                   <div className="p-5 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-900 mt-4 flex items-center justify-between gap-3">
                     <button
-                      onClick={() => setActiveArticle(article)}
+                      onClick={() => {
+                        setActiveArticle(article);
+                        setReaderTab('reading');
+                        setCopiedHtml(false);
+                      }}
                       className="flex-1 bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white font-jetbrains text-xs font-bold py-2.5 px-4 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-2 group/btn cursor-pointer brutal-shadow-black"
                     >
                       <BookOpen className="w-3.5 h-3.5 text-black group-hover/btn:text-white" />
@@ -554,50 +687,258 @@ export const BlogFeed: React.FC = () => {
               />
             </div>
 
+            {/* View Mode Tabs (Reading vs HTML Code) */}
+            <div className="flex border-b-2 border-black dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 sticky top-[57px] z-10">
+              <button
+                onClick={() => setReaderTab('reading')}
+                className={`flex-1 sm:flex-initial px-5 py-3 font-jetbrains text-xs font-bold transition-all flex items-center justify-center gap-2 border-r-2 border-black dark:border-zinc-800 cursor-pointer ${
+                  readerTab === 'reading'
+                    ? 'bg-[#D4FF00] text-black shadow-inner'
+                    : 'bg-white dark:bg-zinc-950 text-black dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                }`}
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>LECTURA EDITORIAL</span>
+              </button>
+
+              {activeArticle.htmlContent && (
+                <button
+                  onClick={() => setReaderTab('html')}
+                  className={`flex-1 sm:flex-initial px-5 py-3 font-jetbrains text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                    readerTab === 'html'
+                      ? 'bg-[#FF4400] text-white shadow-inner'
+                      : 'bg-white dark:bg-zinc-950 text-black dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800'
+                  }`}
+                >
+                  <FileCode className="w-4 h-4" />
+                  <span>CÓDIGO FUENTE HTML</span>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black text-[#D4FF00] font-bold border border-zinc-700 hidden sm:inline-block">
+                    HTML5
+                  </span>
+                </button>
+              )}
+            </div>
+
             {/* Modal Body */}
             <div className="p-6 sm:p-8 space-y-6">
-              {/* Header Info */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-xs font-jetbrains text-zinc-600 dark:text-zinc-400 font-bold">
-                  <span>PUBLICADO: {activeArticle.publishedAt}</span>
-                  {activeArticle.stats?.impact && (
-                    <span className="text-[#B8006E] dark:text-[#D4FF00] font-bold">• {activeArticle.stats.impact}</span>
+              {readerTab === 'reading' ? (
+                <>
+                  {activeArticle.htmlContent ? (
+                    /* Render Full HTML with automatic Copy button on <pre><code> */
+                    <div className="space-y-6">
+                      <ArticleHtmlRenderer html={activeArticle.htmlContent} />
+                    </div>
+                  ) : (
+                    /* Standard fallback rendering */
+                    <>
+                      {/* Header Info */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3 text-xs font-jetbrains text-zinc-600 dark:text-zinc-400 font-bold">
+                          <span>PUBLICADO: {activeArticle.publishedAt}</span>
+                          {activeArticle.stats?.impact && (
+                            <span className="text-[#B8006E] dark:text-[#D4FF00] font-bold">• {activeArticle.stats.impact}</span>
+                          )}
+                        </div>
+
+                        <h1 className="font-anton text-2xl sm:text-4xl uppercase text-black dark:text-white leading-tight">
+                          {activeArticle.title}
+                        </h1>
+
+                        <p className="text-zinc-800 dark:text-zinc-300 font-space-grotesk text-base sm:text-lg leading-relaxed border-l-4 border-[#B8006E] dark:border-[#D4FF00] pl-4 font-medium">
+                          {activeArticle.excerpt}
+                        </p>
+                      </div>
+
+                      {/* Key Takeaways Box */}
+                      {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
+                        <div className="bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-300 dark:border-zinc-800 p-5 space-y-3">
+                          <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#B8006E] dark:text-[#D4FF00]">
+                            <Sparkles className="w-4 h-4 text-[#B8006E] dark:text-[#D4FF00]" />
+                            <span>CONCLUSIONES CLAVE / RETENCIÓN ESTRATÉGICA</span>
+                          </div>
+                          <ul className="space-y-2 text-xs sm:text-sm font-space-grotesk text-zinc-800 dark:text-zinc-300">
+                            {activeArticle.keyTakeaways.map((takeaway, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="text-[#FF4400] font-bold font-jetbrains mt-0.5">[{i + 1}]</span>
+                                <span>{takeaway}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Full Content Paragraphs */}
+                      <div className="space-y-4 font-space-grotesk text-zinc-800 dark:text-zinc-300 text-sm sm:text-base leading-relaxed">
+                        {activeArticle.content.map((paragraph, i) => (
+                          <p key={i}>{paragraph}</p>
+                        ))}
+                      </div>
+
+                      {/* Technical Sections Breakdown */}
+                      {activeArticle.sections && activeArticle.sections.length > 0 && (
+                        <div className="space-y-4 pt-6 border-t-2 border-zinc-200 dark:border-zinc-800">
+                          <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#FF4400]">
+                            <Layers className="w-4 h-4 text-[#FF4400]" />
+                            <span>DESGLOSE TÉCNICO Y SECCIONES DEL DOCUMENTO</span>
+                          </div>
+                          <div className="space-y-3">
+                            {activeArticle.sections.map((section, idx) => (
+                              <div 
+                                key={idx} 
+                                className="bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1.5 transition-all hover:border-black dark:hover:border-zinc-600"
+                              >
+                                <h4 className="font-jetbrains font-bold text-xs sm:text-sm text-black dark:text-[#D4FF00]">
+                                  {section.heading}
+                                </h4>
+                                <p className="font-space-grotesk text-xs sm:text-sm text-zinc-800 dark:text-zinc-300 leading-relaxed">
+                                  {section.body}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
-                </div>
+                </>
+              ) : (
+                /* Tab 2: Raw HTML Source Code Viewer */
+                <div className="space-y-4">
+                  <div className="bg-[#121411] border-2 border-black dark:border-zinc-700 p-5 space-y-4 brutal-shadow-black">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#D4FF00]">
+                          <FileCode className="w-4 h-4 text-[#D4FF00]" />
+                          <span>CÓDIGO FUENTE HTML5 GENERADO</span>
+                        </div>
+                        <p className="text-xs font-space-grotesk text-zinc-400">
+                          HTML semántico listo para integración web, con marcado de ingeniería y bloques &lt;pre&gt;&lt;code&gt;.
+                        </p>
+                      </div>
 
-                <h1 className="font-anton text-2xl sm:text-4xl uppercase text-black dark:text-white leading-tight">
-                  {activeArticle.title}
-                </h1>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <button
+                          onClick={() => {
+                            if (!activeArticle.htmlContent) return;
+                            navigator.clipboard.writeText(activeArticle.htmlContent).then(() => {
+                              setCopiedHtml(true);
+                              setTimeout(() => setCopiedHtml(false), 2500);
+                            });
+                          }}
+                          className={`px-4 py-2 text-xs font-jetbrains font-bold border-2 border-black transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer ${
+                            copiedHtml
+                              ? 'bg-[#00E599] text-black border-black'
+                              : 'bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white'
+                          }`}
+                        >
+                          {copiedHtml ? (
+                            <>
+                              <Check className="w-4 h-4 text-black" />
+                              <span>CÓDIGO HTML COPIADO ✔</span>
+                            </>
+                          ) : (
+                            <>
+                              <FileCode className="w-4 h-4" />
+                              <span>COPIAR CÓDIGO HTML</span>
+                            </>
+                          )}
+                        </button>
 
-                <p className="text-zinc-800 dark:text-zinc-300 font-space-grotesk text-base sm:text-lg leading-relaxed border-l-4 border-[#B8006E] dark:border-[#D4FF00] pl-4 font-medium">
-                  {activeArticle.excerpt}
-                </p>
-              </div>
+                        <button
+                          onClick={() => {
+                            if (!activeArticle.htmlContent) return;
+                            const fullDoc = `<!DOCTYPE html>\n<html lang="es">\n<head>\n  <meta charset="UTF-8">\n  <title>${activeArticle.title} | Wacha Multimedia</title>\n  <meta name="description" content="${activeArticle.excerpt}">\n</head>\n<body>\n${activeArticle.htmlContent}\n</body>\n</html>`;
+                            handleDownloadResource({
+                              id: `${activeArticle.slug}-html-file`,
+                              name: `${activeArticle.title} (HTML)`,
+                              description: 'Documento HTML5 completo',
+                              fileName: `${activeArticle.slug}.html`,
+                              fileType: 'text/html',
+                              fileContent: fullDoc,
+                              size: `${Math.round(fullDoc.length / 1024 * 10) / 10} KB`
+                            });
+                          }}
+                          className="px-4 py-2 text-xs font-jetbrains font-bold bg-white text-black hover:bg-zinc-200 border-2 border-black transition-all duration-150 active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                        >
+                          <Download className="w-4 h-4" />
+                          <span>DESCARGAR .HTML</span>
+                        </button>
+                      </div>
+                    </div>
 
-              {/* Key Takeaways Box */}
-              {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
-                <div className="bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-300 dark:border-zinc-800 p-5 space-y-3">
-                  <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#B8006E] dark:text-[#D4FF00]">
-                    <Sparkles className="w-4 h-4 text-[#B8006E] dark:text-[#D4FF00]" />
-                    <span>CONCLUSIONES CLAVE / RETENCIÓN ESTRATÉGICA</span>
+                    <div className="relative">
+                      <pre className="bg-[#0d1117] text-[#e6edf3] border-2 border-zinc-800 p-4 font-jetbrains text-xs overflow-x-auto max-h-[500px] leading-relaxed selection:bg-[#D4FF00] selection:text-black">
+                        <code>{activeArticle.htmlContent}</code>
+                      </pre>
+                    </div>
                   </div>
-                  <ul className="space-y-2 text-xs sm:text-sm font-space-grotesk text-zinc-800 dark:text-zinc-300">
-                    {activeArticle.keyTakeaways.map((takeaway, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-[#FF4400] font-bold font-jetbrains mt-0.5">[{i + 1}]</span>
-                        <span>{takeaway}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               )}
 
-              {/* Full Content Paragraphs */}
-              <div className="space-y-4 font-space-grotesk text-zinc-800 dark:text-zinc-300 text-sm sm:text-base leading-relaxed">
-                {activeArticle.content.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
+              {/* Downloadable Resources Box */}
+              {activeArticle.resources && activeArticle.resources.length > 0 && (
+                <div className="bg-[#121411] border-2 border-black dark:border-zinc-700 p-5 sm:p-6 space-y-4 brutal-shadow-black">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800 pb-3">
+                    <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#D4FF00]">
+                      <Download className="w-4 h-4 text-[#D4FF00]" />
+                      <span>RECURSOS Y COMPLEMENTOS DE DESCARGA DIRECTA</span>
+                    </div>
+                    <span className="text-[10px] font-jetbrains text-zinc-400">
+                      [ {activeArticle.resources.length} ARCHIVOS DISPONIBLES ]
+                    </span>
+                  </div>
+
+                  <div className="space-y-3">
+                    {activeArticle.resources.map((res) => (
+                      <div 
+                        key={res.id}
+                        className="bg-zinc-900 border border-zinc-800 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-[#D4FF00] transition-colors"
+                      >
+                        <div className="space-y-1 flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="px-1.5 py-0.5 bg-black text-[#D4FF00] text-[10px] font-jetbrains font-bold border border-zinc-700 uppercase">
+                              {res.fileName.split('.').pop()}
+                            </span>
+                            <span className="font-jetbrains font-bold text-xs text-white">
+                              {res.fileName}
+                            </span>
+                            <span className="text-[10px] font-jetbrains text-zinc-400">
+                              ({res.size})
+                            </span>
+                          </div>
+                          <div className="font-jetbrains text-xs text-zinc-200 font-bold">
+                            {res.name}
+                          </div>
+                          <div className="text-[11px] font-space-grotesk text-zinc-400 leading-tight">
+                            {res.description}
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => handleDownloadResource(res)}
+                          className={`font-jetbrains text-xs font-bold py-2.5 px-4 border-2 border-black transition-all duration-150 active:scale-95 flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer shrink-0 ${
+                            downloadedResourceId === res.id
+                              ? 'bg-emerald-500 text-black border-emerald-600'
+                              : 'bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white'
+                          }`}
+                        >
+                          {downloadedResourceId === res.id ? (
+                            <>
+                              <Check className="w-4 h-4 text-black" />
+                              <span>DESCARGADO</span>
+                            </>
+                          ) : (
+                            <>
+                              <Download className="w-4 h-4" />
+                              <span>DESCARGAR</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Author Info */}
               <div className="pt-6 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-4">
