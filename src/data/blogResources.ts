@@ -1,5 +1,5 @@
 import { BlogDownloadResource } from '../types';
-import { ARTICLE_1_HTML, ARTICLE_2_HTML, ARTICLE_3_HTML } from './articleHtmlData';
+import { ARTICLE_1_HTML, ARTICLE_2_HTML, ARTICLE_3_HTML, ARTICLE_GEO_HTML } from './articleHtmlData';
 
 /* =========================================================================
  * ARTÍCULO 1: AEO 2026 - RECURSOS Y COMPLEMENTOS DESCARGABLES
@@ -741,3 +741,82 @@ export const ARTICLE_CORE_RESOURCES: BlogDownloadResource[] = [
 }`
   }
 ];
+
+/* =========================================================================
+ * ARTÍCULO GEO: LA MUERTE DEL KEYWORD STUFFING - RECURSOS DESCARGABLES
+ * ========================================================================= */
+export const ARTICLE_GEO_RESOURCES: BlogDownloadResource[] = [
+  {
+    id: 'geo-html-completo',
+    name: 'Código HTML5 Completo del Artículo (GEO: La Muerte del Keyword Stuffing)',
+    description: 'Archivo HTML5 semántico listo para integración con tablas comparativas, métricas y marcado de organización.',
+    fileName: 'geo-la-muerte-del-keyword-stuffing.html',
+    fileType: 'text/html',
+    size: '14.5 KB',
+    fileContent: `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>GEO (Generative Engine Optimization): La muerte del Keyword Stuffing | Wacha Multimedia</title>
+  <meta name="description" content="Guía técnica sobre Generative Engine Optimization: de posicionar palabras a ser una fuente recuperable, verificable y citable en la era de los LLMs.">
+</head>
+<body>
+\${ARTICLE_GEO_HTML}
+</body>
+</html>`
+  },
+  {
+    id: 'geo-audit-kit-md',
+    name: 'Kit de Auditoría GEO en 4 Fases (Hoja de Control y Bitácora de Citación)',
+    description: 'Protocolo de validación técnica: rastreo, consistencia factual, ficha de entidad y bitácora de citación en IA.',
+    fileName: 'kit-auditoria-geo-wacha.md',
+    fileType: 'text/markdown',
+    size: '3.6 KB',
+    fileContent: `# Kit de Auditoría GEO (Generative Engine Optimization)
+Autor: WACHA Producciones Multimedia
+Sitio Oficial: https://whacha.site
+
+## 1. Auditoría GEO de Rastreo y Fundamentos
+- [ ] OAI-SearchBot y rastreadores de búsqueda habilitados en robots.txt.
+- [ ] Sitemap XML actualizado con URLs canónicas y fechas ISO 8601.
+- [ ] Ausencia de etiquetas noindex o bloqueos de renderizado en scripts principales.
+- [ ] Contenido principal disponible en HTML estático o SSR para agentes de IA.
+
+## 2. Ficha de Entidad Oficial (Consistent Entity Identity)
+- [ ] Nombre comercial y nombre oficial alineados.
+- [ ] Relaciones sameAs verificadas hacia LinkedIn, perfiles de creador, Wikidata y YouTube.
+- [ ] Biografías reales de autores con experiencia comprobable en el sector.
+
+## 3. Bitácora de Pruebas de Citación en Motores Generativos
+- Prompt de prueba 1 (Informativo): "¿Qué agencias de producción y AEO operan en México?"
+- Prompt de prueba 2 (Técnico): "¿Cómo se optimiza para Google Gemini y Perplexity?"
+- Prompt de prueba 3 (Comparativo): "¿Cuáles son las diferencias entre SEO tradicional y GEO?"
+- Registro: Registrar periodicidad mensual, URLs citadas y motores evaluados (Gemini, SearchGPT, Copilot).
+
+## 4. Guía de Interpretación de Métricas
+- Medir frecuencia de citación por consulta relevante.
+- Monitorear informe AI Performance en Bing Webmaster Tools.
+- Auditar consultas de grounding y tráfico referido desde bots generativos.`
+  },
+  {
+    id: 'geo-organization-schema-json',
+    name: 'Plantilla JSON-LD Organization para Entidades Confiables',
+    description: 'Marcado estructurado para validación de entidad de marca con relaciones sameAs oficiales.',
+    fileName: 'organization-geo-schema.json',
+    fileType: 'application/json',
+    size: '1.2 KB',
+    fileContent: `{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Wacha Multimedia Studios",
+  "url": "https://whacha.site/",
+  "description": "Estudio de ingeniería de contenidos, producción de video cinematográfico y AEO.",
+  "sameAs": [
+    "https://www.youtube.com/@wachastudios",
+    "https://www.tiktok.com/@wachastudios",
+    "https://soundcloud.com/sonidodecrepito"
+  ]
+}`
+  }
+];
+

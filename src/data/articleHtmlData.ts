@@ -533,3 +533,299 @@ export const ARTICLE_3_HTML = `<article class="article-content font-space-grotes
     </div>
   </section>
 </article>`;
+
+export const ARTICLE_GEO_HTML = `<article class="article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6">
+  <header class="border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3">
+    <div class="flex flex-wrap gap-2 text-xs font-jetbrains">
+      <span class="bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black">AEO & GEO</span>
+      <span class="bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700">PRINCETON KDD 2024</span>
+      <span class="text-zinc-500 py-0.5">SLUG: geo-la-muerte-del-keyword-stuffing</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white">
+      GEO (Generative Engine Optimization): La muerte del Keyword Stuffing
+    </h1>
+    <p class="text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains">
+      Cómo convertir tu marca en una fuente confiable, estructurada y citable en la era de los modelos de IA
+    </p>
+    <div class="text-xs font-jetbrains text-zinc-600 dark:text-zinc-400">
+      Por <strong>WACHA Producciones Multimedia</strong> • https://whacha.site
+    </div>
+  </header>
+
+  <section class="space-y-4">
+    <p class="text-base sm:text-lg leading-relaxed text-zinc-800 dark:text-zinc-200 font-medium">
+      La nueva visibilidad digital no consiste únicamente en aparecer entre los primeros resultados de Google: también consiste en convertirse en una fuente que los sistemas de inteligencia artificial puedan encontrar, interpretar, verificar y citar.
+    </p>
+    <div class="bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-2">
+      <div class="font-jetbrains text-xs font-bold text-[#FF4400] uppercase">Precisión importante de partida:</div>
+      <p class="text-xs sm:text-sm text-zinc-800 dark:text-zinc-300">
+        GEO no sustituye al PageRank ni existe una métrica universal que haya ocupado su lugar. Tampoco hay evidencia suficiente para afirmar que todos los LLM priorizan marcas registradas verificadas o que las citas cruzadas funcionen como un factor de posicionamiento único. Lo que sí está documentado es una transformación en la forma de descubrir, recuperar, sintetizar y mostrar información.
+      </p>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      1. La idea central: de posicionar palabras a ser una fuente recuperable y citable
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Durante años, muchas estrategias SEO se concentraron en conseguir que una página coincidiera con determinadas búsquedas: palabras clave en títulos, encabezados, textos, enlaces y metadescripciones. Esa lógica sigue teniendo utilidad, pero su versión abusiva —repetir términos sin aportar información— no construye autoridad.
+    </p>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Los motores generativos introducen otra capa: además de recuperar páginas, algunos sistemas seleccionan fuentes, extraen información, comparan afirmaciones y generan respuestas que pueden incluir citas y enlaces. Google explica que sus experiencias generativas utilizan sistemas de recuperación apoyados en sus sistemas tradicionales de búsqueda y pueden ampliar una consulta mediante búsquedas relacionadas (<em>query fan-out</em>).
+    </p>
+
+    <div class="bg-zinc-50 dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 space-y-2">
+      <h3 class="font-jetbrains text-sm font-bold text-black dark:text-white uppercase">¿Qué significa GEO?</h3>
+      <p class="text-xs sm:text-sm text-zinc-800 dark:text-zinc-300">
+        <strong>Generative Engine Optimization (GEO)</strong> es el conjunto de prácticas destinadas a mejorar la posibilidad de que el contenido de una organización sea descubierto, recuperado, comprendido y utilizado como fuente en respuestas generadas por sistemas de inteligencia artificial.
+      </p>
+      <p class="text-xs text-zinc-600 dark:text-zinc-400">
+        El término obtuvo respaldo académico con el estudio <em>GEO: Generative Engine Optimization</em> presentado en KDD 2024 por investigadores de Princeton, demostrando mejoras de visibilidad de hasta un 40% bajo condiciones controladas (benchmark GEO-bench).
+      </p>
+    </div>
+
+    {/* Tabla SEO vs GEO */}
+    <div class="border-2 border-black dark:border-zinc-700 overflow-x-auto my-4 brutal-shadow-black">
+      <table class="w-full text-left text-xs sm:text-sm font-space-grotesk">
+        <thead class="bg-black text-[#D4FF00] uppercase font-jetbrains border-b-2 border-black">
+          <tr>
+            <th class="p-3 border-r border-zinc-700">SEO Tradicional</th>
+            <th class="p-3">GEO (Generative Engine Optimization)</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-zinc-950">
+          <tr>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Busca visibilidad en resultados de búsqueda (SERP).</td>
+            <td class="p-3 font-medium">Busca que una fuente pueda aparecer o ser utilizada en respuestas generativas.</td>
+          </tr>
+          <tr>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Trabaja consultas, intención, indexación y enlaces.</td>
+            <td class="p-3 font-medium">También necesita contenido recuperable, claro, verificable y atribuible.</td>
+          </tr>
+          <tr>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Mide impresiones, clics, posiciones y conversiones.</td>
+            <td class="p-3 font-medium">Puede medir citas, páginas citadas y consultas de referencia (grounding).</td>
+          </tr>
+          <tr>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Compite por relevancia en una lista de enlaces.</td>
+            <td class="p-3 font-medium">Compite por ser una fuente útil dentro de una respuesta sintetizada.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      2. La muerte del Keyword Stuffing: por qué repetir palabras ya no es una estrategia
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      El keyword stuffing consiste en introducir palabras clave o variaciones de ellas de manera excesiva, artificial o fuera de contexto con la intención de manipular la visibilidad.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-red-950/20 border-2 border-red-500/50 p-4 space-y-2">
+        <div class="font-jetbrains text-xs font-bold text-red-500 uppercase flex items-center gap-1.5">
+          <span>✕ EJEMPLO DEFICIENTE (SPAM DE KEYWORDS):</span>
+        </div>
+        <p class="text-xs sm:text-sm text-zinc-400 italic">
+          “GEO, posicionamiento GEO, estrategia GEO, GEO para empresas, GEO para SEO, optimización GEO y herramientas GEO son fundamentales para mejorar el GEO de cualquier negocio.”
+        </p>
+        <div class="text-[11px] text-red-400 font-mono">
+          Repite el término pero no define, no explica un proceso y no aporta evidencia factual.
+        </div>
+      </div>
+
+      <div class="bg-emerald-950/20 border-2 border-emerald-500/50 p-4 space-y-2">
+        <div class="font-jetbrains text-xs font-bold text-emerald-400 uppercase flex items-center gap-1.5">
+          <span>✓ VERSIÓN ÚTIL Y CITABLE:</span>
+        </div>
+        <p class="text-xs sm:text-sm text-zinc-200">
+          “GEO (Generative Engine Optimization) es una estrategia para mejorar la visibilidad de una marca y de sus contenidos en respuestas generadas por inteligencia artificial. Para trabajarla, conviene asegurar que el sitio sea rastreable, publicar información original, identificar claramente a sus autores y respaldar las afirmaciones con fuentes.”
+        </p>
+        <div class="text-[11px] text-emerald-400 font-mono">
+          Define el concepto, incluye relaciones semánticas y provee una explicación autosuficiente.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      3. Qué puede hacer que una página sea utilizada como fuente
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      No existe una fórmula mágica secreta, pero la documentación técnica de Google Search Central, OpenAI y Microsoft permite identificar cinco áreas de trabajo indispensables:
+    </p>
+
+    <div class="space-y-3 font-jetbrains text-xs sm:text-sm">
+      <div class="bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1">
+        <strong class="text-black dark:text-[#D4FF00] uppercase block">• 3.1. Accesibilidad y rastreo:</strong>
+        <p class="text-zinc-700 dark:text-zinc-300 font-space-grotesk text-xs sm:text-sm">
+          Asegúrate de que no existan etiquetas <code>noindex</code> accidentales, enlaces rotos o bloqueos por robots.txt. OpenAI documenta expresamente la diferencia entre <code>OAI-SearchBot</code> (destinado al descubrimiento y búsqueda en tiempo real) y <code>GPTBot</code> (entrenamiento de modelos fundacionales).
+        </p>
+      </div>
+
+      <div class="bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1">
+        <strong class="text-black dark:text-[#D4FF00] uppercase block">• 3.2. Coherencia factual y afirmaciones verificables:</strong>
+        <p class="text-zinc-700 dark:text-zinc-300 font-space-grotesk text-xs sm:text-sm">
+          Evita estadísticas inventadas ("el 80% fracasa sin GEO"). Cada cifra debe citar su fuente primaria, fecha de revisión y alcance metodológico.
+        </p>
+      </div>
+
+      <div class="bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1">
+        <strong class="text-black dark:text-[#D4FF00] uppercase block">• 3.3. Entidades reconocibles:</strong>
+        <p class="text-zinc-700 dark:text-zinc-300 font-space-grotesk text-xs sm:text-sm">
+          Nombres consistentes entre el sitio web, registros comerciales, perfiles sociales y autores con biografías verificables.
+        </p>
+      </div>
+
+      <div class="bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1">
+        <strong class="text-black dark:text-[#D4FF00] uppercase block">• 3.4. Citas cruzadas y reputación externa:</strong>
+        <p class="text-zinc-700 dark:text-zinc-300 font-space-grotesk text-xs sm:text-sm">
+          Aparición en medios especializados, asociaciones y documentación institucional independiente.
+        </p>
+      </div>
+
+      <div class="bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1">
+        <strong class="text-black dark:text-[#D4FF00] uppercase block">• 3.5. Estructura comprensible y contenido original:</strong>
+        <p class="text-zinc-700 dark:text-zinc-300 font-space-grotesk text-xs sm:text-sm">
+          Definiciones concretas, respuestas directas en los primeros párrafos, tablas comparativas y metodologías documentadas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      4. ¿El PageRank ha sido sustituido por una métrica GEO?
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      No. PageRank es un algoritmo histórico de Google y no existe una sola métrica transversal pública en los motores generativos. Sin embargo, las herramientas analíticas han comenzado a reportar nuevas dimensiones de visibilidad:
+    </p>
+
+    <div class="border-2 border-black dark:border-zinc-700 overflow-x-auto my-4 brutal-shadow-black">
+      <table class="w-full text-left text-xs sm:text-sm font-space-grotesk">
+        <thead class="bg-zinc-900 text-white uppercase font-jetbrains">
+          <tr>
+            <th class="p-3 border-r border-zinc-700">Métrica</th>
+            <th class="p-3 border-r border-zinc-700">Qué permite observar</th>
+            <th class="p-3">Qué NO demuestra</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800 bg-white dark:bg-zinc-950">
+          <tr>
+            <td class="p-3 font-bold font-jetbrains border-r border-zinc-200 dark:border-zinc-800 text-[#FF4400]">Citas en respuestas IA</td>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Cuántas veces aparece el contenido como fuente en un sistema medido.</td>
+            <td class="p-3 text-zinc-500">Que la página sea la mejor posicionada o más confiable.</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-bold font-jetbrains border-r border-zinc-200 dark:border-zinc-800 text-[#FF4400]">Páginas citadas</td>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Qué URLs del sitio aparecen como referencias específicas.</td>
+            <td class="p-3 text-zinc-500">Que todo el dominio goce de autoridad global.</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-bold font-jetbrains border-r border-zinc-200 dark:border-zinc-800 text-[#FF4400]">Consultas de grounding</td>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Temas o frases asociados con la recuperación del contenido.</td>
+            <td class="p-3 text-zinc-500">El prompt exacto introducido por cada usuario.</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-bold font-jetbrains border-r border-zinc-200 dark:border-zinc-800 text-[#FF4400]">Tráfico referido desde IA</td>
+            <td class="p-3 border-r border-zinc-200 dark:border-zinc-800">Visitas procedentes de ChatGPT, Perplexity o Gemini.</td>
+            <td class="p-3 text-zinc-500">Todas las impresiones donde el usuario leyó sin hacer clic.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      5. Ejemplo de marcado estructurado JSON-LD para una Organización
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Este fragmento ilustra cómo describir una organización mediante JSON-LD para clarificar relaciones de entidad y enlaces oficiales <code>sameAs</code>.
+    </p>
+
+    <!-- BLOQUE DE CÓDIGO CON ETIQUETAS PRE CODE (BOTÓN COPIAR AUTOMÁTICO) -->
+    <pre><code class="language-json">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Estudio Norte",
+  "url": "https://www.ejemplo.com/",
+  "description": "Estudio de diseño y comunicación visual.",
+  "sameAs": [
+    "https://www.linkedin.com/company/perfil-oficial/",
+    "https://www.instagram.com/perfil-oficial/"
+  ]
+}
+&lt;/script&gt;</code></pre>
+
+    <p class="text-xs text-zinc-600 dark:text-zinc-400 font-jetbrains">
+      * <code>sameAs</code> debe apuntar a perfiles oficiales que representen realmente a la misma organización. No agregues perfiles de terceros o directorios genéricos.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      6. Protocolo: Cómo comprobar si tu sitio aparece en respuestas de IA
+    </h2>
+    <div class="bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 space-y-2 font-jetbrains text-xs sm:text-sm">
+      <ol class="list-decimal list-inside space-y-1.5 text-zinc-800 dark:text-zinc-300">
+        <li>Selecciona entre cinco y diez preguntas que un cliente potencial formularía.</li>
+        <li>Incluye preguntas informativas, comparativas y de resolución de problemas.</li>
+        <li>Ejecuta las mismas consultas en los motores que quieras evaluar (Gemini, SearchGPT, Perplexity).</li>
+        <li>Registra si aparece la marca, si se cita una URL propia y qué otras fuentes se mencionan.</li>
+        <li>Repite las pruebas en fechas distintas.</li>
+        <li>Compara resultados antes y después de cambios editoriales o técnicos.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      7. Recurso práctico: Kit de auditoría GEO
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Descarga el kit complementario que incluye cuatro herramientas en una sola hoja de trabajo:
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-jetbrains text-xs">
+      <div class="p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800">
+        <strong class="text-black dark:text-white uppercase">[1] Auditoría GEO:</strong>
+        <p class="text-zinc-600 dark:text-zinc-400 mt-1">Lista de control para rastreo, evidencia, entidades y reputación.</p>
+      </div>
+      <div class="p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800">
+        <strong class="text-black dark:text-white uppercase">[2] Ficha de Entidad:</strong>
+        <p class="text-zinc-600 dark:text-zinc-400 mt-1">Registro de nombre oficial, dominio, perfiles y autores.</p>
+      </div>
+      <div class="p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800">
+        <strong class="text-black dark:text-white uppercase">[3] Pruebas de Citación:</strong>
+        <p class="text-zinc-600 dark:text-zinc-400 mt-1">Bitácora para guardar consultas, motor, fecha y URLs citadas.</p>
+      </div>
+      <div class="p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800">
+        <strong class="text-black dark:text-white uppercase">[4] Guía de Uso:</strong>
+        <p class="text-zinc-600 dark:text-zinc-400 mt-1">Instrucciones para interpretar resultados sin confundir citas con tráfico.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4 pt-4 border-t-2 border-black dark:border-zinc-800">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00]">
+      Conclusión y Fuentes Oficiales
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      GEO no es el fin del SEO tradicional ni un truco para engañar a los modelos de lenguaje: es el reconocimiento de que la web sintética exige máxima claridad, consistencia factual y atribución verificable.
+    </p>
+
+    <div class="bg-zinc-100 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 p-4 text-xs font-jetbrains space-y-1 text-zinc-700 dark:text-zinc-400">
+      <div class="font-bold text-black dark:text-white uppercase mb-1">Fuentes y documentación oficial:</div>
+      <div>• Princeton University, <em>GEO: Generative Engine Optimization</em> (KDD 2024).</div>
+      <div>• Google Search Central, <em>Generative AI in Search & Query Fan-out Documentation</em>.</div>
+      <div>• OpenAI Developers, <em>OAI-SearchBot & GPTBot Crawling Guidance</em>.</div>
+      <div>• Microsoft Bing Webmaster Tools, <em>AI Performance Report & Grounding Guidelines</em> (2026).</div>
+    </div>
+  </section>
+</article>`;
+

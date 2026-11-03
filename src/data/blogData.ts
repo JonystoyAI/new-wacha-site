@@ -5,12 +5,14 @@ import {
   ARTICLE_3_RESOURCES,
   ARTICLE_CWV_RESOURCES,
   ARTICLE_VOZ_RESOURCES,
-  ARTICLE_CORE_RESOURCES
+  ARTICLE_CORE_RESOURCES,
+  ARTICLE_GEO_RESOURCES
 } from './blogResources';
 import {
   ARTICLE_1_HTML,
   ARTICLE_2_HTML,
-  ARTICLE_3_HTML
+  ARTICLE_3_HTML,
+  ARTICLE_GEO_HTML
 } from './articleHtmlData';
 
 export const INITIAL_BLOG_ARTICLES: BlogPost[] = [
@@ -235,33 +237,66 @@ export const INITIAL_BLOG_ARTICLES: BlogPost[] = [
   {
     id: 'geo-muerte-keyword-stuffing-citation-authority',
     slug: 'geo-muerte-keyword-stuffing-citation-authority',
-    title: 'GEO (Generative Engine Optimization): La Muerte del Keyword Stuffing',
-    excerpt: 'Los LLMs priorizan coherencia factual, citas cruzadas y marcas registradas verificadas. La métrica que sustituye al PageRank.',
+    title: 'GEO (Generative Engine Optimization): La muerte del Keyword Stuffing',
+    excerpt: 'Cómo ser una fuente confiable en la era de la IA. Por qué repetir palabras clave ya no funciona y cómo posicionar en Gemini, SearchGPT y Perplexity mediante coherencia, entidades de marca y citas verificables.',
     category: 'AEO',
-    tags: ['GEO', 'AEO', 'Algoritmos', 'IA Generativa'],
-    publishedAt: '18 Oct 2026',
-    readTime: '7 min',
-    image: '/unitia_software_app.jpg',
-    isFeatured: false,
+    tags: ['GEO', 'AEO', 'Keyword Stuffing', 'Motores Generativos', 'Entidades', 'Gemini', 'Perplexity', 'SearchGPT'],
+    publishedAt: '02 Nov 2026',
+    readTime: '9 min',
+    image: '/GEO__La_muerte_del_keyword_stuffing_2f325e9d.png',
+    isFeatured: true,
     stats: {
-      views: '2.9K lecturas',
-      impact: 'Citas verificadas en ChatGPT Search'
+      views: '5.2K lecturas',
+      impact: '100% Citable Citation Rate'
     },
     author: {
-      name: 'Mr. Decrépito',
-      role: 'Head of Engineering & AEO Wacha Studios',
+      name: 'WACHA Producciones Multimedia',
+      role: 'DevSecOps & Web Architecture',
       avatar: '/wacha_logo.jpg'
     },
     keyTakeaways: [
-      'El "Citation Share" (porcentaje de veces que tu web es citada como fuente) es el nuevo Domain Authority.',
-      'La consistencia de datos entre redes sociales, registros públicos y sitios oficiales previene la exclusión algorítmica.',
-      'El contenido generado por IA sin curaduría humana sufre degradación por pérdida de entropía informativa.'
+      'GEO sustituye la densidad de keywords por relevancia semántica, fuentes citadas y coherencia entre plataformas.',
+      'Los modelos de lenguaje no cuentan palabras; comprenden conceptos, contrastan hechos y evalúan entidades del Knowledge Graph.',
+      'La pérdida de tráfico de los "10 enlaces azules" se compensa con conversiones de mayor intención cuando tu marca es la fuente de la respuesta sintética.',
+      'El marcado JSON-LD con sameAs y la coherencia en redes sociales son la base técnica imprescindible para la autoridad generativa.'
     ],
     content: [
-      'El auge de la inteligencia artificial generativa inundó la web con millones de artículos sintéticos redundantes. En respuesta, las actualizaciones de motores de búsqueda han implementado filtros de "Information Gain Score" para descartar páginas que simplemente repiten lo que ya existe en el índice.',
-      'Generative Engine Optimization (GEO) es la disciplina de construir autoridad citacional. No se trata de qué tan largo es tu texto, sino de si contiene datos empíricos, casos de estudio propios, metodologías con nombre registrado y opiniones fundamentadas que un modelo de lenguaje considere dignas de citar con un enlace de fuente.',
-      'En Wacha Studios combinamos desarrollo full-stack, ingeniería de sonido y producción de video para crear piezas multimedia que ninguna IA puede sintetizar de la nada, blindando la autoridad orgánica de nuestros clientes.'
-    ]
+      'Durante más de dos décadas, el SEO funcionó bajo una lógica predecible: encuentra una palabra clave con volumen, inclúyela en el título, en los subtítulos y a lo largo del texto, consigue algunos enlaces y espera a que Google te premie con tráfico. Esa lógica está muerta.',
+      'La llegada y consolidación de motores de búsqueda generativos —como Google con sus resúmenes de IA (AI Overviews), ChatGPT Search, Perplexity AI y Copilot— ha cambiado las reglas de juego. Ya no se trata de quién repite más veces un término, sino de quién aporta la respuesta más completa, estructurada y verificable.',
+      'GEO (Generative Engine Optimization) es el conjunto de estrategias destinadas a que tu contenido sea encontrado, comprendido y citado por modelos de lenguaje grande (LLMs) y motores de búsqueda basados en IA. A diferencia del SEO tradicional, cuyo fin era aparecer en los diez enlaces azules, el objetivo de GEO es que tu marca o contenido sea la fuente directa que la IA utiliza para responder.'
+    ],
+    sections: [
+      {
+        heading: '1. ¿Qué es GEO y en qué se diferencia del SEO tradicional?',
+        body: 'El SEO tradicional optimizaba para rastreadores de concordancia léxica y PageRank. GEO optimiza para LLMs que procesan semántica contextual y grafos de conocimiento. El resultado buscado no es un clic en una lista, sino ser la fuente citada dentro de la síntesis de IA, logrando usuarios con mucha mayor intención de conversión.'
+      },
+      {
+        heading: '2. Por qué el Keyword Stuffing ya no funciona en la era de los LLMs',
+        body: 'Los modelos no buscan coincidencias literales de texto; procesan embeddings semánticos y vectores de significado. Además, los motores integran filtros anti-spam que penalizan patrones artificiales de repetición. Si un texto es repetitivo, el LLM concluye que carece de valor informativo ("Information Gain") y lo descarta como fuente de síntesis.'
+      },
+      {
+        heading: '3. Los 4 pilares fundamentales de GEO',
+        body: 'Pilar 1: Coherencia informativa y datos verificables (cifras, fechas y fuentes directas). Pilar 2: Estructura clara y lenguaje natural (H2/H3 en forma de preguntas directas con respuestas inmediatas). Pilar 3: Entidad de marca y autoridad de autor (E-E-A-T transparente, experiencia demostrada y contacto verificable). Pilar 4: Presencia cruzada y consistencia digital (mismos datos en web, redes sociales, registros públicos y directorios).'
+      },
+      {
+        heading: '4. Cómo estructurar tu contenido para que la IA te cite',
+        body: 'Utiliza el principio de la pirámide invertida: responde a la pregunta principal en el primer párrafo (40-60 palabras). Desarrolla los matices a continuación con listas ordenadas, tablas comparativas y datos cuantitativos. Los LLMs extraen tablas y listas con facilidad para elaborar comparaciones sintéticas.'
+      },
+      {
+        heading: '5. La base técnica imprescindible: Schema.org y datos estructurados',
+        body: 'Los modelos de IA dependen de datos estructurados para validar entidades. Implementa Organization, TechArticle, FAQPage y Person con enlaces sameAs a Wikidata y perfiles oficiales para que los rastreadores identifiquen unívocamente a tu organización.'
+      },
+      {
+        heading: '6. Métricas: Cómo medir el éxito en la era de GEO',
+        body: 'Mide menciones en respuestas de IA (Gemini, Perplexity, SearchGPT), tráfico de referencia proveniente de dominios de IA (chatgpt.com, perplexity.ai), Share of Model (porcentaje de consultas del sector que te mencionan) y conversiones cualificadas de usuarios informados.'
+      },
+      {
+        heading: '7. Conclusión: El contenido de valor sigue ganando',
+        body: 'La muerte del keyword stuffing no es una mala noticia: es una liberación para quienes generan valor genuino. En la era de la inteligencia artificial, la ventaja competitiva no está en engañar a un algoritmo, sino en construir autoridad verificable y conocimiento citable.'
+      }
+    ],
+    resources: ARTICLE_GEO_RESOURCES,
+    htmlContent: ARTICLE_GEO_HTML
   },
   {
     id: 'core-web-vitals-spa-inp-cls',

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { BlogPost, BlogDownloadResource } from '../types';
 import { loadBlogArticles } from '../data/blogData';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
+import { ArticleShareModal } from './ArticleShareModal';
 import { 
   Search, 
   Tag as TagIcon, 
@@ -21,14 +22,29 @@ import {
   Download,
   Layers,
   FileCode,
-  FileText
+  FileText,
+  Volume2,
+  VolumeX,
+  Pause,
+  Play,
+  Square,
+  Maximize2,
+  Minimize2,
+  Type,
+  Headphones
 } from 'lucide-react';
 
 interface ArticleHtmlRendererProps {
   html: string;
+  fontSizeClass?: string;
+  className?: string;
 }
 
-export const ArticleHtmlRenderer: React.FC<ArticleHtmlRendererProps> = ({ html }) => {
+export const ArticleHtmlRenderer: React.FC<ArticleHtmlRendererProps> = ({ 
+  html, 
+  fontSizeClass = '', 
+  className = '' 
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -113,11 +129,47 @@ export const ArticleHtmlRenderer: React.FC<ArticleHtmlRendererProps> = ({ html }
   return (
     <div 
       ref={containerRef}
-      className="article-html-body prose prose-invert max-w-none space-y-4"
+      className={`article-html-body prose prose-invert max-w-none space-y-4 ${fontSizeClass} ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 };
+
+// Helper to extract clean narrative text for speech synthesis
+function extractCleanTextForSpeech(article: BlogPost): string {
+  const chunks: string[] = [];
+  chunks.push(article.title);
+  if (article.excerpt) {
+    chunks.push(article.excerpt);
+  }
+  if (article.keyTakeaways && article.keyTakeaways.length > 0) {
+    chunks.push('Conclusiones clave: ' + article.keyTakeaways.join('. '));
+  }
+  if (article.htmlContent) {
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(article.htmlContent, 'text/html');
+      doc.querySelectorAll('pre, code, script, style, svg').forEach(el => el.remove());
+      const paragraphs = Array.from(doc.querySelectorAll('p, h2, h3, h4, li'))
+        .map(el => (el.textContent || '').trim())
+        .filter(t => t.length > 15);
+      if (paragraphs.length > 0) {
+        chunks.push(...paragraphs);
+      } else {
+        const text = doc.body.textContent || '';
+        chunks.push(text.replace(/\s+/g, ' ').trim());
+      }
+    } catch {
+      if (article.content) chunks.push(...article.content);
+    }
+  } else if (article.content) {
+    chunks.push(...article.content);
+    if (article.sections) {
+      article.sections.forEach(s => chunks.push(s.heading + ': ' + s.body));
+    }
+  }
+  return chunks.join('. ');
+}
 
 export const BlogFeed: React.FC = () => {
   const [articles, setArticles] = useState<BlogPost[]>([]);
@@ -127,12 +179,148 @@ export const BlogFeed: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('TODAS');
   const [sortBy, setSortBy] = useState<'recent' | 'views'>('recent');
   const [activeArticle, setActiveArticle] = useState<BlogPost | null>(null);
+  const [shareArticle, setShareArticle] = useState<BlogPost | null>(null);
   const [readerTab, setReaderTab] = useState<'reading' | 'html'>('reading');
   const [copiedHtml, setCopiedHtml] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [downloadedResourceId, setDownloadedResourceId] = useState<string | null>(null);
   const [dataSource, setDataSource] = useState<string>('/data/articles.json');
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Reader Mode (Modo Lectura Centrado y Tipografía Optimizada)
+  const [isReadingMode, setIsReadingMode] = useState<boolean>(false);
+  const [readerFontSize, setReaderFontSize] = useState<'normal' | 'large' | 'xlarge'>('large');
+  const [readerTheme, setReaderTheme] = useState<'neutral' | 'sepia' | 'dark'>('neutral');
+
+  // Speech Synthesis (Modo Escucha en Voz Alta)
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [speakingArticleId, setSpeakingArticleId] = useState<string | null>(null);
+  const [speechRate, setSpeechRate] = useState<number>(1);
+  const activeUtteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Stop TTS cleanly
+  const handleStopSpeech = () => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+    setIsPaused(false);
+    setSpeakingArticleId(null);
+    activeUtteranceRef.current = null;
+  };
+
+  // Toggle TTS play/pause/start
+  const handleToggleSpeech = (article: BlogPost, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      alert('Tu navegador no cuenta con soporte nativo de síntesis de voz (Web Speech API).');
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+
+    // If currently speaking this same article, toggle pause/resume
+    if (isSpeaking && speakingArticleId === article.id) {
+      if (isPaused) {
+        synth.resume();
+        setIsPaused(false);
+      } else {
+        synth.pause();
+        setIsPaused(true);
+      }
+      return;
+    }
+
+    // Cancel any previous speech
+    handleStopSpeech();
+
+    const cleanText = extractCleanTextForSpeech(article);
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES';
+    utterance.rate = speechRate;
+
+    // Pick Spanish voice if available
+    const voices = synth.getVoices();
+    const esVoice = voices.find(v => v.lang.startsWith('es') || v.lang.toLowerCase().includes('spanish') || v.lang.includes('es_'));
+    if (esVoice) {
+      utterance.voice = esVoice;
+    }
+
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+      setIsPaused(false);
+      setSpeakingArticleId(article.id);
+    };
+
+    utterance.onpause = () => {
+      setIsPaused(true);
+    };
+
+    utterance.onresume = () => {
+      setIsPaused(false);
+    };
+
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setIsPaused(false);
+      setSpeakingArticleId(null);
+      activeUtteranceRef.current = null;
+    };
+
+    utterance.onerror = (err) => {
+      console.warn('Speech error or cancelled:', err);
+      setIsSpeaking(false);
+      setIsPaused(false);
+      setSpeakingArticleId(null);
+      activeUtteranceRef.current = null;
+    };
+
+    activeUtteranceRef.current = utterance;
+    synth.speak(utterance);
+  };
+
+  // Change Speech Rate on the fly
+  const handleSpeechRateChange = (rate: number) => {
+    setSpeechRate(rate);
+    if (isSpeaking && activeArticle) {
+      handleStopSpeech();
+      setTimeout(() => {
+        handleToggleSpeech(activeArticle);
+      }, 80);
+    }
+  };
+
+  // Clean close of article reader modal
+  const handleCloseReader = () => {
+    setActiveArticle(null);
+    setIsReadingMode(false);
+    handleStopSpeech();
+  };
+
+  // Open article in Standard Reader or directly in Reading Mode
+  const handleOpenReader = (article: BlogPost, readingMode = false, startListening = false) => {
+    setActiveArticle(article);
+    setReaderTab('reading');
+    setCopiedHtml(false);
+    setIsReadingMode(readingMode);
+    if (startListening) {
+      setTimeout(() => {
+        handleToggleSpeech(article);
+      }, 150);
+    }
+  };
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const handleDownloadResource = (resource: BlogDownloadResource) => {
     try {
@@ -276,16 +464,10 @@ export const BlogFeed: React.FC = () => {
       });
   }, [articles, selectedTag, selectedCategory, searchQuery, sortBy]);
 
-  // Handle share link
+  // Handle share modal and quick copy
   const handleShare = (article: BlogPost, e: React.MouseEvent) => {
     e.stopPropagation();
-    const shareUrl = `${window.location.origin}#blog-${article.slug}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        setCopiedId(article.id);
-        setTimeout(() => setCopiedId(null), 2000);
-      });
-    }
+    setShareArticle(article);
   };
 
   const handleResetFilters = () => {
@@ -575,30 +757,67 @@ export const BlogFeed: React.FC = () => {
                   </div>
 
                   {/* Card Footer Actions */}
-                  <div className="p-5 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-900 mt-4 flex items-center justify-between gap-3">
+                  {/* Card Footer Actions */}
+                  <div className="p-5 sm:p-6 pt-0 border-t border-zinc-200 dark:border-zinc-900 mt-4 flex flex-wrap items-center justify-between gap-2">
                     <button
-                      onClick={() => {
-                        setActiveArticle(article);
-                        setReaderTab('reading');
-                        setCopiedHtml(false);
-                      }}
-                      className="flex-1 bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white font-jetbrains text-xs font-bold py-2.5 px-4 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-2 group/btn cursor-pointer brutal-shadow-black"
+                      onClick={() => handleOpenReader(article, false)}
+                      className="flex-1 min-w-[130px] bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white font-jetbrains text-xs font-bold py-2.5 px-3 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-1.5 group/btn cursor-pointer brutal-shadow-black"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-black group-hover/btn:text-white" />
-                      <span className="text-black group-hover/btn:text-white font-bold">LEER ARTÍCULO</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-black group-hover/btn:text-white" />
+                      <BookOpen className="w-3.5 h-3.5 text-black group-hover/btn:text-white shrink-0" />
+                      <span className="text-black group-hover/btn:text-white font-bold truncate">LEER</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-black group-hover/btn:text-white shrink-0" />
                     </button>
 
+                    {/* Botón Modo Lectura */}
+                    <button
+                      onClick={() => handleOpenReader(article, true)}
+                      title="Abrir en Modo Lectura centrado y tipografía optimizada"
+                      className="px-3 py-2.5 bg-white dark:bg-black border-2 border-black dark:border-zinc-700 text-black dark:text-zinc-200 hover:bg-[#D4FF00] hover:text-black hover:border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 cursor-pointer brutal-shadow-black flex items-center gap-1.5 font-jetbrains text-xs font-bold"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5 shrink-0" />
+                      <span className="text-[11px] font-bold">MODO LECTURA</span>
+                    </button>
+
+                    {/* Botón Escuchar en Voz Alta */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggleSpeech(article, e);
+                      }}
+                      title={
+                        isSpeaking && speakingArticleId === article.id
+                          ? (isPaused ? "Reanudar lectura en voz alta" : "Pausar lectura en voz alta")
+                          : "Escuchar este artículo leído en voz alta (Text-to-Speech)"
+                      }
+                      className={`px-3 py-2.5 border-2 transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 cursor-pointer brutal-shadow-black flex items-center gap-1.5 font-jetbrains text-xs font-bold ${
+                        isSpeaking && speakingArticleId === article.id
+                          ? 'bg-[#00E599] text-black border-black animate-pulse'
+                          : 'bg-white dark:bg-black text-black dark:text-zinc-200 hover:bg-[#00E599] hover:text-black border-2 border-black dark:border-zinc-700'
+                      }`}
+                    >
+                      {isSpeaking && speakingArticleId === article.id ? (
+                        isPaused ? (
+                          <Play className="w-3.5 h-3.5 fill-current shrink-0" />
+                        ) : (
+                          <Pause className="w-3.5 h-3.5 fill-current shrink-0" />
+                        )
+                      ) : (
+                        <Volume2 className="w-3.5 h-3.5 shrink-0" />
+                      )}
+                      <span className="text-[11px] font-bold">
+                        {isSpeaking && speakingArticleId === article.id
+                          ? (isPaused ? 'REANUDAR' : 'ESCUCHANDO')
+                          : 'ESCUCHAR'}
+                      </span>
+                    </button>
+
+                    {/* Botón Compartir */}
                     <button
                       onClick={(e) => handleShare(article, e)}
-                      title="Compartir o copiar enlace del artículo"
-                      className="p-2.5 bg-zinc-100 dark:bg-black border-2 border-black dark:border-zinc-800 text-black dark:text-zinc-400 hover:text-white hover:bg-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 cursor-pointer brutal-shadow-black"
+                      title="Compartir en LinkedIn, X, WhatsApp, Discord o Facebook"
+                      className="p-2.5 bg-zinc-100 dark:bg-black border-2 border-black dark:border-zinc-800 text-black dark:text-zinc-400 hover:text-white hover:bg-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 cursor-pointer brutal-shadow-black shrink-0"
                     >
-                      {copiedId === article.id ? (
-                        <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                      ) : (
-                        <Share2 className="w-4 h-4" />
-                      )}
+                      <Share2 className="w-4 h-4" />
                     </button>
                   </div>
                 </article>
@@ -633,43 +852,164 @@ export const BlogFeed: React.FC = () => {
       {/* Full Article Reader Modal */}
       {activeArticle && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
           role="dialog"
           aria-modal="true"
-          onClick={() => setActiveArticle(null)}
+          onClick={handleCloseReader}
         >
           <div 
-            className="bg-white dark:bg-[#121411] border-2 border-black dark:border-zinc-700 w-full max-w-3xl max-h-[90vh] overflow-y-auto brutal-shadow-black dark:brutal-shadow-lime relative"
+            className={`w-full transition-all duration-200 brutal-shadow-black relative flex flex-col ${
+              isReadingMode
+                ? `max-w-4xl sm:max-w-5xl my-4 min-h-[85vh] max-h-[96vh] overflow-y-auto border-2 ${
+                    readerTheme === 'sepia'
+                      ? 'bg-[#FBF0D9] text-[#2C2114] border-[#543D28]'
+                      : readerTheme === 'dark'
+                        ? 'bg-[#0D1117] text-[#E6EDF3] border-zinc-700'
+                        : 'bg-[#FAF9F5] dark:bg-[#121411] text-black dark:text-zinc-100 border-black dark:border-zinc-700'
+                  }`
+                : 'bg-white dark:bg-[#121411] text-black dark:text-zinc-100 border-2 border-black dark:border-zinc-700 max-w-3xl max-h-[90vh] overflow-y-auto dark:brutal-shadow-lime'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header Bar */}
-            <div className="sticky top-0 z-20 bg-zinc-100 dark:bg-zinc-900 border-b-2 border-zinc-300 dark:border-zinc-800 p-4 flex items-center justify-between">
-              <div className="flex items-center gap-2 font-jetbrains text-xs">
-                <span className="w-2 h-2 rounded-full bg-[#B8006E] dark:bg-[#D4FF00]"></span>
-                <span className="text-[#B8006E] dark:text-[#D4FF00] font-bold uppercase">[ {activeArticle.category} ]</span>
-                <span className="text-zinc-400 dark:text-zinc-500">|</span>
-                <span className="text-zinc-700 dark:text-zinc-400 font-bold">{activeArticle.readTime}</span>
+            <div className={`sticky top-0 z-30 border-b-2 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 ${
+              isReadingMode
+                ? (readerTheme === 'sepia' 
+                    ? 'bg-[#F4E6CB] border-[#543D28]' 
+                    : readerTheme === 'dark' 
+                      ? 'bg-[#161B22] border-zinc-700 text-white' 
+                      : 'bg-zinc-100 dark:bg-zinc-900 border-black dark:border-zinc-800')
+                : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-300 dark:border-zinc-800'
+            }`}>
+              {/* Category, Read Time & Mode Indicator */}
+              <div className="flex items-center flex-wrap gap-2 font-jetbrains text-xs">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#B8006E] dark:bg-[#D4FF00] animate-pulse"></span>
+                <span className="font-bold uppercase tracking-wide text-[#B8006E] dark:text-[#D4FF00]">
+                  [ {activeArticle.category} ]
+                </span>
+                <span className="text-zinc-400 dark:text-zinc-600">|</span>
+                <span className="font-bold text-zinc-700 dark:text-zinc-400">
+                  {activeArticle.readTime}
+                </span>
+
+                {isReadingMode && (
+                  <span className="px-2 py-0.5 bg-[#D4FF00] text-black text-[10px] font-bold border border-black uppercase flex items-center gap-1 shadow-sm">
+                    <Maximize2 className="w-3 h-3" /> MODO LECTURA CENTRADO
+                  </span>
+                )}
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Action Controls: Escucha en Voz Alta + Modo Lectura + Compartir + Cerrar */}
+              <div className="flex items-center flex-wrap gap-2">
+                {/* 1. Botón de Escucha (Text-To-Speech) */}
+                <div className="flex items-center gap-1 bg-white dark:bg-black border-2 border-black dark:border-zinc-700 p-0.5">
+                  <button
+                    onClick={() => handleToggleSpeech(activeArticle)}
+                    title={
+                      isSpeaking && speakingArticleId === activeArticle.id
+                        ? (isPaused ? "Reanudar lectura en voz alta" : "Pausar lectura en voz alta")
+                        : "Escuchar este artículo en voz alta (Text-to-Speech)"
+                    }
+                    className={`px-2.5 py-1 text-xs font-jetbrains font-bold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 ${
+                      isSpeaking && speakingArticleId === activeArticle.id
+                        ? 'bg-[#00E599] text-black'
+                        : 'bg-black text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black dark:bg-[#D4FF00] dark:text-black'
+                    }`}
+                  >
+                    {isSpeaking && speakingArticleId === activeArticle.id ? (
+                      isPaused ? (
+                        <>
+                          <Play className="w-3.5 h-3.5 fill-current" />
+                          <span>REANUDAR</span>
+                        </>
+                      ) : (
+                        <>
+                          {/* Animated Audio Equalizer Waveform */}
+                          <span className="flex items-center gap-0.5 h-3">
+                            <span className="w-0.5 bg-black h-3 animate-pulse"></span>
+                            <span className="w-0.5 bg-black h-2 animate-bounce"></span>
+                            <span className="w-0.5 bg-black h-3.5 animate-pulse"></span>
+                          </span>
+                          <Pause className="w-3.5 h-3.5 fill-current" />
+                          <span>PAUSAR</span>
+                        </>
+                      )
+                    ) : (
+                      <>
+                        <Volume2 className="w-3.5 h-3.5" />
+                        <span>ESCUCHAR</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Stop button when speaking */}
+                  {isSpeaking && speakingArticleId === activeArticle.id && (
+                    <button
+                      onClick={handleStopSpeech}
+                      title="Detener lectura en voz alta"
+                      className="p-1 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-red-600 dark:text-red-400 transition-colors cursor-pointer"
+                      aria-label="Detener audio"
+                    >
+                      <Square className="w-3.5 h-3.5 fill-current" />
+                    </button>
+                  )}
+
+                  {/* Speed Selector */}
+                  <div className="flex items-center border-l border-zinc-300 dark:border-zinc-700 pl-1 text-[10px] font-mono">
+                    {[1, 1.25, 1.5].map((rate) => (
+                      <button
+                        key={rate}
+                        onClick={() => handleSpeechRateChange(rate)}
+                        title={`Velocidad de lectura ${rate}x`}
+                        className={`px-1 py-0.5 font-bold transition-colors ${
+                          speechRate === rate
+                            ? 'text-[#B8006E] dark:text-[#D4FF00] underline'
+                            : 'text-zinc-500 hover:text-black dark:hover:text-white'
+                        }`}
+                      >
+                        {rate}x
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. Botón Conmutador Modo Lectura */}
                 <button
-                  onClick={(e) => handleShare(activeArticle, e)}
-                  className="px-2.5 py-1 text-xs font-jetbrains bg-white dark:bg-black border-2 border-black dark:border-zinc-700 text-black dark:text-zinc-300 hover:text-[#B8006E] dark:hover:text-[#D4FF00] transition-all flex items-center gap-1 active:scale-95 font-bold"
+                  onClick={() => setIsReadingMode(!isReadingMode)}
+                  title={isReadingMode ? "Volver a vista estándar del artículo" : "Activar Modo Lectura centrado sin distracciones"}
+                  className={`px-3 py-1.5 text-xs font-jetbrains font-bold border-2 border-black transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 brutal-shadow-black ${
+                    isReadingMode
+                      ? 'bg-[#D4FF00] text-black shadow-inner'
+                      : 'bg-white dark:bg-black text-black dark:text-zinc-200 hover:bg-[#D4FF00] hover:text-black dark:border-zinc-700'
+                  }`}
                 >
-                  {copiedId === activeArticle.id ? (
+                  {isReadingMode ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      <span>COPIADO</span>
+                      <Minimize2 className="w-3.5 h-3.5" />
+                      <span>VISTA ESTÁNDAR</span>
                     </>
                   ) : (
                     <>
-                      <Share2 className="w-3.5 h-3.5" />
-                      <span>COMPARTIR</span>
+                      <Maximize2 className="w-3.5 h-3.5" />
+                      <span>MODO LECTURA</span>
                     </>
                   )}
                 </button>
+
+                {/* 3. Compartir */}
                 <button
-                  onClick={() => setActiveArticle(null)}
-                  className="p-1.5 bg-white dark:bg-black border-2 border-black dark:border-zinc-700 text-black dark:text-zinc-300 hover:text-white hover:bg-black transition-all active:scale-95"
+                  onClick={(e) => handleShare(activeArticle, e)}
+                  title="Compartir en LinkedIn, X, WhatsApp, Discord o Facebook"
+                  className="px-2.5 py-1.5 text-xs font-jetbrains bg-white dark:bg-black border-2 border-black dark:border-zinc-700 text-black dark:text-zinc-300 hover:text-[#B8006E] dark:hover:text-[#D4FF00] transition-all flex items-center gap-1 active:scale-95 font-bold cursor-pointer"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">COMPARTIR</span>
+                </button>
+
+                {/* 4. Cerrar */}
+                <button
+                  onClick={handleCloseReader}
+                  className="p-1.5 bg-white dark:bg-black border-2 border-black dark:border-zinc-700 text-black dark:text-zinc-300 hover:text-white hover:bg-black transition-all active:scale-95 cursor-pointer"
                   aria-label="Cerrar artículo"
                 >
                   <X className="w-4 h-4" />
@@ -677,18 +1017,113 @@ export const BlogFeed: React.FC = () => {
               </div>
             </div>
 
-            {/* Modal Hero Image */}
-            <div className="relative aspect-video bg-black border-b-2 border-black dark:border-zinc-800">
-              <ImageWithSkeleton
-                src={activeArticle.image}
-                alt={activeArticle.title}
-                aspectRatioClassName="aspect-video"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {/* Reading Mode Zen Toolbar (Tamaño de fuente, Temas claro/sepia/oscuro) */}
+            {isReadingMode && (
+              <div className={`px-4 sm:px-6 py-2.5 border-b flex flex-wrap items-center justify-between gap-3 text-xs font-jetbrains ${
+                readerTheme === 'sepia'
+                  ? 'bg-[#F2E1C1] border-[#543D28]/40 text-[#2C2114]'
+                  : readerTheme === 'dark'
+                    ? 'bg-[#12161D] border-zinc-800 text-zinc-300'
+                    : 'bg-zinc-50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300'
+              }`}>
+                {/* Font Size Selector */}
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-[11px] uppercase tracking-wider flex items-center gap-1 text-zinc-600 dark:text-zinc-400">
+                    <Type className="w-3.5 h-3.5" /> TIPOGRAFÍA:
+                  </span>
+                  <div className="flex items-center gap-1 border border-zinc-400 dark:border-zinc-700 p-0.5 bg-white/60 dark:bg-black/60">
+                    <button
+                      onClick={() => setReaderFontSize('normal')}
+                      className={`px-2 py-0.5 text-xs font-bold transition-colors ${
+                        readerFontSize === 'normal' ? 'bg-black text-[#D4FF00] dark:bg-white dark:text-black' : 'hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      A- Normal
+                    </button>
+                    <button
+                      onClick={() => setReaderFontSize('large')}
+                      className={`px-2 py-0.5 text-sm font-bold transition-colors ${
+                        readerFontSize === 'large' ? 'bg-black text-[#D4FF00] dark:bg-white dark:text-black' : 'hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      A Grande
+                    </button>
+                    <button
+                      onClick={() => setReaderFontSize('xlarge')}
+                      className={`px-2 py-0.5 text-base font-bold transition-colors ${
+                        readerFontSize === 'xlarge' ? 'bg-black text-[#D4FF00] dark:bg-white dark:text-black' : 'hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      A+ Extra
+                    </button>
+                  </div>
+                </div>
+
+                {/* Theme Selector: Neutral / Sepia / Dark */}
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-[11px] uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    TEMA DE LECTURA:
+                  </span>
+                  <div className="flex items-center gap-1 border border-zinc-400 dark:border-zinc-700 p-0.5 bg-white/60 dark:bg-black/60">
+                    <button
+                      onClick={() => setReaderTheme('neutral')}
+                      className={`px-2 py-0.5 text-xs font-bold transition-colors ${
+                        readerTheme === 'neutral' ? 'bg-black text-[#D4FF00] dark:bg-white dark:text-black' : 'hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      ☀️ Día
+                    </button>
+                    <button
+                      onClick={() => setReaderTheme('sepia')}
+                      className={`px-2 py-0.5 text-xs font-bold transition-colors ${
+                        readerTheme === 'sepia' ? 'bg-[#543D28] text-[#FBF0D9]' : 'hover:text-[#543D28]'
+                      }`}
+                    >
+                      📜 Sepia
+                    </button>
+                    <button
+                      onClick={() => setReaderTheme('dark')}
+                      className={`px-2 py-0.5 text-xs font-bold transition-colors ${
+                        readerTheme === 'dark' ? 'bg-white text-black' : 'hover:text-black dark:hover:text-white'
+                      }`}
+                    >
+                      🌙 Noche
+                    </button>
+                  </div>
+                </div>
+
+                {/* Audio Playing Indicator */}
+                {isSpeaking && speakingArticleId === activeArticle.id && (
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#00E599]">
+                    <span className="w-2 h-2 rounded-full bg-[#00E599] animate-ping" />
+                    <span>Leyendo artículo en voz alta ({speechRate}x)...</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Modal Hero Image (Visible solo en vista estándar para evitar distracciones en Modo Lectura) */}
+            {!isReadingMode && (
+              <div className="relative aspect-video bg-black border-b-2 border-black dark:border-zinc-800">
+                <ImageWithSkeleton
+                  src={activeArticle.image}
+                  alt={activeArticle.title}
+                  aspectRatioClassName="aspect-video"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
 
             {/* View Mode Tabs (Reading vs HTML Code) */}
-            <div className="flex border-b-2 border-black dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 sticky top-[57px] z-10">
+            <div className={`flex border-b-2 sticky top-[57px] z-10 ${
+              isReadingMode
+                ? (readerTheme === 'sepia'
+                    ? 'bg-[#F4E6CB] border-[#543D28]'
+                    : readerTheme === 'dark'
+                      ? 'bg-[#161B22] border-zinc-700'
+                      : 'bg-zinc-100 dark:bg-zinc-900 border-black dark:border-zinc-800')
+                : 'border-black dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900'
+            }`}>
               <button
                 onClick={() => setReaderTab('reading')}
                 className={`flex-1 sm:flex-initial px-5 py-3 font-jetbrains text-xs font-bold transition-all flex items-center justify-center gap-2 border-r-2 border-black dark:border-zinc-800 cursor-pointer ${
@@ -720,43 +1155,77 @@ export const BlogFeed: React.FC = () => {
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 sm:p-8 space-y-6">
+            <div className={`transition-all duration-200 ${
+              isReadingMode
+                ? 'max-w-3xl sm:max-w-4xl mx-auto py-8 sm:py-12 px-5 sm:px-10 space-y-8'
+                : 'p-6 sm:p-8 space-y-6'
+            }`}>
               {readerTab === 'reading' ? (
                 <>
                   {activeArticle.htmlContent ? (
                     /* Render Full HTML with automatic Copy button on <pre><code> */
                     <div className="space-y-6">
-                      <ArticleHtmlRenderer html={activeArticle.htmlContent} />
+                      <ArticleHtmlRenderer 
+                        html={activeArticle.htmlContent} 
+                        fontSizeClass={
+                          readerFontSize === 'xlarge'
+                            ? 'text-lg sm:text-xl leading-relaxed sm:leading-loose'
+                            : readerFontSize === 'large'
+                              ? 'text-base sm:text-lg leading-relaxed sm:leading-loose'
+                              : 'text-sm sm:text-base leading-relaxed'
+                        }
+                        className={
+                          isReadingMode && readerTheme === 'sepia'
+                            ? 'text-[#2C2114]'
+                            : isReadingMode && readerTheme === 'dark'
+                              ? 'text-[#E6EDF3]'
+                              : ''
+                        }
+                      />
                     </div>
                   ) : (
                     /* Standard fallback rendering */
                     <>
                       {/* Header Info */}
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3 text-xs font-jetbrains text-zinc-600 dark:text-zinc-400 font-bold">
+                      <div className={`space-y-3 ${isReadingMode ? 'text-center pb-6 border-b border-zinc-200 dark:border-zinc-800' : ''}`}>
+                        <div className={`flex items-center gap-3 text-xs font-jetbrains text-zinc-600 dark:text-zinc-400 font-bold ${
+                          isReadingMode ? 'justify-center' : ''
+                        }`}>
                           <span>PUBLICADO: {activeArticle.publishedAt}</span>
                           {activeArticle.stats?.impact && (
                             <span className="text-[#B8006E] dark:text-[#D4FF00] font-bold">• {activeArticle.stats.impact}</span>
                           )}
                         </div>
 
-                        <h1 className="font-anton text-2xl sm:text-4xl uppercase text-black dark:text-white leading-tight">
+                        <h1 className={`font-anton uppercase text-black dark:text-white leading-tight ${
+                          isReadingMode ? 'text-3xl sm:text-5xl tracking-tight' : 'text-2xl sm:text-4xl'
+                        }`}>
                           {activeArticle.title}
                         </h1>
 
-                        <p className="text-zinc-800 dark:text-zinc-300 font-space-grotesk text-base sm:text-lg leading-relaxed border-l-4 border-[#B8006E] dark:border-[#D4FF00] pl-4 font-medium">
+                        <p className={`font-space-grotesk text-base sm:text-lg leading-relaxed font-medium ${
+                          isReadingMode 
+                            ? 'text-zinc-700 dark:text-zinc-300 max-w-2xl mx-auto' 
+                            : 'text-zinc-800 dark:text-zinc-300 border-l-4 border-[#B8006E] dark:border-[#D4FF00] pl-4'
+                        }`}>
                           {activeArticle.excerpt}
                         </p>
                       </div>
 
                       {/* Key Takeaways Box */}
                       {activeArticle.keyTakeaways && activeArticle.keyTakeaways.length > 0 && (
-                        <div className="bg-zinc-50 dark:bg-zinc-950 border-2 border-zinc-300 dark:border-zinc-800 p-5 space-y-3">
+                        <div className={`border-2 p-5 space-y-3 ${
+                          isReadingMode && readerTheme === 'sepia'
+                            ? 'bg-[#F4E6CB] border-[#543D28]/40'
+                            : 'bg-zinc-50 dark:bg-zinc-950 border-zinc-300 dark:border-zinc-800'
+                        }`}>
                           <div className="flex items-center gap-2 font-jetbrains text-xs font-bold text-[#B8006E] dark:text-[#D4FF00]">
                             <Sparkles className="w-4 h-4 text-[#B8006E] dark:text-[#D4FF00]" />
                             <span>CONCLUSIONES CLAVE / RETENCIÓN ESTRATÉGICA</span>
                           </div>
-                          <ul className="space-y-2 text-xs sm:text-sm font-space-grotesk text-zinc-800 dark:text-zinc-300">
+                          <ul className={`space-y-2 font-space-grotesk text-zinc-800 dark:text-zinc-300 ${
+                            readerFontSize === 'xlarge' ? 'text-base sm:text-lg' : readerFontSize === 'large' ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
+                          }`}>
                             {activeArticle.keyTakeaways.map((takeaway, i) => (
                               <li key={i} className="flex items-start gap-2">
                                 <span className="text-[#FF4400] font-bold font-jetbrains mt-0.5">[{i + 1}]</span>
@@ -768,7 +1237,15 @@ export const BlogFeed: React.FC = () => {
                       )}
 
                       {/* Full Content Paragraphs */}
-                      <div className="space-y-4 font-space-grotesk text-zinc-800 dark:text-zinc-300 text-sm sm:text-base leading-relaxed">
+                      <div className={`space-y-5 font-space-grotesk ${
+                        isReadingMode && readerTheme === 'sepia' ? 'text-[#2C2114]' : 'text-zinc-800 dark:text-zinc-300'
+                      } ${
+                        readerFontSize === 'xlarge'
+                          ? 'text-lg sm:text-xl leading-relaxed sm:leading-loose'
+                          : readerFontSize === 'large'
+                            ? 'text-base sm:text-lg leading-relaxed sm:leading-loose'
+                            : 'text-sm sm:text-base leading-relaxed'
+                      }`}>
                         {activeArticle.content.map((paragraph, i) => (
                           <p key={i}>{paragraph}</p>
                         ))}
@@ -785,12 +1262,20 @@ export const BlogFeed: React.FC = () => {
                             {activeArticle.sections.map((section, idx) => (
                               <div 
                                 key={idx} 
-                                className="bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-300 dark:border-zinc-800 p-4 space-y-1.5 transition-all hover:border-black dark:hover:border-zinc-600"
+                                className={`border p-4 sm:p-5 space-y-2 transition-all ${
+                                  isReadingMode && readerTheme === 'sepia'
+                                    ? 'bg-[#F4E6CB]/60 border-[#543D28]/30'
+                                    : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-300 dark:border-zinc-800 hover:border-black dark:hover:border-zinc-600'
+                                }`}
                               >
-                                <h4 className="font-jetbrains font-bold text-xs sm:text-sm text-black dark:text-[#D4FF00]">
+                                <h4 className="font-jetbrains font-bold text-sm sm:text-base text-black dark:text-[#D4FF00]">
                                   {section.heading}
                                 </h4>
-                                <p className="font-space-grotesk text-xs sm:text-sm text-zinc-800 dark:text-zinc-300 leading-relaxed">
+                                <p className={`font-space-grotesk leading-relaxed ${
+                                  isReadingMode && readerTheme === 'sepia' ? 'text-[#2C2114]' : 'text-zinc-800 dark:text-zinc-300'
+                                } ${
+                                  readerFontSize === 'xlarge' ? 'text-base sm:text-lg' : readerFontSize === 'large' ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
+                                }`}>
                                   {section.body}
                                 </p>
                               </div>
@@ -995,6 +1480,12 @@ export const BlogFeed: React.FC = () => {
           </div>
         </div>
       )}
+      {/* Article Multi-channel Social Sharing Modal */}
+      <ArticleShareModal
+        article={shareArticle}
+        isOpen={!!shareArticle}
+        onClose={() => setShareArticle(null)}
+      />
     </section>
   );
 };

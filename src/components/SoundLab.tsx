@@ -499,14 +499,24 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
               {/* Platform Action Links */}
               <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 mt-4 space-y-1.5 font-jetbrains text-xs">
-                {/* Download Button with Social Gate */}
+                {/* Download Button with Mandatory Social Gate */}
                 <button
                   type="button"
                   onClick={() => setDownloadRelease(release)}
                   className="w-full bg-[#D4FF00] hover:bg-[#D9008F] text-black hover:text-white font-bold py-2 border-2 border-black brutal-shadow-black transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-1.5 uppercase text-xs group/btn cursor-pointer"
                 >
                   <Download className="w-4 h-4 shrink-0 text-black group-hover/btn:text-white" />
-                  <span className="text-black group-hover/btn:text-white font-bold">DESCARGAR CANCIÓN // SOCIAL GATE ↗</span>
+                  <span className="text-black group-hover/btn:text-white font-bold">DESCARGAR GRATIS // SHARE GATE ↗</span>
+                </button>
+
+                {/* Direct Share Button */}
+                <button
+                  type="button"
+                  onClick={() => setDownloadRelease(release)}
+                  className="w-full bg-white dark:bg-black text-black dark:text-zinc-200 hover:bg-[#FF4400] hover:text-white py-1.5 border-2 border-black dark:border-zinc-700 transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-1.5 text-[11px] font-bold brutal-shadow-black cursor-pointer"
+                >
+                  <Share2 className="w-3.5 h-3.5" />
+                  <span>COMPARTIR TRACK (X, SOUNDCLOUD, FB, WA)</span>
                 </button>
 
                 {release.bandcampUrl && (
@@ -516,7 +526,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                     rel="noopener noreferrer"
                     className="w-full bg-black text-[#D4FF00] hover:bg-[#FF4400] hover:text-white py-1.5 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center justify-center gap-1.5 text-[11px] font-bold brutal-shadow-black group/bc cursor-pointer"
                   >
-                    <span className="text-[#D4FF00] group-hover/bc:text-white font-bold">BANDCAMP ALBUM ↗</span>
+                    <span className="text-[#D4FF00] group-hover/bc:text-white font-bold">BANDCAMP MASTER ↗</span>
                   </a>
                 )}
 
