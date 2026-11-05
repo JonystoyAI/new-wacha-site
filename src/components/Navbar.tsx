@@ -16,7 +16,10 @@ import {
   Sun,
   Moon,
   Lock,
-  ShieldCheck
+  ShieldCheck,
+  BookOpen,
+  Clapperboard,
+  Disc
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -29,6 +32,8 @@ interface NavbarProps {
   theme: 'dark' | 'light';
   onToggleTheme: () => void;
   onOpenAdmin?: () => void;
+  currentRoute?: string;
+  onNavigate?: (route: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -40,20 +45,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleAudio,
   theme,
   onToggleTheme,
-  onOpenAdmin
+  onOpenAdmin,
+  currentRoute = 'home',
+  onNavigate
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
-    { href: '#mastermind', label: '[00] Mastermind' },
-    { href: '#canales', label: '[01] Red Canales' },
-    { href: '#portafolio', label: '[02] Portafolio' },
-    { href: '#soundlab', label: '[03] Sound Lab' },
-    { href: '#tienda', label: '[04] Drop Store' },
-    { href: '#servicios-aeo', label: '[05] AEO / SEO' },
-    { href: '#blog', label: '[06] Blog AEO' },
-    { href: '#cotizador', label: '[07] Cotizador' },
-    { href: '#faq', label: '[08] FAQ' }
+  const navPages = [
+    { route: 'home', label: 'INICIO', icon: Flame },
+    { route: 'blog', label: 'BLOG', icon: BookOpen },
+    { route: 'produccion', label: 'MULTIMEDIA', icon: Clapperboard, title: 'Investigación, Redacción, Animación y Creación de Contenido' },
+    { route: 'cumbia-lab', label: 'CUMBIA LAB.', icon: Disc, title: 'Proyecto de Cumbia Decrépita' },
+    { route: 'tienda', label: 'DROP STORE', icon: ShoppingBag, title: 'Wacha Drop Store Online' }
   ];
 
   return (
@@ -79,9 +82,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Main Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Logo */}
-        <a 
-          href="#" 
-          className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#D4FF00]"
+        <button 
+          onClick={() => onNavigate ? onNavigate('home') : (window.location.hash = '')}
+          className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#D4FF00] text-left cursor-pointer"
           aria-label="Wacha Multimedia Inicio"
         >
           <div className="relative w-11 h-11 shrink-0 rounded-full overflow-hidden border-2 border-black brutal-shadow-lime group-hover:scale-105 group-hover:border-[#D4FF00] transition-all bg-black flex items-center justify-center">
@@ -108,19 +111,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               PRODUCCIONES & SOUND LAB // ¡PAPÚUU!
             </p>
           </div>
-        </a>
+        </button>
 
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-1 font-jetbrains text-xs">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-3 py-1.5 text-black dark:text-zinc-300 hover:text-white dark:hover:text-black hover:bg-[#D9008F] dark:hover:bg-[#D4FF00] transition-all border border-transparent hover:border-black font-bold"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navPages.map((page) => {
+            const isActive = currentRoute === page.route;
+            const Icon = page.icon;
+            return (
+              <button
+                key={page.route}
+                onClick={() => onNavigate ? onNavigate(page.route) : (window.location.hash = page.route === 'home' ? '' : `#${page.route}`)}
+                title={page.title || page.label}
+                className={`px-3 py-1.5 transition-all font-bold flex items-center gap-1.5 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#D4FF00] text-black border-2 border-black brutal-shadow-black'
+                    : 'text-black dark:text-zinc-300 hover:text-white dark:hover:text-black hover:bg-[#D9008F] dark:hover:bg-[#D4FF00] border-2 border-transparent hover:border-black'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{page.label}</span>
+              </button>
+            );
+          })}
         </nav>
 
         {/* Right Action Controls */}
@@ -268,18 +281,32 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          <nav className="grid grid-cols-1 gap-1 font-jetbrains text-sm">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 bg-zinc-100 dark:bg-zinc-900 text-black dark:text-zinc-200 hover:bg-[#D9008F] hover:text-white dark:hover:bg-[#D4FF00] dark:hover:text-black transition-all border border-zinc-300 dark:border-zinc-800 flex justify-between items-center font-bold"
-              >
-                <span>{link.label}</span>
-                <span className="text-zinc-600 dark:text-zinc-500">↗</span>
-              </a>
-            ))}
+          <nav className="grid grid-cols-1 gap-1.5 font-jetbrains text-sm">
+            {navPages.map((page) => {
+              const isActive = currentRoute === page.route;
+              const Icon = page.icon;
+              return (
+                <button
+                  key={page.route}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onNavigate) onNavigate(page.route);
+                    else window.location.hash = page.route === 'home' ? '' : `#${page.route}`;
+                  }}
+                  className={`px-3.5 py-2.5 transition-all border-2 flex justify-between items-center font-bold cursor-pointer ${
+                    isActive
+                      ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
+                      : 'bg-zinc-100 dark:bg-zinc-900 text-black dark:text-zinc-200 hover:bg-[#D9008F] hover:text-white dark:hover:bg-[#D4FF00] dark:hover:text-black border-zinc-300 dark:border-zinc-800'
+                  }`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Icon className="w-4 h-4" />
+                    <span>{page.label}</span>
+                  </span>
+                  <span className="text-xs font-mono">{page.title ? '★' : '→'}</span>
+                </button>
+              );
+            })}
           </nav>
 
           <div className="pt-2 flex flex-col gap-2">

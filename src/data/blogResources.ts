@@ -820,3 +820,108 @@ Sitio Oficial: https://whacha.site
   }
 ];
 
+/* =========================================================================
+ * ARTÍCULO: REGISTRO DE CANCIONES INDAUTOR Y DISTRIBUCIÓN ISRC
+ * ========================================================================= */
+
+export const ARTICLE_INDAUTOR_RESOURCES: BlogDownloadResource[] = [
+  {
+    id: 'indautor-isrc-checklist-md',
+    name: 'Guía de Trámite INDAUTOR & Matriz ISRC 2026 (Markdown)',
+    description: 'Checklist completo con requisitos para el trámite presencial Express Autor en CDMX ($367 MXN), documentos RPDA-01 y lineamientos para agregadoras digitales.',
+    fileName: 'indautor-isrc-guia-tramite-2026.md',
+    fileType: 'text/markdown',
+    size: '4.8 KB',
+    fileContent: `# Guía Rápida de Trámite INDAUTOR & Asignación de Códigos ISRC (2026)
+Wacha Multimedia • Sonido Decrépito Lab (https://whacha.site)
+
+## 1. Documentación Obligatoria (RPDA-01)
+- Formato oficial RPDA-01 debidamente requisitado (original y copia).
+- Pago bancario oficial vía formato e5cinco ($367.00 MXN en 2026).
+- Identificación oficial vigente (INE o Pasaporte).
+- 2 ejemplares idénticos de la obra:
+  * Si es composición: 2 copias impresas de partitura/letra/acordes.
+  * Si es máster fonograma: 2 CDs o 2 memorias USB con archivos WAV 24-bit.
+
+## 2. Trámite Express en CDMX
+- Dirección: Calle de Puebla 143, Col. Roma Norte, Cuauhtémoc, C.P. 06700, CDMX.
+- Horario de recepción: 09:00 a 11:30 hrs.
+- Horario de entrega del certificado sellado: Mismo día después de las 15:00 hrs.
+
+## 3. Matriz de Códigos ISRC para Spotify y Apple Music
+- Formato: CC-XXX-YY-NNNNN (País - Registrador - Año - Número de Pista).
+- Asignación automatizada recomendada: Agregadora digital (DistroKid, TuneCore, ONErpm, CD Baby).
+- Importante: Una nueva mezcla, remaster o versión en vivo requiere un código ISRC nuevo e independiente.`
+  },
+  {
+    id: 'indautor-music-thumbnail-prompt-txt',
+    name: 'Prompt Maestro para Miniaturas de Trámites Musicales (TXT)',
+    description: 'Instrucción probada para generar conceptos de portadas en alta conversión para videos de derechos de autor y lanzamientos en plataformas de streaming.',
+    fileName: 'prompt-maestro-miniatura-indautor.txt',
+    fileType: 'text/plain',
+    size: '1.9 KB',
+    fileContent: `Actúa como un estratega visual para YouTube y plataformas digitales, especializado en diseño de miniaturas de alto impacto sobre la industria musical, trámites legales y monetización.
+
+Objetivo:
+Diseñar una miniatura visualmente atractiva, profesional y de alta conversión para el tema: "Cómo registrar tu música en INDAUTOR y subirla a Spotify con códigos ISRC".
+
+Especificaciones:
+1. Composición y Punto Focal:
+- Lado izquierdo: Persona o creador musical en plano medio mirando a cámara con expresión de seguridad y determinación, señalando los elementos clave.
+- Lado derecho: Diagrama visual de 3 pasos claros [1: INDAUTOR RPDA-01 / $367 MXN] -> [2: ONDA DE AUDIO CON CÓDIGO ISRC] -> [3: LOGO SPOTIFY / STREAMING].
+
+2. Texto Superpuesto (Regla móvil a 120px):
+- Texto principal: "PASO A PASO" (Tipografía Sans-Serif gruesa, máximo contraste sobre placa limpia).
+
+3. Iluminación y Paleta de Color:
+- Iluminación de borde (rim light) en tonos cian (#00E5FF) y magenta eléctrico (#FF007F).
+- Fondo en gris carbón profundo (#121411) con sutil textura de estudio de grabación.
+- Contraste moderado en el texto interno (35-45%) para evitar ceguera publicitaria.`
+  }
+];
+
+/* =========================================================================
+ * ARTÍCULO: ALGORITMO DE YOUTUBE Y MINIATURAS (CTR × RETENCIÓN)
+ * ========================================================================= */
+
+export const ARTICLE_YOUTUBE_RESOURCES: BlogDownloadResource[] = [
+  {
+    id: 'youtube-thumbnail-audit-matrix-csv',
+    name: 'Matriz de Auditoría Previa a Publicación de Miniaturas (CSV)',
+    description: 'Plantilla de cálculo con 15 variables ponderadas (0-14 puntos) para someter variantes a Test & Compare en YouTube Studio.',
+    fileName: 'matriz-auditoria-miniaturas-youtube.csv',
+    fileType: 'text/csv',
+    size: '2.1 KB',
+    fileContent: `ID_Variante,Concepto_Promesa,Palabras_Texto,Paleta_Colores,Contraste_Texto_Estimado_Pct,Presencia_Rostro,Emocion_Rostro,Rostro_Area_Pct,Contacto_Visual,Contraste_Interfaz,Fuente_Sans_Serif_Negrita,Legible_120px,Diferencial_Promesa_vs_Otras_Variantes,Riesgo_Brecha_Contenido,Puntuacion_Total
+A,Resultado final tangible,3,Amarillo/Negro,40,Si,Determinacion,18,Si,Alto,Si,Si,Si,Bajo,9
+B,Conflicto o error comun,2,Rojo/Blanco,38,Si,Curiosidad,20,Si,Medio,Si,Si,Si,Medio,8
+C,Proceso o metodo,4,Azul/Naranja,42,No,N/A,0,No,Alto,Si,No,Si,Bajo,6`
+  },
+  {
+    id: 'youtube-algorithm-prompt-txt',
+    name: 'Prompt Maestro de Embalaje Visual y Test & Compare (TXT)',
+    description: 'Prompt para directores creativos e IAs generativas que elimina el clickbait tóxico y optimiza la cuota de tiempo de visualización (watch time share).',
+    fileName: 'prompt-maestro-algoritmo-youtube-miniaturas.txt',
+    fileType: 'text/plain',
+    size: '2.4 KB',
+    fileContent: `Actúa como un estratega de conversión visual y empaquetado para YouTube, especializado en analítica de retención, experiencia de usuario (UX móvil) y psicología del color. Tu objetivo es diseñar conceptos visuales que maximicen el 'watch time share' evitando cualquier táctica de clickbait que perjudique la retención temprana.
+
+Contexto de la pieza:
+- Título del video: [¿Cómo evalúa el algoritmo de YouTube las miniaturas en 2026 para otorgar impresiones?]
+- Nicho/Sector: [marketing multimedia]
+- Promesa central (lo que el video entrega genuinamente en los primeros 30 segundos): [que premia el algoritmo de YouTube: premia CTR × retención y penaliza el CTR aislado]
+- Audiencia objetivo: [Diseñadores Gráficos, SEO, creadores de contenido]
+
+Instrucciones de conceptualización:
+Genera 3 conceptos de miniatura altamente diferenciados para someterlos a la herramienta Test & Compare de YouTube. Cada concepto debe apelar a un ángulo psicológico radicalmente distinto (Resultado final tangible, Conflicto/Error común, o Trámite/Método revelado). Se prohíbe proponer variantes que únicamente modifiquen el color de fondo.
+
+Para cada concepto proporciona:
+1. Ángulo Psicológico: Qué asume el espectador al ver la imagen antes del título.
+2. Elemento Humano / Ancla Visual: Rostro u objeto protagónico (20-30% de área con contacto visual directo).
+3. Reglas de Texto (UX Móvil): Máximo 3 palabras en tercio superior.
+4. Ingeniería de Color y Contraste: Contraste texto-fondo moderado del 35-45% para evitar la ceguera publicitaria.
+5. Auditoría de Fricción: Mitigación de brecha promesa-contenido en los primeros 30 segundos.`
+  }
+];
+
+

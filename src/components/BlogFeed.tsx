@@ -171,7 +171,15 @@ function extractCleanTextForSpeech(article: BlogPost): string {
   return chunks.join('. ');
 }
 
-export const BlogFeed: React.FC = () => {
+interface BlogFeedProps {
+  initialArticleId?: string | null;
+  initialReadingMode?: boolean;
+}
+
+export const BlogFeed: React.FC<BlogFeedProps> = ({
+  initialArticleId = null,
+  initialReadingMode = false
+}) => {
   const [articles, setArticles] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -352,6 +360,13 @@ export const BlogFeed: React.FC = () => {
         if (isMounted) {
           setArticles(data);
           setDataSource('/data/articles.json');
+          if (initialArticleId) {
+            const found = data.find(a => a.id === initialArticleId || a.slug === initialArticleId);
+            if (found) {
+              setActiveArticle(found);
+              setIsReadingMode(initialReadingMode);
+            }
+          }
         }
       } catch (err) {
         console.error('Error fetching blog articles:', err);

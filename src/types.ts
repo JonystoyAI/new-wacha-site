@@ -103,7 +103,7 @@ export interface BlogPost {
   excerpt: string;
   content: string[];
   keyTakeaways: string[];
-  category: 'AEO' | 'SEO Técnico' | 'Video SEO' | 'IA Generativa' | 'Algoritmos';
+  category: 'AEO' | 'SEO Técnico' | 'Video SEO' | 'IA Generativa' | 'Algoritmos' | 'Music Business' | string;
   tags: string[];
   author: {
     name: string;

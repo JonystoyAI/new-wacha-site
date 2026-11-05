@@ -14,7 +14,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
   const [pitch, setPitch] = useState<number>(0.85); // Slowed cumbia rebajada pitch
   const [volume, setVolume] = useState<number>(0.8);
   const [tubeSaturation, setTubeSaturation] = useState(true);
-  const [activeTab, setActiveTab] = useState<'synth' | 'soundcloud'>('soundcloud');
+  const [activeTab, setActiveTab] = useState<'cabaret' | 'soundcloud' | 'synth'>('cabaret');
   const [downloadRelease, setDownloadRelease] = useState<MusicRelease | null>(null);
 
   // Audio Context Ref for Web Audio API Synth Engine
@@ -193,12 +193,12 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
             <div>
               <div className="font-jetbrains text-xs text-[#FF4400] font-bold tracking-wider mb-1 flex items-center gap-2">
                 <span className="w-2 h-2 bg-[#FF4400]"></span>
-                // SECCIÓN 03: SOUND LAB & MÚSICA EXPERIMENTAL
+                // CUMBIA LAB & MÚSICA EXPERIMENTAL DECRÉPITA
               </div>
-              <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex items-center gap-3">
-                SONIDO DECRÉPITO // LAB
+              <h2 className="font-anton text-4xl sm:text-5xl text-white uppercase tracking-wide flex flex-wrap items-center gap-3">
+                <span>CUMBIA LAB.</span>
                 <span className="text-xs font-jetbrains px-3 py-1 bg-[#FF4400] text-white border border-black font-bold">
-                  CUMBIA REBAJADA
+                  (PROYECTO DE CUMBIA DECRÉPITA)
                 </span>
               </h2>
             </div>
@@ -234,31 +234,68 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                 <span className="text-black group-hover/sg:text-white font-bold">DESCARGAR PISTA // SOCIAL GATE</span>
               </button>
               <button
-                onClick={() => setActiveTab('synth')}
-                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center gap-1.5 ${
-                  activeTab === 'synth'
-                    ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
-                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100'
+                type="button"
+                onClick={() => setActiveTab('cabaret')}
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black ${
+                  activeTab === 'cabaret'
+                    ? 'bg-[#D4FF00] text-black border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
                 }`}
+                title="Reproductor oficial Cabaret Decrépito en Flow Music"
               >
-                <Sliders className="w-3.5 h-3.5" />
-                <span>SYNTH ENGINE</span>
+                <Music className="w-3.5 h-3.5" />
+                <span>Cabaret Decrépito</span>
               </button>
               <button
+                type="button"
                 onClick={() => setActiveTab('soundcloud')}
-                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:scale-95 flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black ${
                   activeTab === 'soundcloud'
-                    ? 'bg-[#FF4400] text-white border-black brutal-shadow-black'
-                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100'
+                    ? 'bg-[#FF4400] text-white border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
                 }`}
               >
                 <Radio className="w-3.5 h-3.5" />
                 <span>SOUNDCLOUD EMBED</span>
               </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('synth')}
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black ${
+                  activeTab === 'synth'
+                    ? 'bg-[#00E599] text-black border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
+                }`}
+              >
+                <Sliders className="w-3.5 h-3.5" />
+                <span>SYNTH ENGINE</span>
+              </button>
             </div>
           </div>
 
-          {activeTab === 'synth' ? (
+          {activeTab === 'cabaret' ? (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3 font-jetbrains text-xs">
+                <div className="flex items-center gap-2 text-black dark:text-[#D4FF00] font-bold">
+                  <Radio className="w-4 h-4 text-[#FF4400] animate-pulse" />
+                  <span>CABARET DECRÉPITO // REPRODUCTOR FLOW MUSIC PLAYLIST OFICIAL</span>
+                </div>
+                <span className="text-zinc-600 dark:text-zinc-400 text-[11px] font-mono">FLOWMUSIC.APP • ALTA RESOLUCIÓN</span>
+              </div>
+              <div className="w-full bg-black rounded-2xl overflow-hidden brutal-shadow-black flex justify-center">
+                <iframe 
+                  src="https://flowmusic.app/playlist/a8a6f758-cd63-4262-ba4f-4c84c98c666b" 
+                  width="100%" 
+                  height="480" 
+                  frameBorder="0" 
+                  allow="autoplay; encrypted-media" 
+                  style={{ borderRadius: '16px', border: '1px solid #27272a', boxShadow: '0 20px 40px rgba(0,0,0,0.6)' }}
+                  loading="lazy"
+                  title="Cabaret Decrépito Flow Music Playlist"
+                />
+              </div>
+            </div>
+          ) : activeTab === 'synth' ? (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Console Controls */}
               <div className="lg:col-span-5 space-y-6">

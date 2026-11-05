@@ -6,13 +6,17 @@ import {
   ARTICLE_CWV_RESOURCES,
   ARTICLE_VOZ_RESOURCES,
   ARTICLE_CORE_RESOURCES,
-  ARTICLE_GEO_RESOURCES
+  ARTICLE_GEO_RESOURCES,
+  ARTICLE_INDAUTOR_RESOURCES,
+  ARTICLE_YOUTUBE_RESOURCES
 } from './blogResources';
 import {
   ARTICLE_1_HTML,
   ARTICLE_2_HTML,
   ARTICLE_3_HTML,
-  ARTICLE_GEO_HTML
+  ARTICLE_GEO_HTML,
+  ARTICLE_INDAUTOR_HTML,
+  ARTICLE_YOUTUBE_HTML
 } from './articleHtmlData';
 
 export const INITIAL_BLOG_ARTICLES: BlogPost[] = [
@@ -459,35 +463,106 @@ export const INITIAL_BLOG_ARTICLES: BlogPost[] = [
     htmlContent: ARTICLE_3_HTML
   },
   {
-    id: 'thumbnail-ctr-matrix-psicologia-contraste',
-    slug: 'thumbnail-ctr-matrix-psicologia-contraste',
-    title: 'Thumbnail CTR Matrix: Psicología del Color, Alto Contraste y Tipografía',
-    excerpt: 'Deconstrucción de 80 miniaturas de alta conversión en nuestra red de canales con más de 2.4M de impresiones diarias.',
-    category: 'Video SEO',
-    tags: ['YouTube CTR', 'Thumbnails', 'Video SEO', 'Diseño'],
-    publishedAt: '01 Oct 2026',
-    readTime: '6 min',
-    image: '/sigue_bailando.jpg',
-    isFeatured: false,
+    id: 'registrar-cancion-indautor-subir-spotify-isrc-mexico',
+    slug: 'registrar-cancion-indautor-subir-spotify-isrc-mexico',
+    title: 'Cómo Registrar una Canción en INDAUTOR y Subirla a Spotify (2026)',
+    excerpt: 'Proteger la propiedad intelectual de una obra musical y comercializarla en tiendas de streaming son dos procesos independientes. Conoce los requisitos documentales ante INDAUTOR en México ($367 MXN), el trámite express el mismo día en CDMX, la comparativa con el Copyright de EE. UU. y cómo gestionar los códigos ISRC para cobrar regalías en Spotify y Apple Music.',
+    category: 'Music Business',
+    tags: ['DerechosDeAutor', 'INDAUTOR', 'MusicaIndependiente', 'ISRC', 'DistribucionDigital', 'SpotifyForArtists', 'MusicBusiness'],
+    publishedAt: '03 Nov 2026',
+    readTime: '9 min',
+    image: '/assets/aistudio/Gemini_Generated_Image_vz5l0wvz5l0wvz5l_1bffc25a.jpg',
+    isFeatured: true,
     stats: {
-      views: '5.4K lecturas',
-      impact: 'CTR promedio superior a 11.8%'
+      views: '6.2K lecturas',
+      impact: 'Guía de Trámite Legal & Streaming'
     },
     author: {
-      name: 'Equipo de Diseño Wacha',
-      role: 'Creative Direction & Art Lab',
+      name: 'Wacha Multimedia & Sonido Decrépito',
+      role: 'Music Production & Rights Management',
       avatar: '/wacha_logo.jpg'
     },
     keyTakeaways: [
-      'El 82% de las visualizaciones de YouTube provienen de dispositivos móviles donde la miniatura mide menos de 3.5 cm de ancho.',
-      'El texto en miniatura no debe repetir el título del video: debe complementar la intriga con máximo 3 palabras de alto impacto.',
-      'El contraste de borde de 1px o halo recortado sobre fondos oscuros asegura separación visual en el feed oscuro nativo de YouTube.'
+      'Tener el certificado de INDAUTOR otorga protección legal moral y patrimonial, pero para distribuir en streaming se requiere obligatoriamente un código ISRC emitido por agregadora o IFPI.',
+      'El costo oficial de registro en México para 2026 es de $367 MXN por obra, con opción de entrega el mismo día mediante el servicio Express Autor en la Roma Norte (CDMX).',
+      'Bajo el Convenio de Berna, el registro en INDAUTOR tiene plena validez jurídica internacional en Estados Unidos sin necesidad de pagar las tarifas en dólares de la U.S. Copyright Office salvo litigios federales.'
     ],
     content: [
-      'Una excelente producción de video no sirve de nada si nadie hace clic en la miniatura. En un feed saturado con cientos de opciones compitiendo en fracciones de segundo, la miniatura es el único vendedor de tu contenido.',
-      'Nuestra matriz de diseño se basa en 3 reglas: Regla de los 3 Elementos (sujeto principal en primer plano, fondo contextualizado con desenfoque de profundidad y palabra clave de anclaje), regla de colores complementarios de alta saturación (amarillo lima #D4FF00 y naranja de seguridad #FF4400 sobre negro neutro), y regla de legibilidad en miniatura de 120px.',
-      'El Video SEO moderno comienza en el diseño visual de la portada antes de escribir la primera línea de la descripción.'
-    ]
+      'En la gestión de proyectos musicales independientes, es indispensable diferenciar entre la protección del derecho patrimonial y moral y la identificación comercial en entornos digitales.',
+      'Tener la constancia de registro ante el Instituto Nacional del Derecho de Autor (INDAUTOR) acredita la titularidad legal de la creación, pero no habilita la distribución del archivo en plataformas como Spotify, Apple Music, Tidal o Deezer. Para la comercialización digital se requiere una clave estandarizada de rastreo conocida como Código ISRC.',
+      'El trámite ordinario demora 15 días hábiles, pero acudiendo a las oficinas centrales en Calle Puebla 143 en la CDMX con los formatos RPDA-01 y pago e5cinco realizado, se obtiene el certificado el mismo día en el módulo Express Autor.'
+    ],
+    sections: [
+      {
+        heading: '1. Protección Legal vs. Distribución Digital',
+        body: 'El registro legal ante INDAUTOR protege la titularidad moral y económica, mientras que el código ISRC es la cédula numérica que permite a Spotify liquidar regalías a través de las agregadoras.'
+      },
+      {
+        heading: '2. Formatos y Costos Oficiales 2026',
+        body: 'Tarifa de $367 MXN. Para composición se entregan dos partituras/letras impresas; para máster o fonograma se entregan dos discos compactos o dos memorias USB con WAVs en alta fidelidad.'
+      },
+      {
+        heading: '3. Trámite Presencial Express en CDMX',
+        body: 'Oficinas centrales en Puebla 143, Roma Norte. Recepción matutina de 9:00 a 11:30 hrs y entrega el mismo día por la tarde.'
+      },
+      {
+        heading: '4. Validez Internacional (Convenio de Berna)',
+        body: 'Reconocimiento mutuo automático entre los 181 países firmantes, garantizando protección de catálogo mexicano en el extranjero.'
+      }
+    ],
+    resources: ARTICLE_INDAUTOR_RESOURCES,
+    htmlContent: ARTICLE_INDAUTOR_HTML
+  },
+  {
+    id: 'algoritmo-youtube-miniaturas-ctr-retencion-psicologia-visual',
+    slug: 'algoritmo-youtube-miniaturas-ctr-retencion-psicologia-visual',
+    title: 'Algoritmo de YouTube y Miniaturas: Matriz de CTR, Retención y Psicología Visual',
+    excerpt: 'Una puntuación alta de CTR con retención baja destruye el alcance orgánico. El algoritmo de YouTube selecciona las miniaturas ganadoras por watch time share (cuota de tiempo de visualización), no por clics superficiales. Conoce los parámetros visuales, la psicología del color, la legibilidad móvil a 120px y la matriz de auditoría previa a la publicación.',
+    category: 'Video SEO',
+    tags: ['YouTubeAlgorithm', 'ThumbnailDesign', 'CTR', 'Retention', 'WatchTimeShare', 'PsicologiaVisual', 'SEOYouTube'],
+    publishedAt: '04 Nov 2026',
+    readTime: '11 min',
+    image: '/assets/aistudio/Man_viewing_glowing_formula_67bc91c9_593fa41a.jpg',
+    isFeatured: true,
+    stats: {
+      views: '7.8K lecturas',
+      impact: 'Fórmula Watch Time Share 2026'
+    },
+    author: {
+      name: 'Equipo de Video SEO Wacha',
+      role: 'Creative Packaging & Analytics Lab',
+      avatar: '/wacha_logo.jpg'
+    },
+    keyTakeaways: [
+      'El algoritmo de YouTube no premia el CTR aislado: premia CTR × Retención Temprana. Un clic con abandono en los primeros 30 segundos activa penalizaciones orgánicas por brecha de expectativa.',
+      'El contraste de texto interior superior al 70% activa la ceguera publicitaria (efecto neón). El rango óptimo comprobado es del 35% al 45% con tipografía Sans-Serif gruesa.',
+      'En la herramienta Test & Compare de YouTube Studio, las variantes deben competir por ángulos psicológicos radicalmente distintos y evaluarse por cuota de tiempo de visualización.'
+    ],
+    content: [
+      'Durante años, el análisis de diseño para YouTube se concentró en una sola métrica: el Porcentaje de Clics (CTR). La estrategia convencional dictaba aumentar la saturación, rostros sobreactuados y tipografía gigante. Sin embargo, este enfoque ignoraba el factor determinante del posicionamiento orgánico.',
+      'La arquitectura del algoritmo de distribución opera mediante una heurística centrada en la satisfacción del usuario: CTR × Retención Temprana. Esto implica que un video con un 12% de CTR pero solo 20% de retención promedio pierde distribución frente a una pieza con 6% de CTR y 55% de retención. El sistema no busca predecir clics aislados; predice tiempo de visualización satisfecho por impresión.',
+      'Más del 70% de las reproducciones en YouTube ocurren en dispositivos móviles, donde el tamaño renderizado de una miniatura en el feed es de aproximadamente 120 píxeles de ancho. El rango óptimo se sitúa entre 0 y 3 palabras ubicadas en el tercio superior.'
+    ],
+    sections: [
+      {
+        heading: '1. La Trampa del CTR Aislado',
+        body: 'El clic que abandona antes de 30 segundos genera penalización de distribución por fast click-away.'
+      },
+      {
+        heading: '2. La Matriz de Evaluación: 3 Ejes',
+        body: 'Eje 1: Potencial de Clic (1.5s scroll stop). Eje 2: Coherencia de Promesa (primeros 30s). Eje 3: Contribución a la Sesión (Watch Time Share).'
+      },
+      {
+        heading: '3. Psicología del Color y Ceguera Publicitaria',
+        body: 'El contraste óptimo texto-fondo es del 35-45%. Contrastes estridentes mayores a 70% son clasificados por el cerebro como anuncios intrusivos reduciendo CTR un 12%.'
+      },
+      {
+        heading: '4. Matriz de Auditoría Previa a Publicación (CSV)',
+        body: '15 variables ponderadas de 0 a 14 puntos para auditar legibilidad a 120px, área de rostro (20-30%) y contacto visual directo.'
+      }
+    ],
+    resources: ARTICLE_YOUTUBE_RESOURCES,
+    htmlContent: ARTICLE_YOUTUBE_HTML
   }
 ];
 

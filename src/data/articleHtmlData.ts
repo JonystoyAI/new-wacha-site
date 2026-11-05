@@ -829,3 +829,294 @@ export const ARTICLE_GEO_HTML = `<article class="article-content font-space-grot
   </section>
 </article>`;
 
+export const ARTICLE_INDAUTOR_HTML = `<article class="article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6">
+  <header class="border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3">
+    <div class="flex flex-wrap gap-2 text-xs font-jetbrains">
+      <span class="bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black">MUSIC BUSINESS</span>
+      <span class="bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700">INDAUTOR MÉXICO</span>
+      <span class="bg-[#00E599] text-black px-2 py-0.5 font-bold border border-black">CÓDIGOS ISRC</span>
+      <span class="text-zinc-500 py-0.5">SLUG: registrar-cancion-indautor-subir-spotify-isrc-mexico</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white">
+      Cómo Registrar una Canción en INDAUTOR y Subirla a Spotify (2026)
+    </h1>
+    <p class="text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains">
+      ¿Cuáles son los requisitos, costos y trámites para registrar derechos de autor y obtener códigos ISRC en México?
+    </p>
+    <div class="text-xs font-jetbrains text-zinc-600 dark:text-zinc-400">
+      Por <strong>Wacha Multimedia & Sonido Decrépito</strong> • https://whacha.site
+    </div>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Protección Legal vs. Distribución Digital: Dos Capas Diferentes
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      En la gestión de proyectos musicales independientes, es indispensable diferenciar entre la <strong>protección del derecho patrimonial y moral</strong> y la <strong>identificación comercial en entornos digitales</strong>.
+    </p>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Tener la constancia de registro ante el <strong>Instituto Nacional del Derecho de Autor (INDAUTOR)</strong> acredita la titularidad legal de la creación, pero no habilita la distribución del archivo en plataformas como Spotify, Apple Music, Tidal o Deezer. Para la comercialización digital se requiere una clave estandarizada de rastreo conocida como <strong>Código ISRC</strong>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Requisitos, Formatos y Costos en INDAUTOR (2026)
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      El marco legal en México distingue dos figuras principales dentro de una producción musical:
+    </p>
+    <ol class="list-decimal list-inside space-y-2 text-base text-zinc-800 dark:text-zinc-300">
+      <li><strong>La Composición (Obra Músico-Literaria):</strong> Protege la melodía, armonía y letra.</li>
+      <li><strong>El Fonograma (La Grabación Sonora):</strong> Protege la fijación de los sonidos de una interpretación o ejecución específica (el máster).</li>
+    </ol>
+
+    <div class="bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-3">
+      <h3 class="font-jetbrains text-sm font-bold text-black dark:text-white uppercase flex items-center gap-2">
+        <span class="w-2.5 h-2.5 bg-[#FF4400]"></span>
+        Documentación Necesaria:
+      </h3>
+      <ul class="list-disc list-inside space-y-1.5 text-sm text-zinc-800 dark:text-zinc-300 font-jetbrains">
+        <li>Formato oficial de solicitud <strong>RPDA-01</strong> debidamente requisitado.</li>
+        <li>Comprobante de pago de derechos bancario (Formato e5cinco).</li>
+        <li>Identificación oficial vigente del autor o titular de derechos patrimoniales (INE / Pasaporte).</li>
+        <li>Dos ejemplares idénticos de la obra en soporte físico.</li>
+      </ul>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#B8006E] dark:text-[#D4FF00]">A. Solo Composición (Sin Grabación):</h4>
+        <p class="text-xs font-space-grotesk text-zinc-700 dark:text-zinc-400">
+          Se presentan dos ejemplares idénticos de la partitura (guion musical que incluya letra, melodía y cifrado armónico).
+        </p>
+      </div>
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#FF4400]">B. Producción Grabada (Máster Terminado):</h4>
+        <p class="text-xs font-space-grotesk text-zinc-700 dark:text-zinc-400">
+          Se presentan dos copias físicas tangibles en formato CD o unidad USB que contengan los archivos de audio en alta resolución (WAV 24-bit).
+        </p>
+      </div>
+    </div>
+
+    <div class="p-4 bg-[#D4FF00]/10 border-2 border-black dark:border-[#D4FF00] text-sm space-y-1">
+      <p class="font-bold font-jetbrains text-black dark:text-[#D4FF00]">
+        Costo oficial (2026): $367 MXN por concepto de recepción, examen y registro de cada obra.
+      </p>
+      <p class="text-xs text-zinc-700 dark:text-zinc-300">
+        Tiempo del trámite ordinario: 15 días hábiles a través de las delegaciones federales o ventanilla general.
+      </p>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Trámite Presencial "Express Autor" en CDMX
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Para obtener el certificado de registro el mismo día, el INDAUTOR dispone del servicio <strong>Express Autor</strong> en sus oficinas centrales:
+    </p>
+    <div class="p-4 bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs space-y-2">
+      <div class="text-[#FF4400] font-bold uppercase">📍 Sede Central INDAUTOR:</div>
+      <div class="text-zinc-800 dark:text-zinc-200">Calle de Puebla No. 143, Colonia Roma Norte, Alcaldía Cuauhtémoc, C.P. 06700, Ciudad de México.</div>
+      <div class="text-zinc-600 dark:text-zinc-400">
+        Procedimiento: Acude en horario matutino con los formatos RPDA-01, el pago bancario de $367 MXN efectuado y los dos ejemplares idénticos. Si no existen prevenciones técnicas, el certificado sellado se entrega por la tarde del mismo día.
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Validez Internacional: Convenio de Berna vs. U.S. Copyright Office
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      El <strong>Convenio de Berna para la Protección de las Obras Literarias y Artísticas</strong> establece que los países firmantes (incluidos México y EE. UU.) reconocen automáticamente los derechos de autor concedidos en sus respectivos territorios.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#B8006E] dark:text-[#D4FF00]">U.S. Copyright Office ($45 - $85 USD):</h4>
+        <p class="text-xs text-zinc-700 dark:text-zinc-400 leading-relaxed">
+          Exige pago en dólares y depósito en estándar <em>best edition</em>. Su ventaja es que habilita la reclamación de daños estatutarios en tribunales federales de Estados Unidos.
+        </p>
+      </div>
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#00E599]">INDAUTOR México ($367 MXN):</h4>
+        <p class="text-xs text-zinc-700 dark:text-zinc-400 leading-relaxed">
+          Ofrece una vía sumamente económica, resolución rápida en CDMX e idéntica validez probatoria internacional bajo el Convenio de Berna.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Códigos ISRC: La Llave de Rastreo para Plataformas Digitales
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      El <strong>Código ISRC</strong> (<em>International Standard Recording Code</em>) es el identificador único internacional para grabaciones sonoras y videos musicales. Funciona como la cédula de identidad digital de cada fonograma.
+    </p>
+    <ul class="list-disc list-inside space-y-2 text-sm text-zinc-800 dark:text-zinc-300">
+      <li><strong>Rastreo de Regalías:</strong> Spotify, Apple Music y sociedades de gestión colectiva (SACM, SOMEXFON) usan el ISRC para asociar cada stream con tu cuenta.</li>
+      <li><strong>Inmutabilidad:</strong> Si la pieza tiene una nueva mezcla, remasterización, versión en vivo o remix, esa versión debe recibir un ISRC distinto.</li>
+      <li><strong>Mecanismo de Obtención:</strong> La ruta más ágil para sellos independientes y creadores es a través de agregadoras digitales (DistroKid, ONErpm, TuneCore, CD Baby), las cuales emiten códigos ISRC automáticamente con el prefijo asignado por la IFPI.</li>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Prompt Maestro para Miniaturas de la Industria Musical
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Copia el siguiente prompt diseñado para generar portadas de alta conversión visual y autoridad técnica sobre trámites de derechos de autor:
+    </p>
+    <pre><code class="language-text">Actúa como un estratega visual para YouTube y plataformas digitales, especializado en diseño de miniaturas de alto impacto sobre la industria musical, trámites legales y monetización.
+
+Objetivo:
+Diseñar una miniatura visualmente atractiva, profesional y de alta conversión para el tema: "Cómo registrar tu música en INDAUTOR y subirla a Spotify con códigos ISRC".
+
+Especificaciones:
+1. Composición y Punto Focal:
+- Lado izquierdo: Persona o creador musical en plano medio mirando a cámara con expresión de seguridad y determinación, señalando los elementos clave.
+- Lado derecho: Diagrama visual de 3 pasos claros [1: INDAUTOR RPDA-01 / $367 MXN] -> [2: ONDA DE AUDIO CON CÓDIGO ISRC] -> [3: LOGO SPOTIFY / STREAMING].
+
+2. Texto Superpuesto (Regla móvil a 120px):
+- Texto principal: "PASO A PASO" (Tipografía Sans-Serif gruesa, máximo contraste sobre placa limpia).
+
+3. Iluminación y Paleta de Color:
+- Iluminación de borde (rim light) en tonos cian (#00E5FF) y magenta eléctrico (#FF007F).
+- Fondo en gris carbón profundo (#121411) con sutil textura de estudio de grabación.
+- Contraste moderado en el texto interno (35-45%) para evitar ceguera publicitaria.</code></pre>
+  </section>
+</article>`;
+
+export const ARTICLE_YOUTUBE_HTML = `<article class="article-content font-space-grotesk text-zinc-900 dark:text-zinc-100 space-y-6">
+  <header class="border-b-2 border-black dark:border-zinc-800 pb-6 space-y-3">
+    <div class="flex flex-wrap gap-2 text-xs font-jetbrains">
+      <span class="bg-[#FF4400] text-white px-2 py-0.5 font-bold border border-black">VIDEO SEO</span>
+      <span class="bg-black text-[#D4FF00] dark:bg-zinc-800 px-2 py-0.5 font-bold border border-zinc-700">ALGORITMO 2026</span>
+      <span class="bg-[#D4FF00] text-black px-2 py-0.5 font-bold border border-black">CTR × RETENCIÓN</span>
+      <span class="text-zinc-500 py-0.5">SLUG: algoritmo-youtube-miniaturas-ctr-retencion-psicologia-visual</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-anton uppercase tracking-wide leading-tight text-black dark:text-white">
+      Algoritmo de YouTube y Miniaturas: Matriz de CTR, Retención y Psicología Visual
+    </h1>
+    <p class="text-base sm:text-lg font-bold text-[#B8006E] dark:text-[#D4FF00] font-jetbrains">
+      ¿Cómo evalúa el algoritmo de YouTube las miniaturas en 2026 para otorgar impresiones?
+    </p>
+    <div class="text-xs font-jetbrains text-zinc-600 dark:text-zinc-400">
+      Por <strong>Wacha Producciones Multimedia & Video Lab</strong> • https://whacha.site
+    </div>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      La Trampa del CTR Aislado: Por Qué el Clic que No Se Queda es un Pasivo
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Durante años, el análisis de diseño para YouTube se concentró en una sola métrica: el Porcentaje de Clics (CTR). La estrategia convencional dictaba aumentar la saturación, incluir rostros con expresiones exageradas y utilizar tipografías gigantescas. Sin embargo, este enfoque ignoraba el factor determinante del posicionamiento orgánico.
+    </p>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      La arquitectura del algoritmo de distribución opera mediante una heurística centrada en la satisfacción del usuario: <strong>CTR × Retención Temprana</strong>. Esto implica que un video con un 12% de CTR pero solo 20% de retención promedio pierde distribución frente a una pieza con 6% de CTR y 55% de retención. El sistema no busca predecir clics aislados; predice <strong>tiempo de visualización satisfecho por impresión</strong>.
+    </p>
+    <div class="p-4 bg-zinc-100 dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs">
+      <strong class="text-[#FF4400] uppercase">El riesgo del fast click-away:</strong>
+      <p class="text-zinc-700 dark:text-zinc-300 mt-1">
+        Cuando una miniatura genera una expectativa que el contenido no cumple en los primeros 30 segundos, el usuario detecta la brecha de contenido y abandona. Como respuesta, la métrica de retención cae drásticamente y el algoritmo restringe la entrega de impresiones.
+      </p>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      La Matriz de Evaluación: Los 3 Ejes de la Miniatura
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#D4FF00] bg-black p-1 inline-block">Eje 1 — CTR Potencial</h4>
+        <p class="text-xs text-zinc-700 dark:text-zinc-400">
+          Capacidad de detener el scroll en 1.5 segundos. Depende de la prominencia del elemento central y la claridad conceptual.
+        </p>
+      </div>
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#00E599] bg-black p-1 inline-block">Eje 2 — Coherencia</h4>
+        <p class="text-xs text-zinc-700 dark:text-zinc-400">
+          Verificación de la promesa en los primeros 30 segundos. Evita caídas abruptas en la curva de retención temprana.
+        </p>
+      </div>
+      <div class="p-4 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 space-y-2">
+        <h4 class="font-jetbrains font-bold text-xs uppercase text-[#FF4400] bg-black p-1 inline-block">Eje 3 — Watch Time Share</h4>
+        <p class="text-xs text-zinc-700 dark:text-zinc-400">
+          Habilidad para atraer al espectador adecuado que completará la sesión sin penalizaciones de rebote.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Psicología del Color y el Mito del Contraste Máximo
+    </h2>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Un error común en el diseño gráfico para plataformas digitales es asumir que el texto de una miniatura debe contar con el máximo contraste posible (100% blanco puro sobre negro).
+    </p>
+    <p class="text-base leading-relaxed text-zinc-800 dark:text-zinc-300">
+      Estudios sobre más de 50,000 variantes demuestran que el texto con un contraste superior al 70% contra el fondo reduce el CTR en un 12%. El rango óptimo se ubica entre el <strong>35% y el 45%</strong>, donde el rendimiento se incrementa hasta en un 9%.
+    </p>
+    <p class="text-sm text-zinc-700 dark:text-zinc-400 leading-relaxed">
+      Este fenómeno se conoce como el <strong>efecto letrero de neón</strong>: cuando el contraste es excesivo, el cerebro clasifica el elemento como publicidad intrusiva y activa la ceguera publicitaria subconsciente.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Legibilidad Móvil: Reglas Tipográficas a 120px
+    </h2>
+    <ul class="list-disc list-inside space-y-2 text-sm text-zinc-800 dark:text-zinc-300">
+      <li><strong>Límite de Palabras:</strong> El rango óptimo se sitúa entre 0 y 3 palabras (máximo absoluto de 5). Superar este límite reduce el CTR promedio a 4.3%.</li>
+      <li><strong>Familia Tipográfica:</strong> Exclusivamente fuentes Sans-Serif en pesos Bold o ExtraBold (Montserrat ExtraBold, Bebas Neue, Impact).</li>
+      <li><strong>Posición Estratégica:</strong> Tercio superior izquierdo o central. La esquina inferior derecha debe mantenerse libre para evitar la superposición con el indicador de duración del video.</li>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Matriz de Auditoría Previa a la Publicación (CSV)
+    </h2>
+    <p class="text-sm text-zinc-700 dark:text-zinc-300">
+      Copia o descarga la matriz ponderada (0 a 14 puntos) para auditar cada variante antes de subirla a la herramienta Test & Compare de YouTube Studio:
+    </p>
+    <pre><code class="language-csv">ID_Variante,Concepto_Promesa,Palabras_Texto,Paleta_Colores,Contraste_Texto_Estimado_Pct,Presencia_Rostro,Emocion_Rostro,Rostro_Area_Pct,Contacto_Visual,Contraste_Interfaz,Fuente_Sans_Serif_Negrita,Legible_120px,Diferencial_Promesa_vs_Otras_Variantes,Riesgo_Brecha_Contenido,Puntuacion_Total
+A,Resultado final tangible,3,Amarillo/Negro,40,Si,Determinacion,18,Si,Alto,Si,Si,Si,Bajo,9
+B,Conflicto o error comun,2,Rojo/Blanco,38,Si,Curiosidad,20,Si,Medio,Si,Si,Si,Medio,8
+C,Proceso o metodo,4,Azul/Naranja,42,No,N/A,0,No,Alto,Si,No,Si,Bajo,6</code></pre>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="text-2xl font-anton uppercase text-black dark:text-[#D4FF00] border-l-4 border-black dark:border-[#D4FF00] pl-3">
+      Prompt Maestro para Generación de Conceptos
+    </h2>
+    <p class="text-sm text-zinc-700 dark:text-zinc-300">
+      Prompt estructurado para someter conceptos a modelos de lenguaje o diseñadores:
+    </p>
+    <pre><code class="language-text">Actúa como un estratega de conversión visual y empaquetado para YouTube, especializado en analítica de retención, experiencia de usuario (UX móvil) y psicología del color. Tu objetivo es diseñar conceptos visuales que maximicen el 'watch time share' evitando cualquier táctica de clickbait que perjudique la retención temprana.
+
+Contexto de la pieza:
+- Título del video: [¿Cómo evalúa el algoritmo de YouTube las miniaturas en 2026 para otorgar impresiones?]
+- Nicho/Sector: [marketing multimedia]
+- Promesa central (lo que el video entrega genuinamente en los primeros 30 segundos): [que premia el algoritmo de YouTube: premia CTR × retención y penaliza el CTR aislado]
+- Audiencia objetivo: [Diseñadores Gráficos, SEO, creadores de contenido]
+
+Instrucciones de conceptualización:
+Genera 3 conceptos de miniatura altamente diferenciados para someterlos a la herramienta Test & Compare de YouTube. Cada concepto debe apelar a un ángulo psicológico radicalmente distinto (Resultado final tangible, Conflicto/Error común, o Trámite/Método revelado). Se prohíbe proponer variantes que únicamente modifiquen el color de fondo.
+
+Para cada concepto proporciona:
+1. Ángulo Psicológico
+2. Elemento Humano / Ancla Visual (20-30% del área con contacto visual directo)
+3. Reglas de Texto (UX Móvil, máximo 3 palabras en el tercio superior)
+4. Ingeniería de Color y Contraste (contraste texto-fondo 35-45%)
+5. Auditoría de Fricción (Mitigación de brecha promesa-contenido)</code></pre>
+  </section>
+</article>`;
+
+

@@ -3,9 +3,10 @@ import { Youtube, Linkedin, Facebook, Disc, Radio, Terminal, ExternalLink, Shiel
 
 interface FooterProps {
   onOpenAdmin?: () => void;
+  onNavigate?: (route: string) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onNavigate }) => {
   const SOCIAL_LINKS = [
     {
       name: 'YouTube',
@@ -109,18 +110,65 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
           {/* Quick Nav */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="font-anton text-lg text-white tracking-wider border-b-2 border-zinc-800 pb-1">
-              // NAVEGACIÓN RÁPIDA
+              // PÁGINAS & NAVEGACIÓN
             </h4>
             <ul className="space-y-1.5 text-zinc-300 font-semibold">
-              <li><a href="#mastermind" className="hover:text-[#D4FF00] transition-colors">[00] Mastermind (Mr. Decrépito)</a></li>
-              <li><a href="#canales" className="hover:text-[#D4FF00] transition-colors">[01] Red de Canales YouTube</a></li>
-              <li><a href="#portafolio" className="hover:text-[#D4FF00] transition-colors">[02] Portafolio Collage</a></li>
-              <li><a href="#soundlab" className="hover:text-[#D4FF00] transition-colors">[03] Sound Lab (Sonido Decrépito)</a></li>
-              <li><a href="#tienda" className="hover:text-[#D4FF00] transition-colors">[04] Wacha Drop Store</a></li>
-              <li><a href="#servicios-aeo" className="hover:text-[#D4FF00] transition-colors">[05] Servicios AEO & SEO</a></li>
-              <li><a href="#blog" className="hover:text-[#D4FF00] transition-colors">[06] Radar AEO & Blog Feed</a></li>
-              <li><a href="#cotizador" className="hover:text-[#D4FF00] transition-colors">[07] Terminal Cotizador</a></li>
-              <li><a href="#faq" className="hover:text-[#D4FF00] transition-colors">[08] Preguntas Frecuentes</a></li>
+              <li>
+                <button 
+                  onClick={() => onNavigate ? onNavigate('home') : (window.location.hash = '')}
+                  className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
+                >
+                  [00] INICIO (HUB WACHA)
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate ? onNavigate('blog') : (window.location.hash = 'blog')}
+                  className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
+                >
+                  [01] BLOG DE INGENIERÍA & AEO
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate ? onNavigate('produccion') : (window.location.hash = 'produccion')}
+                  className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
+                >
+                  [02] INVESTIGACIÓN & MULTIMEDIA
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate ? onNavigate('cumbia-lab') : (window.location.hash = 'cumbia-lab')}
+                  className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
+                >
+                  [03] CUMBIA LAB. (CUMBIA DECRÉPITA)
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate ? onNavigate('tienda') : (window.location.hash = 'tienda')}
+                  className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
+                >
+                  [04] WACHA DROP STORE ONLINE
+                </button>
+              </li>
+              <li>
+                <a href="#faq" className="hover:text-[#D4FF00] transition-colors">
+                  [05] PREGUNTAS FRECUENTES (FAQ)
+                </a>
+              </li>
+              {onOpenAdmin && (
+                <li>
+                  <button
+                    onClick={onOpenAdmin}
+                    className="hover:text-[#00E599] transition-colors text-left flex items-center gap-1 cursor-pointer"
+                  >
+                    <Lock className="w-3 h-3 text-[#00E599]" />
+                    <span>[06] PANEL ADMIN // TELEMETRÍA GA4</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 

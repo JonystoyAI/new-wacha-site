@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { Mastermind } from './components/Mastermind';
-import { ChannelsGrid } from './components/ChannelsGrid';
-import { PortfolioCollage } from './components/PortfolioCollage';
-import { SoundLab } from './components/SoundLab';
-import { MerchStore } from './components/MerchStore';
-import { AeoTerminal } from './components/AeoTerminal';
-import { BlogFeed } from './components/BlogFeed';
 import { Footer } from './components/Footer';
+import { HomeView } from './views/HomeView';
+import { BlogView } from './views/BlogView';
+import { ProduccionView } from './views/ProduccionView';
+import { CumbiaLabView } from './views/CumbiaLabView';
+import { TiendaView } from './views/TiendaView';
 import { BackToTop } from './components/BackToTop';
 import { VideoModal } from './components/VideoModal';
 import { CetesModal } from './components/CetesModal';
@@ -16,7 +13,9 @@ import { DroAgentModal } from './components/DroAgentModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
 import { Admin } from './components/Admin';
-import { CartItem, MerchItem } from './types';
+import { CartItem, MerchItem, BlogPost } from './types';
+
+type AppRoute = 'home' | 'blog' | 'produccion' | 'cumbia-lab' | 'tienda';
 
 export default function App() {
   // Global States
@@ -31,6 +30,83 @@ export default function App() {
       return 'dark';
     }
   });
+
+  // Multi-Page Routing State
+  const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
+    try {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash === 'blog' || hash === 'radar-aeo') return 'blog';
+      if (hash === 'produccion' || hash === 'multimedia' || hash === 'canales' || hash === 'portafolio') return 'produccion';
+      if (hash === 'cumbia-lab' || hash === 'soundlab' || hash === 'cumbia') return 'cumbia-lab';
+      if (hash === 'tienda' || hash === 'merch' || hash === 'drop-store') return 'tienda';
+      return 'home';
+    } catch {
+      return 'home';
+    }
+  });
+
+  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
+  const [articleReadingMode, setArticleReadingMode] = useState<boolean>(false);
+
+  // Synchronize route with browser URL, hash and back/forward navigation
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const hash = window.location.hash.replace('#', '').toLowerCase();
+      if (hash === 'admin') {
+        setIsAdminOpen(true);
+        return;
+      }
+      if (hash === 'blog' || hash === 'radar-aeo') {
+        setCurrentRoute('blog');
+      } else if (hash === 'produccion' || hash === 'multimedia' || hash === 'canales' || hash === 'portafolio') {
+        setCurrentRoute('produccion');
+      } else if (hash === 'cumbia-lab' || hash === 'soundlab' || hash === 'cumbia') {
+        setCurrentRoute('cumbia-lab');
+      } else if (hash === 'tienda' || hash === 'merch' || hash === 'drop-store') {
+        setCurrentRoute('tienda');
+      } else if (!hash || hash === 'home' || hash === 'mastermind') {
+        setCurrentRoute('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []);
+
+  // Update Page Title based on route for rich SEO
+  useEffect(() => {
+    const titles: Record<AppRoute, string> = {
+      home: "WACHA MULTIMEDIA // Laboratorio de Ingeniería Digital, AEO & Medios",
+      blog: "Blog de Ingeniería Digital & AEO 2026 // Wacha Multimedia",
+      produccion: "Investigación, Redacción, Animación y Creación de Contenido // Wacha Multimedia",
+      'cumbia-lab': "Cumbia Lab. (Proyecto de Cumbia Decrépita) // Wacha Multimedia",
+      tienda: "Wacha Drop Store Online // Streetwear & Hardware de Estudio"
+    };
+    document.title = titles[currentRoute] || "WACHA MULTIMEDIA";
+  }, [currentRoute]);
+
+  // Navigate Handler
+  const handleNavigate = (route: string, articleId?: string, readingMode = false) => {
+    let target: AppRoute = 'home';
+    if (route === 'blog' || route === 'produccion' || route === 'cumbia-lab' || route === 'tienda') {
+      target = route;
+    }
+    setCurrentRoute(target);
+    if (articleId) {
+      setSelectedArticleId(articleId);
+      setArticleReadingMode(readingMode);
+    }
+    try {
+      window.history.pushState({}, '', target === 'home' ? '#' : `#${target}`);
+    } catch {
+      // Fallback
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Sync theme changes with DOM, meta theme-color and localStorage
   useEffect(() => {
@@ -61,13 +137,11 @@ export default function App() {
 
   // Global Audio Mute Handler
   useEffect(() => {
-    // Mute/Unmute any standard HTML media elements
     const mediaElements = document.querySelectorAll('audio, video');
     mediaElements.forEach((el) => {
       (el as HTMLMediaElement).muted = !audioActive;
     });
 
-    // Control iframe volumes (SoundCloud / YouTube)
     const sendIframeVolume = () => {
       const iframes = document.querySelectorAll('iframe');
       const vol = audioActive ? 100 : 0;
@@ -78,7 +152,7 @@ export default function App() {
               JSON.stringify({ method: 'setVolume', value: vol }),
               '*'
             );
-          } catch (e) {
+          } catch {
             // Ignore cross-origin exceptions
           }
         }
@@ -99,16 +173,8 @@ export default function App() {
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Deep Link listener for #admin and Alt+A shortcut
+  // Deep Link listener for Alt+A shortcut
   useEffect(() => {
-    const handleHash = () => {
-      if (window.location.hash === '#admin') {
-        setIsAdminOpen(true);
-      }
-    };
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.altKey && (e.key === 'a' || e.key === 'A')) {
         e.preventDefault();
@@ -116,9 +182,7 @@ export default function App() {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-
     return () => {
-      window.removeEventListener('hashchange', handleHash);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
@@ -138,6 +202,7 @@ export default function App() {
 
       return [...prev, { item, selectedSize, quantity: 1 }];
     });
+    setIsCartOpen(true);
   };
 
   const handleRemoveFromCart = (itemId: string, selectedSize: string) => {
@@ -173,7 +238,7 @@ export default function App() {
         <div className="fixed inset-0 crt-overlay z-50 pointer-events-none opacity-80" aria-hidden="true" />
       )}
 
-      {/* Main Sticky Navbar */}
+      {/* Main Sticky Navbar with Multi-Page Routing */}
       <Navbar
         cartCount={totalCartItemsCount}
         onOpenCart={() => setIsCartOpen(true)}
@@ -184,51 +249,72 @@ export default function App() {
         theme={theme}
         onToggleTheme={handleToggleTheme}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        currentRoute={currentRoute}
+        onNavigate={handleNavigate}
       />
 
-      {/* Main Content Modules */}
+      {/* View Switcher based on currentRoute */}
       <main className="flex-1">
-        {/* Hero Banner Section */}
-        <Hero
-          onPlayVideo={(url, title) => setActiveVideo({ url, title })}
-          onOpenWhatsAppCotizador={() => setIsWhatsAppModalOpen(true)}
-        />
+        {currentRoute === 'home' && (
+          <HomeView
+            onPlayVideo={(url, title) => setActiveVideo({ url, title })}
+            onOpenWhatsAppCotizador={() => setIsWhatsAppModalOpen(true)}
+            onOpenArticle={(article, readingMode) => {
+              handleNavigate('blog', article.id, readingMode);
+            }}
+            onNavigate={handleNavigate}
+            onAddToCart={handleAddToCart}
+            onOpenCetesModal={() => setIsCetesModalOpen(true)}
+            onOpenDroModal={() => setIsDroModalOpen(true)}
+            audioActive={audioActive}
+          />
+        )}
 
-        {/* 00 // Mastermind // Mr. Decrépito */}
-        <Mastermind />
+        {currentRoute === 'blog' && (
+          <BlogView
+            onNavigate={handleNavigate}
+            onAddToCart={handleAddToCart}
+            selectedArticleId={selectedArticleId}
+            readingMode={articleReadingMode}
+          />
+        )}
 
-        {/* 01 // Red Oficial 8 Canales YouTube */}
-        <ChannelsGrid onPlayVideo={(url, title) => setActiveVideo({ url, title })} />
+        {currentRoute === 'produccion' && (
+          <ProduccionView
+            onPlayVideo={(url, title) => setActiveVideo({ url, title })}
+            onOpenCetesModal={() => setIsCetesModalOpen(true)}
+            onOpenDroModal={() => setIsDroModalOpen(true)}
+            onNavigate={handleNavigate}
+            onAddToCart={handleAddToCart}
+          />
+        )}
 
-        {/* 02 // Portafolio Multidisciplinario Collage */}
-        <PortfolioCollage
-          onPlayVideo={(url, title) => setActiveVideo({ url, title })}
-          onOpenCetesModal={() => setIsCetesModalOpen(true)}
-          onOpenDroModal={() => setIsDroModalOpen(true)}
-        />
+        {currentRoute === 'cumbia-lab' && (
+          <CumbiaLabView
+            audioActive={audioActive}
+            onNavigate={handleNavigate}
+            onAddToCart={handleAddToCart}
+          />
+        )}
 
-        {/* 03 // Sonido Decrépito // Sound Lab Console */}
-        <SoundLab audioActive={audioActive} />
-
-        {/* 04 // Wacha Drop Store // Merch Boutique */}
-        <MerchStore
-          cart={cart}
-          onAddToCart={handleAddToCart}
-          onRemoveFromCart={handleRemoveFromCart}
-          onUpdateQuantity={handleUpdateQuantity}
-          isCartOpen={isCartOpen}
-          onCloseCart={() => setIsCartOpen(false)}
-        />
-
-        {/* 05 // Servicios AEO/SEO & Terminal Cotizador Interactivo */}
-        <AeoTerminal />
-
-        {/* 06 // Radar AEO & Blog Feed */}
-        <BlogFeed />
+        {currentRoute === 'tienda' && (
+          <TiendaView
+            cart={cart}
+            onAddToCart={handleAddToCart}
+            onRemoveFromCart={handleRemoveFromCart}
+            onUpdateQuantity={handleUpdateQuantity}
+            isCartOpen={isCartOpen}
+            onCloseCart={() => setIsCartOpen(false)}
+            onNavigate={handleNavigate}
+          />
+        )}
       </main>
 
       {/* Footer */}
-      <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
+      <Footer
+        onOpenAdmin={() => setIsAdminOpen(true)}
+        onNavigate={handleNavigate}
+      />
 
       {/* Admin Panel & Google Analytics Telemetry Modal */}
       <Admin

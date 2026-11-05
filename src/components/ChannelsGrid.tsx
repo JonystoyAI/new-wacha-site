@@ -35,10 +35,10 @@ export const ChannelsGrid: React.FC<ChannelsGridProps> = ({ onPlayVideo }) => {
           <div>
             <div className="font-jetbrains text-xs text-black dark:text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
               <span className="w-2.5 h-2.5 bg-[#FF4400] inline-block border border-black"></span>
-              // SECCIÓN 01: RED OFICIAL DE CONTENIDO
+              // INVESTIGACIÓN, REDACCIÓN, ANIMACIÓN Y CREACIÓN DE CONTENIDO
             </div>
             <h2 className="font-anton text-3xl sm:text-4xl lg:text-5xl text-black dark:text-white uppercase tracking-wide flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <span>RED DE CANALES YOUTUBE</span>
+              <span>RED DE CANALES & MEDIOS</span>
               <span className="text-xs font-jetbrains px-2.5 py-1 bg-[#FF4400] text-white border-2 border-black rounded-none font-bold shrink-0">
                 2.4M IMP/DÍA
               </span>
