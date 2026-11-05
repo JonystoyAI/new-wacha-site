@@ -13,7 +13,7 @@ interface DropStoreGadgetProps {
 export const DropStoreGadget: React.FC<DropStoreGadgetProps> = ({
   onAddToCart,
   onNavigateToStore,
-  title = "WACHA DROP STORE // OFERTAS & MÁS VENDIDOS",
+  title = "WACHA EL TIANGUIS // OFERTAS & MÁS VENDIDOS",
   subtitle = "Piezas limitadas, indumentaria de alto gramaje y hardware de estudio exclusivo antes de agotar existencia."
 }) => {
   // Select top 3-4 items for the gadget spotlight
@@ -45,7 +45,7 @@ export const DropStoreGadget: React.FC<DropStoreGadgetProps> = ({
             className="px-5 py-2.5 bg-[#D4FF00] text-black hover:bg-[#D9008F] hover:text-white font-jetbrains text-xs font-bold border-2 border-black brutal-shadow-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-2 self-start md:self-auto cursor-pointer"
           >
             <ShoppingBag className="w-4 h-4" />
-            <span>VER CATÁLOGO COMPLETO EN TIENDA</span>
+            <span>VER EN WACHA EL TIANGUIS</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

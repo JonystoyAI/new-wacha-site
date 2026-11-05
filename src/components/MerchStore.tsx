@@ -63,7 +63,7 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-black bg-black brutal-shadow-lime shrink-0 hidden sm:block">
               <img
                 src="/wacha_logo.jpg"
-                alt="Logo Oficial Wacha Drop Store"
+                alt="Logo Oficial Wacha El tianguis"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
@@ -71,10 +71,10 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
             <div>
               <div className="font-jetbrains text-xs text-[#B8006E] dark:text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
                 <span className="w-2 h-2 bg-[#B8006E] dark:bg-[#D4FF00]"></span>
-                // SECCIÓN 04: WACHA DROP STORE // MERCH BOUTIQUE
+                // SECCIÓN 04: WACHA EL TIANGUIS // MERCH BOUTIQUE
               </div>
               <h2 className="font-anton text-4xl sm:text-5xl text-black dark:text-white uppercase tracking-wide flex items-center gap-3">
-                WACHA DROP STORE
+                WACHA EL TIANGUIS
                 <span className="text-xs font-jetbrains px-3 py-1 bg-black text-[#D4FF00] dark:bg-[#D4FF00] dark:text-black border border-black font-bold">
                   EDICIÓN LIMITADA
                 </span>

@@ -41,8 +41,8 @@ export const BlogView: React.FC<BlogViewProps> = ({
               <span className="w-2.5 h-2.5 bg-[#D4FF00] animate-pulse"></span>
               <span>// RADAR AEO & CENTRO DE INVESTIGACIÓN EDITORIAL</span>
             </div>
-            <h1 className="font-anton text-4xl sm:text-6xl text-white uppercase tracking-tight">
-              BLOG DE INGENIERÍA DIGITAL & AEO 2026
+            <h1 className="font-anton text-3xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight">
+              BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026
             </h1>
             <p className="font-space-grotesk text-sm sm:text-base text-zinc-300 max-w-3xl mt-2 leading-relaxed">
               Guías completas, código HTML5 listo para producción, esquemas Schema.org anidados, normativas de derechos de autor en INDAUTOR, Core Web Vitals en SPAs y matrices algorítmicas de retención para YouTube.
@@ -61,7 +61,7 @@ export const BlogView: React.FC<BlogViewProps> = ({
       <DropStoreGadget
         onAddToCart={onAddToCart}
         onNavigateToStore={() => onNavigate('tienda')}
-        title="WACHA DROP STORE // OFERTAS DESTACADAS"
+        title="WACHA EL TIANGUIS // OFERTAS DESTACADAS"
         subtitle="Acompaña tu lectura con piezas de edición limitada de nuestro taller de streetwear y hardware."
       />
 

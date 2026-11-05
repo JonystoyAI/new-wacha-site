@@ -34,7 +34,7 @@ export const HomeBlogGadget: React.FC<HomeBlogGadgetProps> = ({
           <div>
             <div className="font-jetbrains text-xs text-[#B8006E] dark:text-[#D4FF00] font-bold tracking-wider mb-1 flex items-center gap-2">
               <span className="w-2.5 h-2.5 bg-[#FF4400] inline-block border border-black"></span>
-              <span>// GADGET 01: RADAR AEO & INVESTIGACIÓN EDITORIAL</span>
+              <span>// GADGET 01: BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026</span>
             </div>
             <h2 className="font-anton text-3xl sm:text-4xl lg:text-5xl text-black dark:text-white uppercase tracking-wide flex items-center gap-3">
               PUBLICACIONES MÁS RECIENTES

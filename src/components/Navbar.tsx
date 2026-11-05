@@ -25,8 +25,8 @@ import {
 interface NavbarProps {
   cartCount: number;
   onOpenCart: () => void;
-  crtEnabled: boolean;
-  onToggleCrt: () => void;
+  crtEnabled?: boolean;
+  onToggleCrt?: () => void;
   audioActive: boolean;
   onToggleAudio: () => void;
   theme: 'dark' | 'light';
@@ -53,10 +53,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navPages = [
     { route: 'home', label: 'INICIO', icon: Flame },
-    { route: 'blog', label: 'BLOG', icon: BookOpen },
+    { route: 'blog', label: 'BLOG AEO', icon: BookOpen, title: 'BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026' },
     { route: 'produccion', label: 'MULTIMEDIA', icon: Clapperboard, title: 'Investigación, Redacción, Animación y Creación de Contenido' },
     { route: 'cumbia-lab', label: 'CUMBIA LAB.', icon: Disc, title: 'Proyecto de Cumbia Decrépita' },
-    { route: 'tienda', label: 'DROP STORE', icon: ShoppingBag, title: 'Wacha Drop Store Online' }
+    { route: 'tienda', label: 'WACHA EL TIANGUIS', icon: ShoppingBag, title: 'Wacha El tianguis' }
   ];
 
   return (
@@ -64,10 +64,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Top Marquee Bar */}
       <div className="bg-[#D4FF00] text-black font-jetbrains text-xs font-bold py-1 overflow-hidden border-b border-black select-none">
         <div className="animate-marquee whitespace-nowrap flex gap-8 items-center">
-          <span>★ WACHA MULTIMEDIA // PRODUCCIÓN DE ALTO IMPACTO ★</span>
-          <span>⚡ ESTRATEGIA AEO & SEO GENERATIVO ★</span>
-          <span>📼 SONIDO DECRÉPITO: EXPERIMENTAL CUMBIA ★</span>
-          <span>🎯 CLONACIÓN DE VOZ IA & RETENCIÓN DE VIDEO ★</span>
+          <span>★ BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026 ★</span>
+          <span>⚡ WACHA MULTIMEDIA // PRODUCCIÓN AUDIOVISUAL & CREATIVIDAD IA ★</span>
+          <span>📼 SONIDO DECRÉPITO: CUMBIA EXPERIMENTAL ★</span>
+          <span>🎯 OPTIMIZACIÓN AEO EN GEMINI, SEARCHGPT & PERPLEXITY ★</span>
           <span>🔥 MERCH BOUTIQUE OFFICAL DROP ★</span>
           <span>¡PAPÚUU! REAL CONTENT ENGINEERING ★</span>
           <span>★ WACHA MULTIMEDIA // PRODUCCIÓN DE ALTO IMPACTO ★</span>
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Main Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Logo without REC badge */}
         <button 
           onClick={() => onNavigate ? onNavigate('home') : (window.location.hash = '')}
           className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#D4FF00] text-left cursor-pointer"
@@ -102,18 +102,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div>
             <div className="font-anton tracking-wider text-lg sm:text-xl text-black dark:text-white group-hover:text-[#D9008F] dark:group-hover:text-[#D4FF00] transition-colors leading-none flex items-center gap-2">
               WACHA MULTIMEDIA
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-jetbrains bg-[#FF4400]/20 text-[#FF4400] border border-[#FF4400]/40 font-bold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF4400] animate-ping mr-1"></span>
-                REC ⏺
-              </span>
             </div>
-            <p className="font-jetbrains text-[10px] text-zinc-700 dark:text-zinc-400 tracking-tight font-semibold">
+            <p className="font-jetbrains text-[10px] text-zinc-700 dark:text-zinc-400 tracking-tight font-semibold mt-0.5">
               PRODUCCIONES & SOUND LAB // ¡PAPÚUU!
             </p>
           </div>
         </button>
 
-        {/* Desktop Nav Links */}
+        {/* Desktop Nav Links with High-Contrast Hover: Black text on Yellow background */}
         <nav className="hidden lg:flex items-center gap-1 font-jetbrains text-xs">
           {navPages.map((page) => {
             const isActive = currentRoute === page.route;
@@ -126,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`px-3 py-1.5 transition-all font-bold flex items-center gap-1.5 cursor-pointer ${
                   isActive
                     ? 'bg-[#D4FF00] text-black border-2 border-black brutal-shadow-black'
-                    : 'text-black dark:text-zinc-300 hover:text-white dark:hover:text-black hover:bg-[#D9008F] dark:hover:bg-[#D4FF00] border-2 border-transparent hover:border-black'
+                    : 'text-black dark:text-zinc-200 hover:text-black dark:hover:text-black hover:bg-[#D4FF00] dark:hover:bg-[#D4FF00] border-2 border-transparent hover:border-black'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -175,27 +171,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </button>
 
-          {/* CRT Overlay Toggle */}
-          <button
-            onClick={onToggleCrt}
-            className={`px-2.5 py-1.5 font-jetbrains text-xs flex items-center gap-1.5 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 brutal-shadow-black cursor-pointer font-bold ${
-              crtEnabled
-                ? 'bg-black text-[#D4FF00]'
-                : 'bg-white text-black'
-            }`}
-            title="Alternar filtro CRT Telemetría"
-            aria-label="Toggle CRT Effect"
-          >
-            <Monitor className={`w-4 h-4 ${crtEnabled ? 'text-[#D4FF00]' : 'text-black'}`} />
-            <span className={`font-bold text-[11px] ${crtEnabled ? 'text-[#D4FF00]' : 'text-black'}`}>
-              CRT {crtEnabled ? 'ON' : 'OFF'}
-            </span>
-          </button>
-
           {/* Shopping Cart Button */}
           <button
             onClick={onOpenCart}
-            className="relative bg-white text-black p-2 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-2 font-jetbrains text-xs cursor-pointer font-bold brutal-shadow-black"
+            className="relative bg-white text-black p-2 border-2 border-black transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-2 font-jetbrains text-xs cursor-pointer font-bold brutal-shadow-black hover:bg-[#D4FF00] hover:text-black"
             aria-label={`Ver carrito de compras con ${cartCount} ítems`}
           >
             <ShoppingBag className="w-4 h-4 text-black" />
@@ -296,7 +275,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className={`px-3.5 py-2.5 transition-all border-2 flex justify-between items-center font-bold cursor-pointer ${
                     isActive
                       ? 'bg-[#D4FF00] text-black border-black brutal-shadow-black'
-                      : 'bg-zinc-100 dark:bg-zinc-900 text-black dark:text-zinc-200 hover:bg-[#D9008F] hover:text-white dark:hover:bg-[#D4FF00] dark:hover:text-black border-zinc-300 dark:border-zinc-800'
+                      : 'bg-zinc-100 dark:bg-zinc-900 text-black dark:text-zinc-200 hover:bg-[#D4FF00] hover:text-black dark:hover:bg-[#D4FF00] dark:hover:text-black border-zinc-300 dark:border-zinc-800'
                   }`}
                 >
                   <span className="flex items-center gap-2.5">

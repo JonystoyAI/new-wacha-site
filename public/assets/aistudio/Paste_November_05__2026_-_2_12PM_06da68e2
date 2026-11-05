@@ -1,0 +1,649 @@
+1 import React , { useEffect , useRef , useState } from "react" ;    
+2import { getSong } from "@flowmusic/sdk" ;   
+3importar { 
+4 Jugar ,  
+5 Pausa ,  
+6 Volumen 2 ,  
+7 VolumenX ,  
+8 destellos ,  
+9 Maximizar2 ,  
+10 Rotar en sentido antihorario ,  
+11 Zap ,  
+12 discos ,  
+13} de "lucide-react" ;  
+14
+15// Shaders WebGL para los 3 estilos estéticos distintos:
+16// 1. Cine Negro 1948 (Cabaret Sonidero)
+17// 2. Cyberpunk Retro-Futurista (Distrito Neón)
+18// 3. Synthwave de los 80 (Outrun Grid y Sunset Horizon)
+19
+20const VS_SOURCE = `   
+21 atributo vec2 aPosition;
+22 vec2 vUv variables;
+23 void main() {
+24   vUv = (aPosition + 1.0) * 0.5;
+25   gl_Position = vec4(aPosition, 0.0, 1.0);
+26 }
+27` ;
+28
+29const FS_SOURCE = `   
+30 precisión media flotante;
+31 resolución uniforme vec2 uResolución;
+32 flotantes uniformes uTime;
+33 flotadores uniformes uBass;
+34 flotadores uniformes uMids;
+35 flotadores uniformes uHighs;
+36 uniforme int uTheme; // 0: Noir 1948, 1: Cyberpunk, 2: Synthwave 80s
+37 vec2 variable vUv;
+38
+39 float hash21(vec2 p) {
+40   vec3 p3 = frac(vec3(p.xyx) * 0,1031);
+41   p3 += punto(p3, p3.yzx + 33.33);
+42   devolver fract((p3.x + p3.y) * p3.z);
+43 }
+44
+45 float ruido(vec2 p) {
+46   vec2 i = floor(p);
+47   vec2 f = fract(p);
+48   vec2 u = f * f * (3.0 - 2.0 * f);
+49   mezcla de retorno(
+50     mix(hash21(i + vec2(0.0, 0.0)), hash21(i + vec2(1.0, 0.0)), ux),
+51     mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), ux),
+52     uy
+53   );
+54 }
+55
+56 float fbm(vec2 p) {
+57   float val = 0.0;
+58   amperios flotantes = 0,5;
+59   para (int i = 0; i < 4; i++) {
+60     val += amp * ruido(p);
+61     p *= 2,05;
+62     amperios *= 0,5;
+63   }
+64   valor de retorno;
+65 }
+66
+67 // 1. Moda del cine negro de 1948
+68 vec3 renderNoir(vec2 st, vec2 uvRaw) {
+69   tiempo flotante = uTime * 0.7;
+70  
+71   // Enfoque
+72   vec2 spot = vec2(0.0, 0.75);
+73   vec2 rayo = st - punto;
+74   float angle = atan(ray.x, -ray.y);
+75   float spotCone = smoothstep(0.48, 0.0, abs(angle));
+76   float spotLight = spotCone * smoothstep(1.7, 0.25, length(ray));
+77
+78   // Humo volumétrico
+79   vec2 smokeUv = st * 1.7 + vec2(sin(tiempo * 0.25), tiempo * 0.2);
+80   float humo = fbm(humoUv + fbm(humoUv + tiempo * 0.1));
+81   humo *= smoothstep(0.85, 0.15, length(st));
+82
+83   float luz = foco * (0,35 + 0,65 * humo) + humo * 0,15;
+84
+85   // Anillos hipnóticos
+86   float dist = length(st - vec2(0.0, 0.05));
+87   float ripple = sin(dist * 35.0 - uTime * 5.0) * uHighs * 0.025;
+88   float ringDist = dist + ripple;
+89
+90   anillos flotantes = 0.0;
+91   para (float i = 1.0; i <= 4.0; i += 1.0) {
+92     float r = i * 0.17 + sin(tiempo + i) * 0.04 + uBass * 0.12;
+93     float thick = 0,005 + uBass * 0,008;
+94     anillos += smoothstep(thick, 0.0, abs(ringDist - r)) * (1.2 - i * 0.22);
+95   }
+96   anillos *= (0,7 + 0,5 * uHighs);
+97
+98   // Bailarina de silueta de cabaret
+99   vec2 p = st;
+100   px -= sin(tiempo * 1.4) * 0.12 * (1.0 + uBass * 0.3);
+101  p.y += 0.15;
+102   float head = length(p - vec2(0.0, 0.52)) - 0.06;
+103   float cuello = longitud((p - vec2(0.0, 0.42)) * vec2(3.0, 1.0)) - 0.04;
+104   float cintura = 0.04 + 0.12 * pow(clamp(abs(py - 0.18) * 3.5, 0.0, 1.0), 2.0);
+105   flotar torso = abs(px) - cintura;
+106   torso = max(torso, py - 0.44);
+107   torso = max(torso, -py - 0.35);
+108   float body = min(min(head, neck), torso) - uBass * 0.02;
+109   bailarín flotante = smoothstep(0.015, 0.0, cuerpo);
+110
+111   float comp = light * 0.55 + rings * (0.5 + uBass * 0.85);
+112   comp = mix(comp, comp * 0.08, dancer);
+113
+114   // Viñeteado y arañazos en la película
+115   float vig = uvRaw.x * uvRaw.y * (1.0 - uvRaw.x) * (1.0 - uvRaw.y);
+116   vig = clamp(pow(16.0 * vig, 0.45), 0.0, 1.0);
+117   comp *= vig;
+118
+119   float grain = (hash21(st + vec2(uTime * 0.12, uTime * 0.31)) - 0.5) * 0.15;
+120   comp += grano;
+121
+122   vec3 sepiaDark = vec3(0.03, 0.02, 0.02);
+123   vec3 sepiaMid = vec3(0.48, 0.42, 0.36);
+124   vec3 sepiaBright = vec3(0.96, 0.92, 0.84);
+125
+126   float contraste = pow(smoothstep(0.05, 0.92, comp), 1.25);
+127   vec3 col = contraste < 0.5 ? mix(sepiaDark, sepiaMid, contraste * 2.0) : mix(sepiaMid, sepiaBright, (contraste - 0.5) * 2.0);
+128   devolver col + vec3(0.09, 0.08, 0.05) * uBass;
+129 }
+130
+131// 2. Cyberpunk Retro-Futurista Mode
+132 vec3 renderCyberpunk(vec2 st, vec2 uvRaw) {
+133   tiempo flotante = uTime * 1.2;
+134   vec2 p = st;
+135
+136   // Líneas de escaneo con fallos y distorsión de graves
+137   float scanline = sin(uvRaw.y * 380.0 + time * 10.0) * 0.06;
+138   px += sin(py * 30.0 + tiempo * 8.0) * 0.01 * uBass;
+139
+140   // Portal ecualizador de neón circular
+141   float r = longitud(p);
+142   float a = atan(py, px);
+143   picos flotantes = sin(a * 16.0 + tiempo * 2.0) * uBass * 0.08;
+144   float circ1 = smoothstep(0.015 + uHighs * 0.02, 0.0, abs(r - (0.35 + spikes)));
+145   float circ2 = smoothstep(0.01, 0.0, abs(r - (0.55 + sin(a * 24.0 - time * 3.0) * uMids * 0.06)));
+146
+147   // Piso de la Red Cibernética
+148   float floorY = py + 0.35;
+149   vec3 gridCol = vec3(0.0);
+150   si (floorY < 0.0) {
+151     vec2 gridUv = vec2(px / (-floorY), 1.0 / (-floorY) + tiempo * 1.5);
+152     float linesX = smoothstep(0.08, 0.0, abs(fract(gridUv.x * 3.0) - 0.5));
+153     float linesZ = smoothstep(0.08, 0.0, abs(fract(gridUv.y * 2.0) - 0.5));
+154     float grid = max(linesX, linesZ) * smoothstep(2.5, 0.0, length(p));
+155     gridCol = vec3(0.0, 0.8, 1.0) * grid * (0.4 + uBass * 0.8);
+156   }
+157
+158   // Silueta del horizonte de la ciudad en neón
+159   float bldX = abs(px * 2.2);
+160   float bldHeight = noise(vec2(floor(bldX * 6.0), 1.2)) * 0.45;
+161   float enEdificio = paso(py + 0.35, alturaBld) * paso(0.0, py + 0.35);
+162   vec3 bldCol = vec3(0.02, 0.01, 0.05);
+163   si (enEdificio > 0.5) {
+164     float windows = step(0.85, hash21(floor(vec2(px * 40.0, py * 50.0)))) * uMids;
+165     bldCol = mix(vec3(0.05, 0.02, 0.08), vec3(1.0, 0.9, 0.3), windows);
+166   }
+167
+168   // Mapeo de color: cian neón y magenta intenso
+169   vec3 cian = vec3(0.0, 0.95, 1.0);
+170   vec3 magenta = vec3(1.0, 0.05, 0.65);
+171   vec3 neonRings = cyan * circ1 * 1.8 + magenta * circ2 * 1.6;
+172
+173   vec3 bg = mix(vec3(0.02, 0.01, 0.04), vec3(0.12, 0.02, 0.18), uvRaw.y);
+174   vec3 col = bg + gridCol + neonRings;
+175   si (enEdificio > 0.5) col = mix(col, bldCol, 0.85);
+176
+177   // Aberración cromática RGB en el ritmo
+178   float split = uBass * 0.025;
+179   col.r += noise(st + vec2(split, 0.0)) * 0.12 * uBass;
+180   col.b += noise(st - vec2(split, 0.0)) * 0.15 * uBass;
+181
+182   col -= línea de exploración;
+183   columna de retorno;
+184 }
+185
+186 // 3. Synthwave de los 80 (Outrun Retro Horizon)
+187 vec3 renderSynthwave(vec2 st, vec2 uvRaw) {
+188   float tiempo = uTime * 1.0;
+189   vec2 p = st;
+190
+191   // Sol gigante retro
+192   vec2 sunPos = vec2(0.0, 0.15);
+193   float sunDist = length(p - sunPos);
+194   sol flotante = paso suave (0,38, 0,36, distsol);
+195
+196   // Barras horizontales con recorte para el sol
+197  if (p.y < sunPos.y + 0.38 && p.y > sunPos.y - 0.38) {
+198    float bar = sin((p.y - sunPos.y) * 45.0 + time * 1.5);
+199     float cutProg = (sunPos.y + 0.38 - py) / 0.76;
+200     si (barra > 0.4 - cutProg * 0.6) {
+201       soles = 0,0;
+202     }
+203   }
+204
+205   // Degradado solar (de amarillo a rosa intenso)
+206  float sunGrad = clamp((p.y - (sunPos.y - 0.35)) / 0.7, 0.0, 1.0);
+207   vec3 sunColor = mix(vec3(1.0, 0.05, 0.5), vec3(1.0, 0.95, 0.2), sunGrad) * (1.0 + uBass * 0.4);
+208
+209   // Cuadrícula de perspectiva de los años 80
+210   float horizon = -0.05;
+211   vec3 gridColor = vec3(0.0);
+212   si (py < horizonte) {
+213     float profundidad = 1.0 / (horizonte - py);
+214     vec2 gridCoord = vec2(px * profundidad * 0.7, profundidad + tiempo * 4.0);
+215
+216     float lineX = smoothstep(0.06, 0.0, abs(fract(gridCoord.x) - 0.5));
+217     float lineZ = smoothstep(0.06, 0.0, abs(fract(gridCoord.y) - 0.5));
+218     float gridMask = max(lineX, lineZ) * smoothstep(horizon - 0.8, horizon, py);
+219
+220     // Rejilla de color púrpura neón/cian con pulsación de graves
+221     gridColor = mix(vec3(0.85, 0.1, 0.9), vec3(0.1, 0.85, 1.0), sin(gridCoord.x * 2.0) * 0.5 + 0.5);
+222     gridColor *= gridMask * (1.2 + uBass * 1.2);
+223   }
+224
+225   // Gradiente del cielo y estrellas
+226   vec3 sky = mix(vec3(0.03, 0.0, 0.08), vec3(0.35, 0.05, 0.35), clamp(py + 0.4, 0.0, 1.0));
+227   si (py > horizonte && sol < 0.1) {
+228     float stars = step(0.985, hash21(floor(p * 90.0)));
+229     cielo += vec3(0.9, 0.9, 1.0) * estrellas * (0.4 + uHighs * 0.6);
+230   }
+231
+232   vec3 col = cielo;
+233   col = mix(col, sunColor, sun);
+234  col += gridColor;
+235
+236   // Líneas de escaneo CRT y brillo sutil
+237   float crt = sin(uvRaw.y * 360.0) * 0.05;
+238   col -= crt;
+239   col += vec3(0.12, 0.0, 0.15) * uBass;
+240
+241   columna de retorno;
+242 }
+243
+244 void main() {
+245   vec2 st = (vUv - 0.5) * vec2(uResolution.x / uResolution.y, 1.0);
+246   vec3 finalColor = vec3(0.0);
+247
+248   si (uTheme == 0) {
+249     finalColor = renderNoir(st, vUv);
+250   } else if (uTheme == 1) {
+251     finalColor = renderCyberpunk(st, vUv);
+252   } de lo contrario {
+253     finalColor = renderSynthwave(st, vUv);
+254   }
+255
+256   gl_FragColor = vec4(finalColor, 1.0);
+257 }
+258` ;
+259
+260const TEMAS = [   
+261 { id : 0 , label : "1948 Noir Cabaret" , icon : "🎬" , tag : "VINTAGE B&W" } ,       
+262 { id : 1 , label : "Cyberpunk 2099" , icon : "⚡" , tag : "NEON GLITCH" } ,       
+263 { id : 2 , label : "Synthwave 80s" , icon : "🌴" , tag : "OUTRUN RETRO" } ,       
+264] ;
+265
+266export default function CabaretVisualizerPlayer ( ) {    
+267 const [ isPlaying , setIsPlaying ] = useState ( false ) ;     
+268 const [ audioUrl , setAudioUrl ] = useState < string > ( "" ) ;     
+269 ​​const [ isMuted , setIsMuted ] = useState ( false ) ;     
+270 const [ currentTheme , setCurrentTheme ] = useState ( 0 ) ;     
+271 const [ volumen , establecerVolumen ] = useState ( 0,85 ) ;     
+272
+273 const canvasRef = useRef < HTMLCanvasElement | null > ( null ) ;    
+274 const audioRef = useRef < HTMLAudioElement | nulo > ( nulo ) ;    
+275
+276 // Cargar la URL oficial de la pista a través de SDK getSong  
+277 useEffect ( ( ) => {    
+278 let activo = verdadero ;     
+279 getSong ( "cd8eae43-eeb9-4164-bd09-09ed9a611695" )    
+280 . luego ( ( clip ) => {        
+281 si ( activo && clip && clip . audioUrl ) {          
+282 setAudioUrl ( clip . audioUrl ) ;          
+283 }        
+284 } )      
+285 . catch ( ( err ) => {        
+286 console.error ( " Error al cargar la canción: " , err ) ;        
+287 } ) ;      
+288 retorno ( ) => {       
+289       activo = falso ; 
+290 } ;    
+291 } , [ ] ) ;   
+292
+293 // Referencias de audio web  
+294 const audioCtxRef = useRef < AudioContext | null > ( null ) ;    
+295 const analyzerRef = useRef < AnalyserNode | null > ( null ) ;    
+296 const dataArrayRef = useRef < Uint8Array < ArrayBuffer > | null > ( null ) ;     
+297
+298 // Referencias WebGL  
+299 const glRef = useRef < WebGLRenderingContext | null > ( null ) ;    
+300 const programRef = useRef < WebGLProgram | null > ( null ) ;    
+301 const animFrameIdRef = useRef < number | null > ( null ) ;     
+302
+303 // Ubicaciones de uniformes de sombreado  
+304 const uniformsRef = useRef < {   
+305     uResolution : WebGLUniformLocation | null ; 
+306     uTime : WebGLUniformLocation | null ; 
+307     uBass : WebGLUniformLocation | null ; 
+308     uMids : WebGLUniformLocation | null ; 
+309     uHighs : WebGLUniformLocation | null ; 
+310     uTheme : WebGLUniformLocation | null ; 
+311 } | null > ( null ) ;    
+312
+313 // Configurar el lienzo del sombreador WebGL  
+314 useEffect ( ( ) => {    
+315 const canvas = canvasRef . current ;    
+316 si ( ! lienzo ) devolver ;      
+317
+318 const gl = canvas . getContext ( "webgl" ) ;    
+319 si ( ! gl ) regresar ;      
+320     glRef.current = gl ;​​ 
+321
+322 // Ayudante de compilación    
+323 const compile = ( src : string , type : number ) => {           
+324 const s = gl . createShader ( type ) ;      
+325 si ( ! s ) devolver null ;         
+326       gl . shaderSource ( s , src ) ;
+327       gl . compileShader ( s ) ;
+328 si ( ! gl . getShaderParameter ( s , gl . COMPILE_STATUS ) ) {        
+329 console.error ( "Error de sombreador : " , gl.getShaderInfoLog ( s ) ) ;        
+330 devuelve nulo ;         
+331 }      
+332 devuelven s ;      
+333 } ;    
+334
+335 const vs = compile ( VS_SOURCE , gl . VERTEX_SHADER ) ;     
+336 const fs = compile ( FS_SOURCE , gl . FRAGMENT_SHADER ) ;     
+337 si ( ! vs || ! fs ) regresar ;       
+338
+339 const prog = gl . createProgram ( ) ;    
+340 si ( ! prog ) regresar ;      
+341     gl . attachShader ( prog , vs ) ;
+342     gl . attachShader ( prog , fs ) ;
+343     gramos . enlacePrograma ( prog ) ;
+344 si ( ! gl . getProgramParameter ( prog , gl . LINK_STATUS ) ) {      
+Consola 345 . error ( "Error de enlace del programa:" , gl . getProgramInfoLog ( prog ) ) ;      
+346 retorno ;      
+347 }    
+348     programRef.current = prog ;​​ 
+349     gl . useProgram ( prog ) ;
+350
+351 // Búfer cuádruple de pantalla completa    
+352 const buf = gl . createBuffer ( ) ;    
+353     gl . bindBuffer ( gl . ARRAY_BUFFER , buf ) ;
+354 verde const = nuevo Float32Array ( [ - 1 , -1,1 , -1 , -1,1 , -1,1,1 , -1,1,1 ] ) ;                 
+355     gl . bufferData ( gl . ARRAY_BUFFER , verts , gl . STATIC_DRAW ) ;
+356
+357 const aPos = gl . getAttribLocation ( prog , "aPosition" ) ;     
+358     gl . enableVertexAttribArray ( aPos ) ;
+359     gl . vertexAttribPointer ( aPos , 2 , gl . FLOAT , false , 0 , 0 ) ;    
+360
+361 // Caché de ubicaciones uniformes    
+362     uniformsRef . current = {  
+363       uResolución : gl . getUniformLocation ( prog , "uResolution" ) , 
+364       uTiempo : gl . getUniformLocation ( prog , "uTime" ) , 
+365       uBajo : gl . getUniformLocation ( prog , "uBass" ) , 
+366       uMedios : gl . getUniformLocation ( prog , "uMids" ) , 
+367       uAltos : gl . getUniformLocation ( prog , "uHighs" ) , 
+368       uTema : gl . getUniformLocation ( prog , "uTheme" ) , 
+369 } ;    
+370
+371 // Controlador de redimensionamiento    
+372 const redimensionar = ( ) => {         
+373 si ( ! lienzo ) devolver ;        
+374 const dpr = window . devicePixelRatio || 1 ;         
+375 const w = Math.floor ( canvas.clientWidth * dpr ) ;​​​​        
+376 const h = Math.floor ( canvas.clientHeight * dpr ) ;​​​​        
+377 si ( canvas . width !== w || canvas . height !== h ) {          
+378         lienzo . ancho = w ; 
+379         lienzo . altura = h ; 
+380 }      
+381       gl . viewport ( 0 , 0 , canvas . width , canvas . height ) ; 
+382 } ;    
+383
+384 ventana.addEventListener ( " redimensionar " , redimensionar ) ;    
+385 redimensionar ( ) ;    
+386
+387 retorno ( ) => {       
+388 ventana . removeEventListener ( "redimensionar" , redimensionar ) ;      
+389 si ( animFrameIdRef . current ) cancelarAnimationFrame ( animFrameIdRef . current ) ;        
+390 } ;    
+391 } , [ ] ) ;   
+392
+393 // Inicializar el gráfico de Web Audio en la primera reproducción  
+394 const ensureAudioContext = ( ) => {       
+395 si ( ! audioCtxRef . actual && audioRef . actual ) {       
+396 const ctx = new AudioContext ( ) ;        
+397 const analyzer = ctx . createAnalyser ( ) ;      
+398       análisis . Tamaño de fft = 512 ;  
+399       analizador . smoothingTimeConstant = 0,82 ;  
+400
+401 const source = ctx . createMediaElementSource ( audioRef . current ) ;      
+402       origen.conectar ( analizador ) ;​​
+403       analizador . conectar ( ctx . destino ) ;
+404
+405       audioCtxRef . current = ctx ; 
+406       analizadorRef.actual = analizador ;​​ 
+407       dataArrayRef . current = new Uint8Array ( analyser . frequencyBinCount ) ;   
+408 }    
+409
+410 si ( audioCtxRef . current && audioCtxRef . current . state === "suspended" ) {         
+411       audioCtxRef . current . resume ( ) ;
+412 }    
+413 } ;  
+414
+415 // Bucle de renderizado (animación WebGL a 60 FPS)  
+416 useEffect ( ( ) => {    
+417 let startTime = performance . now ( ) ;     
+418
+419 const render = ( ) => {         
+420 const gl = glRef . current ;      
+421 const prog = programRef . current ;      
+422 const uniforms = uniformsRef.current ;​​      
+423 const canvas = canvasRef . current ;      
+424
+425 si ( gl && prog && uniforms && canvas ) {        
+426         gl . useProgram ( prog ) ;
+427
+428 const now = ( performance . now ( ) - startTime ) * 0.001 ;            
+429
+430 // Bandas de frecuencia de audio de muestra        
+431 sea bajo = 0 ;         
+432 sea mids = 0 ;         
+433 sea highs = 0 ;         
+434
+435 si ( analyserRef.current && dataArrayRef.current ) {​​​​           
+436 const arr = dataArrayRef . current ;          
+437           analyzerRef . current . getByteFrequencyData ( arr ) ;
+438 const datos = arr ;          
+439
+440 // Cajas de graves: 0..8 (~0..350Hz)          
+441 sea bSum = 0 ;           
+442 para ( let i = 0 ; i < 8 ; i ++ ) bSum += datos [ i ] || 0 ;               
+443           bajo = bSum / ( 8 * 255 ) ;   
+444
+445 // Bandas de frecuencia media: 12..40 (~500..2000Hz)          
+446 sea mSum = 0 ;           
+447 para ( let i = 12 ; i < 40 ; i ++ ) mSum += datos [ i ] || 0 ;               
+448           medios = mSum / ( 28 * 255 ) ;   
+449
+450 // Rangos de frecuencias altas: 60..150 (~3000..8000 Hz)          
+451 sea hSum = 0 ;           
+452 para ( sea i = 60 ; i < 150 ; i ++ ) hSum += datos [ i ] || 0 ;               
+453           máximos = hSum / ( 90 * 255 ) ;   
+454 }        
+455
+456         gl . uniform2f ( uniforms . uResolution , canvas . width , canvas . height ) ;
+457         gl . uniform1f ( uniforms . uTime , now ) ;
+458         gl . uniform1f ( uniforms . uBass , bass ) ;
+459         gl . uniform1f ( uniforms . uMids , mids ) ;
+460         gl . uniform1f ( uniforms . uHighs , highs ) ;
+461         gl . uniform1i ( uniforms . uTheme , currentTheme ) ;
+462
+463         gl . drawArrays ( gl . TRIANGLES , 0 , 6 ) ;  
+464 }      
+465
+466       animFrameIdRef . current = requestAnimationFrame ( render ) ;  
+467 } ;    
+468
+469     animFrameIdRef . current = requestAnimationFrame ( render ) ;  
+470
+471 retorno ( ) => {       
+472 si ( animFrameIdRef . current ) cancelarAnimationFrame ( animFrameIdRef . current ) ;        
+473 } ;    
+474 } , [ currentTheme ] ) ;   
+475
+476 // Controles de reproducción de audio  
+477 const togglePlay = async ( ) => {        
+478 ensureAudioContext ( ) ;    
+479 si ( ! audioRef . actual ) retorno ;      
+480
+481 si ( está jugando ) {      
+482       audioRef.actual.pausa ( ) ;
+483 setIsPlaying ( false ) ;      
+484 } de lo contrario {      
+485 intento {       
+486 esperar audioRef.current.play ( ) ;​​​​        
+487 setIsPlaying ( verdadero ) ;        
+488 } catch ( err ) {         
+489 console.error ( "Error de reproducción de audio : " , err ) ;        
+490 }      
+491 }    
+492 } ;  
+493
+494 const toggleMute = ( ) => {       
+495 si ( ! audioRef . actual ) retorno ;      
+496 const next = ! isMuted ;     
+497     audioRef.current.muted = next ;​​​​ 
+498 setIsMuted ( siguiente ) ;    
+499 } ;  
+500
+501 const handleVolume = ( e : React . ChangeEvent < HTMLInputElement > ) => {        
+502 const val = parseFloat ( es decir , valor objetivo ) ;     
+503 establecerVolumen ( val ) ;    
+504 si ( audioRef.actual ) {      
+505       audioRef.actual.volumen = val ; 
+506 si ( val === 0 ) setIsMuted ( true ) ;         
+507 else if ( isMuted ) setIsMuted ( false ) ;         
+508 }    
+509 } ;  
+510
+511 const restartTrack = ( ) => {       
+512 si ( audioRef.actual ) {      
+513       audioRef.current.currentTime = 0 ;  
+514 si ( ! estáReproduciendo ) alternarReproducción ( ) ;        
+515 }    
+516 } ;  
+517
+518 retorno (   
+519 < div className = " min-h-screen w-full flex flex-col items-center justify-center bg-black p-4 text-white font-sans select-none " >     
+520 { /* Elemento de audio vinculado al máster de Clandestino 1948 */ }      
+521 < audio      
+522 ref = { audioRef }        
+523 origen cruzado = " anónimo "        
+524 src = { audioUrl || indefinido }         
+525 onEnded = { ( ) => setIsPlaying ( false ) }          
+526 precarga = " automático "        
+527 />      
+528
+529 < div className = " relative w-full max-w-4xl h-[640px] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl flex flex-col justify-between " >       
+530 { /* Superficie de lienzo WebGL en tiempo real */ }        
+531 < lienzo        
+532 ref = { canvasRef }          
+533 className = " absoluto inset-0 w-full h-full object-cover z-0 "          
+534 />        
+535
+536 { /* Encabezado de superposición superior ambiental */ }        
+537 < div className = " relative z-10 flex items-center justify-between p-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent " >         
+538 < div className = " flex items-center gap-3 " >           
+539 < div className = " flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md border border-white/20 " >             
+540 < Disc className = " h-5 w-5 text-amber-300 animate-spin " style = { { animationDuration : "6s" } } />                   
+541 </ div >            
+542 < div >            
+543 < div className = " flex items-center gap-2 " >               
+544 < span className = " text-sm font-bold tracking-wider uppercase text-zinc-100 " >                 
+545                   Clandestino 1948
+546 </ span >                
+547 < span className = " rounded-full bg-amber-400/20 px-2 py-0.5 text-[9px] font-mono text-amber-300 border border-amber-400/30 " >                 
+548                   CABARET SONIDERO
+549 </ span >                
+550 </ div >              
+551 < p className = " text-[11px]text-zinc-300 " >               
+552                Visualizador en tiempo real con Audio Analyser Reactivo
+553 </p>​​              
+554 </ div >            
+555 </ div >          
+556
+557 { /* Chips de cambio rápido de tema */ }          
+558 < div className = " flex items-center gap-1.5 rounded-xl bg-black/60 p-1.5 backdrop-blur-md border border-white/10 " >           
+559 { TEMAS . map ( ( t ) => (              
+560 < botón              
+561 clave = { t . id }                
+562 onClick = { ( ) => setCurrentTheme ( t . id ) }                  
+563 className = { ` flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${                
+564                   currentTheme === t . id
+565 ? "bg-amber-400 text-black font-semibold shadow-md shadow-amber-400/20"                     
+566 : "text-zinc-300 hover:text-white hover:bg-white/10"                     
+567 } ` }                
+568 >              
+569 < span > { t . icon } </ span >                
+570 < span > { t . label } </ span >                
+571 </ botón >              
+572 ) ) }            
+573 </ div >          
+574 </ div >        
+575
+576 { /* Insignia estética central / Señal reactiva */ }        
+577 < div className = " relative z-10 flex flex-col items-center justify-center pointer-events-none " >         
+578 < div className = " rounded-full bg-black/40 px-4 py-1 backdrop-blur-md border border-white/10 text-[11px] font-mono tracking-widest text-zinc-300 flex items-center gap-2 " >           
+579 < Sparkles className = " h-3 w-3 text-amber-300 animate-pulse " />              
+580<span>ESTILO ACTIVO: {THEMES[currentTheme].tag}</span>            
+581 </ div >          
+582 </ div >        
+583
+584 { /* Barra inferior interactiva de transporte y controles */ }        
+585 < div className = " relative z-10 p-6 bg-gradient-to-t from-black/95 via-black/75 to-transparent flex flex-col gap-4 " >         
+586 < div className = " flex items-center justify-between " >           
+587 { /* Reproducir/Pausar y Reiniciar */ }            
+588 < div className = " flex items-center gap-3 " >             
+589 < botón              
+590 onClick = { togglePlay }                
+591 className = " flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-amber-300 text-black font-bold shadow-lg shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all "                
+592title={isPlaying ?"Pausar":"Reproducir"}                   
+593 >              
+594 { isPlaying ? < Pause className = " h-6 w-6 " /> : < Play className = " h-6 w-6 ml-0.5 " /> }                       
+595 </ botón >              
+596
+597 < botón              
+598 onClick = { restartTrack }                
+599 className = " flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-zinc-200 backdrop-blur-md border border-white/10 transition-all "                
+600 título = " Reiniciar pista "                
+601 >              
+602 < RotateCcw className = " h-4 w-4 " />                  
+603 </ botón >              
+604
+605 < div className = " flex flex-col ml-2 " >               
+606 < span className = " text-xs font-semibold text-zinc-200 " >                 
+607{isPlaying ?"Reproduciendo en vivo":"Listo para escuchar"}                     
+608 </ span >                
+609 < span className = " text-[10px] font-mono text-zinc-400 " >                 
+610                  Pistas rebajadas a 90 BPM · Güiro & Cencerro HD
+611 </ span >                
+612 </ div >              
+613 </ div >            
+614
+615 { /* Controles de volumen y salida de audio */ }            
+616 < div className = " flex items-center gap-4 " >             
+617 < div className = " flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 backdrop-blur-md border border-white/10 " >               
+618 < botón                
+619 onClick = { toggleMute }                  
+620 className = " text-zinc-300 hover:text-white transition-colors "                  
+621 >                
+622 { isMuted || volumen === 0 ? (                     
+623 < VolumeX className = " h-4 w-4 " />                      
+624 ) : (                    
+625 < Volume2 className = " h-4 w-4 " />                      
+626 ) }                  
+627 </ botón >                
+628 < entrada                
+629 tipo = " rango "                  
+630 min = { 0 }                  
+631 máx = { 1 }                  
+632 pasos = { 0.01 }                  
+633 valor = { isMuted ? 0 : volumen }                    
+634 onChange = { handleVolume }                  
+635 className = " w-20 h-1.5 accent-amber-400 bg-zinc-700 rounded-lg cursor-pointer "                  
+636 />                
+637 </ div >              
+638
+639 < div className = " hidden sm:flex items-center gap-1 text-[11px] font-mono text-amber-300/80 bg-amber-400/10 px-3 py-1.5 rounded-xl border border-amber-400/20 " >               
+640 < Zap className = " h-3.5 w-3.5 " />                  
+641 < span > 60 FPS GLSL </ span >                
+642 </ div >              
+643 </ div >            
+644 </ div >          
+645 </ div >        
+646 </ div >      
+647 </ div >    
+648 ) ;  
+649}

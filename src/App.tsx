@@ -13,37 +13,137 @@ import { DroAgentModal } from './components/DroAgentModal';
 import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
 import { Admin } from './components/Admin';
+import { SoundCloudGlobalPlayer } from './components/SoundCloudGlobalPlayer';
+import { INITIAL_BLOG_ARTICLES } from './data/blogData';
+import { captureAeoQueryFromUrl } from './services/aeoQueryLogger';
 import { CartItem, MerchItem, BlogPost } from './types';
 
 type AppRoute = 'home' | 'blog' | 'produccion' | 'cumbia-lab' | 'tienda';
 
+/**
+ * Dynamically generates and updates Open-Graph, Twitter Card, and SEO meta tags
+ * based on the currently active route and any open article to maximize search engine visibility.
+ */
+export function updateOpenGraphMetadata(route: AppRoute, articleId?: string | null): void {
+  if (typeof document === 'undefined') return;
+
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://whacha.site';
+
+  const routeMetaMap: Record<AppRoute, {
+    title: string;
+    description: string;
+    url: string;
+    image: string;
+    type: string;
+  }> = {
+    home: {
+      title: "WACHA MULTIMEDIA // Blog de Ingeniería, Arte y Diseño Digital & AEO 2026",
+      description: "Estudio de ingeniería de contenidos, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, producción cinematográfica y Sonido Decrépito.",
+      url: `${origin}/`,
+      image: `${origin}/wacha_logo.jpg`,
+      type: "website"
+    },
+    blog: {
+      title: "BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026 // Wacha Multimedia",
+      description: "Guías técnicas de AEO, optimización de motores generativos (GEO), Core Web Vitals en SPAs, registro en INDAUTOR y algoritmos de retención de video.",
+      url: `${origin}/#blog`,
+      image: `${origin}/assets/aistudio/GEO__La_muerte_del_keyword_stuffing_2f325e9d.png`,
+      type: "blog"
+    },
+    produccion: {
+      title: "INVESTIGACIÓN, REDACCIÓN, ANIMACIÓN Y CREACIÓN DE CONTENIDO // Wacha Multimedia",
+      description: "Portafolio cinematográfico, personalidades creativas con IA, animación 2D/3D y producción de contenido de alto impacto para marcas e instituciones.",
+      url: `${origin}/#produccion`,
+      image: `${origin}/wacha_logo.jpg`,
+      type: "website"
+    },
+    'cumbia-lab': {
+      title: "CUMBIA LAB. (Proyecto de Cumbia Decrépita) // Sonido Decrépito",
+      description: "Laboratorio de cumbia experimental rebajada, tracks descargables con Social Gate, playlists oficiales de SoundCloud y sintetizadores sonideros.",
+      url: `${origin}/#cumbia-lab`,
+      image: `${origin}/cumbia_del_futuro.jpg`,
+      type: "music.playlist"
+    },
+    tienda: {
+      title: "WACHA EL TIANGUIS ONLINE // Streetwear & Hardware de Estudio",
+      description: "Piezas de edición limitada, mercancía oficial, hoodies, gorras y hardware de estudio creado por el colectivo Wacha Multimedia.",
+      url: `${origin}/#tienda`,
+      image: `${origin}/wacha_logo.jpg`,
+      type: "website"
+    }
+  };
+
+  let meta = routeMetaMap[route] || routeMetaMap.home;
+
+  // Enrich with specific article data when viewing a blog post
+  if (route === 'blog' && articleId) {
+    const article = INITIAL_BLOG_ARTICLES.find(a => a.id === articleId);
+    if (article) {
+      const rawImg = article.image || '/wacha_logo.jpg';
+      const imgPath = rawImg.startsWith('http')
+        ? rawImg
+        : `${origin}${rawImg.startsWith('/') ? '' : '/'}${rawImg}`;
+
+      meta = {
+        title: `${article.title} | Wacha Multimedia`,
+        description: article.excerpt.length > 155 ? `${article.excerpt.slice(0, 152)}...` : article.excerpt,
+        url: `${origin}/#blog/${article.slug || article.id}`,
+        image: imgPath,
+        type: "article"
+      };
+    }
+  }
+
+  // Update document title
+  document.title = meta.title;
+
+  // Dynamic tag helper
+  const setMetaTag = (attr: string, key: string, val: string) => {
+    let tag = document.querySelector(`meta[${attr}="${key}"]`);
+    if (!tag) {
+      tag = document.createElement('meta');
+      tag.setAttribute(attr, key);
+      document.head.appendChild(tag);
+    }
+    tag.setAttribute('content', val);
+  };
+
+  // Standard SEO Meta Tags
+  setMetaTag('name', 'description', meta.description);
+
+  // Open Graph (og:*)
+  setMetaTag('property', 'og:title', meta.title);
+  setMetaTag('property', 'og:description', meta.description);
+  setMetaTag('property', 'og:url', meta.url);
+  setMetaTag('property', 'og:image', meta.image);
+  setMetaTag('property', 'og:type', meta.type);
+  setMetaTag('property', 'og:site_name', 'Wacha Multimedia');
+
+  // Twitter / X Cards (twitter:*)
+  setMetaTag('name', 'twitter:card', 'summary_large_image');
+  setMetaTag('name', 'twitter:title', meta.title);
+  setMetaTag('name', 'twitter:description', meta.description);
+  setMetaTag('name', 'twitter:url', meta.url);
+  setMetaTag('name', 'twitter:image', meta.image);
+
+  // Canonical Link
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.setAttribute('rel', 'canonical');
+    document.head.appendChild(canonical);
+  }
+  canonical.setAttribute('href', meta.url);
+}
+
 export default function App() {
-  // Global States
+  // Global States - Always start in dark mode (versión nocturna)
   const [crtEnabled, setCrtEnabled] = useState(false);
   const [audioActive, setAudioActive] = useState(true);
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    try {
-      const saved = localStorage.getItem('wacha_theme');
-      if (saved === 'light' || saved === 'dark') return saved;
-      return 'dark';
-    } catch {
-      return 'dark';
-    }
-  });
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
-  // Multi-Page Routing State
-  const [currentRoute, setCurrentRoute] = useState<AppRoute>(() => {
-    try {
-      const hash = window.location.hash.replace('#', '').toLowerCase();
-      if (hash === 'blog' || hash === 'radar-aeo') return 'blog';
-      if (hash === 'produccion' || hash === 'multimedia' || hash === 'canales' || hash === 'portafolio') return 'produccion';
-      if (hash === 'cumbia-lab' || hash === 'soundlab' || hash === 'cumbia') return 'cumbia-lab';
-      if (hash === 'tienda' || hash === 'merch' || hash === 'drop-store') return 'tienda';
-      return 'home';
-    } catch {
-      return 'home';
-    }
-  });
+  // Multi-Page Routing State - Always start on Home page
+  const [currentRoute, setCurrentRoute] = useState<AppRoute>('home');
 
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
   const [articleReadingMode, setArticleReadingMode] = useState<boolean>(false);
@@ -67,7 +167,27 @@ export default function App() {
       } else if (!hash || hash === 'home' || hash === 'mastermind') {
         setCurrentRoute('home');
       }
+
+      // Capture any AEO search queries in the URL hash
+      captureAeoQueryFromUrl(window.location.hash ? window.location.hash.split('?')[0].replace('#', '') : 'home');
     };
+
+    // Always enforce starting on home page and night mode on fresh launch
+    setCurrentRoute('home');
+    if (window.location.hash && window.location.hash !== '#' && window.location.hash !== '#home') {
+      try {
+        window.history.replaceState(null, '', '#');
+      } catch {}
+    }
+    document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+    try {
+      localStorage.setItem('wacha_theme', 'dark');
+    } catch {}
+
+    // Initial capture on load
+    captureAeoQueryFromUrl('home');
 
     window.addEventListener('hashchange', handleLocationChange);
     window.addEventListener('popstate', handleLocationChange);
@@ -77,17 +197,10 @@ export default function App() {
     };
   }, []);
 
-  // Update Page Title based on route for rich SEO
+  // Update Page Title and Open Graph / Twitter Meta Tags dynamically based on active route and article
   useEffect(() => {
-    const titles: Record<AppRoute, string> = {
-      home: "WACHA MULTIMEDIA // Laboratorio de Ingeniería Digital, AEO & Medios",
-      blog: "Blog de Ingeniería Digital & AEO 2026 // Wacha Multimedia",
-      produccion: "Investigación, Redacción, Animación y Creación de Contenido // Wacha Multimedia",
-      'cumbia-lab': "Cumbia Lab. (Proyecto de Cumbia Decrépita) // Wacha Multimedia",
-      tienda: "Wacha Drop Store Online // Streetwear & Hardware de Estudio"
-    };
-    document.title = titles[currentRoute] || "WACHA MULTIMEDIA";
-  }, [currentRoute]);
+    updateOpenGraphMetadata(currentRoute, selectedArticleId);
+  }, [currentRoute, selectedArticleId]);
 
   // Navigate Handler
   const handleNavigate = (route: string, articleId?: string, readingMode = false) => {
@@ -351,6 +464,12 @@ export default function App() {
 
       {/* Floating WhatsApp Action Widget */}
       <WhatsAppWidget />
+
+      {/* Global SoundCloud Auto-Player Dock (https://on.soundcloud.com/485W8PONR0OfSHWVVj) */}
+      <SoundCloudGlobalPlayer
+        audioActive={audioActive}
+        onToggleAudio={() => setAudioActive(!audioActive)}
+      />
 
       {/* Floating Back to Top Button */}
       <BackToTop />

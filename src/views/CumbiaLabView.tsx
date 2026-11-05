@@ -59,7 +59,7 @@ export const CumbiaLabView: React.FC<CumbiaLabViewProps> = ({
       <DropStoreGadget
         onAddToCart={onAddToCart}
         onNavigateToStore={() => onNavigate('tienda')}
-        title="WACHA DROP STORE // MERCH DE CUMBIA DECRÉPITA"
+        title="WACHA EL TIANGUIS // MERCH DE CUMBIA DECRÉPITA"
         subtitle="Playeras con lavado ácido '¡PAPÚUU!', gorras camper bordadas y pósters numerados de colección."
       />
 

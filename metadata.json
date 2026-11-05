@@ -1,6 +1,6 @@
 {
   "name": "Wacha Multimedia",
-  "description": "Estudio de ingeniería de contenidos, producción de video cinematográfico, desarrollo de personalidades creativas con IA, red de YouTube y sound design.",
+  "description": "Estudio de ingeniería de contenidos, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, producción cinematográfica y Sonido Decrépito.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

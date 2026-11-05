@@ -100,6 +100,7 @@ export const RELEASES_DATA: MusicRelease[] = [
     type: '',
     status: '',
     youtubeUrl: 'https://youtube.com/shorts/iNA0aphhgBg?si=TEUwWdj21YdfxoEx',
+    soundcloudUrl: 'https://on.soundcloud.com/485W8PONR0OfSHWVVj',
     coverImage: '/mr_decrepito_portrait.jpg',
     tracksCount: 1,
     duration: '00:59'

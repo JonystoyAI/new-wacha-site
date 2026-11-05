@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RELEASES_DATA } from '../data/releasesData';
 import { MusicRelease } from '../types';
-import { Disc, Play, Pause, Volume2, Sliders, ExternalLink, Music, Radio, Sparkles, Youtube, Download, Share2 } from 'lucide-react';
+import { Disc, Play, Pause, Volume2, ExternalLink, Music, Radio, Sparkles, Youtube, Download, Share2 } from 'lucide-react';
 import { MusicDownloadModal } from './MusicDownloadModal';
 
 interface SoundLabProps {
@@ -14,7 +14,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
   const [pitch, setPitch] = useState<number>(0.85); // Slowed cumbia rebajada pitch
   const [volume, setVolume] = useState<number>(0.8);
   const [tubeSaturation, setTubeSaturation] = useState(true);
-  const [activeTab, setActiveTab] = useState<'cabaret' | 'soundcloud' | 'synth'>('cabaret');
+  const [activeTab, setActiveTab] = useState<'space' | 'cabaret' | 'soundcloud'>('space');
   const [downloadRelease, setDownloadRelease] = useState<MusicRelease | null>(null);
 
   // Audio Context Ref for Web Audio API Synth Engine
@@ -214,8 +214,8 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
             <div className="flex items-center gap-3">
               <Disc className={`w-6 h-6 text-[#B8006E] dark:text-[#D4FF00] ${isPlayingTape ? 'animate-spin' : ''}`} />
               <div>
-                <h3 className="font-anton text-xl text-black dark:text-white">CONSOLA ANALÓGICA REBAJADA V3.0</h3>
-                <p className="text-zinc-700 dark:text-zinc-400 text-[10px] font-bold">WEB AUDIO HARDWARE SYNTH ENGINE // DECRÉPITO STEREO</p>
+                <h3 className="font-anton text-xl text-black dark:text-white">VISUALIZADOR SPACE 3D // CABARET DECRÉPITO</h3>
+                <p className="text-zinc-700 dark:text-zinc-400 text-[10px] font-bold">FLOW MUSIC SPACE (GLSL 60 FPS) // REPRODUCTORES MULTIMEDIA DECRÉPITO</p>
               </div>
             </div>
 
@@ -232,6 +232,19 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
               >
                 <Download className="w-3.5 h-3.5 text-black group-hover/sg:text-white" />
                 <span className="text-black group-hover/sg:text-white font-bold">DESCARGAR PISTA // SOCIAL GATE</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('space')}
+                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black ${
+                  activeTab === 'space'
+                    ? 'bg-[#00E5FF] text-black border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
+                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
+                }`}
+                title="Visualizador Flow Music Space 3D en tiempo real con Shaders GLSL"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Visualizador Space 3D</span>
               </button>
               <button
                 type="button"
@@ -258,22 +271,47 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                 <Radio className="w-3.5 h-3.5" />
                 <span>SOUNDCLOUD EMBED</span>
               </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab('synth')}
-                className={`px-3 py-1.5 border-2 font-bold transition-all duration-150 hover:-translate-y-1 active:translate-y-0 active:scale-95 flex items-center gap-1.5 cursor-pointer brutal-shadow-black ${
-                  activeTab === 'synth'
-                    ? 'bg-[#00E599] text-black border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'
-                    : 'bg-white dark:bg-zinc-800 text-black dark:text-zinc-300 border-black dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700'
-                }`}
-              >
-                <Sliders className="w-3.5 h-3.5" />
-                <span>SYNTH ENGINE</span>
-              </button>
             </div>
           </div>
 
-          {activeTab === 'cabaret' ? (
+          {activeTab === 'space' ? (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3 font-jetbrains text-xs">
+                <div className="flex items-center gap-2 text-black dark:text-[#00E5FF] font-bold">
+                  <Sparkles className="w-4 h-4 text-[#00E5FF] animate-pulse" />
+                  <span>ESPACIO VISUALIZADOR 3D // FLOW MUSIC SPACE (GLSL 60 FPS)</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-zinc-600 dark:text-zinc-400 text-[11px] font-mono">FLOWMUSIC.APP/SPACE • WEBGL REACTIVO</span>
+                  <a
+                    href="https://flowmusic.app/space/8e9aea2c-6b13-43d9-baca-6174ab5325cc"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#FF4400] hover:underline font-bold text-xs"
+                  >
+                    PANTALLA COMPLETA ↗
+                  </a>
+                </div>
+              </div>
+              <div className="w-full flex justify-center bg-black rounded-2xl overflow-hidden brutal-shadow-black">
+                <iframe 
+                  src="https://flowmusic.app/space/8e9aea2c-6b13-43d9-baca-6174ab5325cc" 
+                  width="100%" 
+                  height="700" 
+                  frameBorder="0" 
+                  allow="autoplay; encrypted-media" 
+                  style={{
+                    borderRadius: '20px',
+                    border: '1px solid #3f3f46',
+                    boxShadow: '0 25px 50px rgba(0,0,0,0.85)',
+                    overflow: 'hidden'
+                  }}
+                  loading="lazy"
+                  title="Flow Music Space 3D Visualizer"
+                />
+              </div>
+            </div>
+          ) : activeTab === 'cabaret' ? (
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-200 dark:border-zinc-800 pb-3 font-jetbrains text-xs">
                 <div className="flex items-center gap-2 text-black dark:text-[#D4FF00] font-bold">
@@ -295,108 +333,6 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                 />
               </div>
             </div>
-          ) : activeTab === 'synth' ? (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left Console Controls */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={toggleTape}
-                    className={`w-full py-4 font-jetbrains text-sm font-bold border-2 border-black brutal-shadow-black transition-all flex items-center justify-center gap-3 ${
-                      isPlayingTape
-                        ? 'bg-[#FF4400] text-white hover:bg-red-600'
-                        : 'bg-[#D4FF00] text-black hover:bg-lime-400'
-                    }`}
-                  >
-                    {isPlayingTape ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current" />}
-                    <span>{isPlayingTape ? 'PAUSAR CONSOLA DE CUMBIA' : 'REPRODUCIR RITMO REBAJADO'}</span>
-                  </button>
-                </div>
-
-                {/* Hardware Controls */}
-                <div className="space-y-4 bg-black p-4 border border-zinc-800 font-jetbrains text-xs">
-                  {/* Pitch Slowdown Control */}
-                  <div>
-                    <div className="flex justify-between text-zinc-300 mb-1">
-                      <span>PITCH REBAJADA (RPM SPEED):</span>
-                      <span className="text-[#D4FF00] font-bold">{(pitch * 100).toFixed(0)}% ({pitch < 1 ? 'SLOW 16 RPM' : 'NORM 33 RPM'})</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="0.5"
-                      max="1.2"
-                      step="0.05"
-                      value={pitch}
-                      onChange={(e) => setPitch(parseFloat(e.target.value))}
-                      className="w-full accent-[#D4FF00] bg-zinc-800 h-2 rounded cursor-pointer"
-                    />
-                  </div>
-
-                  {/* Master Volume */}
-                  <div>
-                    <div className="flex justify-between text-zinc-300 mb-1">
-                      <span>VOLUMEN MASTER DE CINTA:</span>
-                      <span className="text-[#D4FF00] font-bold">{(volume * 100).toFixed(0)}%</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.05"
-                      value={volume}
-                      onChange={(e) => setVolume(parseFloat(e.target.value))}
-                      className="w-full accent-[#D4FF00] bg-zinc-800 h-2 rounded cursor-pointer"
-                    />
-                  </div>
-
-                  {/* Tube Saturation Toggle */}
-                  <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
-                    <span className="text-zinc-400">SATURACIÓN DE BULBO ANALÓGICO:</span>
-                    <button
-                      onClick={() => setTubeSaturation(!tubeSaturation)}
-                      className={`px-3 py-1 border text-[10px] font-bold ${
-                        tubeSaturation ? 'bg-amber-500 text-black border-black' : 'bg-zinc-800 text-zinc-400 border-zinc-700'
-                      }`}
-                    >
-                      {tubeSaturation ? 'CALIDEZ BULBO ON' : 'LIMPIO OFF'}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Telemetry VU Meter Display */}
-              <div className="lg:col-span-7 bg-black p-4 border-2 border-zinc-800 font-jetbrains space-y-4">
-                <div className="flex justify-between text-xs text-zinc-400 border-b border-zinc-800 pb-2">
-                  <span>SPECTRUM ANALYZER // L+R AUDIO METERS</span>
-                  <span className={isPlayingTape ? 'text-[#D4FF00] animate-pulse' : 'text-zinc-600'}>
-                    {isPlayingTape ? '● SIGNAL ACTIVE' : '○ STANDBY'}
-                  </span>
-                </div>
-
-                {/* Animated Spectrum Equalizer Bar Graphs */}
-                <div className="h-24 flex items-end justify-between gap-1.5 px-2 bg-zinc-950 border border-zinc-800">
-                  {Array.from({ length: 16 }).map((_, i) => (
-                    <div key={i} className="flex-1 bg-zinc-800 h-full flex items-end">
-                      <div
-                        className={`w-full transition-all duration-150 ${
-                          i % 3 === 0 ? 'bg-[#FF4400]' : 'bg-[#D4FF00]'
-                        }`}
-                        style={{
-                          height: isPlayingTape
-                            ? `${Math.max(15, Math.floor(Math.random() * 95))}%`
-                            : '8%'
-                        }}
-                      ></div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex justify-between text-[10px] text-zinc-500 font-mono">
-                  <span>FORMATO: 24-BIT FLAC / WAV 48KHZ</span>
-                  <span>ESTILO: REBAJADA SUBTERRÁNEA</span>
-                </div>
-              </div>
-            </div>
           ) : (
             <div className="space-y-4">
               <div className="w-full bg-black border-2 border-zinc-800 overflow-hidden brutal-shadow-black">
@@ -407,7 +343,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                   scrolling="no"
                   frameBorder="no"
                   allow="autoplay; encrypted-media"
-                  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A2108495635&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
+                  src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sonidodecrepito/sets/decrepito-papu&color=%23d4ff00&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"
                 ></iframe>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-jetbrains text-xs p-3 bg-zinc-100 dark:bg-black border-2 border-black dark:border-zinc-800">
@@ -423,17 +359,17 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
                   </a>{' '}
                   <span className="text-zinc-400">·</span>{' '}
                   <a
-                    href="https://soundcloud.com/sonidodecrepito/sets/ecos"
-                    title="Ecos - Sonido decrépito - Cumbia Sound"
+                    href="https://on.soundcloud.com/485W8PONR0OfSHWVVj"
+                    title="Decrépito Papu - Playlist Oficial de Sonido Decrépito"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-black dark:text-zinc-200 hover:underline font-bold"
                   >
-                    Ecos - Sonido decrépito - Cumbia Sound
+                    Decrépito Papu // Playlist Oficial
                   </a>
                 </div>
                 <a
-                  href="https://soundcloud.com/sonidodecrepito/sets/ecos"
+                  href="https://on.soundcloud.com/485W8PONR0OfSHWVVj"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-[#FF4400] text-white px-3 py-1 font-bold hover:bg-orange-600 transition-colors flex items-center gap-1 shrink-0 text-xs border border-black"

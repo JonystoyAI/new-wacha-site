@@ -165,40 +165,57 @@ export const HomeCumbiaLabGadget: React.FC<HomeCumbiaLabGadgetProps> = ({
           </div>
         )}
 
-        {/* SoundCloud Bottom Player Bar */}
-        <div className="mt-8 bg-zinc-950 border-2 border-zinc-800 p-4 flex flex-col md:flex-row items-center justify-between gap-4 font-jetbrains text-xs">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-black border border-[#D4FF00] flex items-center justify-center shrink-0">
-              <Disc className="w-5 h-5 text-[#D4FF00] animate-spin" />
-            </div>
-            <div>
-              <div className="font-bold text-white flex items-center gap-2">
-                <span>SOUNDCLOUD STREAMING OFICIAL</span>
-                <span className="px-1.5 py-0.2 bg-[#00E599] text-black text-[9px]">EN VIVO</span>
+        {/* SoundCloud Bottom Player Bar with Playlist https://on.soundcloud.com/485W8PONR0OfSHWVVj */}
+        <div className="mt-8 bg-zinc-950 border-2 border-zinc-800 p-4 sm:p-5 brutal-shadow-black space-y-4 font-jetbrains text-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-black border border-[#D4FF00] flex items-center justify-center shrink-0">
+                <Disc className="w-5 h-5 text-[#D4FF00] animate-spin" />
               </div>
-              <p className="text-zinc-400 text-[11px]">
-                Sincronizado con pistas subidas y agregadas a la playlist de Sonido Decrépito.
-              </p>
+              <div>
+                <div className="font-bold text-white flex items-center gap-2">
+                  <span>PLAYLIST OFICIAL // DECRÉPITO PAPÚ</span>
+                  <span className="px-1.5 py-0.2 bg-[#00E599] text-black text-[9px] font-bold">EN VIVO</span>
+                </div>
+                <p className="text-zinc-400 text-[11px]">
+                  Sincronizado con SoundCloud y pistas oficiales de Sonido Decrépito.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="https://on.soundcloud.com/485W8PONR0OfSHWVVj"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 bg-[#FF4400] text-white hover:bg-black border border-black font-bold flex items-center gap-1.5 transition-all text-xs"
+              >
+                <Radio className="w-3.5 h-3.5" />
+                <span>ABRIR EN SOUNDCLOUD ↗</span>
+              </a>
+              <button
+                type="button"
+                onClick={onNavigateToCumbiaLab}
+                className="px-3 py-1.5 bg-black text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black border border-[#D4FF00] font-bold flex items-center gap-1.5 transition-all cursor-pointer text-xs"
+              >
+                <Sliders className="w-3.5 h-3.5" />
+                <span>CUMBIA LAB COMPLETO &rarr;</span>
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <a
-              href="https://soundcloud.com/sonidodecrepito"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3.5 py-1.5 bg-[#FF4400] text-white hover:bg-black border border-black font-bold flex items-center gap-1.5 transition-all"
-            >
-              <Radio className="w-3.5 h-3.5" />
-              <span>PERFIL SOUNDCLOUD &rarr;</span>
-            </a>
-            <button
-              onClick={onNavigateToCumbiaLab}
-              className="px-3.5 py-1.5 bg-black text-[#D4FF00] hover:bg-[#D4FF00] hover:text-black border border-[#D4FF00] font-bold flex items-center gap-1.5 transition-all cursor-pointer"
-            >
-              <Sliders className="w-3.5 h-3.5" />
-              <span>ABRIR CONSOLA & SINTETIZADOR &rarr;</span>
-            </button>
+          {/* Embedded SoundCloud Player */}
+          <div className="w-full bg-black border border-zinc-800 overflow-hidden rounded-lg">
+            <iframe
+              id="home-cumbialab-soundcloud-iframe"
+              width="100%"
+              height="166"
+              scrolling="no"
+              frameBorder="no"
+              allow="autoplay; encrypted-media"
+              src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sonidodecrepito/sets/decrepito-papu&color=%23d4ff00&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+              title="SoundCloud Playlist Decrépito Papu Oficial"
+            ></iframe>
           </div>
         </div>
 

@@ -9,15 +9,44 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onNavigate }) => {
   const SOCIAL_LINKS = [
     {
-      name: 'YouTube',
-      url: 'https://www.youtube.com/@wachanos',
+      name: 'TikTok',
+      url: 'https://www.tiktok.com/@whachaproducciones',
+      color: 'hover:bg-black hover:text-cyan-400 border-cyan-500/30',
+      badge: '@whachaproducciones',
+      icon: (
+        <svg className="w-4 h-4 fill-zinc-200 group-hover:fill-cyan-400" viewBox="0 0 24 24">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.22V8.25a6.34 6.34 0 0 0-5.18 6.18 6.34 6.34 0 1 0 11.52-3.43 8.3 8.3 0 0 0 5.48 2.07V9.6a4.84 4.84 0 0 1-1.71-2.91z"/>
+        </svg>
+      )
+    },
+    {
+      name: 'YouTube Music',
+      url: 'https://music.youtube.com/@wachamultimediaproducer',
       color: 'hover:bg-red-600 hover:text-white',
-      badge: '@wachanos',
-      icon: <Youtube className="w-4 h-4 text-red-500 group-hover:text-white" />
+      badge: '@wachamultimediaproducer',
+      icon: <Music className="w-4 h-4 text-red-500 group-hover:text-white" />
+    },
+    {
+      name: 'X (Twitter)',
+      url: 'https://x.com/WhachaMe',
+      color: 'hover:bg-black hover:text-white',
+      badge: '@WhachaMe',
+      icon: (
+        <svg className="w-4 h-4 fill-zinc-200 group-hover:fill-white" viewBox="0 0 24 24">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      )
+    },
+    {
+      name: 'Facebook',
+      url: 'https://www.facebook.com/profile.php?id=61593007179166',
+      color: 'hover:bg-blue-600 hover:text-white',
+      badge: 'Wacha Multimedia',
+      icon: <Facebook className="w-4 h-4 text-blue-500 group-hover:text-white" />
     },
     {
       name: 'SoundCloud',
-      url: 'https://on.soundcloud.com/65NrLGKtwr50Oz7AaY',
+      url: 'https://on.soundcloud.com/485W8PONR0OfSHWVVj',
       color: 'hover:bg-[#FF5500] hover:text-white',
       badge: 'Playlist Oficial',
       icon: (
@@ -36,31 +65,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onNavigate }) => {
           <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/>
         </svg>
       )
-    },
-    {
-      name: 'TikTok',
-      url: 'https://www.tiktok.com/@whacha.site',
-      color: 'hover:bg-black hover:text-cyan-400 border-cyan-500/30',
-      badge: '@whacha.site',
-      icon: (
-        <svg className="w-4 h-4 fill-zinc-200 group-hover:fill-cyan-400" viewBox="0 0 24 24">
-          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.74 2.89 2.89 0 0 1 2.31-2.22V8.25a6.34 6.34 0 0 0-5.18 6.18 6.34 6.34 0 1 0 11.52-3.43 8.3 8.3 0 0 0 5.48 2.07V9.6a4.84 4.84 0 0 1-1.71-2.91z"/>
-        </svg>
-      )
-    },
-    {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/profile.php?id=61593007179166',
-      color: 'hover:bg-blue-600 hover:text-white',
-      badge: 'Wacha Multimedia',
-      icon: <Facebook className="w-4 h-4 text-blue-500 group-hover:text-white" />
-    },
-    {
-      name: 'LinkedIn',
-      url: 'https://www.linkedin.com/company/wacha-multimedia',
-      color: 'hover:bg-blue-700 hover:text-white',
-      badge: 'Oficial',
-      icon: <Linkedin className="w-4 h-4 text-blue-400 group-hover:text-white" />
     }
   ];
 
@@ -126,7 +130,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onNavigate }) => {
                   onClick={() => onNavigate ? onNavigate('blog') : (window.location.hash = 'blog')}
                   className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
                 >
-                  [01] BLOG DE INGENIERÍA & AEO
+                  [01] BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026
                 </button>
               </li>
               <li>
@@ -150,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin, onNavigate }) => {
                   onClick={() => onNavigate ? onNavigate('tienda') : (window.location.hash = 'tienda')}
                   className="hover:text-[#D4FF00] transition-colors text-left cursor-pointer"
                 >
-                  [04] WACHA DROP STORE ONLINE
+                  [04] WACHA EL TIANGUIS ONLINE
                 </button>
               </li>
               <li>

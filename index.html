@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#121411" />
-    <title>Wacha Multimedia | Producciones, Portafolio & Sonido Decrépito</title>
-    <meta name="description" content="Estudio de ingeniería de contenidos, producción de video cinematográfico, desarrollo de personalidades creativas con IA, red de YouTube y sound design." />
-    <meta name="keywords" content="Wacha Multimedia, producción audiovisual, ingeniería de contenidos, personalidades creativas IA, edición de video, animación cinematográfica, Sonido Decrépito, YouTube, diseño web, Querétaro" />
+    <title>Wacha Multimedia | Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, Producción & Cumbia Lab</title>
+    <meta name="description" content="Estudio de ingeniería de contenidos, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, producción cinematográfica, Sonido Decrépito y optimización algorítmica." />
+    <meta name="keywords" content="Wacha Multimedia, Blog de Ingeniería, Arte y Diseño Digital, AEO 2026, producción audiovisual, Sonido Decrépito, YouTube, Querétaro" />
     <meta name="author" content="Wacha Multimedia" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://whacha.site/" />
@@ -17,8 +17,8 @@
     <meta property="og:url" content="https://whacha.site/" />
     <meta property="og:site_name" content="Wacha Multimedia" />
     <meta property="og:locale" content="es_MX" />
-    <meta property="og:title" content="Wacha Multimedia | Producciones, Portafolio & Sonido Decrépito" />
-    <meta property="og:description" content="Estudio de ingeniería de contenidos, producción cinematográfica, desarrollo de personajes IA, red de canales de YouTube y sound design urbano." />
+    <meta property="og:title" content="Wacha Multimedia | Blog de Ingeniería, Arte y Diseño Digital & AEO 2026" />
+    <meta property="og:description" content="Estudio de ingeniería de contenidos, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, producción cinematográfica y Sonido Decrépito." />
     <meta property="og:image" content="https://whacha.site/wacha_logo.jpg" />
     <meta property="og:image:secure_url" content="https://whacha.site/wacha_logo.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
@@ -29,8 +29,8 @@
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://whacha.site/" />
-    <meta name="twitter:title" content="Wacha Multimedia | Producciones, Portafolio & Sonido Decrépito" />
-    <meta name="twitter:description" content="Estudio de ingeniería de contenidos, producción cinematográfica, desarrollo de personajes IA, red de canales de YouTube y sound design urbano." />
+    <meta name="twitter:title" content="Wacha Multimedia | Blog de Ingeniería, Arte y Diseño Digital & AEO 2026" />
+    <meta name="twitter:description" content="Estudio de ingeniería de contenidos, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, producción cinematográfica y Sonido Decrépito." />
     <meta name="twitter:image" content="https://whacha.site/wacha_logo.jpg" />
     <meta name="twitter:image:alt" content="Wacha Multimedia - Logotipo Oficial y Portafolio Creativo" />
 
@@ -54,12 +54,14 @@
       "url": "https://whacha.site/",
       "logo": "https://whacha.site/wacha_logo.jpg",
       "image": "https://whacha.site/wacha_logo.jpg",
-      "description": "Estudio multidisciplinario de producción audiovisual, ingeniería de contenidos con IA, animación cinematográfica, desarrollo web y sound design.",
+      "description": "Estudio multidisciplinario de producción audiovisual, Blog de Ingeniería, Arte y Diseño Digital & AEO 2026, animación cinematográfica, desarrollo web y sound design.",
       "sameAs": [
         "https://www.tiktok.com/@whacha.site",
-        "https://www.youtube.com/@wachanos"
+        "https://www.youtube.com/@wachanos",
+        "https://on.soundcloud.com/485W8PONR0OfSHWVVj"
       ],
       "knowsAbout": [
+        "Blog de Ingeniería, Arte y Diseño Digital & AEO 2026",
         "Generación de contenidos y desarrollo de personalidades creativas IA",
         "Edición de video y animaciones cinematográficas de marca",
         "Producción musical y sound design urbano",
@@ -71,20 +73,15 @@
 
     <link rel="icon" type="image/jpeg" href="/wacha_logo.jpg" />
 
-    <!-- Anti-flicker Theme Initialization -->
+    <!-- Anti-flicker Theme Initialization: Always start in night mode -->
     <script>
       (function() {
         try {
-          var t = localStorage.getItem('wacha_theme');
-          if (t === 'light') {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-            var meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', '#F4F4EE');
-          } else {
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-          }
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#121411');
         } catch(e) {}
       })();
     </script>

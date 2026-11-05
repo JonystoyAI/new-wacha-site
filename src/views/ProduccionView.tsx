@@ -113,7 +113,7 @@ export const ProduccionView: React.FC<ProduccionViewProps> = ({
       <DropStoreGadget
         onAddToCart={onAddToCart}
         onNavigateToStore={() => onNavigate('tienda')}
-        title="WACHA DROP STORE // MERCHANDISING OFICIAL"
+        title="WACHA EL TIANGUIS // MERCHANDISING OFICIAL"
         subtitle="Viste la cultura del estudio con nuestra indumentaria oficial de alta densidad y edición numerada."
       />
 

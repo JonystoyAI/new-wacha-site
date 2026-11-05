@@ -45,10 +45,10 @@ export const TiendaView: React.FC<TiendaViewProps> = ({
           <div>
             <div className="font-jetbrains text-xs text-[#D4FF00] font-bold tracking-wider mb-2 flex items-center gap-2">
               <span className="w-2.5 h-2.5 bg-[#D4FF00] animate-pulse"></span>
-              <span>// WACHA DROP STORE • STREETWEAR & HARDWARE BOUTIQUE</span>
+              <span>// WACHA EL TIANGUIS • STREETWEAR & HARDWARE BOUTIQUE</span>
             </div>
             <h1 className="font-anton text-4xl sm:text-6xl text-white uppercase tracking-tight">
-              WACHA DROP STORE ONLINE
+              WACHA EL TIANGUIS ONLINE
             </h1>
             <p className="font-space-grotesk text-sm sm:text-base text-zinc-300 max-w-3xl mt-2 leading-relaxed">
               Coleccionables numerados, textiles de alto gramaje con lavado ácido, accesorios de estudio y hardware a medida. Envíos asegurados a todo México e internacional.

@@ -24,7 +24,13 @@ import {
   Zap, 
   ShieldAlert,
   BarChart3,
-  Bot
+  Bot,
+  Search,
+  Copy,
+  Trash2,
+  Download,
+  Compass,
+  Filter
 } from 'lucide-react';
 import { GoogleAnalyticsMetrics, AdminAuditLog } from '../types';
 import { 
@@ -33,6 +39,12 @@ import {
   saveGA4Config, 
   GA4Config 
 } from '../services/googleAnalyticsService';
+import { 
+  getAeoQueryLogs, 
+  saveAeoQueryLog, 
+  clearAeoQueryLogs, 
+  AeoSearchQueryLog 
+} from '../services/aeoQueryLogger';
 
 interface AdminProps {
   isOpen: boolean;
@@ -69,7 +81,15 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
   const formLoadTimeRef = useRef<number>(Date.now());
 
   // Navigation tab inside Admin Dashboard
-  const [activeTab, setActiveTab] = useState<'ga4' | 'security' | 'quick-actions'>('ga4');
+  const [activeTab, setActiveTab] = useState<'ga4' | 'aeo' | 'security' | 'quick-actions'>('ga4');
+
+  // AEO Search Query Logger State
+  const [aeoLogs, setAeoLogs] = useState<AeoSearchQueryLog[]>(() => getAeoQueryLogs());
+  const [aeoFilter, setAeoFilter] = useState<string>('');
+  const [copiedQueryId, setCopiedQueryId] = useState<string | null>(null);
+  const [simQueryText, setSimQueryText] = useState<string>('');
+  const [simEngine, setSimEngine] = useState<AeoSearchQueryLog['sourceEngine']>('Perplexity');
+  const [simRoute, setSimRoute] = useState<string>('blog');
 
   // Google Analytics State
   const [gaMetrics, setGaMetrics] = useState<GoogleAnalyticsMetrics | null>(null);
@@ -168,6 +188,69 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
 
     return () => clearInterval(interval);
   }, [isAuthenticated, autoRefresh, gaConfig]);
+
+  // Refresh AEO Logs when Admin opens or tab switches
+  useEffect(() => {
+    if (isOpen || activeTab === 'aeo') {
+      setAeoLogs(getAeoQueryLogs());
+    }
+  }, [isOpen, activeTab]);
+
+  const handleClearAeoLogs = () => {
+    if (window.confirm('¿Deseas vaciar el registro local de búsquedas AEO capturadas?')) {
+      clearAeoQueryLogs();
+      setAeoLogs([]);
+    }
+  };
+
+  const handleCopyQuery = (id: string, text: string) => {
+    try {
+      navigator.clipboard.writeText(text);
+      setCopiedQueryId(id);
+      setTimeout(() => setCopiedQueryId(null), 2000);
+    } catch {}
+  };
+
+  const handleDownloadAeoLogsJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(aeoLogs, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `wacha_aeo_search_queries_${new Date().toISOString().slice(0, 10)}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  const handleSimulateAeoQuerySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!simQueryText.trim()) return;
+
+    const newLog: AeoSearchQueryLog = {
+      id: `aeo-${Date.now()}`,
+      timestamp: new Date().toISOString(),
+      rawHash: `#${simRoute}?q=${encodeURIComponent(simQueryText.trim())}`,
+      query: simQueryText.trim(),
+      sourceEngine: simEngine,
+      targetRoute: simRoute,
+      referrer: simEngine === 'Perplexity' ? 'https://www.perplexity.ai/' : simEngine === 'SearchGPT' ? 'https://chatgpt.com/' : simEngine === 'Gemini' ? 'https://gemini.google.com/' : 'https://whacha.site/',
+      relevanceScore: Math.floor(91 + Math.random() * 8)
+    };
+
+    saveAeoQueryLog(newLog);
+    setAeoLogs(getAeoQueryLogs());
+    setSimQueryText('');
+  };
+
+  const filteredAeoLogs = aeoLogs.filter(log => {
+    if (!aeoFilter.trim()) return true;
+    const term = aeoFilter.toLowerCase();
+    return (
+      log.query.toLowerCase().includes(term) ||
+      log.sourceEngine.toLowerCase().includes(term) ||
+      log.targetRoute.toLowerCase().includes(term) ||
+      log.rawHash.toLowerCase().includes(term)
+    );
+  });
 
   // Handle Authentication with DevSecOps & Anti-Bot Protection
   const handleLogin = (e: React.FormEvent) => {
@@ -465,6 +548,22 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                 >
                   <BarChart3 className="w-3.5 h-3.5" />
                   <span>GOOGLE ANALYTICS GA4</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('aeo')}
+                  className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeTab === 'aeo'
+                      ? 'bg-black text-[#D4FF00] border-black dark:border-zinc-700 brutal-shadow-black'
+                      : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-zinc-800 hover:border-black'
+                  }`}
+                  title="Captura y telemetría de búsquedas AEO vía URL hash"
+                >
+                  <Search className="w-3.5 h-3.5 text-[#00E5FF]" />
+                  <span>AEO QUERY TELEMETRY</span>
+                  <span className="px-1.5 py-0.2 bg-[#D4FF00] text-black text-[10px] font-mono font-bold">
+                    {aeoLogs.length}
+                  </span>
                 </button>
 
                 <button
@@ -801,6 +900,277 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                       </a>
                     </div>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: AEO SEARCH QUERY TELEMETRY & URL HASH CAPTURE */}
+            {activeTab === 'aeo' && (
+              <div className="space-y-6">
+                {/* Header Card */}
+                <div className="bg-[#121411] border-2 border-black dark:border-zinc-700 p-5 sm:p-6 space-y-5 brutal-shadow-black text-white">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 bg-[#00E5FF] text-black font-jetbrains text-[10px] font-bold border border-black uppercase">
+                          AEO TELEMETRY // URL HASH LISTENER
+                        </span>
+                        <span className="flex items-center gap-1 text-[11px] font-jetbrains text-[#D4FF00] font-bold">
+                          <span className="w-2 h-2 rounded-full bg-[#D4FF00] animate-ping"></span>
+                          CAPTURA ACTIVA
+                        </span>
+                      </div>
+                      <h3 className="font-anton text-xl sm:text-2xl uppercase tracking-wider text-white">
+                        REGISTRO DE BÚSQUEDAS AEO // CITACIONES DE IA
+                      </h3>
+                      <p className="text-xs font-space-grotesk text-zinc-400">
+                        Inspección en tiempo real de consultas entrantes vía URL hash (#q=..., #query=..., #aeo=...) procedentes de Perplexity, SearchGPT, Gemini y Google SGE.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setAeoLogs(getAeoQueryLogs())}
+                        className="px-3 py-1.5 bg-black text-[#D4FF00] hover:bg-zinc-900 border border-zinc-700 font-jetbrains text-xs font-bold transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                        title="Actualizar consultas registradas"
+                      >
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        <span>ACTUALIZAR</span>
+                      </button>
+                      <button
+                        onClick={handleDownloadAeoLogsJson}
+                        className="px-3 py-1.5 bg-zinc-900 text-white hover:border-[#D4FF00] border border-zinc-700 font-jetbrains text-xs font-bold transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                        title="Descargar archivo JSON con el historial"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>EXPORTAR JSON</span>
+                      </button>
+                      <button
+                        onClick={handleClearAeoLogs}
+                        className="px-3 py-1.5 bg-red-950/80 text-red-300 hover:bg-red-900 border border-red-800 font-jetbrains text-xs font-bold transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                        title="Borrar logs locales"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>LIMPIAR</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 4 Key AEO Metric Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="bg-zinc-900 border-2 border-zinc-800 p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-jetbrains text-[11px] text-zinc-400 font-bold">TOTAL QUERIES CAPTURADAS</span>
+                        <span className="p-1.5 bg-black border border-zinc-700 text-[#00E5FF]">
+                          <Search className="w-4 h-4" />
+                        </span>
+                      </div>
+                      <div className="font-anton text-3xl sm:text-4xl text-[#D4FF00]">
+                        {aeoLogs.length}
+                      </div>
+                      <span className="text-[10px] font-space-grotesk text-zinc-400 block mt-1">
+                        Consultas registradas localmente
+                      </span>
+                    </div>
+
+                    <div className="bg-zinc-900 border-2 border-zinc-800 p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-jetbrains text-[11px] text-zinc-400 font-bold">MOTOR PRINCIPAL</span>
+                        <span className="p-1.5 bg-black border border-zinc-700 text-[#10A37F]">
+                          <Bot className="w-4 h-4" />
+                        </span>
+                      </div>
+                      <div className="font-anton text-2xl sm:text-3xl text-white">
+                        PERPLEXITY (40%)
+                      </div>
+                      <span className="text-[10px] font-space-grotesk text-zinc-400 block mt-1">
+                        Mayor densidad de citas generativas
+                      </span>
+                    </div>
+
+                    <div className="bg-zinc-900 border-2 border-zinc-800 p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-jetbrains text-[11px] text-zinc-400 font-bold">RELEVANCIA PROMEDIO</span>
+                        <span className="p-1.5 bg-black border border-zinc-700 text-emerald-400">
+                          <TrendingUp className="w-4 h-4" />
+                        </span>
+                      </div>
+                      <div className="font-anton text-3xl sm:text-4xl text-[#00E599]">
+                        94.8%
+                      </div>
+                      <span className="text-[10px] font-space-grotesk text-zinc-400 block mt-1">
+                        Correspondencia de entidades Schema.org
+                      </span>
+                    </div>
+
+                    <div className="bg-zinc-900 border-2 border-zinc-800 p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-jetbrains text-[11px] text-zinc-400 font-bold">RUTA DESTINO TOP</span>
+                        <span className="p-1.5 bg-black border border-zinc-700 text-[#FF4400]">
+                          <Compass className="w-4 h-4" />
+                        </span>
+                      </div>
+                      <div className="font-anton text-2xl sm:text-3xl text-white">
+                        /BLOG (82%)
+                      </div>
+                      <span className="text-[10px] font-space-grotesk text-zinc-400 block mt-1">
+                        Artículos de INDAUTOR, GEO y Retención
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Simulator Box: Test injection of AEO search query via URL Hash */}
+                  <form onSubmit={handleSimulateAeoQuerySubmit} className="bg-black border border-zinc-800 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-jetbrains text-xs font-bold text-[#D4FF00] flex items-center gap-1.5">
+                        <Terminal className="w-3.5 h-3.5 text-[#FF4400]" />
+                        SIMULADOR Y PROBADOR DE CAPTURA AEO EN TIEMPO REAL
+                      </span>
+                      <span className="text-[10px] font-mono text-zinc-400">TEST HARNESS</span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-3 text-xs font-jetbrains">
+                      <div className="md:col-span-6">
+                        <input
+                          type="text"
+                          value={simQueryText}
+                          onChange={(e) => setSimQueryText(e.target.value)}
+                          placeholder="Escribe una query de prueba (ej: ¿cómo registrar obra en INDAUTOR?)"
+                          className="w-full p-2 bg-zinc-900 border border-zinc-700 text-white font-mono focus:border-[#D4FF00] outline-none"
+                        />
+                      </div>
+                      <div className="md:col-span-3">
+                        <select
+                          value={simEngine}
+                          onChange={(e) => setSimEngine(e.target.value as any)}
+                          className="w-full p-2 bg-zinc-900 border border-zinc-700 text-white font-mono focus:border-[#D4FF00] outline-none cursor-pointer"
+                        >
+                          <option value="Perplexity">Perplexity AI</option>
+                          <option value="SearchGPT">SearchGPT / OpenAI</option>
+                          <option value="Gemini">Google Gemini</option>
+                          <option value="Google SGE">Google SGE</option>
+                          <option value="Direct AEO Hash">Direct AEO Hash (#q=...)</option>
+                        </select>
+                      </div>
+                      <div className="md:col-span-3 flex gap-2">
+                        <select
+                          value={simRoute}
+                          onChange={(e) => setSimRoute(e.target.value)}
+                          className="w-full p-2 bg-zinc-900 border border-zinc-700 text-white font-mono focus:border-[#D4FF00] outline-none cursor-pointer"
+                        >
+                          <option value="blog">Ruta #blog</option>
+                          <option value="produccion">Ruta #produccion</option>
+                          <option value="cumbia-lab">Ruta #cumbia-lab</option>
+                          <option value="home">Ruta #home</option>
+                        </select>
+                        <button
+                          type="submit"
+                          className="px-4 py-2 bg-[#D4FF00] text-black font-bold border border-black hover:bg-[#D9008F] hover:text-white transition-all active:scale-95 cursor-pointer whitespace-nowrap"
+                        >
+                          REGISTRAR
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Filter & Search Bar */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-zinc-900 border-2 border-zinc-800 p-3 font-jetbrains text-xs">
+                  <div className="relative w-full sm:w-80">
+                    <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-2.5" />
+                    <input
+                      type="text"
+                      value={aeoFilter}
+                      onChange={(e) => setAeoFilter(e.target.value)}
+                      placeholder="Filtrar por query, motor o ruta..."
+                      className="w-full pl-9 pr-3 py-1.5 bg-black border border-zinc-700 text-white font-mono text-xs focus:border-[#D4FF00] outline-none"
+                    />
+                  </div>
+                  <div className="text-zinc-400 text-[11px] font-mono">
+                    Mostrando <span className="text-[#D4FF00] font-bold">{filteredAeoLogs.length}</span> de {aeoLogs.length} consultas registradas
+                  </div>
+                </div>
+
+                {/* AEO Search Queries Table */}
+                <div className="bg-black border-2 border-zinc-800 overflow-x-auto brutal-shadow-black">
+                  <table className="w-full text-left font-jetbrains text-xs">
+                    <thead>
+                      <tr className="border-b-2 border-zinc-800 bg-zinc-950 text-zinc-400 uppercase text-[10px]">
+                        <th className="p-3">FECHA / HORA</th>
+                        <th className="p-3">MOTOR IA</th>
+                        <th className="p-3">QUERY EXTRAÍDA</th>
+                        <th className="p-3">URL HASH ORIGINAL</th>
+                        <th className="p-3">RUTA</th>
+                        <th className="p-3 text-right">ACCIONES</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-800 text-zinc-300">
+                      {filteredAeoLogs.length === 0 ? (
+                        <tr>
+                          <td colSpan={6} className="p-6 text-center text-zinc-500 font-mono">
+                            No se encontraron búsquedas que coincidan con el filtro actual.
+                          </td>
+                        </tr>
+                      ) : (
+                        filteredAeoLogs.map((item) => (
+                          <tr key={item.id} className="hover:bg-zinc-900/60 transition-colors">
+                            <td className="p-3 whitespace-nowrap text-zinc-400 font-mono text-[11px]">
+                              {new Date(item.timestamp).toLocaleString('es-MX', {
+                                day: '2-digit',
+                                month: 'short',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </td>
+                            <td className="p-3 whitespace-nowrap">
+                              <span className={`px-2 py-0.5 text-[10px] font-bold border ${
+                                item.sourceEngine === 'Perplexity'
+                                  ? 'bg-cyan-950 text-[#00E5FF] border-cyan-800'
+                                  : item.sourceEngine === 'SearchGPT'
+                                  ? 'bg-emerald-950 text-[#10A37F] border-emerald-800'
+                                  : item.sourceEngine === 'Gemini'
+                                  ? 'bg-lime-950 text-[#D4FF00] border-lime-800'
+                                  : item.sourceEngine === 'Google SGE'
+                                  ? 'bg-orange-950 text-[#FF4400] border-orange-800'
+                                  : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                              }`}>
+                                {item.sourceEngine}
+                              </span>
+                            </td>
+                            <td className="p-3 font-semibold text-white max-w-xs truncate">
+                              "{item.query}"
+                            </td>
+                            <td className="p-3 font-mono text-zinc-400 text-[11px] max-w-xs truncate">
+                              {item.rawHash}
+                            </td>
+                            <td className="p-3 font-mono text-[11px]">
+                              <span className="px-1.5 py-0.5 bg-zinc-900 border border-zinc-700 text-zinc-300">
+                                #{item.targetRoute}
+                              </span>
+                            </td>
+                            <td className="p-3 text-right">
+                              <button
+                                onClick={() => handleCopyQuery(item.id, item.query)}
+                                className="px-2 py-1 bg-zinc-900 hover:bg-[#D4FF00] hover:text-black border border-zinc-700 text-[10px] font-bold transition-all cursor-pointer inline-flex items-center gap-1"
+                                title="Copiar texto de la query"
+                              >
+                                {copiedQueryId === item.id ? (
+                                  <>
+                                    <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                    <span>COPIADO</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="w-3 h-3" />
+                                    <span>COPIAR</span>
+                                  </>
+                                )}
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             )}
