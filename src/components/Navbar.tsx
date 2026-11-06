@@ -21,6 +21,7 @@ import {
   Clapperboard,
   Disc
 } from 'lucide-react';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface NavbarProps {
   cartCount: number;
@@ -186,6 +187,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
+          {/* PWA In-App Install Button */}
+          <PWAInstallButton />
+
           {/* Admin Panel Access */}
           {onOpenAdmin && (
             <button
@@ -258,6 +262,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               {audioActive ? <Volume2 className="w-4 h-4 text-black" /> : <VolumeX className="w-4 h-4 text-black dark:text-zinc-500" />}
               <span className="text-black dark:text-inherit">AUDIO {audioActive ? 'ON' : 'OFF'}</span>
             </button>
+          </div>
+
+          <div className="pb-1 flex justify-center">
+            <PWAInstallButton />
           </div>
 
           <nav className="grid grid-cols-1 gap-1.5 font-jetbrains text-sm">

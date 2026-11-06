@@ -1,0 +1,32 @@
+{
+  "id": "/",
+  "name": "Wacha Multimedia | Blog & Sound Lab",
+  "short_name": "WachaApp",
+  "description": "Estudio de ingeniería de contenidos, Blog AEO 2026, producción cinematográfica y Sonido Decrépito.",
+  "theme_color": "#121411",
+  "background_color": "#121411",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import { WhatsAppWidget } from './components/WhatsAppWidget';
 import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
 import { Admin } from './components/Admin';
 import { SoundCloudGlobalPlayer } from './components/SoundCloudGlobalPlayer';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { INITIAL_BLOG_ARTICLES } from './data/blogData';
 import { captureAeoQueryFromUrl } from './services/aeoQueryLogger';
 import { CartItem, MerchItem, BlogPost } from './types';
@@ -473,6 +474,9 @@ export default function App() {
 
       {/* Floating Back to Top Button */}
       <BackToTop />
+
+      {/* PWA Offline Connectivity Indicator */}
+      <OfflineIndicator />
     </div>
   );
 }
