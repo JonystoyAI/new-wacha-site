@@ -15,6 +15,7 @@ import { WhatsAppCotizadorModal } from './components/WhatsAppCotizadorModal';
 import { Admin } from './components/Admin';
 import { SoundCloudGlobalPlayer } from './components/SoundCloudGlobalPlayer';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { INITIAL_BLOG_ARTICLES } from './data/blogData';
 import { captureAeoQueryFromUrl } from './services/aeoQueryLogger';
 import { CartItem, MerchItem, BlogPost } from './types';
@@ -477,6 +478,9 @@ export default function App() {
 
       {/* PWA Offline Connectivity Indicator */}
       <OfflineIndicator />
+
+      {/* GDPR / Cookie Consent Banner */}
+      <CookieConsentBanner />
     </div>
   );
 }
