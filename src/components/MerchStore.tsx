@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getStoredMerchProducts } from '../services/cmsService';
 import { MerchItem, CartItem } from '../types';
-import { ShoppingBag, Plus, Check, X, Flame, Trash2, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Plus, Check, X, Flame, Trash2, ArrowRight, Search } from 'lucide-react';
 
 interface MerchStoreProps {
   cart: CartItem[];
@@ -29,6 +29,39 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
   });
 
   const [addedNotification, setAddedNotification] = useState<string | null>(null);
+
+  // Dynamic Filtering State
+  const [selectedCategory, setSelectedCategory] = useState<string>('todos');
+  const [priceRange, setPriceRange] = useState<string>('all');
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const allProducts = getStoredMerchProducts();
+
+  // Extract unique categories
+  const categories = ['todos', ...Array.from(new Set(allProducts.map(p => p.category)))];
+
+  // Filter products dynamically
+  const filteredProducts = allProducts.filter(product => {
+    if (selectedCategory !== 'todos' && product.category !== selectedCategory) {
+      return false;
+    }
+    if (priceRange === 'under30' && product.priceUsd >= 30) return false;
+    if (priceRange === '30to50' && (product.priceUsd < 30 || product.priceUsd > 50)) return false;
+    if (priceRange === 'over50' && product.priceUsd <= 50) return false;
+
+    if (availabilityFilter === 'instock' && !product.inStock) return false;
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const matchName = product.name.toLowerCase().includes(q);
+      const matchDesc = product.description.toLowerCase().includes(q);
+      const matchCat = product.category.toLowerCase().includes(q);
+      if (!matchName && !matchDesc && !matchCat) return false;
+    }
+
+    return true;
+  });
 
   const handleSizeSelect = (itemId: string, size: string) => {
     setSelectedSizes(prev => ({ ...prev, [itemId]: size }));
@@ -94,9 +127,119 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
           </div>
         )}
 
+        {/* Dynamic Filtering Bar */}
+        <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-4 sm:p-5 mb-8 brutal-shadow-black space-y-4">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+            {/* Search Input */}
+            <div className="relative w-full lg:w-96">
+              <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-3" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar por nombre, material o descripción..."
+                className="w-full pl-9 pr-3 py-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold focus:outline-none focus:border-[#D4FF00]"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-2.5 text-xs text-zinc-400 hover:text-black dark:hover:text-white cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Filter Dropdowns & Counters */}
+            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+              {/* Category Filter */}
+              <div className="flex items-center gap-1.5">
+                <span className="font-jetbrains text-[11px] font-bold text-zinc-500 uppercase">Categoría:</span>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-3 py-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs font-bold text-black dark:text-white cursor-pointer"
+                >
+                  <option value="todos">Todas las categorías</option>
+                  {categories.filter(c => c !== 'todos').map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Price Filter */}
+              <div className="flex items-center gap-1.5">
+                <span className="font-jetbrains text-[11px] font-bold text-zinc-500 uppercase">Precio:</span>
+                <select
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(e.target.value)}
+                  className="px-3 py-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs font-bold text-black dark:text-white cursor-pointer"
+                >
+                  <option value="all">Cualquier precio</option>
+                  <option value="under30">Menos de $30 USD</option>
+                  <option value="30to50">$30 - $50 USD</option>
+                  <option value="over50">Más de $50 USD</option>
+                </select>
+              </div>
+
+              {/* Availability Filter */}
+              <div className="flex items-center gap-1.5">
+                <span className="font-jetbrains text-[11px] font-bold text-zinc-500 uppercase">Disponibilidad:</span>
+                <select
+                  value={availabilityFilter}
+                  onChange={(e) => setAvailabilityFilter(e.target.value)}
+                  className="px-3 py-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs font-bold text-black dark:text-white cursor-pointer"
+                >
+                  <option value="all">Todos</option>
+                  <option value="instock">En existencia (In Stock)</option>
+                </select>
+              </div>
+
+              {/* Reset Filters */}
+              {(selectedCategory !== 'todos' || priceRange !== 'all' || availabilityFilter !== 'all' || searchQuery !== '') && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory('todos');
+                    setPriceRange('all');
+                    setAvailabilityFilter('all');
+                    setSearchQuery('');
+                  }}
+                  className="px-3 py-2 bg-[#FF4400] text-white font-jetbrains text-xs font-bold border-2 border-black hover:bg-black transition-all cursor-pointer"
+                >
+                  LIMPIAR FILTROS
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-zinc-800 text-xs font-jetbrains text-zinc-500">
+            <span>Mostrando <strong className="text-black dark:text-white">{filteredProducts.length}</strong> de {allProducts.length} artículos en el catálogo</span>
+            <span className="text-[11px]">// WACHA EL TIANGUIS REAL-TIME FILTER ENGINE</span>
+          </div>
+        </div>
+
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {getStoredMerchProducts().map((product) => (
+        {filteredProducts.length === 0 ? (
+          <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-12 text-center space-y-4 brutal-shadow-black">
+            <p className="font-jetbrains text-sm text-zinc-500">No se encontraron productos que coincidan con los filtros seleccionados.</p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory('todos');
+                setPriceRange('all');
+                setAvailabilityFilter('all');
+                setSearchQuery('');
+              }}
+              className="px-4 py-2 bg-[#D4FF00] text-black font-jetbrains text-xs font-bold border-2 border-black cursor-pointer"
+            >
+              RESTABLECER FILTROS
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-5 brutal-shadow-black hover:border-[#B8006E] dark:hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
@@ -169,6 +312,7 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
             </div>
           ))}
         </div>
+      )}
       </div>
 
       {/* Shopping Cart Side Drawer */}
