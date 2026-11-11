@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PORTFOLIO_DATA } from '../data/portfolioData';
+import { getStoredPortfolioItems } from '../services/cmsService';
 import { PortfolioItem } from '../types';
 import { ExternalLink, Play, Calculator, Bot, Sparkles, CheckCircle, ArrowUpRight, ChevronLeft, ChevronRight, Layers, Filter, RefreshCw, Youtube, Video, Facebook, Music } from 'lucide-react';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
@@ -47,7 +47,8 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
   };
 
   // Filtering projects
-  const filteredProjects = PORTFOLIO_DATA.filter((item) => {
+  const portfolioItems = getStoredPortfolioItems();
+  const filteredProjects = portfolioItems.filter((item) => {
     if (activeFilter === 'all') return true;
 
     if (item.filterCategories && item.filterCategories.includes(activeFilter)) {
@@ -55,7 +56,7 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
     }
 
     const filterKey = activeFilter.toLowerCase();
-    const inTags = item.tags.some(tag => tag.toLowerCase().includes(filterKey));
+    const inTags = item.tags ? item.tags.some(tag => tag.toLowerCase().includes(filterKey)) : false;
     const inCat = item.category.toLowerCase().includes(filterKey);
     const inTitle = item.title.toLowerCase().includes(filterKey);
     const inSub = item.subtitle.toLowerCase().includes(filterKey);
@@ -65,12 +66,12 @@ export const PortfolioCollage: React.FC<PortfolioCollageProps> = ({
 
   // Calculate project counts for each category
   const getCategoryCount = (catId: string) => {
-    if (catId === 'all') return PORTFOLIO_DATA.length;
-    return PORTFOLIO_DATA.filter(item => {
+    if (catId === 'all') return portfolioItems.length;
+    return portfolioItems.filter(item => {
       if (item.filterCategories && item.filterCategories.includes(catId)) return true;
       const filterKey = catId.toLowerCase();
       return (
-        item.tags.some(tag => tag.toLowerCase().includes(filterKey)) ||
+        (item.tags ? item.tags.some(tag => tag.toLowerCase().includes(filterKey)) : false) ||
         item.category.toLowerCase().includes(filterKey)
       );
     }).length;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { RELEASES_DATA } from '../data/releasesData';
+import { getStoredReleases } from '../services/cmsService';
 import { MusicRelease } from '../types';
 import { Disc, Play, Pause, Volume2, ExternalLink, Music, Radio, Sparkles, Youtube, Download, Share2 } from 'lucide-react';
 import { MusicDownloadModal } from './MusicDownloadModal';
@@ -214,7 +214,8 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
               <button
                 type="button"
                 onClick={() => {
-                  const targetSong = RELEASES_DATA.find((r) => r.id === playingReleaseId) || RELEASES_DATA[0];
+                  const releases = getStoredReleases();
+                  const targetSong = releases.find((r) => r.id === playingReleaseId) || releases[0];
                   setDownloadRelease(targetSong);
                 }}
                 className="px-3 py-1.5 border-2 font-bold transition-all duration-150 bg-[#D4FF00] text-black border-black hover:bg-[#D9008F] hover:text-white flex items-center gap-1.5 text-xs brutal-shadow-black hover:-translate-y-1 active:translate-y-0 active:scale-95 group/sg cursor-pointer"
@@ -373,7 +374,7 @@ export const SoundLab: React.FC<SoundLabProps> = ({ audioActive = true }) => {
 
         {/* 4 Releases Quadrants */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {RELEASES_DATA.map((release) => {
+          {getStoredReleases().map((release) => {
             const isThisPlaying = (playingReleaseId === release.id && isPlayingTape) || (isPlayingTape && playingReleaseId === null);
 
             return (

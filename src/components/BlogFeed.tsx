@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { BlogPost, BlogDownloadResource } from '../types';
 import { loadBlogArticles } from '../data/blogData';
+import { getStoredBlogArticles } from '../services/cmsService';
 import { ImageWithSkeleton } from './ImageWithSkeleton';
 import { ArticleShareModal } from './ArticleShareModal';
 import { 
@@ -373,10 +374,10 @@ export const BlogFeed: React.FC<BlogFeedProps> = ({
     async function fetchData() {
       setIsLoading(true);
       try {
-        const data = await loadBlogArticles();
+        const data = getStoredBlogArticles();
         if (isMounted) {
           setArticles(data);
-          setDataSource('/data/articles.json');
+          setDataSource('localStorage / cmsService');
           if (initialArticleId) {
             const found = data.find(a => a.id === initialArticleId || a.slug === initialArticleId);
             if (found) {

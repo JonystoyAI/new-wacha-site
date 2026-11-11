@@ -16,7 +16,7 @@ import { Admin } from './components/Admin';
 import { SoundCloudGlobalPlayer } from './components/SoundCloudGlobalPlayer';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
-import { INITIAL_BLOG_ARTICLES } from './data/blogData';
+import { getStoredBlogArticles } from './services/cmsService';
 import { captureAeoQueryFromUrl } from './services/aeoQueryLogger';
 import { CartItem, MerchItem, BlogPost } from './types';
 
@@ -79,7 +79,8 @@ export function updateOpenGraphMetadata(route: AppRoute, articleId?: string | nu
 
   // Enrich with specific article data when viewing a blog post
   if (route === 'blog' && articleId) {
-    const article = INITIAL_BLOG_ARTICLES.find(a => a.id === articleId);
+    const articles = getStoredBlogArticles();
+    const article = articles.find(a => a.id === articleId || a.slug === articleId);
     if (article) {
       const rawImg = article.image || '/wacha_logo.jpg';
       const imgPath = rawImg.startsWith('http')

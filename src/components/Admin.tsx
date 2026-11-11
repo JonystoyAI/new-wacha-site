@@ -32,7 +32,7 @@ import {
   Compass,
   Filter
 } from 'lucide-react';
-import { GoogleAnalyticsMetrics, AdminAuditLog } from '../types';
+import { GoogleAnalyticsMetrics, AdminAuditLog, BlogPost, MerchItem, MusicRelease, PortfolioItem } from '../types';
 import { 
   fetchGoogleAnalyticsMetrics, 
   getSavedGA4Config, 
@@ -45,6 +45,16 @@ import {
   clearAeoQueryLogs, 
   AeoSearchQueryLog 
 } from '../services/aeoQueryLogger';
+import {
+  getStoredBlogArticles,
+  saveStoredBlogArticles,
+  getStoredMerchProducts,
+  saveStoredMerchProducts,
+  getStoredReleases,
+  saveStoredReleases,
+  getStoredPortfolioItems,
+  saveStoredPortfolioItems
+} from '../services/cmsService';
 
 interface AdminProps {
   isOpen: boolean;
@@ -81,7 +91,297 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
   const formLoadTimeRef = useRef<number>(Date.now());
 
   // Navigation tab inside Admin Dashboard
-  const [activeTab, setActiveTab] = useState<'ga4' | 'aeo' | 'security' | 'quick-actions'>('ga4');
+  const [activeTab, setActiveTab] = useState<'ga4' | 'aeo' | 'security' | 'cms'>('ga4');
+  const [cmsSubTab, setCmsSubTab] = useState<'blog' | 'tianguis' | 'cumbia' | 'portfolio'>('blog');
+
+  // CMS Collections State
+  const [cmsArticles, setCmsArticles] = useState<BlogPost[]>(() => getStoredBlogArticles());
+  const [cmsMerch, setCmsMerch] = useState<MerchItem[]>(() => getStoredMerchProducts());
+  const [cmsReleases, setCmsReleases] = useState<MusicRelease[]>(() => getStoredReleases());
+  const [cmsPortfolio, setCmsPortfolio] = useState<PortfolioItem[]>(() => getStoredPortfolioItems());
+
+  // Editing state for Blog
+  const [blogTitle, setBlogTitle] = useState('');
+  const [blogExcerpt, setBlogExcerpt] = useState('');
+  const [blogCategory, setBlogCategory] = useState('AEO');
+  const [blogImage, setBlogImage] = useState('');
+  const [blogTags, setBlogTags] = useState('AEO, Gemini, IA');
+  const [blogReadTime, setBlogReadTime] = useState('8 min');
+  const [blogContent, setBlogContent] = useState('Contenido detallado del artículo...');
+  const [editingBlogId, setEditingBlogId] = useState<string | null>(null);
+
+  // Editing state for Merch (Tianguis)
+  const [merchName, setMerchName] = useState('');
+  const [merchPriceUsd, setMerchPriceUsd] = useState(35);
+  const [merchPriceMxn, setMerchPriceMxn] = useState(700);
+  const [merchCategory, setMerchCategory] = useState('Textil & Streetwear');
+  const [merchDesc, setMerchDesc] = useState('');
+  const [merchImage, setMerchImage] = useState('');
+  const [merchBadge, setMerchBadge] = useState('EDICIÓN LIMITADA');
+  const [merchInStock, setMerchInStock] = useState(true);
+  const [merchSizes, setMerchSizes] = useState('S, M, L, XL');
+  const [editingMerchId, setEditingMerchId] = useState<string | null>(null);
+  const [batchJsonInput, setBatchJsonInput] = useState('');
+
+  // Editing state for Cumbia Lab (Releases)
+  const [releaseTitle, setReleaseTitle] = useState('');
+  const [releaseSubtitle, setReleaseSubtitle] = useState('');
+  const [releaseYear, setReleaseYear] = useState('2026');
+  const [releaseType, setReleaseType] = useState<'EP' | 'Single' | 'Album' | 'Recopilación'>('EP');
+  const [releaseStatus, setReleaseStatus] = useState<'Disponible' | 'GRATIS' | 'Próximo Estreno'>('GRATIS');
+  const [releaseCover, setReleaseCover] = useState('');
+  const [releaseSoundcloud, setReleaseSoundcloud] = useState('https://soundcloud.com/sonidodecrepito');
+  const [releaseYoutube, setReleaseYoutube] = useState('https://www.youtube.com/@sonidodecrepito');
+  const [releaseTracksCount, setReleaseTracksCount] = useState(4);
+  const [editingReleaseId, setEditingReleaseId] = useState<string | null>(null);
+
+  // Editing state for Portfolio
+  const [portTitle, setPortTitle] = useState('');
+  const [portSubtitle, setPortSubtitle] = useState('');
+  const [portCategory, setPortCategory] = useState('Generación de Contenidos & Animación');
+  const [portClient, setPortClient] = useState('Wacha Multimedia');
+  const [portDesc, setPortDesc] = useState('');
+  const [portImage, setPortImage] = useState('');
+  const [portLiveUrl, setPortLiveUrl] = useState('');
+  const [portYoutube, setPortYoutube] = useState('');
+  const [portTiktok, setPortTiktok] = useState('');
+  const [editingPortId, setEditingPortId] = useState<string | null>(null);
+
+  // Blog Handlers
+  const handleSaveBlogPost = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!blogTitle.trim()) return;
+    const newArticle: BlogPost = {
+      id: editingBlogId || `article-${Date.now()}`,
+      slug: blogTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      title: blogTitle.trim(),
+      excerpt: blogExcerpt.trim() || 'Resumen del artículo de ingeniería y AEO...',
+      category: blogCategory,
+      tags: blogTags.split(',').map(t => t.trim()).filter(Boolean),
+      publishedAt: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+      readTime: blogReadTime,
+      image: blogImage.trim() || '/wacha_logo.jpg',
+      author: {
+        name: 'Mr. Decrépito',
+        role: 'Head of Engineering & AEO',
+        avatar: '/wacha_logo.jpg'
+      },
+      content: [blogContent.trim()],
+      keyTakeaways: ['Optimización semántica avanzada', 'Marcado estructurado JSON-LD'],
+      isFeatured: true
+    };
+
+    let updated: BlogPost[];
+    if (editingBlogId) {
+      updated = cmsArticles.map(a => a.id === editingBlogId ? newArticle : a);
+    } else {
+      updated = [newArticle, ...cmsArticles];
+    }
+    setCmsArticles(updated);
+    saveStoredBlogArticles(updated);
+    setEditingBlogId(null);
+    setBlogTitle('');
+    setBlogExcerpt('');
+    setBlogContent('');
+    setBlogImage('');
+  };
+
+  const handleEditBlog = (article: BlogPost) => {
+    setEditingBlogId(article.id);
+    setBlogTitle(article.title);
+    setBlogExcerpt(article.excerpt);
+    setBlogCategory(article.category);
+    setBlogImage(article.image);
+    setBlogTags(article.tags.join(', '));
+    setBlogReadTime(article.readTime);
+    setBlogContent(article.content.join('\n\n'));
+  };
+
+  const handleDeleteBlog = (id: string) => {
+    if (window.confirm('¿Eliminar este artículo del blog?')) {
+      const updated = cmsArticles.filter(a => a.id !== id);
+      setCmsArticles(updated);
+      saveStoredBlogArticles(updated);
+    }
+  };
+
+  // Tianguis Merch Handlers
+  const handleSaveMerchItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!merchName.trim()) return;
+    const newItem: MerchItem = {
+      id: editingMerchId || `merch-${Date.now()}`,
+      name: merchName.trim(),
+      priceUsd: Number(merchPriceUsd) || 35,
+      priceMxn: Number(merchPriceMxn) || 700,
+      category: merchCategory,
+      description: merchDesc.trim() || 'Indumentaria y hardware oficial Wacha Studio.',
+      image: merchImage.trim() || '/wacha_logo.jpg',
+      badge: merchBadge.trim(),
+      inStock: merchInStock,
+      availableSizes: merchSizes.split(',').map(s => s.trim()).filter(Boolean)
+    };
+
+    let updated: MerchItem[];
+    if (editingMerchId) {
+      updated = cmsMerch.map(m => m.id === editingMerchId ? newItem : m);
+    } else {
+      updated = [newItem, ...cmsMerch];
+    }
+    setCmsMerch(updated);
+    saveStoredMerchProducts(updated);
+    setEditingMerchId(null);
+    setMerchName('');
+    setMerchDesc('');
+    setMerchImage('');
+  };
+
+  const handleEditMerch = (item: MerchItem) => {
+    setEditingMerchId(item.id);
+    setMerchName(item.name);
+    setMerchPriceUsd(item.priceUsd);
+    setMerchPriceMxn(item.priceMxn);
+    setMerchCategory(item.category);
+    setMerchDesc(item.description);
+    setMerchImage(item.image);
+    setMerchBadge(item.badge || '');
+    setMerchInStock(item.inStock);
+    setMerchSizes(item.availableSizes ? item.availableSizes.join(', ') : 'S, M, L, XL');
+  };
+
+  const handleDeleteMerch = (id: string) => {
+    if (window.confirm('¿Eliminar producto de Wacha El Tianguis?')) {
+      const updated = cmsMerch.filter(m => m.id !== id);
+      setCmsMerch(updated);
+      saveStoredMerchProducts(updated);
+    }
+  };
+
+  const handleBatchImportMerch = () => {
+    try {
+      const parsed = JSON.parse(batchJsonInput);
+      if (Array.isArray(parsed)) {
+        const updated = [...parsed, ...cmsMerch];
+        setCmsMerch(updated);
+        saveStoredMerchProducts(updated);
+        setBatchJsonInput('');
+        alert(`¡Importación por lote exitosa! Se añadieron ${parsed.length} productos.`);
+      } else {
+        alert('El JSON debe ser un arreglo de objetos de productos.');
+      }
+    } catch (err) {
+      alert('Error al parsear el JSON ingresado: ' + err);
+    }
+  };
+
+  // Cumbia Lab Release Handlers
+  const handleSaveReleaseItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!releaseTitle.trim()) return;
+    const newRelease: MusicRelease = {
+      id: editingReleaseId || `release-${Date.now()}`,
+      title: releaseTitle.trim(),
+      subtitle: releaseSubtitle.trim() || 'Cumbia Rebajada & Texturas Analógicas',
+      year: releaseYear,
+      type: releaseType,
+      status: releaseStatus,
+      coverImage: releaseCover.trim() || '/sonido_decrepito_vol1.jpg',
+      tracksCount: Number(releaseTracksCount) || 4,
+      duration: '22:15',
+      soundcloudUrl: releaseSoundcloud.trim(),
+      youtubeUrl: releaseYoutube.trim()
+    };
+
+    let updated: MusicRelease[];
+    if (editingReleaseId) {
+      updated = cmsReleases.map(r => r.id === editingReleaseId ? newRelease : r);
+    } else {
+      updated = [newRelease, ...cmsReleases];
+    }
+    setCmsReleases(updated);
+    saveStoredReleases(updated);
+    setEditingReleaseId(null);
+    setReleaseTitle('');
+    setReleaseSubtitle('');
+    setReleaseCover('');
+  };
+
+  const handleEditRelease = (r: MusicRelease) => {
+    setEditingReleaseId(r.id);
+    setReleaseTitle(r.title);
+    setReleaseSubtitle(r.subtitle);
+    setReleaseYear(r.year);
+    setReleaseType((r.type as any) || 'EP');
+    setReleaseStatus((r.status as any) || 'GRATIS');
+    setReleaseCover(r.coverImage);
+    setReleaseTracksCount(r.tracksCount);
+    setReleaseSoundcloud(r.soundcloudUrl || '');
+    setReleaseYoutube(r.youtubeUrl || '');
+  };
+
+  const handleDeleteRelease = (id: string) => {
+    if (window.confirm('¿Eliminar lanzamiento de Cumbia Lab?')) {
+      const updated = cmsReleases.filter(r => r.id !== id);
+      setCmsReleases(updated);
+      saveStoredReleases(updated);
+    }
+  };
+
+  // Portfolio Handlers
+  const handleSavePortfolioItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!portTitle.trim()) return;
+    const newItem: PortfolioItem = {
+      id: editingPortId || `port-${Date.now()}`,
+      title: portTitle.trim(),
+      subtitle: portSubtitle.trim() || 'Desarrollo y Producción Multidisciplinaria',
+      category: portCategory,
+      client: portClient,
+      metrics: ['+2.5M Vistas', 'Optimizado AEO'],
+      description: portDesc.trim() || 'Proyecto destacado del portafolio Wacha Multimedia.',
+      image: portImage.trim() || '/wacha_logo.jpg',
+      liveUrl: portLiveUrl.trim(),
+      youtubeUrl: portYoutube.trim(),
+      tiktokUrl: portTiktok.trim(),
+      tags: ['AEO', 'PRODUCCIÓN', 'MULTIDISCIPLINARIO'],
+      filterCategories: ['content-creation', 'web-design', 'video']
+    };
+
+    let updated: PortfolioItem[];
+    if (editingPortId) {
+      updated = cmsPortfolio.map(p => p.id === editingPortId ? newItem : p);
+    } else {
+      updated = [newItem, ...cmsPortfolio];
+    }
+    setCmsPortfolio(updated);
+    saveStoredPortfolioItems(updated);
+    setEditingPortId(null);
+    setPortTitle('');
+    setPortSubtitle('');
+    setPortDesc('');
+    setPortImage('');
+  };
+
+  const handleEditPortfolio = (p: PortfolioItem) => {
+    setEditingPortId(p.id);
+    setPortTitle(p.title);
+    setPortSubtitle(p.subtitle);
+    setPortCategory(p.category);
+    setPortClient(p.client);
+    setPortDesc(p.description);
+    setPortImage(p.image);
+    setPortLiveUrl(p.liveUrl || '');
+    setPortYoutube(p.youtubeUrl || '');
+    setPortTiktok(p.tiktokUrl || '');
+  };
+
+  const handleDeletePortfolio = (id: string) => {
+    if (window.confirm('¿Eliminar elemento del portafolio?')) {
+      const updated = cmsPortfolio.filter(p => p.id !== id);
+      setCmsPortfolio(updated);
+      saveStoredPortfolioItems(updated);
+    }
+  };
 
   // AEO Search Query Logger State
   const [aeoLogs, setAeoLogs] = useState<AeoSearchQueryLog[]>(() => getAeoQueryLogs());
@@ -298,7 +598,7 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
     // 5. Credentials Validation (Real Admin / Mastermind Credential)
     const validEmail = authEmail.trim().toLowerCase();
     const isMasterUser = (validEmail === 'admin@whacha.site' || validEmail === 'jonyshanchez@gmail.com' || validEmail === 'admin');
-    const isMasterPass = (authPassword === 'wacha2026' || authPassword === 'admin123' || authPassword === 'mrdecrepito');
+    const isMasterPass = (authPassword === 'wacha2026' || authPassword === 'admin123' || authPassword === 'mrdecrepito' || authPassword === 'admin');
 
     if (isMasterUser && isMasterPass) {
       const sessionData = {
@@ -377,8 +677,8 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
 
   // Helper to fill demo credentials
   const fillDemoCredentials = () => {
-    setAuthEmail('admin@whacha.site');
-    setAuthPassword('wacha2026');
+    setAuthEmail('admin');
+    setAuthPassword('admin');
     setAuthError(null);
   };
 
@@ -526,7 +826,7 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                 onClick={fillDemoCredentials}
                 className="text-xs font-jetbrains font-bold text-[#FF4400] hover:underline cursor-pointer"
               >
-                👉 Rellenar Credenciales de Prueba (admin@whacha.site / wacha2026)
+                👉 Rellenar Credenciales de Acceso Rápido (admin / admin)
               </button>
             </div>
           </div>
@@ -576,6 +876,19 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                 >
                   <ShieldAlert className="w-3.5 h-3.5" />
                   <span>DEVSECOPS & AUDIT LOGS</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('cms')}
+                  className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeTab === 'cms'
+                      ? 'bg-black text-[#D4FF00] border-black dark:border-zinc-700 brutal-shadow-black'
+                      : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-zinc-800 hover:border-black'
+                  }`}
+                  title="Gestor CMS para Blog, Tianguis, Cumbia Lab y Portafolio"
+                >
+                  <Sliders className="w-3.5 h-3.5 text-[#D4FF00]" />
+                  <span>GESTIÓN CMS (BLOG, TIANGUIS, CUMBIA, PORTAFOLIO)</span>
                 </button>
               </div>
 
@@ -1227,6 +1540,717 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: GESTIÓN CMS (BLOG, TIANGUIS, CUMBIA, PORTAFOLIO) */}
+            {activeTab === 'cms' && (
+              <div className="space-y-6">
+                <div className="bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-800 p-4 sm:p-6 space-y-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b-2 border-zinc-200 dark:border-zinc-800 pb-4">
+                    <div>
+                      <h3 className="font-anton text-xl uppercase tracking-wider text-black dark:text-white flex items-center gap-2">
+                        <Sliders className="w-5 h-5 text-[#D4FF00]" />
+                        CENTRO DE CONTROL & GESTIÓN DE CONTENIDOS (CMS)
+                      </h3>
+                      <p className="text-xs font-space-grotesk text-zinc-600 dark:text-zinc-400">
+                        Administra, añade, modifica y actualiza en tiempo real los artículos del blog, productos de Wacha El Tianguis, lanzamientos de Cumbia Lab y proyectos del Portafolio Multidisciplinario.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => setCmsSubTab('blog')}
+                        className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer ${
+                          cmsSubTab === 'blog' ? 'bg-black text-[#D4FF00] border-black' : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300'
+                        }`}
+                      >
+                        📝 BLOG ({cmsArticles.length})
+                      </button>
+                      <button
+                        onClick={() => setCmsSubTab('tianguis')}
+                        className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer ${
+                          cmsSubTab === 'tianguis' ? 'bg-black text-[#D4FF00] border-black' : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300'
+                        }`}
+                      >
+                        🛍️ TIANGUIS ({cmsMerch.length})
+                      </button>
+                      <button
+                        onClick={() => setCmsSubTab('cumbia')}
+                        className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer ${
+                          cmsSubTab === 'cumbia' ? 'bg-black text-[#D4FF00] border-black' : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300'
+                        }`}
+                      >
+                        🎵 CUMBIA LAB ({cmsReleases.length})
+                      </button>
+                      <button
+                        onClick={() => setCmsSubTab('portfolio')}
+                        className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer ${
+                          cmsSubTab === 'portfolio' ? 'bg-black text-[#D4FF00] border-black' : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300'
+                        }`}
+                      >
+                        💼 PORTAFOLIO ({cmsPortfolio.length})
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* SUB-TAB 1: BLOG */}
+                  {cmsSubTab === 'blog' && (
+                    <div className="space-y-6">
+                      <form onSubmit={handleSaveBlogPost} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                          {editingBlogId ? '✏️ EDITAR ARTÍCULO DE BLOG' : '➕ AÑADIR NUEVO ARTÍCULO AL BLOG'}
+                        </h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Título del Artículo:</label>
+                            <input
+                              type="text"
+                              required
+                              value={blogTitle}
+                              onChange={(e) => setBlogTitle(e.target.value)}
+                              placeholder="Ej: AEO 2026: Estrategias avanzadas..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Categoría:</label>
+                            <select
+                              value={blogCategory}
+                              onChange={(e) => setBlogCategory(e.target.value)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            >
+                              <option value="AEO">AEO</option>
+                              <option value="SEO Técnico">SEO Técnico</option>
+                              <option value="Video SEO">Video SEO</option>
+                              <option value="IA Generativa">IA Generativa</option>
+                              <option value="Music Business">Music Business</option>
+                            </select>
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Extracto (Resumen corto):</label>
+                            <textarea
+                              rows={2}
+                              value={blogExcerpt}
+                              onChange={(e) => setBlogExcerpt(e.target.value)}
+                              placeholder="Breve introducción para tarjetas de vista previa..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">URL de Miniatura (Imagen):</label>
+                            <input
+                              type="text"
+                              value={blogImage}
+                              onChange={(e) => setBlogImage(e.target.value)}
+                              placeholder="/wacha_logo.jpg o URL externa"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Tiempo de Lectura:</label>
+                            <input
+                              type="text"
+                              value={blogReadTime}
+                              onChange={(e) => setBlogReadTime(e.target.value)}
+                              placeholder="Ej: 10 min"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Etiquetas (Separadas por comas):</label>
+                            <input
+                              type="text"
+                              value={blogTags}
+                              onChange={(e) => setBlogTags(e.target.value)}
+                              placeholder="AEO, Gemini, Schema, JSON-LD"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Contenido del Artículo:</label>
+                            <textarea
+                              rows={5}
+                              value={blogContent}
+                              onChange={(e) => setBlogContent(e.target.value)}
+                              placeholder="Escribe el cuerpo principal del artículo..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-2">
+                          <button
+                            type="submit"
+                            className="px-4 py-2 bg-[#D4FF00] text-black font-jetbrains text-xs font-bold border-2 border-black brutal-shadow-black hover:bg-[#B8006E] hover:text-white transition-all cursor-pointer"
+                          >
+                            {editingBlogId ? '💾 GUARDAR CAMBIOS' : '🚀 PUBLICAR ARTÍCULO'}
+                          </button>
+                          {editingBlogId && (
+                            <button
+                              type="button"
+                              onClick={() => { setEditingBlogId(null); setBlogTitle(''); setBlogExcerpt(''); setBlogContent(''); }}
+                              className="px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-black dark:text-white font-jetbrains text-xs font-bold border-2 border-black cursor-pointer"
+                            >
+                              CANCELAR
+                            </button>
+                          )}
+                        </div>
+                      </form>
+
+                      {/* Articles List */}
+                      <div className="space-y-3">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white">
+                          ARTÍCULOS EXISTENTES EN EL BLOG ({cmsArticles.length})
+                        </h4>
+                        <div className="space-y-2 max-h-[400px] overflow-y-auto">
+                          {cmsArticles.map(article => (
+                            <div key={article.id} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-3.5 flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-3">
+                                <img src={article.image || '/wacha_logo.jpg'} alt="" className="w-12 h-12 object-cover border border-black" />
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-1.5 py-0.5 bg-black text-[#D4FF00] font-jetbrains text-[10px] font-bold">
+                                      {article.category}
+                                    </span>
+                                    <span className="text-[11px] font-jetbrains text-zinc-500">{article.publishedAt}</span>
+                                  </div>
+                                  <h5 className="font-anton text-sm uppercase tracking-wide text-black dark:text-white">{article.title}</h5>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleEditBlog(article)}
+                                  className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  EDITAR
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteBlog(article.id)}
+                                  className="px-3 py-1 bg-red-100 dark:bg-red-950/50 hover:bg-red-600 hover:text-white text-red-700 border border-red-600 font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  ELIMINAR
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUB-TAB 2: TIANGUIS */}
+                  {cmsSubTab === 'tianguis' && (
+                    <div className="space-y-6">
+                      <form onSubmit={handleSaveMerchItem} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                          {editingMerchId ? '✏️ EDITAR PRODUCTO EN TIANGUIS' : '➕ AÑADIR PRODUCTO A WACHA EL TIANGUIS'}
+                        </h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Nombre del Producto:</label>
+                            <input
+                              type="text"
+                              required
+                              value={merchName}
+                              onChange={(e) => setMerchName(e.target.value)}
+                              placeholder="Ej: PLAYERA HEAVYWEIGHT ACID..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Categoría:</label>
+                            <input
+                              type="text"
+                              value={merchCategory}
+                              onChange={(e) => setMerchCategory(e.target.value)}
+                              placeholder="Textil & Streetwear, Accesorios, etc."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Precio USD ($):</label>
+                            <input
+                              type="number"
+                              value={merchPriceUsd}
+                              onChange={(e) => setMerchPriceUsd(Number(e.target.value))}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Precio MXN ($):</label>
+                            <input
+                              type="number"
+                              value={merchPriceMxn}
+                              onChange={(e) => setMerchPriceMxn(Number(e.target.value))}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">URL de Imagen del Producto:</label>
+                            <input
+                              type="text"
+                              value={merchImage}
+                              onChange={(e) => setMerchImage(e.target.value)}
+                              placeholder="https://... o ruta local"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Insignia / Resaltar como Oferta:</label>
+                            <input
+                              type="text"
+                              value={merchBadge}
+                              onChange={(e) => setMerchBadge(e.target.value)}
+                              placeholder="Ej: OFERTA ESPECIAL / EDICIÓN LIMITADA"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Descripción Completa & Envío:</label>
+                            <textarea
+                              rows={3}
+                              value={merchDesc}
+                              onChange={(e) => setMerchDesc(e.target.value)}
+                              placeholder="Detalles de materiales, existencia, envíos nacionales e internacionales..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Tallas Disponibles (Separadas por comas):</label>
+                            <input
+                              type="text"
+                              value={merchSizes}
+                              onChange={(e) => setMerchSizes(e.target.value)}
+                              placeholder="S, M, L, XL, 2XL"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div className="flex items-center gap-3 pt-6">
+                            <label className="flex items-center gap-2 text-xs font-jetbrains font-bold cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={merchInStock}
+                                onChange={(e) => setMerchInStock(e.target.checked)}
+                                className="w-4 h-4 accent-[#D4FF00]"
+                              />
+                              <span>DISPONIBLE EN EXISTENCIA (IN STOCK)</span>
+                            </label>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-2">
+                          <button
+                            type="submit"
+                            className="px-4 py-2 bg-[#D4FF00] text-black font-jetbrains text-xs font-bold border-2 border-black brutal-shadow-black hover:bg-[#B8006E] hover:text-white transition-all cursor-pointer"
+                          >
+                            {editingMerchId ? '💾 GUARDAR PRODUCTO' : '🛍️ AÑADIR PRODUCTO AL TIANGUIS'}
+                          </button>
+                        </div>
+                      </form>
+
+                      {/* Batch JSON Import for Tianguis */}
+                      <div className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 space-y-3">
+                        <h4 className="font-anton text-sm uppercase text-black dark:text-white">
+                          📦 AÑADIR PRODUCTOS POR LOTE (JSON BATCH IMPORT)
+                        </h4>
+                        <textarea
+                          rows={3}
+                          value={batchJsonInput}
+                          onChange={(e) => setBatchJsonInput(e.target.value)}
+                          placeholder='Pega un arreglo JSON de productos [{ "id": "...", "name": "...", "priceUsd": 30, "priceMxn": 600, "category": "...", "description": "...", "image": "...", "inStock": true }]'
+                          className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-mono text-xs text-black dark:text-white"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleBatchImportMerch}
+                          className="px-3 py-1.5 bg-black text-[#D4FF00] hover:bg-[#FF4400] hover:text-white border border-zinc-700 font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                        >
+                          📥 IMPORTAR LOTE DE PRODUCTOS
+                        </button>
+                      </div>
+
+                      {/* Products List */}
+                      <div className="space-y-3">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white">
+                          PRODUCTOS ACTUALES EN TIANGUIS ({cmsMerch.length})
+                        </h4>
+                        <div className="space-y-2 max-h-[350px] overflow-y-auto">
+                          {cmsMerch.map(product => (
+                            <div key={product.id} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-3.5 flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-3">
+                                <img src={product.image || '/wacha_logo.jpg'} alt="" className="w-12 h-12 object-cover border border-black" />
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-1.5 py-0.5 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold">
+                                      ${product.priceUsd} USD / ${product.priceMxn} MXN
+                                    </span>
+                                    {product.badge && (
+                                      <span className="px-1.5 py-0.5 bg-[#B8006E] text-white font-jetbrains text-[10px] font-bold">
+                                        {product.badge}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <h5 className="font-anton text-sm uppercase tracking-wide text-black dark:text-white">{product.name}</h5>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleEditMerch(product)}
+                                  className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  EDITAR
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteMerch(product.id)}
+                                  className="px-3 py-1 bg-red-100 dark:bg-red-950/50 hover:bg-red-600 hover:text-white text-red-700 border border-red-600 font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  ELIMINAR
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUB-TAB 3: CUMBIA LAB */}
+                  {cmsSubTab === 'cumbia' && (
+                    <div className="space-y-6">
+                      <form onSubmit={handleSaveReleaseItem} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                          {editingReleaseId ? '✏️ EDITAR LANZAMIENTO CUMBIA LAB' : '🎵 AÑADIR LANZAMIENTO A CUMBIA LAB'}
+                        </h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Título del Release:</label>
+                            <input
+                              type="text"
+                              required
+                              value={releaseTitle}
+                              onChange={(e) => setReleaseTitle(e.target.value)}
+                              placeholder="Ej: EL SONIDO DE MI CORA..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Subtítulo / Descripción Corta:</label>
+                            <input
+                              type="text"
+                              value={releaseSubtitle}
+                              onChange={(e) => setReleaseSubtitle(e.target.value)}
+                              placeholder="Cumbia Rebajada & Texturas Analógicas..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Formato / Tipo:</label>
+                            <select
+                              value={releaseType}
+                              onChange={(e) => setReleaseType(e.target.value as any)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            >
+                              <option value="EP">EP</option>
+                              <option value="Single">Sencillo</option>
+                              <option value="Album">Álbum</option>
+                              <option value="Recopilación">Recopilación</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Estado / Destacar Estreno:</label>
+                            <select
+                              value={releaseStatus}
+                              onChange={(e) => setReleaseStatus(e.target.value as any)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            >
+                              <option value="GRATIS">GRATIS (Social Gate: YouTube / SoundCloud)</option>
+                              <option value="Disponible">Disponible</option>
+                              <option value="Próximo Estreno">Próximo Estreno (Featured Premiere)</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">URL de Carátula (Cover Image):</label>
+                            <input
+                              type="text"
+                              value={releaseCover}
+                              onChange={(e) => setReleaseCover(e.target.value)}
+                              placeholder="/el_sonido_de_mi_cora.jpg"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Número de Pistas:</label>
+                            <input
+                              type="number"
+                              value={releaseTracksCount}
+                              onChange={(e) => setReleaseTracksCount(Number(e.target.value))}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Enlace SoundCloud:</label>
+                            <input
+                              type="text"
+                              value={releaseSoundcloud}
+                              onChange={(e) => setReleaseSoundcloud(e.target.value)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Enlace YouTube (https://www.youtube.com/@sonidodecrepito):</label>
+                            <input
+                              type="text"
+                              value={releaseYoutube}
+                              onChange={(e) => setReleaseYoutube(e.target.value)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="p-3 bg-zinc-100 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-xs font-jetbrains space-y-1">
+                          <p className="font-bold text-[#D4FF00]">// CONDICIONES DE DESCARGA CONFIGURADAS</p>
+                          <p className="text-zinc-400">Las descargas gratuitas activan automáticamente el Social Gate requiriendo suscribirse a <span className="text-white font-bold">https://www.youtube.com/@sonidodecrepito</span> o seguir el canal de SoundCloud. Las pistas con costo enlazan directamente a Wacha El Tianguis.</p>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-2">
+                          <button
+                            type="submit"
+                            className="px-4 py-2 bg-[#D4FF00] text-black font-jetbrains text-xs font-bold border-2 border-black brutal-shadow-black hover:bg-[#B8006E] hover:text-white transition-all cursor-pointer"
+                          >
+                            {editingReleaseId ? '💾 GUARDAR LANZAMIENTO' : '🎵 AÑADIR A CUMBIA LAB'}
+                          </button>
+                        </div>
+                      </form>
+
+                      {/* Releases List */}
+                      <div className="space-y-3">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white">
+                          LANZAMIENTOS EN CUMBIA LAB ({cmsReleases.length})
+                        </h4>
+                        <div className="space-y-2 max-h-[350px] overflow-y-auto">
+                          {cmsReleases.map(r => (
+                            <div key={r.id} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-3.5 flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-3">
+                                <img src={r.coverImage || '/sonido_decrepito_vol1.jpg'} alt="" className="w-12 h-12 object-cover border border-black" />
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-1.5 py-0.5 bg-[#00E5FF] text-black font-jetbrains text-[10px] font-bold">
+                                      {r.type || 'EP'} • {r.status || 'GRATIS'}
+                                    </span>
+                                    <span className="text-[11px] font-jetbrains text-zinc-500">{r.year}</span>
+                                  </div>
+                                  <h5 className="font-anton text-sm uppercase tracking-wide text-black dark:text-white">{r.title}</h5>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleEditRelease(r)}
+                                  className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  EDITAR
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteRelease(r.id)}
+                                  className="px-3 py-1 bg-red-100 dark:bg-red-950/50 hover:bg-red-600 hover:text-white text-red-700 border border-red-600 font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  ELIMINAR
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SUB-TAB 4: PORTAFOLIO */}
+                  {cmsSubTab === 'portfolio' && (
+                    <div className="space-y-6">
+                      <form onSubmit={handleSavePortfolioItem} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2">
+                          {editingPortId ? '✏️ EDITAR PROYECTO DE PORTAFOLIO' : '💼 AÑADIR PROYECTO AL PORTAFOLIO'}
+                        </h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Título del Proyecto:</label>
+                            <input
+                              type="text"
+                              required
+                              value={portTitle}
+                              onChange={(e) => setPortTitle(e.target.value)}
+                              placeholder="Ej: CETES PREMIER (FinTech Luxury)..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Subtítulo / Especialidad:</label>
+                            <input
+                              type="text"
+                              value={portSubtitle}
+                              onChange={(e) => setPortSubtitle(e.target.value)}
+                              placeholder="Calculadora de Inversión Financiera..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Categoría:</label>
+                            <input
+                              type="text"
+                              value={portCategory}
+                              onChange={(e) => setPortCategory(e.target.value)}
+                              placeholder="Generación de Contenidos & Animación"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Cliente / Institución:</label>
+                            <input
+                              type="text"
+                              value={portClient}
+                              onChange={(e) => setPortClient(e.target.value)}
+                              placeholder="Wacha Multimedia Studio"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">URL de Imagen Principal:</label>
+                            <input
+                              type="text"
+                              value={portImage}
+                              onChange={(e) => setPortImage(e.target.value)}
+                              placeholder="/wacha_logo.jpg"
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Enlace Web (Live URL):</label>
+                            <input
+                              type="text"
+                              value={portLiveUrl}
+                              onChange={(e) => setPortLiveUrl(e.target.value)}
+                              placeholder="https://..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Enlace YouTube:</label>
+                            <input
+                              type="text"
+                              value={portYoutube}
+                              onChange={(e) => setPortYoutube(e.target.value)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Enlace TikTok:</label>
+                            <input
+                              type="text"
+                              value={portTiktok}
+                              onChange={(e) => setPortTiktok(e.target.value)}
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label className="block text-xs font-jetbrains font-bold uppercase text-zinc-700 dark:text-zinc-300 mb-1">Descripción Completa del Caso de Éxito:</label>
+                            <textarea
+                              rows={3}
+                              value={portDesc}
+                              onChange={(e) => setPortDesc(e.target.value)}
+                              placeholder="Detalles técnicos, métricas de impacto y arquitectura de producción..."
+                              className="w-full p-2 bg-zinc-50 dark:bg-zinc-950 border-2 border-black dark:border-zinc-700 font-jetbrains text-xs text-black dark:text-white font-bold"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-2">
+                          <button
+                            type="submit"
+                            className="px-4 py-2 bg-[#D4FF00] text-black font-jetbrains text-xs font-bold border-2 border-black brutal-shadow-black hover:bg-[#B8006E] hover:text-white transition-all cursor-pointer"
+                          >
+                            {editingPortId ? '💾 GUARDAR PROYECTO' : '💼 AÑADIR AL PORTAFOLIO'}
+                          </button>
+                        </div>
+                      </form>
+
+                      {/* Portfolio List */}
+                      <div className="space-y-3">
+                        <h4 className="font-anton text-base uppercase text-black dark:text-white">
+                          PROYECTOS EN PORTAFOLIO ({cmsPortfolio.length})
+                        </h4>
+                        <div className="space-y-2 max-h-[350px] overflow-y-auto">
+                          {cmsPortfolio.map(item => (
+                            <div key={item.id} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-3.5 flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-3">
+                                <img src={item.image || '/wacha_logo.jpg'} alt="" className="w-12 h-12 object-cover border border-black" />
+                                <div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-1.5 py-0.5 bg-black text-[#D4FF00] font-jetbrains text-[10px] font-bold">
+                                      {item.category}
+                                    </span>
+                                    <span className="text-[11px] font-jetbrains text-zinc-500">{item.client}</span>
+                                  </div>
+                                  <h5 className="font-anton text-sm uppercase tracking-wide text-black dark:text-white">{item.title}</h5>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => handleEditPortfolio(item)}
+                                  className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 hover:bg-[#D4FF00] hover:text-black border border-black font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  EDITAR
+                                </button>
+                                <button
+                                  onClick={() => handleDeletePortfolio(item.id)}
+                                  className="px-3 py-1 bg-red-100 dark:bg-red-950/50 hover:bg-red-600 hover:text-white text-red-700 border border-red-600 font-jetbrains text-xs font-bold transition-all cursor-pointer"
+                                >
+                                  ELIMINAR
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

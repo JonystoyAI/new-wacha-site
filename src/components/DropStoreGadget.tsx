@@ -1,6 +1,6 @@
 import React from 'react';
 import { ShoppingBag, Flame, Sparkles, ArrowRight, Check } from 'lucide-react';
-import { MERCH_DATA } from '../data/merchData';
+import { getStoredMerchProducts } from '../services/cmsService';
 import { MerchItem } from '../types';
 
 interface DropStoreGadgetProps {
@@ -17,7 +17,7 @@ export const DropStoreGadget: React.FC<DropStoreGadgetProps> = ({
   subtitle = "Piezas limitadas, indumentaria de alto gramaje y hardware de estudio exclusivo antes de agotar existencia."
 }) => {
   // Select top 3-4 items for the gadget spotlight
-  const featuredDrops = MERCH_DATA.slice(0, 4);
+  const featuredDrops = getStoredMerchProducts().slice(0, 4);
 
   return (
     <section className="py-12 bg-zinc-950 text-white border-t-2 border-b-2 border-black dark:border-zinc-800 relative overflow-hidden">

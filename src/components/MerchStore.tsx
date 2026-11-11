@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MERCH_DATA } from '../data/merchData';
+import { getStoredMerchProducts } from '../services/cmsService';
 import { MerchItem, CartItem } from '../types';
 import { ShoppingBag, Plus, Check, X, Flame, Trash2, ArrowRight } from 'lucide-react';
 
@@ -96,7 +96,7 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MERCH_DATA.map((product) => (
+          {getStoredMerchProducts().map((product) => (
             <div
               key={product.id}
               className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-800 p-5 brutal-shadow-black hover:border-[#B8006E] dark:hover:border-[#D4FF00] transition-all flex flex-col justify-between group"
