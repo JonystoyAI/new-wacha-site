@@ -200,6 +200,23 @@ export const BlogFeed: React.FC<BlogFeedProps> = ({
   const [readerFontSize, setReaderFontSize] = useState<'normal' | 'large' | 'xlarge'>('large');
   const [readerTheme, setReaderTheme] = useState<'neutral' | 'sepia' | 'dark'>('neutral');
 
+  // Reading Progress Bar State
+  const [readingProgress, setReadingProgress] = useState<number>(0);
+  const readerModalRef = useRef<HTMLDivElement>(null);
+
+  const handleModalScroll = () => {
+    if (!readerModalRef.current) return;
+    const el = readerModalRef.current;
+    const scrollTop = el.scrollTop;
+    const scrollHeight = el.scrollHeight - el.clientHeight;
+    if (scrollHeight <= 0) {
+      setReadingProgress(0);
+      return;
+    }
+    const progress = (scrollTop / scrollHeight) * 100;
+    setReadingProgress(Math.min(100, Math.max(0, progress)));
+  };
+
   // Speech Synthesis (Modo Escucha en Voz Alta)
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
@@ -867,6 +884,8 @@ export const BlogFeed: React.FC<BlogFeedProps> = ({
       {/* Full Article Reader Modal */}
       {activeArticle && (
         <div 
+          ref={readerModalRef}
+          onScroll={handleModalScroll}
           className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
           role="dialog"
           aria-modal="true"
@@ -886,6 +905,13 @@ export const BlogFeed: React.FC<BlogFeedProps> = ({
             }`}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Reading Progress Bar at Top */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-zinc-800 z-40 overflow-hidden">
+              <div 
+                className="h-full bg-[#D4FF00] transition-all duration-75"
+                style={{ width: `${readingProgress}%` }}
+              />
+            </div>
             {/* Modal Header Bar */}
             <div className={`sticky top-0 z-30 border-b-2 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 ${
               isReadingMode
