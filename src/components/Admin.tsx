@@ -30,9 +30,16 @@ import {
   Trash2,
   Download,
   Compass,
-  Filter
+  Filter,
+  Sparkles
 } from 'lucide-react';
 import { GoogleAnalyticsMetrics, AdminAuditLog, BlogPost, MerchItem, MusicRelease, PortfolioItem } from '../types';
+import { 
+  generateArticleWithGemini, 
+  getStoredGeminiApiKey, 
+  saveStoredGeminiApiKey, 
+  ResearchMode 
+} from '../services/aiGeneratorService';
 import { 
   fetchGoogleAnalyticsMetrics, 
   getSavedGA4Config, 
@@ -147,6 +154,48 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
   const [portTiktok, setPortTiktok] = useState('');
   const [editingPortId, setEditingPortId] = useState<string | null>(null);
 
+  // AI Generator & Research Studio State
+  const [geminiApiKey, setGeminiApiKey] = useState(() => getStoredGeminiApiKey());
+  const [aiTopicInput, setAiTopicInput] = useState('');
+  const [selectedResearchMode, setSelectedResearchMode] = useState<ResearchMode>('investigador-senior');
+  const [isGeneratingAi, setIsGeneratingAi] = useState(false);
+  const [scheduledAt, setScheduledAt] = useState('');
+  const [thumbnailPromptMaster, setThumbnailPromptMaster] = useState('Cyberpunk Brutalism Studio, neon green accents, high contrast 8k render');
+
+  const handleSaveApiKey = () => {
+    saveStoredGeminiApiKey(geminiApiKey);
+    alert('¡API Key de Gemini guardada con éxito en almacenamiento seguro local!');
+  };
+
+  const handleRunAiGenerator = async () => {
+    if (!aiTopicInput.trim()) {
+      alert('Por favor ingresa un tema, premisa o categoría para que la IA realice la investigación.');
+      return;
+    }
+    setIsGeneratingAi(true);
+    try {
+      const generated = await generateArticleWithGemini({
+        topicOrPremise: aiTopicInput.trim(),
+        mode: selectedResearchMode,
+        category: blogCategory,
+        apiKey: geminiApiKey
+      });
+
+      if (generated.title) setBlogTitle(generated.title);
+      if (generated.excerpt) setBlogExcerpt(generated.excerpt);
+      if (generated.tags) setBlogTags(generated.tags.join(', '));
+      if (generated.content) setBlogContent(generated.content.join('\n\n'));
+      if (generated.category) setBlogCategory(generated.category);
+
+      alert('¡Artículo investigado y generado exitosamente con Gemini AI! Revisa y ajusta los campos antes de guardar o programar.');
+    } catch (err) {
+      console.error('Error generating AI article:', err);
+      alert('Error al generar con IA. Verifique su API Key de Gemini.');
+    } finally {
+      setIsGeneratingAi(false);
+    }
+  };
+
   // Blog Handlers
   const handleSaveBlogPost = (e: React.FormEvent) => {
     e.preventDefault();
@@ -158,8 +207,8 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
       excerpt: blogExcerpt.trim() || 'Resumen del artículo de ingeniería y AEO...',
       category: blogCategory,
       tags: blogTags.split(',').map(t => t.trim()).filter(Boolean),
-      publishedAt: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
-      readTime: blogReadTime,
+      publishedAt: scheduledAt ? `Programado: ${new Date(scheduledAt).toLocaleString('es-ES')}` : new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+      readTime: '8 min',
       image: blogImage.trim() || '/wacha_logo.jpg',
       author: {
         name: 'Mr. Decrépito',
@@ -1598,6 +1647,148 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                   {/* SUB-TAB 1: BLOG */}
                   {cmsSubTab === 'blog' && (
                     <div className="space-y-6">
+                      {/* AI Generator & Research Studio Panel */}
+                      <div className="bg-black border-2 border-[#D4FF00] p-4 sm:p-5 space-y-4 brutal-shadow-lime text-white">
+                        <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+                          <span className="font-anton text-base uppercase text-[#D4FF00] flex items-center gap-2">
+                            <Bot className="w-5 h-5 text-[#D4FF00]" />
+                            ESTUDIO DE INVESTIGACIÓN & GENERACIÓN DE ARTÍCULOS CON IA (GEMINI API)
+                          </span>
+                          <span className="px-2 py-0.5 bg-[#D4FF00] text-black font-jetbrains text-[10px] font-bold">
+                            GEMINI 2.5 FLASH
+                          </span>
+                        </div>
+
+                        {/* API Key Configuration */}
+                        <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-end font-jetbrains text-xs">
+                          <div className="sm:col-span-9">
+                            <label className="block text-zinc-400 mb-1">Gemini API Key (Predeterminada) o Custom API Key:</label>
+                            <input
+                              type="password"
+                              value={geminiApiKey}
+                              onChange={(e) => setGeminiApiKey(e.target.value)}
+                              placeholder="AIzaSy..."
+                              className="w-full p-2 bg-zinc-900 border border-zinc-700 text-white font-mono focus:border-[#D4FF00] outline-none"
+                            />
+                          </div>
+                          <div className="sm:col-span-3">
+                            <button
+                              type="button"
+                              onClick={handleSaveApiKey}
+                              className="w-full px-3 py-2 bg-zinc-800 hover:bg-[#D4FF00] hover:text-black border border-zinc-700 font-bold transition-all cursor-pointer"
+                            >
+                              GUARDAR KEY
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Topic / Premise / Tool Category Input */}
+                        <div className="space-y-2 font-jetbrains text-xs">
+                          <label className="block text-zinc-300 font-bold uppercase">
+                            Tema, Premisa o Categoría de Herramienta a Investigar:
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={aiTopicInput}
+                            onChange={(e) => setAiTopicInput(e.target.value)}
+                            placeholder="Ej: Automatización con IA en flujos de diseño web 2026, o introduce una premisa a auditar..."
+                            className="w-full p-2.5 bg-zinc-900 border border-zinc-700 text-white font-space-grotesk text-xs focus:border-[#D4FF00] outline-none"
+                          />
+                        </div>
+
+                        {/* Research Mode Selection */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-jetbrains text-xs">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedResearchMode('investigador-senior')}
+                            className={`p-3 border text-left cursor-pointer transition-all ${
+                              selectedResearchMode === 'investigador-senior'
+                                ? 'bg-[#D4FF00] text-black border-black font-bold'
+                                : 'bg-zinc-900 text-zinc-300 border-zinc-700 hover:border-white'
+                            }`}
+                          >
+                            <div className="font-bold mb-1">1. Investigador Senior</div>
+                            <div className="text-[10px] opacity-80">Hechos, consenso, controversias y vacíos de info.</div>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => setSelectedResearchMode('auditoria-premisas')}
+                            className={`p-3 border text-left cursor-pointer transition-all ${
+                              selectedResearchMode === 'auditoria-premisas'
+                                ? 'bg-[#D4FF00] text-black border-black font-bold'
+                                : 'bg-zinc-900 text-zinc-300 border-zinc-700 hover:border-white'
+                            }`}
+                          >
+                            <div className="font-bold mb-1">2. Auditoría de Premisas</div>
+                            <div className="text-[10px] opacity-80">4 pasos críticos: suposiciones y pruebas de realidad.</div>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => setSelectedResearchMode('rastreador-herramientas')}
+                            className={`p-3 border text-left cursor-pointer transition-all ${
+                              selectedResearchMode === 'rastreador-herramientas'
+                                ? 'bg-[#D4FF00] text-black border-black font-bold'
+                                : 'bg-zinc-900 text-zinc-300 border-zinc-700 hover:border-white'
+                            }`}
+                          >
+                            <div className="font-bold mb-1">3. Rastreador & Sesgos</div>
+                            <div className="text-[10px] opacity-80">Filtro de marketing, gancho viral y veredicto objetivo.</div>
+                          </button>
+                        </div>
+
+                        {/* Thumbnail Prompt Master Generator */}
+                        <div className="space-y-2 font-jetbrains text-xs pt-2 border-t border-zinc-800">
+                          <div className="flex items-center justify-between">
+                            <span className="text-zinc-400 font-bold uppercase">Prompt Maestro para Miniatura (Thumbnail):</span>
+                            <span className="text-[10px] text-[#D4FF00]">Guardado en prompts maestros</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={thumbnailPromptMaster}
+                              onChange={(e) => setThumbnailPromptMaster(e.target.value)}
+                              className="flex-1 p-2 bg-zinc-900 border border-zinc-700 text-white font-mono text-xs"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setBlogImage(`https://image.pollinations.ai/prompt/${encodeURIComponent(thumbnailPromptMaster)}?width=1200&height=630&nologo=true`);
+                                alert('¡Prompt de miniatura aplicado al campo de imagen del artículo!');
+                              }}
+                              className="px-3 py-2 bg-[#00E5FF] text-black font-bold hover:bg-white cursor-pointer"
+                            >
+                              GENERAR MINIATURA
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Scheduled Publishing */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-jetbrains text-xs pt-2 border-t border-zinc-800">
+                          <div>
+                            <label className="block text-zinc-400 mb-1">Programar Publicación (Fecha y Hora):</label>
+                            <input
+                              type="datetime-local"
+                              value={scheduledAt}
+                              onChange={(e) => setScheduledAt(e.target.value)}
+                              className="w-full p-2 bg-zinc-900 border border-zinc-700 text-white font-mono"
+                            />
+                          </div>
+                          <div className="flex items-end">
+                            <button
+                              type="button"
+                              disabled={isGeneratingAi}
+                              onClick={handleRunAiGenerator}
+                              className="w-full px-4 py-2.5 bg-[#D4FF00] text-black hover:bg-[#B8006E] hover:text-white font-bold border-2 border-black transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                            >
+                              <Sparkles className={`w-4 h-4 ${isGeneratingAi ? 'animate-spin' : ''}`} />
+                              <span>{isGeneratingAi ? 'INVESTIGANDO CON IA...' : '⚡ EJECUTAR INVESTIGACIÓN & GENERAR ARTÍCULO'}</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
                       <form onSubmit={handleSaveBlogPost} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">
                         <h4 className="font-anton text-base uppercase text-black dark:text-white border-b border-zinc-200 dark:border-zinc-800 pb-2">
                           {editingBlogId ? '✏️ EDITAR ARTÍCULO DE BLOG' : '➕ AÑADIR NUEVO ARTÍCULO AL BLOG'}
