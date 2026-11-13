@@ -63,6 +63,7 @@ import {
   saveStoredPortfolioItems
 } from '../services/cmsService';
 import { AeoPerformanceCharts } from './AeoPerformanceCharts';
+import { WachasStudioOS } from './WachasStudioOS';
 
 interface AdminProps {
   isOpen: boolean;
@@ -99,7 +100,7 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
   const formLoadTimeRef = useRef<number>(Date.now());
 
   // Navigation tab inside Admin Dashboard
-  const [activeTab, setActiveTab] = useState<'ga4' | 'aeo' | 'security' | 'cms'>('ga4');
+  const [activeTab, setActiveTab] = useState<'ga4' | 'aeo' | 'security' | 'cms' | 'studio-os'>('ga4');
   const [cmsSubTab, setCmsSubTab] = useState<'blog' | 'tianguis' | 'cumbia' | 'portfolio'>('blog');
 
   // CMS Collections State
@@ -938,7 +939,20 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                   title="Gestor CMS para Blog, Tianguis, Cumbia Lab y Portafolio"
                 >
                   <Sliders className="w-3.5 h-3.5 text-[#D4FF00]" />
-                  <span>GESTIÓN CMS (BLOG, TIANGUIS, CUMBIA, PORTAFOLIO)</span>
+                  <span>GESTIÓN CMS</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveTab('studio-os')}
+                  className={`px-3 py-1.5 font-jetbrains text-xs font-bold border-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeTab === 'studio-os'
+                      ? 'bg-black text-[#D4FF00] border-black dark:border-zinc-700 brutal-shadow-black'
+                      : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-zinc-800 hover:border-black'
+                  }`}
+                  title="Organizador WACHAS STUDIO OS v3.0 y Google Drive Master"
+                >
+                  <Server className="w-3.5 h-3.5 text-[#00E5FF]" />
+                  <span>WACHAS STUDIO OS v3.0</span>
                 </button>
               </div>
 
@@ -2520,6 +2534,11 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                   )}
                 </div>
               </div>
+            )}
+
+            {/* TAB CONTENT: WACHAS STUDIO OS v3.0 */}
+            {activeTab === 'studio-os' && (
+              <WachasStudioOS />
             )}
           </div>
         )}

@@ -1,0 +1,3275 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS STUDIO OS v3.0 — CreativeOps, DAM & Indicadores IA</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0B0E14',
+            panel: '#121722',
+            elevated: '#1A2130',
+            borderTech: '#232D3F',
+            tealSurgical: '#14B8A6',
+            amberSurgical: '#F59E0B',
+            violetInd: '#8B5CF6',
+            roseAudio: '#F43F5E',
+            emeraldOk: '#10B981',
+            crimsonAlert: '#EF4444'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #0B0E14;
+      color: #E2E8F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0B0E14; }
+    ::-webkit-scrollbar-thumb { background: #232D3F; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374561; }
+
+    .studio-grid {
+      background-image:
+        linear-gradient(to right, rgba(35, 45, 63, 0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(35, 45, 63, 0.35) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    .checkerboard-bg {
+      background-color: #182030;
+      background-image:
+        linear-gradient(45deg, #232D3F 25%, transparent 25%),
+        linear-gradient(-45deg, #232D3F 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #232D3F 75%),
+        linear-gradient(-45deg, transparent 75%, #232D3F 75%);
+      background-size: 16px 16px;
+      background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    }
+
+    .var-token {
+      color: #F59E0B;
+      background-color: rgba(245, 158, 11, 0.14);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .modal-backdrop {
+      background-color: rgba(5, 7, 11, 0.86);
+      backdrop-filter: blur(6px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-tealSurgical/25 selection:text-tealSurgical">
+
+  <!-- ======================================================================== -->
+  <!-- TOPBAR DE CONSOLA DE ESTUDIO                                             -->
+  <!-- ======================================================================== -->
+  <header class="sticky top-0 z-30 bg-obsidian/95 backdrop-blur-md border-b border-borderTech px-4 lg:px-6 py-3">
+    <div class="max-w-[1680px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Identidad & Estado de Persistencia Híbrida -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-lg bg-panel border border-borderTech flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-tealSurgical/20 via-transparent to-amberSurgical/20"></div>
+          <svg class="w-5 h-5 text-tealSurgical relative z-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-white">NEXUS STUDIO OS <span class="text-amberSurgical">v3.0</span></h1>
+            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-panel border border-borderTech text-tealSurgical">
+              CREATIVEOPS • DAM • INDICADORES IA
+            </span>
+          </div>
+          <div class="flex items-center gap-2 mt-0.5 text-[11px] font-mono">
+            <span id="sync-dot" class="w-2 h-2 rounded-full bg-emeraldOk"></span>
+            <span id="sync-label" class="text-slate-400">LS + IndexedDB Sincronizado</span>
+            <span class="text-slate-600">•</span>
+            <span id="total-assets-count" class="text-slate-200">0 fichas</span>
+            <span class="text-slate-600 hidden sm:inline">•</span>
+            <span id="idb-logos-count" class="text-tealSurgical hidden sm:inline">0 logos binarios</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles Globales -->
+      <div class="flex flex-wrap items-center gap-2">
+        <input type="file" id="import-json-input" accept=".json" class="hidden" onchange="handleImportFullBackup(event)" />
+
+        <button onclick="document.getElementById('import-json-input').click()" title="Importar respaldo completo (.json con logos PNG/SVG)"
+                class="px-3 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs font-medium text-slate-300 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          <span class="hidden sm:inline">Importar Respaldo (.json)</span>
+          <span class="sm:hidden">Importar</span>
+        </button>
+
+        <button onclick="exportFullBackup()" title="Exportar respaldo completo (.json incluyendo logos binarios)"
+                class="px-3 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs font-medium text-slate-300 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-tealSurgical" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span class="hidden sm:inline">Exportar Respaldo (.json)</span>
+          <span class="sm:hidden">Respaldo</span>
+        </button>
+
+        <button onclick="openBlogHubModal()" title="Exportador Sanitizado para Blog"
+                class="px-3 py-2 rounded-lg bg-emeraldOk/10 hover:bg-emeraldOk/20 border border-emeraldOk/30 text-xs font-semibold text-emeraldOk flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+          <span>Modo Blog</span>
+        </button>
+
+        <button onclick="openFastCaptureModal()"
+                class="px-3.5 py-2 rounded-lg bg-amberSurgical hover:bg-amber-400 text-obsidian text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>+ Captura Rápida</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================== -->
+  <!-- 4 VERTICALES CLARAS Y SIN RUIDO + BUSCADOR GLOBAL Y FILTROS CRUZADOS      -->
+  <!-- ======================================================================== -->
+  <section class="studio-grid border-b border-borderTech bg-panel/70 px-4 lg:px-6 py-4">
+    <div class="max-w-[1680px] mx-auto space-y-3.5">
+      
+      <!-- Pestañas de las 4 Verticales Independientes -->
+      <div class="flex flex-wrap items-center gap-2" id="vertical-tabs">
+        <button onclick="setFilterVertical('all')" data-v="all"
+                class="v-tab px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2">
+          <span>Todas las Verticales</span>
+          <span class="v-count font-mono text-[11px] px-1.5 py-0.2 rounded bg-obsidian/80">0</span>
+        </button>
+        <button onclick="setFilterVertical('canales')" data-v="canales"
+                class="v-tab px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-tealSurgical"></span>
+          <span>1. Canales de Contenido</span>
+          <span class="v-count font-mono text-[11px] px-1.5 py-0.2 rounded bg-obsidian/80">0</span>
+        </button>
+        <button onclick="setFilterVertical('clientes')" data-v="clientes"
+                class="v-tab px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amberSurgical"></span>
+          <span>2. Clientes, Diseño & Web</span>
+          <span class="v-count font-mono text-[11px] px-1.5 py-0.2 rounded bg-obsidian/80">0</span>
+        </button>
+        <button onclick="setFilterVertical('musica_audio')" data-v="musica_audio"
+                class="v-tab px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-roseAudio"></span>
+          <span>3. Música & Audio (Sonido Decrépito)</span>
+          <span class="v-count font-mono text-[11px] px-1.5 py-0.2 rounded bg-obsidian/80">0</span>
+        </button>
+        <button onclick="setFilterVertical('indicadores')" data-v="indicadores"
+                class="v-tab px-3.5 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-violetInd"></span>
+          <span>4. INDICADORES (Códices, Skills, Habilidades & Prompts)</span>
+          <span class="v-count font-mono text-[11px] px-1.5 py-0.2 rounded bg-obsidian/80">0</span>
+        </button>
+      </div>
+
+      <!-- Barra de Búsqueda Global y Filtros Cruzados -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-2.5">
+        <!-- Buscador Instantáneo -->
+        <div class="md:col-span-4 relative">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="global-search" oninput="renderWorkspace()"
+                 placeholder="Buscar nombre, Voice ID, dominio, proyecto, modelo IA, HEX, red social..."
+                 class="w-full pl-10 pr-8 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-tealSurgical focus:outline-none text-xs text-white placeholder-slate-500" />
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs font-mono">
+            ✕
+          </button>
+        </div>
+
+        <!-- Filtro Tipo de Indicador -->
+        <div class="md:col-span-2">
+          <select id="filter-ind-type" onchange="renderWorkspace()"
+                  class="w-full px-2.5 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-violetInd focus:outline-none text-xs text-slate-200">
+            <option value="all">Tipo Indicador: Todos</option>
+            <option value="Códice">Códice</option>
+            <option value="Skill">Skill</option>
+            <option value="Habilidad">Habilidad</option>
+            <option value="Prompt">Prompt</option>
+          </select>
+        </div>
+
+        <!-- Filtro Función / Usado para -->
+        <div class="md:col-span-2">
+          <select id="filter-function" onchange="renderWorkspace()"
+                  class="w-full px-2.5 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-tealSurgical focus:outline-none text-xs text-slate-200">
+            <option value="all">Función: Todas</option>
+            <option value="Investigación Forense">Investigación Forense</option>
+            <option value="Auditoría de Sesgos">Auditoría de Sesgos</option>
+            <option value="Guionización">Guionización</option>
+            <option value="Stylelock Visual">Stylelock Visual</option>
+            <option value="Desarrollo Web / UI">Desarrollo Web / UI</option>
+            <option value="Masterización Audio">Masterización Audio</option>
+            <option value="Ciberseguridad">Ciberseguridad</option>
+            <option value="SEO / Virales">SEO / Virales</option>
+            <option value="Brand Kit & Diseño">Brand Kit & Diseño</option>
+          </select>
+        </div>
+
+        <!-- Filtro Modelo de IA -->
+        <div class="md:col-span-2">
+          <select id="filter-ai-model" onchange="renderWorkspace()"
+                  class="w-full px-2.5 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-amberSurgical focus:outline-none text-xs text-slate-200">
+            <option value="all">Modelo IA: Todos</option>
+            <option value="Gemini 2.5 Pro">Gemini 2.5 Pro</option>
+            <option value="DeepSeek R1 / 7B (Ollama)">DeepSeek R1 / 7B (Ollama)</option>
+            <option value="Claude 3.7 Sonnet">Claude 3.7 Sonnet</option>
+            <option value="GPT-4o">GPT-4o</option>
+            <option value="Midjourney v6.1">Midjourney v6.1</option>
+            <option value="Flux.1 Dev">Flux.1 Dev</option>
+            <option value="ElevenLabs">ElevenLabs</option>
+            <option value="Suno / Udio">Suno / Udio</option>
+          </select>
+        </div>
+
+        <!-- Filtro Titularidad / Visibilidad + Reset -->
+        <div class="md:col-span-2 flex gap-1.5">
+          <select id="filter-ownership" onchange="renderWorkspace()"
+                  class="w-full px-2.5 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-tealSurgical focus:outline-none text-xs text-slate-200">
+            <option value="all">Titular / Blog: Todos</option>
+            <option value="owner_mio">🔑 Propiedad Mía</option>
+            <option value="owner_cliente">🤝 Propiedad Cliente</option>
+            <option value="vis_publico">🌐 Público Blog</option>
+            <option value="vis_privado">🔒 Privado</option>
+          </select>
+          <button onclick="resetAllFilters()" title="Limpiar todos los filtros"
+                  class="px-2.5 py-2 rounded-lg bg-obsidian hover:bg-elevated border border-borderTech text-xs font-mono text-slate-400 hover:text-white shrink-0">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Filtro Rápido por Proyecto Aplicado -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-0.5" id="projects-cloud"></div>
+    </div>
+  </section>
+
+  <!-- ======================================================================== -->
+  <!-- TABLERO DE EXPEDIENTES                                                   -->
+  <!-- ======================================================================== -->
+  <main class="flex-1 max-w-[1680px] w-full mx-auto px-4 lg:px-6 py-6">
+    
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+      <p id="results-summary" class="text-xs text-slate-400 font-mono">Mostrando todos los expedientes</p>
+      <button onclick="openRestoreDefaultsModal()" class="text-[11px] font-mono text-slate-500 hover:text-amberSurgical transition">
+        ↺ Restaurar catálogo base v3.0
+      </button>
+    </div>
+
+    <div id="assets-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+
+    <div id="empty-state" class="hidden py-20 text-center border border-dashed border-borderTech rounded-xl bg-panel/40">
+      <p class="text-sm font-bold text-slate-300">No hay fichas que coincidan con los filtros seleccionados</p>
+      <p class="text-xs text-slate-500 mt-1">Prueba limpiar los filtros o crea una nueva ficha desde "+ Captura Rápida".</p>
+      <button onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs font-semibold text-tealSurgical">
+        Restablecer filtros
+      </button>
+    </div>
+  </main>
+
+  <!-- ======================================================================== -->
+  <!-- MODAL 1: + CAPTURA RÁPIDA (FAST-CAPTURE)                                 -->
+  <!-- ======================================================================== -->
+  <div id="modal-fast-capture" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-panel border border-borderTech rounded-xl w-full max-w-md shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-borderTech flex items-center justify-between bg-obsidian/70">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-amberSurgical"></span>
+          <h2 class="text-sm font-bold text-white">Captura Rápida (Fast-Capture)</h2>
+        </div>
+        <button onclick="closeModal('modal-fast-capture')" class="text-slate-400 hover:text-white text-sm">✕</button>
+      </div>
+      <form onsubmit="submitFastCapture(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nombre del Canal, Cliente, Proyecto Musical o Indicador *</label>
+          <input type="text" id="fc-name" required placeholder="Ej: Nuevo Canal IA / Clínica Dental / Skill Auditoría"
+                 class="w-full px-3.5 py-2.5 rounded-lg bg-obsidian border border-borderTech focus:border-amberSurgical focus:outline-none text-xs text-white" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Vertical Destino *</label>
+          <select id="fc-vertical" onchange="toggleFastCaptureIndicatorFields()" required
+                  class="w-full px-3.5 py-2.5 rounded-lg bg-obsidian border border-borderTech focus:border-amberSurgical focus:outline-none text-xs text-white">
+            <option value="canales">1. Canales de Contenido</option>
+            <option value="clientes">2. Clientes, Diseño & Web</option>
+            <option value="musica_audio">3. Música & Audio (Sonido Decrépito)</option>
+            <option value="indicadores">4. INDICADORES (Códice, Skill, Habilidad, Prompt)</option>
+          </select>
+        </div>
+
+        <!-- Campos rápidos exclusivos si elige INDICADORES -->
+        <div id="fc-indicator-extra" class="hidden grid grid-cols-2 gap-3 p-3 rounded-lg bg-obsidian border border-violetInd/35">
+          <div>
+            <label class="block text-[11px] font-mono text-violetInd mb-1">TIPO DE INDICADOR</label>
+            <select id="fc-ind-type" class="w-full px-2.5 py-2 rounded bg-panel border border-borderTech text-xs text-white">
+              <option value="Códice">Códice</option>
+              <option value="Skill">Skill</option>
+              <option value="Habilidad">Habilidad</option>
+              <option value="Prompt">Prompt</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-mono text-violetInd mb-1">MODELO IA EJECUTADO</label>
+            <input type="text" id="fc-ind-model" value="Gemini 2.5 Pro" class="w-full px-2.5 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Usado para (Función)</label>
+            <input type="text" id="fc-function" value="Guionización" placeholder="Ej: Investigación Forense"
+                   class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-slate-200" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Titularidad</label>
+            <select id="fc-ownership" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-slate-200">
+              <option value="mio">🔑 Propiedad Mía / Agencia</option>
+              <option value="cliente">🤝 Propiedad del Cliente</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeModal('modal-fast-capture')"
+                  class="px-4 py-2 rounded-lg bg-obsidian hover:bg-elevated border border-borderTech text-xs text-slate-300">
+            Cancelar
+          </button>
+          <button type="submit"
+                  class="px-4 py-2 rounded-lg bg-amberSurgical hover:bg-amber-400 text-obsidian text-xs font-extrabold">
+            Crear y Abrir Editor
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- MODAL 2: EDITOR MAESTRO CON "MOVER A: ___" Y SUB-PESTAÑAS ADAPTATIVAS    -->
+  <!-- ======================================================================== -->
+  <div id="modal-editor" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-panel border border-borderTech rounded-xl w-full max-w-5xl max-h-[94vh] flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Cabecera del Editor con Acción Rápida "Mover a: ___" -->
+      <div class="px-5 py-3.5 border-b border-borderTech flex flex-wrap items-center justify-between gap-3 bg-obsidian/85">
+        <div>
+          <span id="ed-subtitle" class="text-[10px] font-mono uppercase tracking-wider text-tealSurgical">EXPEDIENTE MAESTRO EDITABLE</span>
+          <h2 id="ed-title" class="text-base font-extrabold text-white">Editar Ficha</h2>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Selector Universal Mover a: ___ dentro del Editor -->
+          <div class="flex items-center gap-1.5 bg-panel px-2.5 py-1.5 rounded-lg border border-amberSurgical/40">
+            <span class="text-[11px] font-mono text-amberSurgical font-bold">Mover a:</span>
+            <select id="ed-move-vertical" onchange="handleMoveFromEditor(this.value)"
+                    class="bg-obsidian border border-borderTech rounded px-2 py-1 text-xs font-semibold text-white focus:outline-none">
+              <option value="canales">Canales de Contenido</option>
+              <option value="clientes">Clientes, Diseño & Web</option>
+              <option value="musica_audio">Música & Audio (Sonido Decrépito)</option>
+              <option value="indicadores">INDICADORES (Códices/Skills)</option>
+            </select>
+          </div>
+
+          <button onclick="closeModal('modal-editor')" class="w-8 h-8 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-slate-400 hover:text-white flex items-center justify-center">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Sub-pestañas del Editor -->
+      <div class="px-5 pt-2.5 bg-obsidian/50 border-b border-borderTech flex flex-wrap gap-1.5">
+        <button type="button" onclick="switchEditorTab('general')" id="ed-tab-general" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          1. Identidad, Redes & Cuentas
+        </button>
+        <button type="button" onclick="switchEditorTab('indicador')" id="ed-tab-indicador" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          2. Indicador IA (Tipo, Proyecto & Modelo)
+        </button>
+        <button type="button" onclick="switchEditorTab('brand')" id="ed-tab-brand" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          3. Brand Kit & Logos (PNG/SVG)
+        </button>
+        <button type="button" onclick="switchEditorTab('ads_crm')" id="ed-tab-ads_crm" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          4. Contacto, Ads & Direcciones
+        </button>
+        <button type="button" onclick="switchEditorTab('infra')" id="ed-tab-infra" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          5. Web, Dominio & Cloud
+        </button>
+        <button type="button" onclick="switchEditorTab('audio_style')" id="ed-tab-audio_style" class="ed-subtab px-3 py-2 rounded-t-lg text-xs font-bold border-t border-x transition">
+          6. Stylelock, Audio DAW & Blog
+        </button>
+      </div>
+
+      <!-- Cuerpo Scrollable del Editor -->
+      <div class="p-5 overflow-y-auto flex-1 space-y-5">
+        <input type="hidden" id="ed-id" />
+
+        <!-- ==================== SUB-PESTAÑA 1: IDENTIDAD, REDES & CUENTAS ==================== -->
+        <div id="ed-pane-general" class="ed-pane space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+            <div class="md:col-span-6">
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">NOMBRE DE LA FICHA *</label>
+              <input type="text" id="ed-name" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-tealSurgical focus:outline-none text-xs text-white font-bold" />
+            </div>
+            <div class="md:col-span-3">
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">ESTADO</label>
+              <select id="ed-status" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-white">
+                <option value="Activo">Activo / Producción</option>
+                <option value="Desarrollo">En Desarrollo</option>
+                <option value="En pausa">En Pausa</option>
+                <option value="Borrador">Borrador</option>
+              </select>
+            </div>
+            <div class="md:col-span-3">
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">VISIBILIDAD</label>
+              <select id="ed-visibility" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-white">
+                <option value="privado">🔒 Privado / Interno</option>
+                <option value="publico">🌐 Público / Blog</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">USADO PARA (FUNCIÓN PRINCIPAL)</label>
+              <input type="text" id="ed-function" placeholder="Ej: Guionización / Investigación Forense / Brand Kit & Diseño" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-mono text-slate-400 mb-1">ETIQUETAS TRANSVERSALES (SEPARADAS POR COMA)</label>
+              <input type="text" id="ed-tags" placeholder="#youtube, #elevenlabs, #cliente-mx" class="w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech text-xs font-mono text-slate-300" />
+            </div>
+          </div>
+
+          <!-- Cuenta de Google Registrada & Teléfono de Verificación -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-amberSurgical">CUENTA DE GOOGLE REGISTRADA & TELÉFONO DE VERIFICACIÓN</span>
+              <span class="text-[10px] font-mono text-crimsonAlert bg-crimsonAlert/10 border border-crimsonAlert/30 px-2 py-0.5 rounded">
+                ⚠ SEGURIDAD: Nunca guardes contraseñas ni API Keys privadas aquí
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">CUENTA DE GOOGLE PROPIETARIA / GESTORA</label>
+                <input type="email" id="ed-google-account" placeholder="ejemplo.canal@gmail.com" class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech focus:border-amberSurgical focus:outline-none text-xs font-mono text-tealSurgical" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">NÚMERO DE TELÉFONO REGISTRADO (2FA / CONTACTO)</label>
+                <input type="text" id="ed-reg-phone" placeholder="+52 442 000 0000" class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech focus:border-amberSurgical focus:outline-none text-xs font-mono text-white" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Redes Sociales: Red Principal + Redes Secundarias -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-tealSurgical">REDES SOCIALES (RED PRINCIPAL Y SECUNDARIAS)</span>
+              <button type="button" onclick="addSocialSecondaryRow()" class="px-2.5 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[11px] font-mono text-tealSurgical">
+                + Añadir Red Secundaria
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 bg-panel/60 p-3 rounded-lg border border-borderTech">
+              <div class="md:col-span-4">
+                <label class="block text-[10px] font-mono text-amberSurgical mb-1">RED PRINCIPAL</label>
+                <select id="ed-social-main-platform" class="w-full px-2.5 py-2 rounded bg-obsidian border border-borderTech text-xs text-white">
+                  <option value="YouTube">YouTube</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Bandcamp">Bandcamp</option>
+                  <option value="Spotify">Spotify</option>
+                  <option value="X (Twitter)">X (Twitter)</option>
+                  <option value="Otra">Otra</option>
+                </select>
+              </div>
+              <div class="md:col-span-8">
+                <label class="block text-[10px] font-mono text-amberSurgical mb-1">URL / @HANDLE DE RED PRINCIPAL</label>
+                <input type="text" id="ed-social-main-url" placeholder="https://youtube.com/@CodigoHumano" class="w-full px-3 py-2 rounded bg-obsidian border border-borderTech text-xs font-mono text-white" />
+              </div>
+            </div>
+
+            <div id="ed-social-secondary-list" class="space-y-2"></div>
+          </div>
+
+          <!-- Voz en Off (ElevenLabs) & Asistentes IA -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2.5">
+              <span class="text-xs font-bold text-white block">VOZ EN OFF (ELEVENLABS)</span>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">ELEVENLABS VOICE ID</label>
+                <input type="text" id="ed-voice-id" placeholder="HIkzxzvsigFIynXHHKhU" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-tealSurgical" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">PARÁMETROS VOCALES</label>
+                <input type="text" id="ed-voice-params" placeholder="Vel: 0.92 | Estab: 0.70 | Neutro MX" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-slate-200" />
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2.5">
+              <span class="text-xs font-bold text-white block">ASISTENTES IA UTILIZADOS EN EL PROYECTO</span>
+              <div id="ed-ai-tools-chips" class="flex flex-wrap gap-1.5"></div>
+              <div class="flex gap-2 pt-1">
+                <input type="text" id="ed-custom-ai-input" placeholder="Añadir otra IA (ej. Suno, Runway)..." class="flex-1 px-2.5 py-1.5 rounded bg-panel border border-borderTech text-xs text-white" />
+                <button type="button" onclick="addCustomAiTool()" class="px-3 py-1.5 rounded bg-panel hover:bg-elevated border border-borderTech text-xs font-mono text-amberSurgical">+ Añadir</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PESTAÑA 2: INDICADORES (CÓDICES, SKILLS, HABILIDADES, PROMPTS) ==================== -->
+        <div id="ed-pane-indicador" class="ed-pane hidden space-y-4">
+          <div class="p-4 rounded-xl bg-obsidian/95 border border-violetInd/40 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderTech pb-2.5">
+              <div>
+                <span class="text-xs font-extrabold text-violetInd">FICHA TÉCNICA DE INDICADOR IA</span>
+                <span class="block text-[11px] text-slate-400">Clasificación estructurada para Códices, Skills, Habilidades y Prompts reutilizables.</span>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-violetInd/15 text-violetInd border border-violetInd/30">
+                SOPORTA {{VARIABLES}} DINÁMICAS
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              <div>
+                <label class="block text-[11px] font-mono text-violetInd mb-1">TIPO DE INDICADOR *</label>
+                <select id="ed-ind-type" class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs font-bold text-white">
+                  <option value="Códice">Códice</option>
+                  <option value="Skill">Skill</option>
+                  <option value="Habilidad">Habilidad</option>
+                  <option value="Prompt">Prompt</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-mono text-violetInd mb-1">USADO PARA (FUNCIÓN) *</label>
+                <input type="text" id="ed-ind-used-for" placeholder="Ej: Investigación Forense / Auditoría de Sesgos / UI"
+                       class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs text-white" />
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-mono text-violetInd mb-1">MODELO DE IA (EN CUÁL SE EJECUTÓ) *</label>
+                <input type="text" id="ed-ind-ai-model" list="ai-models-datalist" placeholder="Ej: Gemini 2.5 Pro / DeepSeek R1 / Claude 3.7"
+                       class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs font-mono text-amberSurgical" />
+                <datalist id="ai-models-datalist">
+                  <option value="Gemini 2.5 Pro"></option>
+                  <option value="DeepSeek R1 / 7B (Ollama)"></option>
+                  <option value="Claude 3.7 Sonnet"></option>
+                  <option value="GPT-4o"></option>
+                  <option value="Midjourney v6.1"></option>
+                  <option value="Flux.1 Dev"></option>
+                  <option value="ElevenLabs"></option>
+                  <option value="Suno / Udio"></option>
+                </datalist>
+              </div>
+            </div>
+
+            <!-- Proyecto(s) aplicados (Etiquetas múltiples con autocompletado de tus proyectos existentes) -->
+            <div>
+              <label class="block text-[11px] font-mono text-violetInd mb-1">PROYECTO(S) DONDE SE APLICA (SEPARADOS POR COMA)</label>
+              <input type="text" id="ed-ind-projects" placeholder="Ej: Efecto Colateral, Código Humano, Transversal / Todos"
+                     class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs text-white" />
+              <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                <span class="text-[10px] font-mono text-slate-500">Añadir rápido desde tus proyectos:</span>
+                <div id="ed-quick-project-pills" class="flex flex-wrap gap-1"></div>
+              </div>
+            </div>
+
+            <!-- Cuerpo Principal del Indicador -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                <label class="text-xs font-bold text-amberSurgical">CUERPO DEL CÓDICE / SKILL / HABILIDAD / PROMPT</label>
+                <div>
+                  <input type="file" id="upload-prompt-file" accept=".txt,.md,.json" class="hidden" onchange="loadLocalFileIntoField(event, 'ed-prompt')" />
+                  <button type="button" onclick="document.getElementById('upload-prompt-file').click()"
+                          class="px-2.5 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[11px] font-mono text-slate-300">
+                    📄 Cargar Archivo (.txt / .md / .json)
+                  </button>
+                </div>
+              </div>
+              <textarea id="ed-prompt" rows="9" placeholder="Escribe aquí las instrucciones exactas, reglas anti-sesgo, estructura de skill o prompt con {{VARIABLES}} en mayúsculas..."
+                        class="w-full p-3 rounded-lg bg-panel border border-borderTech text-xs font-mono text-slate-100 leading-relaxed"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PESTAÑA 3: BRAND KIT & LOGOTIPOS (PNG/SVG) ==================== -->
+        <div id="ed-pane-brand" class="ed-pane hidden space-y-4">
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="text-xs font-bold text-amberSurgical">LOGOTIPOS / PORTADAS (ALMACENAMIENTO BINARIO INDEXEDDB)</span>
+                <span class="block text-[11px] text-slate-400">Sube, previsualiza y descarga archivos en PNG y vector SVG sanitizado.</span>
+              </div>
+              <button type="button" onclick="toggleLogoPreviewBg()" class="px-2.5 py-1 rounded bg-panel border border-borderTech text-[11px] font-mono text-slate-300">
+                ◐ Fondo Transparencia
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- PNG -->
+              <div class="p-3.5 rounded-xl bg-panel border border-borderTech flex flex-col justify-between gap-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-tealSurgical">ARCHIVO RÁSTER (.PNG)</span>
+                  <span id="logo-png-status" class="text-[10px] font-mono text-slate-500">Sin archivo PNG</span>
+                </div>
+                <div id="logo-png-preview-box" class="checkerboard-bg h-40 rounded-lg border border-borderTech flex items-center justify-center p-3 overflow-hidden">
+                  <span class="text-xs font-mono text-slate-500">Vista previa PNG</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <input type="file" id="upload-logo-png" accept="image/png" class="hidden" onchange="handleLogoUpload(event, 'png')" />
+                  <button type="button" onclick="document.getElementById('upload-logo-png').click()" class="flex-1 px-3 py-2 rounded-lg bg-obsidian hover:bg-elevated border border-borderTech text-xs font-semibold text-white">
+                    ⬆ Subir PNG
+                  </button>
+                  <button type="button" onclick="downloadStoredLogo('png')" id="btn-dl-png" disabled class="flex-1 px-3 py-2 rounded-lg bg-tealSurgical/15 border border-tealSurgical/40 text-xs font-semibold text-tealSurgical disabled:opacity-35">
+                    ⬇ Descargar PNG
+                  </button>
+                  <button type="button" onclick="removeStoredLogo('png')" class="px-2.5 py-2 rounded-lg bg-crimsonAlert/10 border border-crimsonAlert/30 text-xs text-crimsonAlert">✕</button>
+                </div>
+              </div>
+
+              <!-- SVG -->
+              <div class="p-3.5 rounded-xl bg-panel border border-borderTech flex flex-col justify-between gap-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold text-amberSurgical">ARCHIVO VECTORIAL (.SVG)</span>
+                  <span id="logo-svg-status" class="text-[10px] font-mono text-slate-500">Sin archivo SVG</span>
+                </div>
+                <div id="logo-svg-preview-box" class="checkerboard-bg h-40 rounded-lg border border-borderTech flex items-center justify-center p-3 overflow-hidden">
+                  <span class="text-xs font-mono text-slate-500">Vista previa SVG</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <input type="file" id="upload-logo-svg" accept=".svg,image/svg+xml" class="hidden" onchange="handleLogoUpload(event, 'svg')" />
+                  <button type="button" onclick="document.getElementById('upload-logo-svg').click()" class="flex-1 px-3 py-2 rounded-lg bg-obsidian hover:bg-elevated border border-borderTech text-xs font-semibold text-white">
+                    ⬆ Subir SVG
+                  </button>
+                  <button type="button" onclick="downloadStoredLogo('svg')" id="btn-dl-svg" disabled class="flex-1 px-3 py-2 rounded-lg bg-amberSurgical/15 border border-amberSurgical/40 text-xs font-semibold text-amberSurgical disabled:opacity-35">
+                    ⬇ Descargar SVG
+                  </button>
+                  <button type="button" onclick="removeStoredLogo('svg')" class="px-2.5 py-2 rounded-lg bg-crimsonAlert/10 border border-crimsonAlert/30 text-xs text-crimsonAlert">✕</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paleta HEX -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2.5">
+            <label class="block text-xs font-bold text-white">PALETA DE COLORES (HEX)</label>
+            <div class="flex flex-wrap items-center gap-2" id="ed-palette-list"></div>
+            <div class="flex items-center gap-2 pt-1">
+              <input type="color" id="ed-color-picker" value="#14B8A6" class="w-8 h-8 rounded bg-transparent border-0 cursor-pointer"
+                     oninput="document.getElementById('ed-color-hex').value = this.value.toUpperCase()" />
+              <input type="text" id="ed-color-hex" value="#14B8A6" maxlength="7" class="w-28 px-2.5 py-1.5 rounded bg-panel border border-borderTech text-xs font-mono text-white uppercase" />
+              <button type="button" onclick="addEditorPaletteColor()" class="px-3 py-1.5 rounded bg-panel hover:bg-elevated border border-borderTech text-xs font-semibold text-tealSurgical">
+                + Añadir Color
+              </button>
+            </div>
+          </div>
+
+          <!-- Tipografías -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <span class="text-xs font-bold text-white block">TIPOGRAFÍAS DE MARCA (PRIMARIA, SECUNDARIA Y TEXTOS)</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">FUENTE PRIMARIA</label>
+                <input type="text" id="ed-font-primary" placeholder="Plus Jakarta Sans Bold" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">FUENTE SECUNDARIA</label>
+                <input type="text" id="ed-font-secondary" placeholder="JetBrains Mono" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">FUENTE PARA TEXTOS</label>
+                <input type="text" id="ed-font-body" placeholder="Inter Regular" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Elementos de Marca & Estilo Visual -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2">
+              <label class="block text-xs font-bold text-tealSurgical">ELEMENTOS DE MARCA</label>
+              <textarea id="ed-brand-elements" rows="3" placeholder="Isotipo, retícula, área de protección, variantes..." class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs text-slate-200"></textarea>
+            </div>
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2">
+              <label class="block text-xs font-bold text-amberSurgical">ESTILO VISUAL & PERSONALIDAD</label>
+              <textarea id="ed-brand-style" rows="3" placeholder="Descripción corta del tono visual y estético..." class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs text-slate-200"></textarea>
+            </div>
+          </div>
+
+          <!-- Bóveda Drive / Terabox / Otros -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <span class="text-xs font-bold text-slate-200 block">BÓVEDA DE EDITABLES, STEMS & PROYECTOS (DRIVE / TERABOX / DAW)</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">GOOGLE DRIVE URL</label>
+                <input type="url" id="ed-link-drive" placeholder="https://drive.google.com/..." class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-slate-300" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">TERABOX URL</label>
+                <input type="url" id="ed-link-terabox" placeholder="https://terabox.com/..." class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-slate-300" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">FIGMA / BANDCAMP / OTRO RECURSO</label>
+                <input type="url" id="ed-link-other" placeholder="https://..." class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-slate-300" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PESTAÑA 4: CONTACTO CRM, ADS & DIRECCIONES ==================== -->
+        <div id="ed-pane-ads_crm" class="ed-pane hidden space-y-4">
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <span class="text-xs font-bold text-white block">CONTACTO DIRECTO DEL CLIENTE</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">NOMBRE DEL CONTACTO PRINCIPAL</label>
+                <input type="text" id="ed-contact-name" placeholder="Ej: Ing. Javier Flores" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">TELÉFONO DEL CLIENTE</label>
+                <input type="text" id="ed-client-phone" placeholder="+52 442 123 4567" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-white" />
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-amberSurgical/35 space-y-3">
+            <span class="text-xs font-bold text-amberSurgical block">DATOS OFICIALES PARA PUBLICIDAD (META ADS / GOOGLE ADS / LANDINGS)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">NÚMERO DE TEL (ANUNCIOS)</label>
+                <input type="text" id="ed-ads-phone" placeholder="+52 442 000 1111" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-tealSurgical" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">LÍNEA 1</label>
+                <input type="text" id="ed-ads-line1" placeholder="442 200 0001" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">LÍNEA 2</label>
+                <input type="text" id="ed-ads-line2" placeholder="442 200 0002" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-emeraldOk mb-1">WHATSAPP BUSINESS</label>
+                <input type="text" id="ed-ads-whatsapp" placeholder="+52 1 442 333 4444" class="w-full px-3 py-2 rounded bg-panel border border-emeraldOk/40 text-xs font-mono text-emeraldOk" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">DIRECCIÓN 1 (MATRIZ)</label>
+                <input type="text" id="ed-ads-addr1" placeholder="Av. Constituyentes 120, Querétaro, Qro." class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">DIRECCIÓN 2 (SUCURSAL / PATIO)</label>
+                <input type="text" id="ed-ads-addr2" placeholder="Blvd. Bernardo Quintana 450, Querétaro, Qro." class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PESTAÑA 5: WEB, DOMINIO & CLOUD ==================== -->
+        <div id="ed-pane-infra" class="ed-pane hidden space-y-4">
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-tealSurgical/35 space-y-3">
+            <span class="text-xs font-bold text-tealSurgical block">AUDITORÍA DE TITULARIDAD (¿FUE REGISTRADO POR MÍ O POR EL CLIENTE?)</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">TITULARIDAD DEL REGISTRO</label>
+                <select id="ed-infra-owner" class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs font-bold text-white">
+                  <option value="mio">🔑 Propiedad Mía / Agencia</option>
+                  <option value="cliente">🤝 Propiedad del Cliente</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-mono text-slate-400 mb-1">DATOS / CUENTA CON LOS QUE SE REGISTRÓ</label>
+                <input type="text" id="ed-infra-reg-account" placeholder="Ej: admin@miagencia.com o cliente@empresa.com" class="w-full px-3 py-2 rounded-lg bg-panel border border-borderTech text-xs font-mono text-amberSurgical" />
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <span class="text-xs font-bold text-white block">SITIO WEB, SERVIDOR DE ALOJAMIENTO Y PROVEEDOR DE DOMINIO</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">SITIO WEB (URL)</label>
+                <input type="url" id="ed-infra-website" placeholder="https://www.ejemplo.com" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-tealSurgical" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">SERVIDOR DE ALOJAMIENTO (HOSTING)</label>
+                <input type="text" id="ed-infra-hosting" placeholder="Ej: Vercel Pro / Hostinger / VPS" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">PROVEEDOR DEL DOMINIO</label>
+                <input type="text" id="ed-infra-domain-prov" placeholder="Ej: Porkbun / GoDaddy / Namecheap" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">FECHA DE RENOVACIÓN</label>
+                <input type="text" id="ed-infra-renewal" placeholder="Ej: 18 Oct 2027" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-slate-300" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">NOTAS DEL SITIO WEB</label>
+              <textarea id="ed-infra-site-notes" rows="2" placeholder="Stack técnico, DNS, certificados SSL, formularios..." class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs text-slate-200"></textarea>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs font-bold text-amberSurgical">OTROS SERVICIOS (CUBETAS GOOGLE CLOUD, VERCEL, ADS, ETC.)</span>
+              <button type="button" onclick="addCloudServiceRow()" class="px-3 py-1.5 rounded bg-panel hover:bg-elevated border border-borderTech text-xs font-mono text-amberSurgical">
+                + Añadir Servicio Cloud / Ads
+              </button>
+            </div>
+            <div id="ed-cloud-services-list" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PESTAÑA 6: STYLELOCK, AUDIO MASTER & BLOG ==================== -->
+        <div id="ed-pane-audio_style" class="ed-pane hidden space-y-4">
+          <!-- Especificaciones de Masterización & Mezcla (para Música & Audio) -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-roseAudio/35 space-y-3">
+            <span class="text-xs font-bold text-roseAudio block">PARÁMETROS DE PRODUCCIÓN MUSICAL & MASTERIZACIÓN (MÚSICA & AUDIO)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">ÁLBUM / SERIE SONORA</label>
+                <input type="text" id="ed-audio-album" placeholder="Ej: Cumbias Cinemáticas Vol. 1" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">BPM / TONALIDAD</label>
+                <input type="text" id="ed-audio-bpm" placeholder="Ej: 88 BPM | Dm (Re menor)" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-white" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-mono text-slate-400 mb-1">LUFS OBJETIVO & TRUE PEAK</label>
+                <input type="text" id="ed-audio-lufs" placeholder="Ej: -11.5 LUFS | -1.0 dBTP" class="w-full px-3 py-2 rounded bg-panel border border-borderTech text-xs font-mono text-roseAudio" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-400 mb-1">CADENA DE EFECTOS, EQ Y MEZCLA</label>
+              <textarea id="ed-audio-chain" rows="2" placeholder="Ej: Paso-alto 28Hz, saturación de cinta analógica, compresión bus 2:1..." class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs font-mono text-slate-200"></textarea>
+            </div>
+          </div>
+
+          <!-- Style Lock Visual / Arte Portadas -->
+          <div class="p-4 rounded-xl bg-obsidian/90 border border-borderTech space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold text-tealSurgical">STYLE LOCK VISUAL / DIRECCIÓN DE ARTE</label>
+              <div>
+                <input type="file" id="upload-stylelock-file" accept=".txt,.md,.json" class="hidden" onchange="loadLocalFileIntoField(event, 'ed-stylelock')" />
+                <button type="button" onclick="document.getElementById('upload-stylelock-file').click()"
+                        class="px-2.5 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[11px] font-mono text-slate-300">
+                  📄 Cargar Archivo (.txt / .md / .json)
+                </button>
+              </div>
+            </div>
+            <textarea id="ed-stylelock" rows="4" placeholder="Prompt maestro de estilo visual (Style Lock)..."
+                      class="w-full p-3 rounded-lg bg-panel border border-borderTech text-xs font-mono text-slate-200 leading-relaxed"></textarea>
+          </div>
+
+          <!-- Guía Blog vs Notas Privadas -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-emeraldOk/30 space-y-2">
+              <label class="block text-xs font-bold text-emeraldOk">GUÍA DE USO PARA BLOG (PÚBLICO)</label>
+              <textarea id="ed-blog-guide" rows="3" placeholder="Explicación limpia que se exportará en Modo Blog..."
+                        class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs text-slate-200"></textarea>
+            </div>
+            <div class="p-4 rounded-xl bg-obsidian/90 border border-crimsonAlert/30 space-y-2">
+              <label class="block text-xs font-bold text-crimsonAlert">NOTAS PRIVADAS INTERNAS (NUNCA SE EXPORTAN AL BLOG)</label>
+              <textarea id="ed-private-notes" rows="3" placeholder="Notas confidenciales internas..."
+                        class="w-full p-2.5 rounded-lg bg-panel border border-borderTech text-xs text-slate-200"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pie del Editor -->
+      <div class="px-5 py-3.5 border-t border-borderTech bg-obsidian/90 flex items-center justify-between gap-3">
+        <button type="button" onclick="deleteCurrentAsset()" class="px-3.5 py-2 rounded-lg bg-crimsonAlert/10 hover:bg-crimsonAlert/20 border border-crimsonAlert/35 text-xs font-bold text-crimsonAlert">
+          Eliminar Ficha
+        </button>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeModal('modal-editor')" class="px-4 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs text-slate-300">
+            Cancelar
+          </button>
+          <button type="button" onclick="saveAssetFromEditor()" class="px-5 py-2 rounded-lg bg-tealSurgical hover:bg-teal-400 text-obsidian text-xs font-extrabold">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- MODAL 3: COMPILADOR "EJECUTAR INDICADOR / CÓDICE" ({{VARIABLES}})        -->
+  <!-- ======================================================================== -->
+  <div id="modal-execute" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-panel border border-borderTech rounded-xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-borderTech flex items-center justify-between bg-obsidian/80">
+        <div>
+          <span id="exec-subtitle" class="text-[10px] font-mono uppercase tracking-wider text-amberSurgical">COMPILADOR DE VARIABLES {{...}}</span>
+          <h2 id="exec-title" class="text-base font-extrabold text-white">Ejecutar Indicador</h2>
+        </div>
+        <button onclick="closeModal('modal-execute')" class="w-8 h-8 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 flex-1">
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-obsidian p-3 rounded-lg border border-borderTech">
+          <span class="text-xs text-slate-300 font-semibold">Bloques a ensamblar:</span>
+          <div class="flex gap-4">
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" id="exec-inc-stylelock" checked onchange="rebuildExecutedPrompt()" class="accent-tealSurgical" />
+              <span>Style Lock Visual</span>
+            </label>
+            <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" id="exec-inc-prompt" checked onchange="rebuildExecutedPrompt()" class="accent-amberSurgical" />
+              <span>Cuerpo del Indicador / Guion</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="exec-variables-container" class="space-y-3"></div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-mono font-bold text-tealSurgical">RESULTADO COMPILADO (LISTO PARA PEGAR EN IA)</label>
+            <span id="exec-char-count" class="text-[11px] font-mono text-slate-500">0 caracteres</span>
+          </div>
+          <textarea id="exec-output" rows="9" readonly
+                    class="w-full p-3.5 rounded-lg bg-obsidian border border-borderTech text-xs font-mono text-slate-100 leading-relaxed focus:outline-none"></textarea>
+        </div>
+      </div>
+
+      <div class="px-5 py-3.5 border-t border-borderTech bg-obsidian/85 flex items-center justify-end gap-2">
+        <button onclick="closeModal('modal-execute')" class="px-4 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs text-slate-300">Cerrar</button>
+        <button onclick="copyExecutedPrompt()" class="px-5 py-2 rounded-lg bg-amberSurgical hover:bg-amber-400 text-obsidian text-xs font-extrabold">
+          📋 Copiar Resultado en 1 Clic
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- MODAL 4: MODO BLOG / EXPORTADOR SANITIZADO                                -->
+  <!-- ======================================================================== -->
+  <div id="modal-blog" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-panel border border-borderTech rounded-xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-borderTech flex items-center justify-between bg-obsidian/80">
+        <div>
+          <span class="text-[10px] font-mono uppercase tracking-wider text-emeraldOk">PURGA AUTOMÁTICA DE DATOS SENSIBLES ACTIVA</span>
+          <h2 class="text-base font-extrabold text-white">Exportador Sanitizado para Blog & Web</h2>
+        </div>
+        <button onclick="closeModal('modal-blog')" class="w-8 h-8 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-5 overflow-y-auto space-y-4 flex-1">
+        <div class="p-3 rounded-lg bg-emeraldOk/10 border border-emeraldOk/30 flex flex-wrap items-center justify-between gap-2">
+          <p class="text-xs text-emeraldOk">
+            <strong>Privacidad blindada:</strong> Se omiten automáticamente teléfonos, líneas 1/2, WhatsApp, direcciones, cuentas Google/Cloud, enlaces Drive/Terabox y notas internas.
+          </p>
+          <select id="blog-asset-selector" onchange="renderBlogPreview()" class="px-3 py-1.5 rounded-lg bg-obsidian border border-emeraldOk/40 text-xs text-white font-semibold"></select>
+        </div>
+
+        <div id="blog-preview-card" class="p-5 rounded-xl bg-obsidian border border-borderTech space-y-4"></div>
+      </div>
+
+      <div class="px-5 py-3.5 border-t border-borderTech bg-obsidian/85 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="downloadCleanBlogMarkdown()" class="px-3.5 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs font-bold text-white">
+            ⬇ Markdown (.md)
+          </button>
+          <button onclick="downloadCleanBlogJson()" class="px-3.5 py-2 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-xs font-bold text-tealSurgical">
+            ⬇ JSON (.json)
+          </button>
+          <button onclick="copyBlogHtmlEmbed()" class="px-3.5 py-2 rounded-lg bg-emeraldOk hover:bg-emerald-400 text-obsidian text-xs font-extrabold">
+            &lt;/&gt; Copiar HTML Embed
+          </button>
+        </div>
+        <button onclick="closeModal('modal-blog')" class="px-4 py-2 rounded-lg bg-panel border border-borderTech text-xs text-slate-400 hover:text-white">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- MODAL 5: CONFIRMACIÓN PERSONALIZADA                                      -->
+  <!-- ======================================================================== -->
+  <div id="modal-confirm" class="hidden fixed inset-0 z-50 modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-panel border border-borderTech rounded-xl w-full max-w-sm p-5 shadow-2xl space-y-4">
+      <h3 id="confirm-title" class="text-sm font-bold text-white">Confirmar</h3>
+      <p id="confirm-message" class="text-xs text-slate-300 leading-relaxed"></p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModal('modal-confirm')" class="px-3.5 py-2 rounded-lg bg-obsidian border border-borderTech text-xs text-slate-300">Cancelar</button>
+        <button id="confirm-action-btn" class="px-4 py-2 rounded-lg bg-crimsonAlert hover:bg-red-500 text-white text-xs font-bold">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOASTS CON SOPORTE PARA BOTÓN "DESHACER" -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+  <script>
+    /**
+     * ==========================================================================
+     * NEXUS STUDIO OS v3.0 — MOTOR CREATIVEOPS, DAM & INDICADORES IA
+     * ==========================================================================
+     */
+    const LS_KEY = 'nexus_studio_os_v3_metadata';
+    const IDB_NAME = 'NexusStudioOS_v3_LogosDB';
+    const IDB_STORE = 'logos';
+
+    const PRESET_AI_TOOLS = [
+      'Gemini 2.5 Pro', 'DeepSeek R1 / 7B (Ollama)', 'Claude 3.7 Sonnet', 'GPT-4o',
+      'ElevenLabs', 'Midjourney v6.1', 'Flux.1 Dev', 'Suno / Udio', 'Cursor AI'
+    ];
+
+    const VERTICAL_NAMES = {
+      canales: 'Canales de Contenido',
+      clientes: 'Clientes, Diseño & Web',
+      musica_audio: 'Música & Audio',
+      indicadores: 'INDICADORES'
+    };
+
+    // ==========================================================================
+    // 1. INDEXEDDB PARA LOGOTIPOS BINARIOS PNG & SVG SANITIZADOS
+    // ==========================================================================
+    let idbInstance = null;
+    let logosCache = {};
+
+    function initIndexedDB() {
+      return new Promise((resolve) => {
+        if (!('indexedDB' in window)) return resolve(null);
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(IDB_STORE)) {
+            db.createObjectStore(IDB_STORE, { keyPath: 'assetId' });
+          }
+        };
+        req.onsuccess = (e) => {
+          idbInstance = e.target.result;
+          loadAllLogosFromIDB().then(() => resolve(idbInstance));
+        };
+        req.onerror = () => resolve(null);
+      });
+    }
+
+    function loadAllLogosFromIDB() {
+      return new Promise((resolve) => {
+        if (!idbInstance) return resolve();
+        const tx = idbInstance.transaction(IDB_STORE, 'readonly');
+        const req = tx.objectStore(IDB_STORE).getAll();
+        req.onsuccess = () => {
+          logosCache = {};
+          (req.result || []).forEach(r => {
+            logosCache[r.assetId] = { png: r.png || null, svg: r.svg || null };
+          });
+          updateIDBStatsUI();
+          resolve();
+        };
+        req.onerror = () => resolve();
+      });
+    }
+
+    function saveLogoToIDB(assetId, pngData, svgData) {
+      logosCache[assetId] = { png: pngData || null, svg: svgData || null };
+      updateIDBStatsUI();
+      if (!idbInstance) return Promise.resolve();
+      return new Promise((resolve) => {
+        const tx = idbInstance.transaction(IDB_STORE, 'readwrite');
+        const store = tx.objectStore(IDB_STORE);
+        if (!pngData && !svgData) store.delete(assetId);
+        else store.put({ assetId, png: pngData || null, svg: svgData || null });
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => resolve();
+      });
+    }
+
+    function updateIDBStatsUI() {
+      let count = 0;
+      Object.values(logosCache).forEach(entry => {
+        if (entry.png) count++;
+        if (entry.svg) count++;
+      });
+      const el = document.getElementById('idb-logos-count');
+      if (el) el.textContent = `${count} logos binarios`;
+    }
+
+    function sanitizeSvgMarkup(rawSvg) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(rawSvg, 'image/svg+xml');
+      if (doc.querySelector('parsererror')) throw new Error('SVG inválido.');
+      const svgEl = doc.querySelector('svg');
+      if (!svgEl) throw new Error('Etiqueta <svg> no encontrada.');
+      svgEl.querySelectorAll('script, foreignObject, iframe, object, embed').forEach(el => el.remove());
+      svgEl.querySelectorAll('*').forEach(node => {
+        Array.from(node.attributes).forEach(attr => {
+          const n = attr.name.toLowerCase();
+          const v = attr.value.trim().toLowerCase();
+          if (n.startsWith('on') || v.startsWith('javascript:')) node.removeAttribute(attr.name);
+        });
+      });
+      return new XMLSerializer().serializeToString(svgEl);
+    }
+
+    // ==========================================================================
+    // 2. CATÁLOGO BASE v3.0 (4 VERTICALES LIMPIAS Y SIN RUIDO)
+    // ==========================================================================
+    const DEFAULT_ASSETS = [
+      // ==================== VERTICAL 1: CANALES DE CONTENIDO ====================
+      {
+        id: 'ch-codigo-humano',
+        vertical: 'canales',
+        name: 'Código Humano',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#neurociencia', '#tech-noir', '#elevenlabs'],
+        googleAccount: 'codigohumano.canal@gmail.com',
+        regPhone: '+52 442 000 0101',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@CodigoHumano' },
+        socialSecondary: [
+          { platform: 'TikTok', url: '@codigohumano.lab' },
+          { platform: 'Instagram', url: '@codigohumano.lab' }
+        ],
+        voiceId: 'HIkzxzvsigFIynXHHKhU',
+        voiceParams: 'Español neutro | Vel: 0.90–0.95 | Estab: 0.70 | Simil: 0.80',
+        aiTools: ['Gemini 2.5 Pro', 'Claude 3.7 Sonnet', 'ElevenLabs'],
+        palette: ['#0D1B2A', '#00C8D4', '#7B2FBE'],
+        fontPrimary: 'Plus Jakarta Sans Bold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans Regular',
+        brandElements: 'Escultura clásica en mármol griego gris oscuro con HUDs neurológicos en cian eléctrico y código binario.',
+        brandStyle: 'Tech-Noir científico riguroso ("sin neurohumo").',
+        stylelock: 'Hyper-realistic, deep-etch Tech-Noir visual identity across all assets. Strict 16:9 horizontal aspect ratio. Rigid color palette: Deep Navy (#0D1B2A) backgrounds, accented by glowing Electric Cyan (#00C8D4) and Neon Purple (#7B2FBE). ALL central subjects MUST be rendered as classical dark grey Greek marble sculptures with cold cyan/purple edge-glow and neurological HUDs.',
+        prompt: 'GUION CÓDIGO HUMANO — FENÓMENO: {{TEMA}}\n1. Gancho contraintuitivo (0:00-0:28)\n2. Desmontaje de mito pop\n3. Evidencia experimental (autor, año, institución)\n4. Matices críticos anti-sesgo\n5. Cierre + CTA.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['Código Humano'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-dinero-sin-censura',
+        vertical: 'canales',
+        name: 'Dinero sin Censura',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#finanzas-mx', '#art-deco', '#elevenlabs'],
+        googleAccount: 'dinerosincensura.mx@gmail.com',
+        regPhone: '+52 442 000 0102',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@DineroSinCensura' },
+        socialSecondary: [{ platform: 'TikTok', url: '@dinerosincensura' }],
+        voiceId: 'gbTn1bmCvNgk0QEAVyfM',
+        voiceParams: 'Voz Rodrigo/Diego | Vel: 0.94–1.05 | Acento MX/CO',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs'],
+        palette: ['#064E3B', '#D4AF37', '#0B0F19'],
+        fontPrimary: 'Cinzel Bold',
+        fontSecondary: 'Plus Jakarta Sans',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Escultura low-poly metálica en verde esmeralda y oro cepillado sobre planos Art Déco.',
+        brandStyle: 'Editorial financiero de lujo crítico y revelador.',
+        stylelock: 'Maintain the exact same artistic language across every illustration. Every object must be represented as a premium geometric low-poly sculpture with metallic materials, emerald green and brushed gold accents, architectural symmetry, centered pedestal composition, dark Art Deco blueprint background, floating technical diagrams.',
+        prompt: 'GUION DINERO SIN CENSURA — TEMA: {{TEMA}} | PAÍS: {{PAIS}}\n1. Hook disruptivo\n2. Falla estructural\n3. Cálculo real en moneda local\n4. Alternativas reguladas vigentes.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['Dinero sin Censura'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-mentes-que-producen',
+        vertical: 'canales',
+        name: 'Mentes que Producen',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#salud-laboral', '#nom-035', '#elevenlabs'],
+        googleAccount: 'mentesqueproducen@gmail.com',
+        regPhone: '+52 442 000 0103',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@MentesQueProducen' },
+        socialSecondary: [{ platform: 'LinkedIn', url: 'linkedin.com/company/mentes-que-producen' }],
+        voiceId: 'qRUgOhnxGASxirG4fKjv',
+        voiceParams: 'Voz Mateo | Acento MX/CO cálido y empático | Vel: 0.91–0.98',
+        aiTools: ['Gemini 2.5 Pro', 'Claude 3.7 Sonnet', 'ElevenLabs'],
+        palette: ['#0F766E', '#F97316', '#7E22CE'],
+        fontPrimary: 'Plus Jakarta Sans Bold',
+        fontSecondary: 'Plus Jakarta Sans SemiBold',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Silueta humana frente a interfaz transparente con cerebro dividido (red neuronal orgánica vs retícula hexagonal).',
+        brandStyle: 'Techno-Organic Flow con degradados vectoriales texturizados.',
+        stylelock: 'Techno-Organic Flow (textured vector gradients). Central human silhouette at a transparent interface with a large split brain hovering above (organic neural firing on left, hexagonal data grid on right). Swirling teal-to-orange-to-purple energy river below.',
+        prompt: 'GUION MENTES QUE PRODUCEN — CONDICIÓN: {{TEMA}}\n1. Escena laboral real\n2. Diagnóstico diferencial OMS/CIE-11\n3. Auditoría NOM-035\n4. Experimento 7 días.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['Mentes que Producen'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: 'Incluir línea de crisis 800 911 2000.'
+      },
+      {
+        id: 'ch-sin-letras-chiquitas',
+        vertical: 'canales',
+        name: 'Sin Letras Chiquitas',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#seguros', '#condusef', '#documental', '#elevenlabs'],
+        googleAccount: 'sinletraschiquitas.tv@gmail.com',
+        regPhone: '+52 442 000 0104',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@SinLetrasChiquitas' },
+        socialSecondary: [{ platform: 'TikTok', url: '@sinletraschiquitas' }],
+        voiceId: 'K2hxVAa7GXBUha4hWzV1',
+        voiceParams: 'Voz Eduardo (Mentor empático) | Corte directo al gancho',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs'],
+        palette: ['#1C1917', '#D97706', '#E7E5E4'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Fotografía documental realista en entornos urbanos mexicanos con luz natural dramática y grano cinematográfico.',
+        brandStyle: 'Fotografía Documental Hiperrealista Mexicana.',
+        stylelock: 'Hyper-realistic documentary photography aesthetic—NOT stock photo, NOT illustration. Authentic Mexican/Latina people with natural brown skin tones and serious investigative expressions. Dramatic natural light, desaturated warm tones, slight film grain, real urban Mexican environments.',
+        prompt: 'GUION SIN LETRAS CHIQUITAS — CONTRATO: {{PRODUCTO}}\n1. Escena financiera límite en MXN\n2. Traducción de argot legal\n3. Derechos CNSF / CONDUSEF\n4. Cláusula crítica + 3 preguntas filtro.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['Sin Letras Chiquitas'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-trabaja-menos-mejor',
+        vertical: 'canales',
+        name: 'Trabaja Menos y Mejor',
+        func: 'Stylelock Visual',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#productividad', '#glassmorphism', '#elevenlabs'],
+        googleAccount: 'trabajamenosymejor@gmail.com',
+        regPhone: '+52 442 000 0106',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@TrabajaMenosYMejor' },
+        socialSecondary: [],
+        voiceId: '6BEk9bRlUBhlAoIbhBYK',
+        voiceParams: 'Voz Alejandro/Ricardo | MX calmado y reflexivo | Vel: 0.93–1.05',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs', 'Flux.1 Dev'],
+        palette: ['#E8F5F3', '#2E9E90', '#C9A96E'],
+        fontPrimary: 'Plus Jakarta Sans Bold',
+        fontSecondary: 'Plus Jakarta Sans',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Cristal jade translúcido (#2E9E90), oro champán (#C9A96E) y degradado pearl-mint (#E8F5F3).',
+        brandStyle: 'Glassmorphism 3D Pearl-Mint / Jade / Champagne.',
+        stylelock: 'Premium 3D rendered illustration, soft glassmorphism materials, soft pearl-mint gradient background (#E8F5F3 to #F8FFFE), translucent jade-teal glass (#2E9E90), champagne gold details (#C9A96E), soft volumetric diffused light, NO hard shadows.',
+        prompt: 'GUION TRABAJA MENOS Y MEJOR — SISTEMA: {{TEMA}}\n1. Paradoja menos horas / más output\n2. Desmontaje jornada tradicional\n3. Arquitectura Deep Work + Ritual semanal.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Stylelock Visual', projects: ['Trabaja Menos y Mejor'], aiModel: 'Flux.1 Dev' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-negocios-autonomos',
+        vertical: 'canales',
+        name: 'Negocios Autónomos',
+        func: 'Stylelock Visual',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#automatizacion', '#isometrico', '#elevenlabs'],
+        googleAccount: 'negociosautonomos.ia@gmail.com',
+        regPhone: '+52 442 000 0107',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@NegociosAutonomos' },
+        socialSecondary: [],
+        voiceId: 'SDVJaMLoJa7wc3s2sn7d',
+        voiceParams: 'Voz Marcos/Luis | MX profesional dinámico | Vel: 1.05–1.12',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs'],
+        palette: ['#0D1B2A', '#00C8D4', '#7B2FBE', '#FF6B35'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Perspectiva isométrica estricta 30° Low-Poly con trazos PCB dorados y flujos de datos cian y naranja.',
+        brandStyle: 'Isométrico 30° Low-Poly Navy / Cian / Púrpura / Naranja.',
+        stylelock: 'Strict 30-degree isometric perspective, 3D low-poly geometric shapes with flat shading, deep navy blue (#0D1B2A) background with dark gold PCB traces, neon purple (#7B2FBE) AI accents, electric cyan (#00C8D4) data flows, vibrant orange (#FF6B35) focal elements.',
+        prompt: 'GUION NEGOCIOS AUTÓNOMOS — FLUJO: {{FLUJO}}\n1. Tiempo manual vs automatizado\n2. Stack gratuito\n3. Los primeros 7 minutos tras capturar un lead.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Stylelock Visual', projects: ['Negocios Autónomos'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-efecto-colateral',
+        vertical: 'canales',
+        name: 'Efecto Colateral',
+        func: 'Investigación Forense',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#investigacion-forense', '#hibrido-9-16-16-9', '#documental'],
+        googleAccount: 'efectocolateral.investigacion@gmail.com',
+        regPhone: '+52 442 000 0109',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@EfectoColateral' },
+        socialSecondary: [
+          { platform: 'TikTok', url: '@efectocolateral.doc' },
+          { platform: 'Instagram', url: '@efectocolateral.doc' }
+        ],
+        voiceId: '',
+        voiceParams: 'Tono documental de investigación forense | Ritmo pausado y preciso',
+        aiTools: ['Gemini 2.5 Pro', 'Claude 3.7 Sonnet'],
+        palette: ['#0B0E14', '#E11D48', '#F59E0B', '#94A3B8'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Sistema híbrido multi-formato: 4 cápsulas verticales (9:16) de impacto + 1 Dossier Maestro horizontal (16:9) con mapas de evidencia forense.',
+        brandStyle: 'Sistema híbrido 4 verticales 9:16 + 1 Dossier 16:9, evidencia forense.',
+        stylelock: 'Forensic documentary investigation aesthetic. Dark slate evidence board (#0B0E14), archival documents with crimson red marker highlights (#E11D48), amber timeline nodes (#F59E0B), monospace telemetry overlays, high-contrast editorial lighting. Supports 9:16 vertical short capsules and 16:9 master dossier layouts.',
+        prompt: 'SISTEMA HÍBRIDO EFECTO COLATERAL — CASO: {{CASO_FORENSE}}\n- 4 Verticales 9:16 (Gancho documental, Dato oculto, Conexión financiera, Pregunta abierta)\n- 1 Dossier 16:9 (Cronología completa, actores, evidencia documental verificable).',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Códice', usedFor: 'Investigación Forense', projects: ['Efecto Colateral'], aiModel: 'Claude 3.7 Sonnet' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-software-que-vende',
+        vertical: 'canales',
+        name: 'Software que Vende',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#saas', '#pixel-art', '#elevenlabs'],
+        googleAccount: 'softwarequevende@gmail.com',
+        regPhone: '+52 442 000 0105',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@SoftwareQueVende' },
+        socialSecondary: [{ platform: 'TikTok', url: '@softwarequevende' }],
+        voiceId: 'y2ijeTfmnXjzheHO6zeN',
+        voiceParams: 'Voz Sebastián/Carlos | MX tech-neutral | Vel: 1.06–1.12',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs'],
+        palette: ['#121212', '#D9383A', '#2ECC71', '#F1C40F'],
+        fontPrimary: 'Press Start 2P',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Ventana terminal blanca sobre fondo negro mate con partículas píxel y semáforo ROI.',
+        brandStyle: 'Neo-Retro Pixel Art UI (Interfaz Arcade Oscura).',
+        stylelock: 'Neo-Retro Pixel Art UI (Estética de Interfaz Arcade en Modo Oscuro #121212). Ventana flotante tipo terminal blanca (#FFFFFF) con barra superior oscura (#1E1E1E), acentos rojo carmesí (#D9383A), verde esmeralda (#2ECC71) y dorado (#F1C40F).',
+        prompt: 'GUION SOFTWARE QUE VENDE — HERRAMIENTA: {{SOFTWARE}}\n1. Hook económico directo\n2. 3 usos que hacen dinero\n3. 2 fallas reales\n4. Costo real [+] vs [-]\n5. Veredicto ROI.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['Software que Vende'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'ch-quien-lo-invento',
+        vertical: 'canales',
+        name: '¿Quién lo Inventó?',
+        func: 'Guionización',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#historia-tecnologia', '#patentes', '#elevenlabs'],
+        googleAccount: 'quienloinvento.tv@gmail.com',
+        regPhone: '+52 442 000 0110',
+        socialMain: { platform: 'YouTube', url: 'https://youtube.com/@QuienLoInvento' },
+        socialSecondary: [{ platform: 'TikTok', url: '@quienloinvento' }],
+        voiceId: 'spPXlKT5a4JMfbhPRAzA',
+        voiceParams: 'Voz narrativa histórica | Vel: 0.96–1.04 | Claridad documental',
+        aiTools: ['Gemini 2.5 Pro', 'ElevenLabs'],
+        palette: ['#1E1B18', '#D97706', '#38BDF8'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Planos de patente vintage combinados con renders modernos de ingeniería.',
+        brandStyle: 'Crónica histórica de inventos, patentes olvidadas y disputas reales.',
+        stylelock: 'Split-era engineering illustration: vintage sepia patent blueprint schematics transitioning seamlessly into modern photorealistic industrial 3D cutaway render, warm amber highlights (#D97706) and cyan technical callouts (#38BDF8) on dark charcoal background (#1E1B18).',
+        prompt: 'GUION ¿QUIÉN LO INVENTÓ? — INVENTO: {{INVENTO}}\n1. Gancho sobre el mito atribuido\n2. El inventor real olvidado y su patente\n3. El conflicto comercial o robo intelectual\n4. Impacto hoy.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Guionización', projects: ['¿Quién lo Inventó?'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+
+      // ==================== VERTICAL 2: CLIENTES, DISEÑO & WEB =================
+      {
+        id: 'cli-jf-construcciones',
+        vertical: 'clientes',
+        name: 'JF Construcciones',
+        func: 'Brand Kit & Diseño',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'cliente',
+        tags: ['#cliente-agencia', '#construccion', '#ads-mx'],
+        googleAccount: 'contacto@jfconstrucciones.mx',
+        regPhone: '+52 442 210 8890',
+        socialMain: { platform: 'Facebook', url: 'https://facebook.com/JFConstruccionesQro' },
+        socialSecondary: [
+          { platform: 'Instagram', url: '@jfconstrucciones.mx' },
+          { platform: 'LinkedIn', url: 'linkedin.com/company/jf-construcciones' }
+        ],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Gemini 2.5 Pro', 'Midjourney v6.1'],
+        palette: ['#1E293B', '#EA580C', '#F8FAFC', '#0F172A'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans Regular',
+        brandElements: 'Isotipo estructural de vigas en perspectiva; retícula modular de 12 columnas; prohibido deformar proporciones.',
+        brandStyle: 'Ingeniería civil contemporánea, solidez industrial y alto contraste.',
+        stylelock: '',
+        prompt: 'CAMPAÑA META ADS — JF CONSTRUCCIONES\nSERVICIO: {{SERVICIO_OBRA}}\nZONA: {{ZONA}}\nGenera 3 anuncios con CTA directo a WhatsApp Business.',
+        links: { drive: 'https://drive.google.com/drive/folders/1_HUWKzvQuhmrUSOW1GCH_rSec1SX81Xf', terabox: 'https://terabox.com/', other: '' },
+        contact: { name: 'Ing. Javier Flores', phone: '+52 442 210 8890' },
+        ads: {
+          phone: '+52 442 210 8890',
+          line1: '442 210 8890',
+          line2: '442 210 8891',
+          whatsapp: '+52 1 442 345 6789',
+          addr1: 'Av. Constituyentes 410, Int. 3, Col. El Marqués, Querétaro, Qro.',
+          addr2: 'Patio de Maquinaria: Carretera Estatal 200 Km 12, El Marqués, Qro.'
+        },
+        infra: {
+          website: 'https://jfconstrucciones.mx',
+          hosting: 'Vercel Pro (Cuenta Agencia)',
+          domainProvider: 'Porkbun',
+          renewal: '18 Oct 2027',
+          regAccount: 'infraestructura@iasinaptica.com',
+          siteNotes: 'Landing page de captación conectada a WhatsApp Business y webhook CRM.',
+          cloudServices: [
+            { service: 'Vercel Hosting (Producción)', account: 'infraestructura@iasinaptica.com', owner: 'mio' },
+            { service: 'Meta Ads Manager (Facturación Cliente)', account: 'contacto@jfconstrucciones.mx', owner: 'cliente' },
+            { service: 'Google Cloud Storage (Renders & Planos)', account: 'infraestructura@iasinaptica.com', owner: 'mio' }
+          ]
+        },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Brand Kit & Diseño', projects: ['JF Construcciones'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'cli-vida-animal',
+        vertical: 'clientes',
+        name: 'Vida Animal — Clínica & Bienestar',
+        func: 'Desarrollo Web / UI',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'cliente',
+        tags: ['#cliente-agencia', '#veterinaria', '#google-ads'],
+        googleAccount: 'administracion@vidaanimal.mx',
+        regPhone: '+52 442 555 0199',
+        socialMain: { platform: 'Instagram', url: 'https://instagram.com/vidaanimal.qro' },
+        socialSecondary: [
+          { platform: 'Facebook', url: 'facebook.com/VidaAnimalQro' },
+          { platform: 'TikTok', url: '@vidaanimal.tips' }
+        ],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Gemini 2.5 Pro', 'Cursor AI'],
+        palette: ['#065F46', '#F59E0B', '#ECFDF5', '#1F2937'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'Plus Jakarta Sans SemiBold',
+        fontBody: 'Plus Jakarta Sans Regular',
+        brandElements: 'Emblema orgánico de hoja y silueta canina/felina en trazo continuo sobre fondos claros #ECFDF5.',
+        brandStyle: 'Clínico-profesional, cálido y confiable.',
+        stylelock: '',
+        prompt: 'GOOGLE ADS BÚSQUEDA LOCAL — VIDA ANIMAL\nESPECIALIDAD: {{ESPECIALIDAD}}\nRedacta 5 títulos (máx 30 chars) y 3 descripciones (máx 90 chars).',
+        links: { drive: 'https://drive.google.com/', terabox: '', other: '' },
+        contact: { name: 'Dra. Mariana Solís', phone: '+52 442 555 0199' },
+        ads: {
+          phone: '+52 442 555 0199',
+          line1: '442 555 0199',
+          line2: '442 555 0200 (Urgencias 24h)',
+          whatsapp: '+52 1 442 555 0200',
+          addr1: 'Blvd. Jurica La Campana 890, Jurica, Querétaro, Qro.',
+          addr2: 'Sucursal Milenio III: Camino Real de Carretas 215, Querétaro, Qro.'
+        },
+        infra: {
+          website: 'https://vidaanimal.mx',
+          hosting: 'Hostinger Cloud Startup',
+          domainProvider: 'GoDaddy',
+          renewal: '04 Mar 2027',
+          regAccount: 'administracion@vidaanimal.mx',
+          siteNotes: 'Sitio web con agendamiento de citas y Google Business Profile verificado en ambas sucursales.',
+          cloudServices: [
+            { service: 'Hostinger Cloud + Correos', account: 'administracion@vidaanimal.mx', owner: 'cliente' },
+            { service: 'Google Ads & Google Business Profile', account: 'administracion@vidaanimal.mx', owner: 'cliente' }
+          ]
+        },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Desarrollo Web / UI', projects: ['Vida Animal'], aiModel: 'Cursor AI' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+      {
+        id: 'cli-ia-sinaptica-wacha',
+        vertical: 'clientes',
+        name: 'IA Sináptica Estudio / Wacha MultimedIA',
+        func: 'Desarrollo Web / UI',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#agencia-propia', '#vercel', '#google-cloud', '#brand-kit'],
+        googleAccount: 'infraestructura@iasinaptica.com',
+        regPhone: '+52 442 000 0100',
+        socialMain: { platform: 'LinkedIn', url: 'https://linkedin.com/company/iasinaptica' },
+        socialSecondary: [
+          { platform: 'YouTube', url: 'https://youtube.com/@IASinaptica' },
+          { platform: 'Instagram', url: '@wachamultimedia' }
+        ],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Gemini 2.5 Pro', 'Claude 3.7 Sonnet', 'DeepSeek R1 / 7B (Ollama)', 'Cursor AI'],
+        palette: ['#0B0E14', '#14B8A6', '#F59E0B', '#F8FAFC'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans Regular',
+        brandElements: 'Nodo sináptico geométrico + retícula técnica de precisión quirúrgica sobre obsidiana.',
+        brandStyle: 'Estudio de arquitectura digital, automatización IA y producción multimedia de alto contraste.',
+        stylelock: '',
+        prompt: 'AUDITORÍA DE ARQUITECTURA CLOUD & WEB — IA SINÁPTICA\nPROYECTO: {{PROYECTO}}\nVerifica DNS, buckets GCS, permisos IAM y rendimiento Core Web Vitals.',
+        links: { drive: '', terabox: '', other: 'https://iasinaptica.com' },
+        contact: { name: 'Dirección Estudio (Propia)', phone: '+52 442 000 0100' },
+        ads: {
+          phone: '+52 442 000 0100',
+          line1: '442 000 0100',
+          line2: '',
+          whatsapp: '+52 1 442 000 0100',
+          addr1: 'Santiago de Querétaro, Querétaro, México',
+          addr2: ''
+        },
+        infra: {
+          website: 'https://iasinaptica.com',
+          hosting: 'Vercel Pro + Cloudflare DNS',
+          domainProvider: 'Porkbun',
+          renewal: '22 Ene 2028',
+          regAccount: 'infraestructura@iasinaptica.com',
+          siteNotes: 'Hub principal de la agencia, portafolio, blog técnico de indicadores IA y herramientas CreativeOps.',
+          cloudServices: [
+            { service: 'Google Cloud Storage — Bucket: nexus-studio-assets', account: 'infraestructura@iasinaptica.com', owner: 'mio' },
+            { service: 'Vercel Pro Team (Despliegues Clientes)', account: 'infraestructura@iasinaptica.com', owner: 'mio' },
+            { service: 'Google Ads MCC (Administrador Agencia)', account: 'infraestructura@iasinaptica.com', owner: 'mio' }
+          ]
+        },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: { type: 'Skill', usedFor: 'Desarrollo Web / UI', projects: ['IA Sináptica Estudio'], aiModel: 'Gemini 2.5 Pro' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+
+      // ==================== VERTICAL 3: MÚSICA & AUDIO (SONIDO DECRÉPITO) ======
+      {
+        id: 'mus-sonido-decrepito',
+        vertical: 'musica_audio',
+        name: 'Sonido Decrépito / Míster Decrépito',
+        func: 'Masterización Audio',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#sonido-decrepito', '#cumbias-cinematicas', '#masterizacion', '#bandcamp'],
+        googleAccount: 'sonidodecrepito@gmail.com',
+        regPhone: '+52 442 000 0108',
+        socialMain: { platform: 'Bandcamp', url: 'https://sonidodecrepito.bandcamp.com' },
+        socialSecondary: [
+          { platform: 'YouTube', url: 'https://youtube.com/@SonidoDecrepito' },
+          { platform: 'Spotify', url: 'open.spotify.com/artist/sonidodecrepito' },
+          { platform: 'TikTok', url: '@sonidodecrepito' }
+        ],
+        voiceId: '2ExTicPozzTIuVQRluHJ',
+        voiceParams: 'Voz Míster Decrépito | Pregón oscuro grave con textura analógica de cinta',
+        aiTools: ['Suno / Udio', 'ElevenLabs', 'Midjourney v6.1'],
+        palette: ['#18181B', '#F43F5E', '#FACC15'],
+        fontPrimary: 'Plus Jakarta Sans ExtraBold',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: 'Estética de vinilo vintage desgastado, neón carmesí y hardware analógico nocturno.',
+        brandStyle: 'Noir tropical, cumbia rebajada cinemática y saturación de cinta.',
+        stylelock: 'Cinematic dark tropical noir album artwork, vintage worn vinyl sleeve aesthetic, deep obsidian shadows (#18181B), crimson rose neon highlights (#F43F5E), warm analog gold (#FACC15), 35mm film grain, moody streetlamps and retro sound system hardware.',
+        prompt: 'ARTE & VISUAL SONORO — SONIDO DECRÉPITO\nTRACK: {{TRACK_NAME}} | ÁLBUM: Cumbias Cinemáticas\nGenera portada de vinilo y loop visual 16:9 con atmósfera noir tropical.',
+        links: { drive: '', terabox: '', other: 'https://sonidodecrepito.bandcamp.com' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: {
+          album: 'Cumbias Cinemáticas',
+          bpm: '86–92 BPM | Dm / Am',
+          lufs: '-11.5 LUFS Integrados | -1.0 dBTP True Peak',
+          chain: '1. EQ Sustractiva: Paso-alto 28Hz (24dB/oct), corte quirúrgico 260Hz para liberar bajo y güiro.\n2. Saturación de cinta analógica: Armónicos pares suaves (15% mix).\n3. Compresión Bus: Ratio 2:1, ataque lento 30ms, release auto.\n4. Limitador True Peak: Techo estricto -1.0 dBTP para streaming y vinilo.'
+        },
+        indicatorMeta: { type: 'Prompt', usedFor: 'Masterización Audio', projects: ['Sonido Decrépito'], aiModel: 'Suno / Udio' },
+        blogGuide: '',
+        privateNotes: ''
+      },
+
+      // ==================== VERTICAL 4: INDICADORES (EXCLUSIVO CÓDICES, SKILLS, HABILIDADES & PROMPTS) ====================
+      {
+        id: 'ind-codice-cbdv',
+        vertical: 'indicadores',
+        name: 'Códice Maestro C.B.D.V. — Detección de Demanda Viral',
+        func: 'SEO / Virales',
+        status: 'Activo',
+        visibility: 'publico',
+        ownership: 'mio',
+        tags: ['#codice', '#demanda-viral', '#investigacion'],
+        googleAccount: '',
+        regPhone: '',
+        socialMain: { platform: 'YouTube', url: '' },
+        socialSecondary: [],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Gemini 2.5 Pro'],
+        palette: ['#0B0E14', '#14B8A6', '#F59E0B'],
+        fontPrimary: 'Plus Jakarta Sans',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: '',
+        brandStyle: 'Protocolo de investigación de fricciones reales y brechas Free vs Pro.',
+        stylelock: '',
+        prompt: 'EJECUTA CÓDICE C.B.D.V. (DETECCIÓN DE DEMANDA VIRAL Y FRICCIONES DE USO):\nNICHO / CATEGORÍA: {{CATEGORIA}}\nMERCADO OBJETIVO: {{MERCADO}}\n\n1. RASTREO DE FRICCIONES REALES: Identifica las 3 herramientas o temas con mayor volumen de dudas reales, quejas de facturación o límites ocultos.\n2. FILTRO ANTI-HYPE: Elimina afirmaciones promocionales sin respaldo.\n3. EXTRACCIÓN ESTRUCTURADA:\n   - Gancho viral basado en la duda más buscada.\n   - 3 usos concretos que generan ingresos o ahorran tiempo.\n   - 2 fallas reales o letras chiquitas.\n   - Costo real: Versión Completa [+] vs Versión Gratuita [-].',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: {
+          type: 'Códice',
+          usedFor: 'SEO / Virales',
+          projects: ['Software que Vende', 'Dinero sin Censura', 'Transversal / Todos'],
+          aiModel: 'Gemini 2.5 Pro'
+        },
+        blogGuide: 'Códice diseñado para detectar oportunidades de contenido con alta intención de búsqueda antes de redactar un guion o artículo técnico.',
+        privateNotes: ''
+      },
+      {
+        id: 'ind-skill-auditoria-sesgos',
+        vertical: 'indicadores',
+        name: 'Skill: Auditoría Científica y Triangulación Anti-Sesgos',
+        func: 'Auditoría de Sesgos',
+        status: 'Activo',
+        visibility: 'publico',
+        ownership: 'mio',
+        tags: ['#skill', '#anti-sesgos', '#rigor-cientifico'],
+        googleAccount: '',
+        regPhone: '',
+        socialMain: { platform: 'YouTube', url: '' },
+        socialSecondary: [],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Claude 3.7 Sonnet', 'Gemini 2.5 Pro'],
+        palette: ['#0B0E14', '#8B5CF6', '#14B8A6'],
+        fontPrimary: 'Plus Jakarta Sans',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: '',
+        brandStyle: 'Skill de verificación documental y separación estricta entre consenso, contexto y especulación.',
+        stylelock: '',
+        prompt: 'ACTIVA SKILL DE AUDITORÍA ANTI-SESGOS SOBRE: {{AFIRMACION_O_GUION}}\n\nREGLAS DE EJECUCIÓN:\n1. VERIFICACIÓN DE FUENTES PRIMARIAS: Exige autor, año, institución y tamaño de muestra. Si un estudio es solo correlacional, prohíbe presentarlo como causalidad.\n2. MATRIZ DE CERTEZA:\n   - [DEMOSTRADO]: Qué respalda la evidencia replicada.\n   - [CONDICIONAL]: Qué depende del contexto socioeconómico, clínico o regulatorio en {{PAIS}}.\n   - [NO DEMOSTRADO / HYPE]: Qué afirmaciones deben eliminarse o matizarse.\n3. REESCRITURA QUIRÚRGICA: Entrega el párrafo corregido manteniendo gancho narrativo sin sacrificar rigor.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: {
+          type: 'Skill',
+          usedFor: 'Auditoría de Sesgos',
+          projects: ['Código Humano', 'Efecto Colateral', 'Mentes que Producen'],
+          aiModel: 'Claude 3.7 Sonnet'
+        },
+        blogGuide: 'Skill reutilizable para auditar cualquier borrador de investigación o guion divulgativo y eliminar afirmaciones exageradas.',
+        privateNotes: ''
+      },
+      {
+        id: 'ind-habilidad-forense-local',
+        vertical: 'indicadores',
+        name: 'Habilidad: Extracción Documental y Cronología Forense',
+        func: 'Investigación Forense',
+        status: 'Activo',
+        visibility: 'privado',
+        ownership: 'mio',
+        tags: ['#habilidad', '#ollama', '#deepseek', '#forense'],
+        googleAccount: '',
+        regPhone: '',
+        socialMain: { platform: 'YouTube', url: '' },
+        socialSecondary: [],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['DeepSeek R1 / 7B (Ollama)'],
+        palette: ['#0B0E14', '#F59E0B', '#EF4444'],
+        fontPrimary: 'Plus Jakarta Sans',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: '',
+        brandStyle: 'Habilidad optimizada para ejecución local sin fuga de datos sensibles.',
+        stylelock: '',
+        prompt: 'HABILIDAD DE EXTRACCIÓN FORENSE LOCAL\nDOCUMENTO / EXPEDIENTE: {{TEXTO_DOCUMENTO}}\n\n1. Extrae todas las fechas exactas en formato ISO (AAAA-MM-DD) y ordénalas cronológicamente.\n2. Lista entidades, empresas, contratos o montos mencionados.\n3. Señala contradicciones internas o vacíos de información entre páginas.\n4. Genera resumen ejecutivo en 5 viñetas verificables.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: {
+          type: 'Habilidad',
+          usedFor: 'Investigación Forense',
+          projects: ['Efecto Colateral', 'Sin Letras Chiquitas'],
+          aiModel: 'DeepSeek R1 / 7B (Ollama)'
+        },
+        blogGuide: '',
+        privateNotes: 'Ejecutar localmente en Ollama para documentos confidenciales.'
+      },
+      {
+        id: 'ind-prompt-auditoria-seguridad-web',
+        vertical: 'indicadores',
+        name: 'Prompt: Hardening & Auditoría de Seguridad App Web / Cloud',
+        func: 'Ciberseguridad',
+        status: 'Activo',
+        visibility: 'publico',
+        ownership: 'mio',
+        tags: ['#prompt', '#ciberseguridad', '#owasp', '#cloud'],
+        googleAccount: '',
+        regPhone: '',
+        socialMain: { platform: 'YouTube', url: '' },
+        socialSecondary: [],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: ['Gemini 2.5 Pro', 'Claude 3.7 Sonnet'],
+        palette: ['#0B0E14', '#14B8A6', '#8B5CF6'],
+        fontPrimary: 'Plus Jakarta Sans',
+        fontSecondary: 'JetBrains Mono',
+        fontBody: 'Plus Jakarta Sans',
+        brandElements: '',
+        brandStyle: 'Auditoría defensiva de vectores XSS, sanitización SVG y permisos IAM en Cloud.',
+        stylelock: '',
+        prompt: 'AUDITORÍA DEFENSIVA DE SEGURIDAD — PROYECTO: {{NOMBRE_PROYECTO}}\nSTACK: {{STACK_TECNICO}}\n\nEvalúa y entrega checklist accionable sobre:\n1. Sanitización de entradas de usuario y archivos SVG/JSON (prevención de XSS almacenado).\n2. Políticas CORS, cabeceras CSP y aislamiento de secretos/API Keys.\n3. Revisión de privilegios mínimos (IAM) en buckets de almacenamiento Cloud y despliegues serverless.',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: {
+          type: 'Prompt',
+          usedFor: 'Ciberseguridad',
+          projects: ['IA Sináptica Estudio', 'Transversal / Todos'],
+          aiModel: 'Gemini 2.5 Pro'
+        },
+        blogGuide: 'Prompt de revisión defensiva previo a pasar a producción cualquier aplicación web o bucket en la nube.',
+        privateNotes: ''
+      }
+    ];
+
+    // Estado de la aplicación
+    let assets = [];
+    let currentVertical = 'all';
+    let currentProjectPill = '';
+    let editorPalette = [];
+    let editorSocialSecondary = [];
+    let editorCloudServices = [];
+    let editorAiTools = [];
+    let currentExecutingAsset = null;
+    let logoBgDark = false;
+    let lastMoveSnapshot = null; // Para botón "Deshacer" tras "Mover a: ___"
+
+    // ==========================================================================
+    // 3. PERSISTENCIA HÍBRIDA & BACKUP
+    // ==========================================================================
+    function loadAssets() {
+      try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            assets = parsed;
+            return;
+          }
+        }
+      } catch (e) {}
+      assets = JSON.parse(JSON.stringify(DEFAULT_ASSETS));
+      saveAssets(false);
+    }
+
+    function saveAssets(pulse = true) {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(assets));
+        updateStatsAndProjectPills();
+        if (pulse) {
+          const label = document.getElementById('sync-label');
+          const dot = document.getElementById('sync-dot');
+          label.textContent = 'Guardado en LS + IDB';
+          dot.classList.replace('bg-emeraldOk', 'bg-tealSurgical');
+          setTimeout(() => {
+            label.textContent = 'LS + IndexedDB Sincronizado';
+            dot.classList.replace('bg-tealSurgical', 'bg-emeraldOk');
+          }, 1300);
+        }
+      } catch (e) {
+        showToast('Error al guardar en LocalStorage', 'error');
+      }
+    }
+
+    async function exportFullBackup() {
+      await loadAllLogosFromIDB();
+      const payload = {
+        app: 'NEXUS STUDIO OS v3.0',
+        exportedAt: new Date().toISOString(),
+        assets: assets,
+        binaryLogos: logosCache
+      };
+      triggerDownload(JSON.stringify(payload, null, 2), `nexus-studio-os-v3-backup-${new Date().toISOString().slice(0, 10)}.json`, 'application/json');
+      showToast(`Respaldo completo exportado (${assets.length} fichas + logos binarios)`);
+    }
+
+    function handleImportFullBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          const importedAssets = Array.isArray(parsed) ? parsed : parsed.assets;
+          if (!Array.isArray(importedAssets)) throw new Error('Archivo JSON no válido.');
+          assets = importedAssets;
+          saveAssets();
+
+          if (parsed.binaryLogos && typeof parsed.binaryLogos === 'object') {
+            for (const [assetId, logoObj] of Object.entries(parsed.binaryLogos)) {
+              await saveLogoToIDB(assetId, logoObj.png || null, logoObj.svg || null);
+            }
+          }
+          renderWorkspace();
+          showToast(`Respaldo restaurado (${assets.length} fichas)`);
+        } catch (err) {
+          showToast(`Error al importar: ${err.message}`, 'error');
+        }
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    function openRestoreDefaultsModal() {
+      openConfirmDialog(
+        'Restaurar catálogo base v3.0',
+        'Se restaurarán los expedientes base de tus 4 verticales (Canales, Clientes, Música & Audio e Indicadores). Exporta tu respaldo .json antes si deseas conservar ediciones.',
+        () => {
+          assets = JSON.parse(JSON.stringify(DEFAULT_ASSETS));
+          saveAssets();
+          renderWorkspace();
+          showToast('Catálogo base v3.0 restaurado');
+        }
+      );
+    }
+
+    // ==========================================================================
+    // 4. FUNCIÓN UNIVERSAL "MOVER A: ___" CON REASIGNACIÓN SIN PÉRDIDA + DESHACER
+    // ==========================================================================
+    function moveAssetToVertical(assetId, targetVertical, reopenEditor = false) {
+      const idx = assets.findIndex(a => a.id === assetId);
+      if (idx === -1) return;
+
+      const item = assets[idx];
+      const previousVertical = item.vertical;
+      if (previousVertical === targetVertical) return;
+
+      // Guardar instantánea exacta para el botón "Deshacer"
+      lastMoveSnapshot = {
+        assetId: item.id,
+        previousState: JSON.parse(JSON.stringify(item)),
+        fromLabel: VERTICAL_NAMES[previousVertical] || previousVertical,
+        toLabel: VERTICAL_NAMES[targetVertical] || targetVertical
+      };
+
+      // Migrar conservando todos los campos comunes e inicializando estructura destino
+      const migrated = {
+        ...item,
+        vertical: targetVertical,
+        socialMain: item.socialMain || { platform: targetVertical === 'musica_audio' ? 'Bandcamp' : 'YouTube', url: '' },
+        socialSecondary: Array.isArray(item.socialSecondary) ? item.socialSecondary : [],
+        palette: Array.isArray(item.palette) ? item.palette : [],
+        links: item.links || { drive: '', terabox: '', other: '' },
+        contact: item.contact || { name: '', phone: '' },
+        ads: item.ads || { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: item.infra || { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: item.audioSpec || { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: item.indicatorMeta || {
+          type: 'Prompt',
+          usedFor: item.func || 'Guionización',
+          projects: [item.name],
+          aiModel: (item.aiTools && item.aiTools[0]) || 'Gemini 2.5 Pro'
+        }
+      };
+
+      // Ajustar valores por defecto inteligentes si el destino es INDICADORES o MÚSICA
+      if (targetVertical === 'indicadores') {
+        if (!migrated.indicatorMeta.projects || migrated.indicatorMeta.projects.length === 0) {
+          migrated.indicatorMeta.projects = ['Transversal / Todos'];
+        }
+        if (!migrated.indicatorMeta.usedFor) {
+          migrated.indicatorMeta.usedFor = migrated.func || 'Investigación Forense';
+        }
+      } else if (targetVertical === 'musica_audio') {
+        migrated.func = 'Masterización Audio';
+      }
+
+      assets[idx] = migrated;
+      saveAssets();
+      renderWorkspace();
+
+      if (reopenEditor) {
+        openEditorModal(assetId);
+      }
+
+      showUndoToast(
+        `Movido "${migrated.name}" → ${VERTICAL_NAMES[targetVertical]}`,
+        () => undoLastMove()
+      );
+    }
+
+    function undoLastMove() {
+      if (!lastMoveSnapshot) return;
+      const idx = assets.findIndex(a => a.id === lastMoveSnapshot.assetId);
+      if (idx !== -1) {
+        assets[idx] = lastMoveSnapshot.previousState;
+        saveAssets();
+        renderWorkspace();
+        if (!document.getElementById('modal-editor').classList.contains('hidden')) {
+          openEditorModal(lastMoveSnapshot.assetId);
+        }
+        showToast(`Movimiento deshecho: restaurado en ${lastMoveSnapshot.fromLabel}`);
+      }
+      lastMoveSnapshot = null;
+    }
+
+    function handleMoveFromEditor(newVertical) {
+      const assetId = document.getElementById('ed-id').value;
+      if (!assetId) return;
+      // Primero guardamos los cambios actuales del formulario antes de mover
+      saveAssetFromEditor(false);
+      moveAssetToVertical(assetId, newVertical, true);
+    }
+
+    // ==========================================================================
+    // 5. FILTRADO CRUZADO Y RENDERIZADO DE LAS 4 VERTICALES
+    // ==========================================================================
+    function setFilterVertical(v) {
+      currentVertical = v;
+      document.querySelectorAll('.v-tab').forEach(btn => {
+        if (btn.dataset.v === v) {
+          btn.classList.add('bg-tealSurgical/15', 'border-tealSurgical', 'text-white');
+          btn.classList.remove('bg-obsidian', 'border-borderTech', 'text-slate-400');
+        } else {
+          btn.classList.remove('bg-tealSurgical/15', 'border-tealSurgical', 'text-white');
+          btn.classList.add('bg-obsidian', 'border-borderTech', 'text-slate-400');
+        }
+      });
+      renderWorkspace();
+    }
+
+    function toggleProjectPill(proj) {
+      currentProjectPill = currentProjectPill === proj ? '' : proj;
+      renderWorkspace();
+    }
+
+    function clearSearch() {
+      document.getElementById('global-search').value = '';
+      renderWorkspace();
+    }
+
+    function resetAllFilters() {
+      currentVertical = 'all';
+      currentProjectPill = '';
+      document.getElementById('global-search').value = '';
+      document.getElementById('filter-ind-type').value = 'all';
+      document.getElementById('filter-function').value = 'all';
+      document.getElementById('filter-ai-model').value = 'all';
+      document.getElementById('filter-ownership').value = 'all';
+      setFilterVertical('all');
+    }
+
+    function updateStatsAndProjectPills() {
+      document.getElementById('total-assets-count').textContent = `${assets.length} fichas`;
+
+      const counts = {
+        all: assets.length,
+        canales: assets.filter(a => a.vertical === 'canales').length,
+        clientes: assets.filter(a => a.vertical === 'clientes').length,
+        musica_audio: assets.filter(a => a.vertical === 'musica_audio').length,
+        indicadores: assets.filter(a => a.vertical === 'indicadores').length
+      };
+
+      document.querySelectorAll('.v-tab').forEach(btn => {
+        const badge = btn.querySelector('.v-count');
+        if (badge) badge.textContent = counts[btn.dataset.v] ?? 0;
+      });
+
+      // Construir nube de Proyectos aplicados (útil especialmente para filtrar Indicadores por Proyecto)
+      const projSet = new Set();
+      assets.forEach(a => {
+        if (a.vertical !== 'indicadores') projSet.add(a.name);
+        if (a.indicatorMeta && Array.isArray(a.indicatorMeta.projects)) {
+          a.indicatorMeta.projects.forEach(p => { if (p.trim()) projSet.add(p.trim()); });
+        }
+      });
+
+      const cloud = document.getElementById('projects-cloud');
+      cloud.innerHTML = `<span class="text-[11px] font-mono text-slate-500 shrink-0 mr-1">Filtrar por Proyecto:</span>`;
+      Array.from(projSet).slice(0, 14).forEach(proj => {
+        const active = currentProjectPill === proj;
+        const btn = document.createElement('button');
+        btn.onclick = () => toggleProjectPill(proj);
+        btn.className = active
+          ? 'px-2.5 py-1 rounded-md text-[11px] font-mono bg-amberSurgical text-obsidian font-bold shrink-0 transition'
+          : 'px-2.5 py-1 rounded-md text-[11px] font-mono bg-obsidian hover:bg-elevated border border-borderTech text-slate-400 hover:text-slate-200 shrink-0 transition';
+        btn.textContent = proj;
+        cloud.appendChild(btn);
+      });
+    }
+
+    function getVerticalVisualStyle(v) {
+      switch (v) {
+        case 'canales':
+          return { label: 'Canal de Contenido', cls: 'text-tealSurgical bg-tealSurgical/10 border-tealSurgical/30' };
+        case 'clientes':
+          return { label: 'Cliente, Diseño & Web', cls: 'text-amberSurgical bg-amberSurgical/10 border-amberSurgical/30' };
+        case 'musica_audio':
+          return { label: 'Música & Audio', cls: 'text-roseAudio bg-roseAudio/10 border-roseAudio/30' };
+        case 'indicadores':
+          return { label: 'INDICADOR IA', cls: 'text-violetInd bg-violetInd/10 border-violetInd/30' };
+        default:
+          return { label: v, cls: 'text-slate-300 bg-slate-800 border-slate-700' };
+      }
+    }
+
+    function highlightVars(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\{\{([A-Z0-9_]+)\}\}/g, '<span class="var-token">{{$1}}</span>');
+    }
+
+    function renderWorkspace() {
+      updateStatsAndProjectPills();
+      const q = document.getElementById('global-search').value.trim().toLowerCase();
+      document.getElementById('clear-search-btn').classList.toggle('hidden', q.length === 0);
+
+      const indTypeFilter = document.getElementById('filter-ind-type').value;
+      const funcFilter = document.getElementById('filter-function').value;
+      const aiModelFilter = document.getElementById('filter-ai-model').value;
+      const ownerFilter = document.getElementById('filter-ownership').value;
+
+      const filtered = assets.filter(item => {
+        if (currentVertical !== 'all' && item.vertical !== currentVertical) return false;
+
+        if (indTypeFilter !== 'all') {
+          if (item.vertical !== 'indicadores') return false;
+          if ((item.indicatorMeta?.type || '') !== indTypeFilter) return false;
+        }
+
+        if (funcFilter !== 'all') {
+          const itemFunc = (item.indicatorMeta?.usedFor || item.func || '').toLowerCase();
+          if (!itemFunc.includes(funcFilter.toLowerCase())) return false;
+        }
+
+        if (aiModelFilter !== 'all') {
+          const indModel = (item.indicatorMeta?.aiModel || '').toLowerCase();
+          const tools = (item.aiTools || []).map(t => t.toLowerCase());
+          if (!indModel.includes(aiModelFilter.toLowerCase()) && !tools.some(t => t.includes(aiModelFilter.toLowerCase()))) {
+            return false;
+          }
+        }
+
+        if (ownerFilter === 'owner_mio' && item.ownership !== 'mio') return false;
+        if (ownerFilter === 'owner_cliente' && item.ownership !== 'cliente') return false;
+        if (ownerFilter === 'vis_publico' && item.visibility !== 'publico') return false;
+        if (ownerFilter === 'vis_privado' && item.visibility !== 'privado') return false;
+
+        if (currentProjectPill) {
+          const matchesName = item.name.toLowerCase() === currentProjectPill.toLowerCase();
+          const matchesIndProj = (item.indicatorMeta?.projects || []).some(p => p.toLowerCase() === currentProjectPill.toLowerCase());
+          if (!matchesName && !matchesIndProj) return false;
+        }
+
+        if (q) {
+          const blob = JSON.stringify(item).toLowerCase();
+          if (!blob.includes(q)) return false;
+        }
+        return true;
+      });
+
+      const grid = document.getElementById('assets-grid');
+      const empty = document.getElementById('empty-state');
+      document.getElementById('results-summary').textContent = `Mostrando ${filtered.length} de ${assets.length} expedientes`;
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      filtered.forEach(item => {
+        const vStyle = getVerticalVisualStyle(item.vertical);
+        const isPublic = item.visibility === 'publico';
+        const isOwnerMio = item.ownership !== 'cliente';
+        const storedLogos = logosCache[item.id] || {};
+        const varsCount = extractVariables(`${item.stylelock || ''}\n${item.prompt || ''}`).length;
+
+        const card = document.createElement('article');
+        card.className = 'bg-panel border border-borderTech hover:border-slate-600 rounded-xl flex flex-col justify-between transition shadow-sm overflow-hidden';
+
+        // 1. Bloque Específico si es Vertical 4: INDICADORES
+        let indicatorBlock = '';
+        if (item.vertical === 'indicadores') {
+          const im = item.indicatorMeta || {};
+          const typeColors = {
+            'Códice': 'bg-amberSurgical/15 text-amberSurgical border-amberSurgical/40',
+            'Skill': 'bg-tealSurgical/15 text-tealSurgical border-tealSurgical/40',
+            'Habilidad': 'bg-violetInd/15 text-violetInd border-violetInd/40',
+            'Prompt': 'bg-sky-500/15 text-sky-400 border-sky-500/40'
+          };
+          const tCls = typeColors[im.type] || typeColors['Prompt'];
+          indicatorBlock = `
+            <div class="p-3 rounded-lg bg-obsidian border border-violetInd/35 space-y-2 text-[11px]">
+              <div class="flex flex-wrap items-center justify-between gap-1.5">
+                <span class="px-2 py-0.5 rounded font-mono font-bold border ${tCls}">
+                  Tipo: ${im.type || 'Prompt'}
+                </span>
+                <span class="font-mono text-[10px] text-amberSurgical bg-panel px-2 py-0.5 rounded border border-borderTech">
+                  IA: ${im.aiModel || 'Gemini 2.5 Pro'}
+                </span>
+              </div>
+              <div class="text-slate-300">
+                <span class="font-mono text-[10px] text-slate-500">Usado para (Función):</span>
+                <strong class="text-white ml-1">${im.usedFor || item.func || 'General'}</strong>
+              </div>
+              <div class="flex flex-wrap items-center gap-1 pt-0.5">
+                <span class="font-mono text-[10px] text-slate-500 mr-1">Proyecto(s):</span>
+                ${(im.projects || []).map(p => `<span class="px-1.5 py-0.5 rounded bg-panel border border-borderTech text-[10px] font-mono text-tealSurgical">${p}</span>`).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        // 2. Bloque Específico si es Vertical 3: MÚSICA & AUDIO (SONIDO DECRÉPITO)
+        let audioBlock = '';
+        if (item.vertical === 'musica_audio') {
+          const au = item.audioSpec || {};
+          audioBlock = `
+            <div class="p-3 rounded-lg bg-obsidian border border-roseAudio/35 space-y-1.5 text-[11px]">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] font-bold text-roseAudio">ESPECIFICACIONES MASTER & DAW</span>
+                ${au.album ? `<span class="text-[10px] font-mono text-amberSurgical">${au.album}</span>` : ''}
+              </div>
+              <div class="flex flex-wrap gap-2 font-mono text-[10px] text-slate-300">
+                ${au.bpm ? `<span class="px-1.5 py-0.5 rounded bg-panel border border-borderTech">${au.bpm}</span>` : ''}
+                ${au.lufs ? `<span class="px-1.5 py-0.5 rounded bg-panel border border-borderTech text-roseAudio">${au.lufs}</span>` : ''}
+              </div>
+              ${au.chain ? `<p class="text-[10px] font-mono text-slate-400 line-clamp-2 whitespace-pre-line">${au.chain}</p>` : ''}
+            </div>
+          `;
+        }
+
+        // 3. Logotipo Binario PNG / SVG en IndexedDB
+        let logoSection = '';
+        if (storedLogos.png || storedLogos.svg) {
+          const src = storedLogos.png || ('data:image/svg+xml;utf8,' + encodeURIComponent(storedLogos.svg));
+          logoSection = `
+            <div class="flex items-center justify-between gap-2.5 p-2 rounded-lg bg-obsidian border border-borderStruct border-borderTech">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-10 h-10 rounded checkerboard-bg border border-borderTech flex items-center justify-center p-1 shrink-0 overflow-hidden">
+                  <img src="${src}" alt="Logo ${item.name}" class="max-w-full max-h-full object-contain" />
+                </div>
+                <div class="min-w-0">
+                  <span class="text-[10px] font-mono text-amberSurgical block">BRAND ASSET (INDEXEDDB)</span>
+                  <span class="text-[11px] font-mono text-slate-300">${storedLogos.png ? 'PNG ✓' : ''} ${storedLogos.svg ? 'SVG ✓' : ''}</span>
+                </div>
+              </div>
+              <div class="flex gap-1 shrink-0">
+                ${storedLogos.png ? `<button onclick="downloadLogoByAssetId('${item.id}', 'png')" class="px-2 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[10px] font-mono text-tealSurgical">⬇ PNG</button>` : ''}
+                ${storedLogos.svg ? `<button onclick="downloadLogoByAssetId('${item.id}', 'svg')" class="px-2 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[10px] font-mono text-amberSurgical">⬇ SVG</button>` : ''}
+              </div>
+            </div>
+          `;
+        }
+
+        // 4. Cuenta Google & Teléfono (para Canales, Clientes y Música)
+        let accountSection = '';
+        if (item.vertical !== 'indicadores' && (item.googleAccount || item.regPhone)) {
+          accountSection = `
+            <div class="flex flex-wrap items-center justify-between gap-1.5 text-[11px] font-mono bg-obsidian/80 px-2.5 py-1.5 rounded-lg border border-borderTech">
+              ${item.googleAccount ? `<button onclick="copyText('${item.googleAccount}', 'Correo copiado')" class="text-slate-300 hover:text-amberSurgical truncate">✉ ${item.googleAccount}</button>` : ''}
+              ${item.regPhone ? `<button onclick="copyText('${item.regPhone}', 'Teléfono copiado')" class="text-slate-400 hover:text-white">☎ ${item.regPhone}</button>` : ''}
+            </div>
+          `;
+        }
+
+        // 5. Redes Sociales (Principal + Secundarias)
+        let socialsSection = '';
+        if (item.vertical !== 'indicadores' && ((item.socialMain && item.socialMain.url) || (item.socialSecondary && item.socialSecondary.length > 0))) {
+          socialsSection = `
+            <div class="flex flex-wrap items-center gap-1.5">
+              ${item.socialMain && item.socialMain.url ? `
+                <button onclick="copyText('${item.socialMain.url}', 'Red principal copiada')" class="px-2 py-1 rounded bg-obsidian border border-tealSurgical/35 text-[10px] font-mono text-tealSurgical hover:bg-elevated">
+                  ★ ${item.socialMain.platform}: ${item.socialMain.url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 24)}
+                </button>` : ''}
+              ${(item.socialSecondary || []).map(s => `
+                <button onclick="copyText('${s.url}', '${s.platform} copiado')" class="px-2 py-1 rounded bg-obsidian border border-borderTech text-[10px] font-mono text-slate-300 hover:text-white">
+                  ${s.platform}: ${s.url.replace(/^https?:\/\/(www\.)?/, '').slice(0, 18)}
+                </button>`).join('')}
+            </div>
+          `;
+        }
+
+        // 6. Voice ID ElevenLabs
+        const voiceSection = (item.vertical !== 'indicadores' && item.voiceId)
+          ? `<div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-obsidian border border-borderTech">
+              <div class="truncate">
+                <span class="text-[9px] font-mono text-slate-500 block">ELEVENLABS VOICE ID</span>
+                <span class="text-xs font-mono text-tealSurgical font-bold">${item.voiceId}</span>
+              </div>
+              <button onclick="copyText('${item.voiceId}', 'Voice ID copiado')" class="px-2 py-1 rounded bg-panel hover:bg-elevated border border-borderTech text-[10px] font-mono text-slate-300">Copiar</button>
+            </div>`
+          : '';
+
+        // 7. Datos Publicidad & Infraestructura Web (para Clientes)
+        let clientInfraSection = '';
+        if (item.vertical === 'clientes') {
+          const ads = item.ads || {};
+          const inf = item.infra || {};
+          clientInfraSection = `
+            <div class="p-2.5 rounded-lg bg-obsidian border border-amberSurgical/30 space-y-1.5 text-[11px]">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[10px] font-bold text-amberSurgical">ADS, WEB & TITULARIDAD</span>
+                <span class="font-mono text-[10px] px-1.5 py-0.2 rounded ${isOwnerMio ? 'bg-tealSurgical/15 text-tealSurgical' : 'bg-amberSurgical/15 text-amberSurgical'}">
+                  ${isOwnerMio ? '🔑 Registro Mío' : '🤝 Registro Cliente'}
+                </span>
+              </div>
+              <div class="flex flex-wrap gap-1.5 font-mono text-[10px]">
+                ${ads.whatsapp ? `<button onclick="copyText('${ads.whatsapp}', 'WhatsApp copiado')" class="px-1.5 py-0.5 rounded bg-emeraldOk/10 text-emeraldOk border border-emeraldOk/30">WA: ${ads.whatsapp}</button>` : ''}
+                ${ads.line1 ? `<button onclick="copyText('${ads.line1}', 'Línea 1 copiada')" class="px-1.5 py-0.5 rounded bg-panel text-slate-300 border border-borderTech">L1: ${ads.line1}</button>` : ''}
+              </div>
+              ${inf.website ? `<div class="font-mono text-[11px] text-tealSurgical truncate"><a href="${inf.website}" target="_blank" rel="noopener noreferrer" class="hover:underline">↗ ${inf.website}</a></div>` : ''}
+              ${(inf.hosting || inf.domainProvider) ? `<div class="text-[10px] font-mono text-slate-400">Host: <strong class="text-slate-200">${inf.hosting || '—'}</strong> • Dom: <strong class="text-slate-200">${inf.domainProvider || '—'}</strong></div>` : ''}
+            </div>
+          `;
+        }
+
+        // 8. Paleta HEX
+        const paletteSection = (item.palette && item.palette.length > 0 && item.vertical !== 'indicadores')
+          ? `<div class="flex flex-wrap items-center gap-1.5">
+              ${item.palette.map(hex => `
+                <button onclick="copyText('${hex}', 'HEX ${hex} copiado')" class="flex items-center gap-1 px-2 py-0.5 rounded bg-obsidian border border-borderTech hover:border-white/40 text-[10px] font-mono text-slate-300">
+                  <span class="w-2.5 h-2.5 rounded-sm border border-white/20" style="background:${hex};"></span>
+                  <span>${hex}</span>
+                </button>`).join('')}
+            </div>`
+          : '';
+
+        // 9. Extracto de Stylelock o Cuerpo de Indicador
+        const codePreview = (item.vertical === 'indicadores' ? item.prompt : (item.stylelock || item.prompt))
+          ? `<div class="p-2.5 rounded-lg bg-obsidian border border-borderTech text-[11px] font-mono text-slate-300 line-clamp-3 leading-relaxed">${highlightVars(item.vertical === 'indicadores' ? item.prompt : (item.stylelock || item.prompt))}</div>`
+          : '';
+
+        card.innerHTML = `
+          <div class="p-4 space-y-3">
+            <!-- Fila Superior: Vertical + Selector Rápido "Mover a: ___" -->
+            <div class="flex flex-wrap items-center justify-between gap-1.5">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${vStyle.cls}">${vStyle.label}</span>
+
+              <div class="flex items-center gap-1.5">
+                <select onchange="moveAssetToVertical('${item.id}', this.value, false)" title="Mover ficha a otra sección sin perder datos"
+                        class="bg-obsidian border border-borderTech hover:border-amberSurgical/60 rounded px-2 py-0.5 text-[10px] font-mono text-slate-300 focus:outline-none cursor-pointer">
+                  <option value="" disabled selected>Mover a: ___</option>
+                  <option value="canales" ${item.vertical === 'canales' ? 'disabled' : ''}>→ Canales de Contenido</option>
+                  <option value="clientes" ${item.vertical === 'clientes' ? 'disabled' : ''}>→ Clientes, Diseño & Web</option>
+                  <option value="musica_audio" ${item.vertical === 'musica_audio' ? 'disabled' : ''}>→ Música & Audio</option>
+                  <option value="indicadores" ${item.vertical === 'indicadores' ? 'disabled' : ''}>→ INDICADORES</option>
+                </select>
+
+                <button onclick="toggleAssetVisibility('${item.id}')" title="Alternar visibilidad Privado / Blog"
+                        class="px-2 py-0.5 rounded text-[10px] font-mono border transition ${isPublic ? 'text-emeraldOk bg-emeraldOk/10 border-emeraldOk/30' : 'text-slate-400 bg-obsidian border-borderTech'}">
+                  ${isPublic ? '🌐 Blog' : '🔒 Privado'}
+                </button>
+              </div>
+            </div>
+
+            <!-- Título y Estilo -->
+            <div>
+              <h3 class="text-base font-extrabold text-white leading-snug">${item.name}</h3>
+              ${item.brandStyle ? `<p class="text-xs text-slate-400 mt-0.5 line-clamp-2">${item.brandStyle}</p>` : ''}
+            </div>
+
+            ${indicatorBlock}
+            ${audioBlock}
+            ${logoSection}
+            ${accountSection}
+            ${socialsSection}
+            ${paletteSection}
+            ${voiceSection}
+            ${clientInfraSection}
+            ${codePreview}
+          </div>
+
+          <!-- Pie de Acciones -->
+          <div class="px-4 py-2.5 bg-obsidian/85 border-t border-borderTech flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <button onclick="openExecuteModal('${item.id}')"
+                      class="px-2.5 py-1.5 rounded-lg bg-amberSurgical/15 hover:bg-amberSurgical/25 border border-amberSurgical/40 text-amberSurgical text-[11px] font-extrabold flex items-center gap-1 transition">
+                <span>⚡ ${item.vertical === 'indicadores' ? 'Ejecutar Indicador' : 'Compilar Prompt'}</span>
+                ${varsCount > 0 ? `<span class="font-mono text-[10px] bg-amberSurgical text-obsidian px-1 rounded">${varsCount}</span>` : ''}
+              </button>
+              <button onclick="openBlogHubModal('${item.id}')"
+                      class="px-2.5 py-1.5 rounded-lg bg-emeraldOk/10 hover:bg-emeraldOk/20 border border-emeraldOk/30 text-emeraldOk text-[11px] font-bold transition">
+                Blog
+              </button>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="duplicateAsset('${item.id}')" title="Duplicar ficha"
+                      class="px-2 py-1.5 rounded-lg bg-panel hover:bg-elevated border border-borderTech text-slate-400 hover:text-white text-xs">
+                ⧉
+              </button>
+              <button onclick="openEditorModal('${item.id}')"
+                      class="px-3 py-1.5 rounded-lg bg-tealSurgical/15 hover:bg-tealSurgical/25 border border-tealSurgical/40 text-xs font-extrabold text-tealSurgical transition">
+                Editar Ficha
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ==========================================================================
+    // 6. CAPTURA RÁPIDA (FAST-CAPTURE)
+    // ==========================================================================
+    function toggleFastCaptureIndicatorFields() {
+      const v = document.getElementById('fc-vertical').value;
+      document.getElementById('fc-indicator-extra').classList.toggle('hidden', v !== 'indicadores');
+    }
+
+    function openFastCaptureModal() {
+      document.getElementById('fc-name').value = '';
+      if (currentVertical !== 'all') {
+        document.getElementById('fc-vertical').value = currentVertical;
+      }
+      toggleFastCaptureIndicatorFields();
+      openModal('modal-fast-capture');
+      setTimeout(() => document.getElementById('fc-name').focus(), 40);
+    }
+
+    function submitFastCapture(e) {
+      e.preventDefault();
+      const name = document.getElementById('fc-name').value.trim();
+      const vertical = document.getElementById('fc-vertical').value;
+      const func = document.getElementById('fc-function').value.trim() || 'Guionización';
+      const ownership = document.getElementById('fc-ownership').value;
+      const indType = document.getElementById('fc-ind-type').value;
+      const indModel = document.getElementById('fc-ind-model').value.trim() || 'Gemini 2.5 Pro';
+      if (!name) return;
+
+      const newItem = {
+        id: 'asset-' + Date.now(),
+        vertical,
+        name,
+        func,
+        status: 'Activo',
+        visibility: 'privado',
+        ownership,
+        tags: [`#${vertical}`],
+        googleAccount: '',
+        regPhone: '',
+        socialMain: { platform: vertical === 'musica_audio' ? 'Bandcamp' : 'YouTube', url: '' },
+        socialSecondary: [],
+        voiceId: '',
+        voiceParams: '',
+        aiTools: [indModel],
+        palette: ['#0B0E14', '#14B8A6'],
+        fontPrimary: '',
+        fontSecondary: '',
+        fontBody: '',
+        brandElements: '',
+        brandStyle: '',
+        stylelock: '',
+        prompt: '',
+        links: { drive: '', terabox: '', other: '' },
+        contact: { name: '', phone: '' },
+        ads: { phone: '', line1: '', line2: '', whatsapp: '', addr1: '', addr2: '' },
+        infra: { website: '', hosting: '', domainProvider: '', renewal: '', regAccount: '', siteNotes: '', cloudServices: [] },
+        audioSpec: { album: '', bpm: '', lufs: '', chain: '' },
+        indicatorMeta: {
+          type: indType,
+          usedFor: func,
+          projects: vertical === 'indicadores' ? ['Transversal / Todos'] : [name],
+          aiModel: indModel
+        },
+        blogGuide: '',
+        privateNotes: ''
+      };
+
+      assets.unshift(newItem);
+      saveAssets();
+      closeModal('modal-fast-capture');
+      renderWorkspace();
+      openEditorModal(newItem.id);
+      showToast(`Ficha "${name}" creada en ${VERTICAL_NAMES[vertical]}`);
+    }
+
+    // ==========================================================================
+    // 7. EDITOR INTEGRAL CON SUB-PESTAÑAS Y "MOVER A: ___"
+    // ==========================================================================
+    function switchEditorTab(tabKey) {
+      ['general', 'indicador', 'brand', 'ads_crm', 'infra', 'audio_style'].forEach(k => {
+        const pane = document.getElementById(`ed-pane-${k}`);
+        const btn = document.getElementById(`ed-tab-${k}`);
+        if (k === tabKey) {
+          pane.classList.remove('hidden');
+          btn.classList.add('bg-panel', 'border-borderTech', 'text-amberSurgical');
+          btn.classList.remove('bg-transparent', 'border-transparent', 'text-slate-400');
+        } else {
+          pane.classList.add('hidden');
+          btn.classList.remove('bg-panel', 'border-borderTech', 'text-amberSurgical');
+          btn.classList.add('bg-transparent', 'border-transparent', 'text-slate-400');
+        }
+      });
+    }
+
+    function openEditorModal(id) {
+      const item = assets.find(a => a.id === id);
+      if (!item) return;
+
+      document.getElementById('ed-id').value = item.id;
+      document.getElementById('ed-title').textContent = item.name;
+      document.getElementById('ed-move-vertical').value = item.vertical;
+
+      document.getElementById('ed-name').value = item.name || '';
+      document.getElementById('ed-status').value = item.status || 'Activo';
+      document.getElementById('ed-visibility').value = item.visibility || 'privado';
+      document.getElementById('ed-function').value = item.func || '';
+      document.getElementById('ed-tags').value = (item.tags || []).join(', ');
+
+      // Cuentas y Redes
+      document.getElementById('ed-google-account').value = item.googleAccount || '';
+      document.getElementById('ed-reg-phone').value = item.regPhone || '';
+      const sMain = item.socialMain || { platform: 'YouTube', url: '' };
+      document.getElementById('ed-social-main-platform').value = sMain.platform || 'YouTube';
+      document.getElementById('ed-social-main-url').value = sMain.url || '';
+      editorSocialSecondary = JSON.parse(JSON.stringify(item.socialSecondary || []));
+      renderSocialSecondaryRows();
+
+      document.getElementById('ed-voice-id').value = item.voiceId || '';
+      document.getElementById('ed-voice-params').value = item.voiceParams || '';
+      editorAiTools = [...(item.aiTools || [])];
+      renderAiToolsChips();
+
+      // Indicador IA
+      const im = item.indicatorMeta || { type: 'Prompt', usedFor: item.func || '', projects: [], aiModel: 'Gemini 2.5 Pro' };
+      document.getElementById('ed-ind-type').value = im.type || 'Prompt';
+      document.getElementById('ed-ind-used-for').value = im.usedFor || item.func || '';
+      document.getElementById('ed-ind-ai-model').value = im.aiModel || 'Gemini 2.5 Pro';
+      document.getElementById('ed-ind-projects').value = (im.projects || []).join(', ');
+      renderQuickProjectPills();
+      document.getElementById('ed-prompt').value = item.prompt || '';
+
+      // Brand Kit & Logos
+      refreshEditorLogoPreviews(item.id);
+      editorPalette = [...(item.palette || [])];
+      renderEditorPalette();
+      document.getElementById('ed-font-primary').value = item.fontPrimary || '';
+      document.getElementById('ed-font-secondary').value = item.fontSecondary || '';
+      document.getElementById('ed-font-body').value = item.fontBody || '';
+      document.getElementById('ed-brand-elements').value = item.brandElements || '';
+      document.getElementById('ed-brand-style').value = item.brandStyle || '';
+
+      const links = item.links || {};
+      document.getElementById('ed-link-drive').value = links.drive || '';
+      document.getElementById('ed-link-terabox').value = links.terabox || '';
+      document.getElementById('ed-link-other').value = links.other || '';
+
+      // Contacto CRM & Publicidad
+      const contact = item.contact || {};
+      document.getElementById('ed-contact-name').value = contact.name || '';
+      document.getElementById('ed-client-phone').value = contact.phone || '';
+      const ads = item.ads || {};
+      document.getElementById('ed-ads-phone').value = ads.phone || '';
+      document.getElementById('ed-ads-line1').value = ads.line1 || '';
+      document.getElementById('ed-ads-line2').value = ads.line2 || '';
+      document.getElementById('ed-ads-whatsapp').value = ads.whatsapp || '';
+      document.getElementById('ed-ads-addr1').value = ads.addr1 || '';
+      document.getElementById('ed-ads-addr2').value = ads.addr2 || '';
+
+      // Infraestructura Web, Dominio & Cloud
+      const inf = item.infra || {};
+      document.getElementById('ed-infra-owner').value = item.ownership || 'mio';
+      document.getElementById('ed-infra-reg-account').value = inf.regAccount || '';
+      document.getElementById('ed-infra-website').value = inf.website || '';
+      document.getElementById('ed-infra-hosting').value = inf.hosting || '';
+      document.getElementById('ed-infra-domain-prov').value = inf.domainProvider || '';
+      document.getElementById('ed-infra-renewal').value = inf.renewal || '';
+      document.getElementById('ed-infra-site-notes').value = inf.siteNotes || '';
+      editorCloudServices = JSON.parse(JSON.stringify(inf.cloudServices || []));
+      renderCloudServicesRows();
+
+      // Audio DAW, Stylelock & Blog
+      const au = item.audioSpec || {};
+      document.getElementById('ed-audio-album').value = au.album || '';
+      document.getElementById('ed-audio-bpm').value = au.bpm || '';
+      document.getElementById('ed-audio-lufs').value = au.lufs || '';
+      document.getElementById('ed-audio-chain').value = au.chain || '';
+      document.getElementById('ed-stylelock').value = item.stylelock || '';
+      document.getElementById('ed-blog-guide').value = item.blogGuide || '';
+      document.getElementById('ed-private-notes').value = item.privateNotes || '';
+
+      // Seleccionar pestaña inicial inteligente según la vertical
+      if (item.vertical === 'indicadores') switchEditorTab('indicador');
+      else if (item.vertical === 'clientes') switchEditorTab('brand');
+      else if (item.vertical === 'musica_audio') switchEditorTab('audio_style');
+      else switchEditorTab('general');
+
+      openModal('modal-editor');
+    }
+
+    function renderQuickProjectPills() {
+      const box = document.getElementById('ed-quick-project-pills');
+      box.innerHTML = '';
+      const candidates = ['Transversal / Todos', ...assets.filter(a => a.vertical !== 'indicadores').map(a => a.name)];
+      Array.from(new Set(candidates)).forEach(proj => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'px-2 py-0.5 rounded bg-panel hover:bg-elevated border border-borderTech text-[10px] font-mono text-tealSurgical';
+        btn.textContent = '+ ' + proj;
+        btn.onclick = () => {
+          const inp = document.getElementById('ed-ind-projects');
+          const cur = inp.value.split(',').map(s => s.trim()).filter(Boolean);
+          if (!cur.includes(proj)) {
+            cur.push(proj);
+            inp.value = cur.join(', ');
+          }
+        };
+        box.appendChild(btn);
+      });
+    }
+
+    function renderSocialSecondaryRows() {
+      const container = document.getElementById('ed-social-secondary-list');
+      container.innerHTML = '';
+      editorSocialSecondary.forEach((row, idx) => {
+        const div = document.createElement('div');
+        div.className = 'grid grid-cols-12 gap-2 items-center';
+        div.innerHTML = `
+          <div class="col-span-4">
+            <input type="text" value="${row.platform || ''}" oninput="editorSocialSecondary[${idx}].platform = this.value"
+                   placeholder="Red (ej. TikTok)" class="w-full px-2.5 py-1.5 rounded bg-panel border border-borderTech text-xs text-white" />
+          </div>
+          <div class="col-span-7">
+            <input type="text" value="${row.url || ''}" oninput="editorSocialSecondary[${idx}].url = this.value"
+                   placeholder="URL o @usuario" class="w-full px-2.5 py-1.5 rounded bg-panel border border-borderTech text-xs font-mono text-slate-200" />
+          </div>
+          <div class="col-span-1 text-right">
+            <button type="button" onclick="editorSocialSecondary.splice(${idx}, 1); renderSocialSecondaryRows();" class="px-2 py-1.5 rounded bg-crimsonAlert/10 text-crimsonAlert text-xs">✕</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function addSocialSecondaryRow() {
+      editorSocialSecondary.push({ platform: 'Instagram', url: '' });
+      renderSocialSecondaryRows();
+    }
+
+    function renderAiToolsChips() {
+      const container = document.getElementById('ed-ai-tools-chips');
+      container.innerHTML = '';
+      const all = Array.from(new Set([...PRESET_AI_TOOLS, ...editorAiTools]));
+      all.forEach(tool => {
+        const active = editorAiTools.includes(tool);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => {
+          editorAiTools = active ? editorAiTools.filter(t => t !== tool) : [...editorAiTools, tool];
+          renderAiToolsChips();
+        };
+        btn.className = active
+          ? 'px-2.5 py-1 rounded text-[11px] font-mono bg-tealSurgical/20 border border-tealSurgical text-tealSurgical font-semibold'
+          : 'px-2.5 py-1 rounded text-[11px] font-mono bg-panel border border-borderTech text-slate-400 hover:text-white';
+        btn.textContent = (active ? '✓ ' : '+ ') + tool;
+        container.appendChild(btn);
+      });
+    }
+
+    function addCustomAiTool() {
+      const inp = document.getElementById('ed-custom-ai-input');
+      const val = inp.value.trim();
+      if (!val) return;
+      if (!editorAiTools.includes(val)) editorAiTools.push(val);
+      inp.value = '';
+      renderAiToolsChips();
+    }
+
+    // Logos PNG y SVG en IndexedDB
+    function refreshEditorLogoPreviews(assetId) {
+      const entry = logosCache[assetId] || {};
+      const pngBox = document.getElementById('logo-png-preview-box');
+      const pngStatus = document.getElementById('logo-png-status');
+      const btnDlPng = document.getElementById('btn-dl-png');
+
+      if (entry.png) {
+        pngBox.innerHTML = `<img src="${entry.png}" alt="Logo PNG" class="max-w-full max-h-full object-contain" />`;
+        pngStatus.textContent = 'PNG Guardado ✓';
+        pngStatus.className = 'text-[10px] font-mono text-emeraldOk';
+        btnDlPng.disabled = false;
+      } else {
+        pngBox.innerHTML = `<span class="text-xs font-mono text-slate-500">Vista previa PNG</span>`;
+        pngStatus.textContent = 'Sin archivo PNG';
+        pngStatus.className = 'text-[10px] font-mono text-slate-500';
+        btnDlPng.disabled = true;
+      }
+
+      const svgBox = document.getElementById('logo-svg-preview-box');
+      const svgStatus = document.getElementById('logo-svg-status');
+      const btnDlSvg = document.getElementById('btn-dl-svg');
+
+      if (entry.svg) {
+        const uri = 'data:image/svg+xml;utf8,' + encodeURIComponent(entry.svg);
+        svgBox.innerHTML = `<img src="${uri}" alt="Logo SVG" class="max-w-full max-h-full object-contain" />`;
+        svgStatus.textContent = 'SVG Sanitizado ✓';
+        svgStatus.className = 'text-[10px] font-mono text-emeraldOk';
+        btnDlSvg.disabled = false;
+      } else {
+        svgBox.innerHTML = `<span class="text-xs font-mono text-slate-500">Vista previa SVG</span>`;
+        svgStatus.textContent = 'Sin archivo SVG';
+        svgStatus.className = 'text-[10px] font-mono text-slate-500';
+        btnDlSvg.disabled = true;
+      }
+    }
+
+    function toggleLogoPreviewBg() {
+      logoBgDark = !logoBgDark;
+      ['logo-png-preview-box', 'logo-svg-preview-box'].forEach(id => {
+        const el = document.getElementById(id);
+        if (logoBgDark) {
+          el.classList.remove('checkerboard-bg');
+          el.style.backgroundColor = '#0B0E14';
+        } else {
+          el.classList.add('checkerboard-bg');
+          el.style.backgroundColor = '';
+        }
+      });
+    }
+
+    function handleLogoUpload(event, type) {
+      const file = event.target.files[0];
+      const assetId = document.getElementById('ed-id').value;
+      if (!file || !assetId) return;
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const current = logosCache[assetId] || { png: null, svg: null };
+          if (type === 'png') {
+            await saveLogoToIDB(assetId, e.target.result, current.svg);
+            showToast('Archivo PNG guardado en IndexedDB');
+          } else {
+            const cleanSvg = sanitizeSvgMarkup(e.target.result);
+            await saveLogoToIDB(assetId, current.png, cleanSvg);
+            showToast('Archivo SVG sanitizado y guardado en IndexedDB');
+          }
+          refreshEditorLogoPreviews(assetId);
+          renderWorkspace();
+        } catch (err) {
+          showToast(`Error: ${err.message}`, 'error');
+        }
+        event.target.value = '';
+      };
+      if (type === 'png') reader.readAsDataURL(file);
+      else reader.readAsText(file);
+    }
+
+    function downloadStoredLogo(type) {
+      downloadLogoByAssetId(document.getElementById('ed-id').value, type);
+    }
+
+    function downloadLogoByAssetId(assetId, type) {
+      const entry = logosCache[assetId];
+      const item = assets.find(a => a.id === assetId);
+      const slug = slugify(item ? item.name : 'logo');
+      if (!entry) return;
+      if (type === 'png' && entry.png) {
+        const a = document.createElement('a');
+        a.href = entry.png;
+        a.download = `${slug}-logo.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else if (type === 'svg' && entry.svg) {
+        triggerDownload(entry.svg, `${slug}-logo.svg`, 'image/svg+xml');
+      }
+    }
+
+    async function removeStoredLogo(type) {
+      const assetId = document.getElementById('ed-id').value;
+      const current = logosCache[assetId] || {};
+      if (type === 'png') await saveLogoToIDB(assetId, null, current.svg);
+      else await saveLogoToIDB(assetId, current.png, null);
+      refreshEditorLogoPreviews(assetId);
+      renderWorkspace();
+      showToast(`Archivo ${type.toUpperCase()} eliminado`);
+    }
+
+    function renderEditorPalette() {
+      const container = document.getElementById('ed-palette-list');
+      container.innerHTML = '';
+      editorPalette.forEach((hex, idx) => {
+        const chip = document.createElement('div');
+        chip.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-panel border border-borderTech text-xs font-mono';
+        chip.innerHTML = `
+          <span class="w-3.5 h-3.5 rounded-sm border border-white/20" style="background:${hex};"></span>
+          <span class="text-white">${hex}</span>
+          <button type="button" onclick="editorPalette.splice(${idx}, 1); renderEditorPalette();" class="text-slate-400 hover:text-crimsonAlert ml-1">✕</button>
+        `;
+        container.appendChild(chip);
+      });
+    }
+
+    function addEditorPaletteColor() {
+      let hex = document.getElementById('ed-color-hex').value.trim().toUpperCase();
+      if (!hex.startsWith('#')) hex = '#' + hex;
+      if (!/^#[0-9A-F]{6}$/.test(hex)) {
+        showToast('Usa formato HEX válido (#RRGGBB)', 'error');
+        return;
+      }
+      if (!editorPalette.includes(hex)) {
+        editorPalette.push(hex);
+        renderEditorPalette();
+      }
+    }
+
+    function renderCloudServicesRows() {
+      const container = document.getElementById('ed-cloud-services-list');
+      container.innerHTML = '';
+      editorCloudServices.forEach((srv, idx) => {
+        const row = document.createElement('div');
+        row.className = 'grid grid-cols-12 gap-2 items-center bg-panel/60 p-2 rounded border border-borderTech';
+        row.innerHTML = `
+          <div class="col-span-12 sm:col-span-5">
+            <input type="text" value="${srv.service || ''}" oninput="editorCloudServices[${idx}].service = this.value"
+                   placeholder="Servicio (ej. Bucket GCS / Vercel / Ads)" class="w-full px-2.5 py-1.5 rounded bg-obsidian border border-borderTech text-xs text-white" />
+          </div>
+          <div class="col-span-8 sm:col-span-4">
+            <input type="text" value="${srv.account || ''}" oninput="editorCloudServices[${idx}].account = this.value"
+                   placeholder="Cuenta con la que se registró" class="w-full px-2.5 py-1.5 rounded bg-obsidian border border-borderTech text-xs font-mono text-amberSurgical" />
+          </div>
+          <div class="col-span-3 sm:col-span-2">
+            <select onchange="editorCloudServices[${idx}].owner = this.value" class="w-full px-2 py-1.5 rounded bg-obsidian border border-borderTech text-xs text-slate-200">
+              <option value="mio" ${srv.owner === 'mio' ? 'selected' : ''}>🔑 Mío</option>
+              <option value="cliente" ${srv.owner === 'cliente' ? 'selected' : ''}>🤝 Cliente</option>
+            </select>
+          </div>
+          <div class="col-span-1 text-right">
+            <button type="button" onclick="editorCloudServices.splice(${idx}, 1); renderCloudServicesRows();" class="px-2 py-1.5 rounded bg-crimsonAlert/10 text-crimsonAlert text-xs">✕</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function addCloudServiceRow() {
+      editorCloudServices.push({ service: '', account: '', owner: 'mio' });
+      renderCloudServicesRows();
+    }
+
+    function loadLocalFileIntoField(event, fieldId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        let content = e.target.result;
+        if (file.name.toLowerCase().endsWith('.json')) {
+          try {
+            const parsed = JSON.parse(content);
+            if (fieldId === 'ed-stylelock' && parsed.stylelock) content = parsed.stylelock;
+            else if (fieldId === 'ed-prompt' && (parsed.prompt || parsed.guion)) content = parsed.prompt || parsed.guion;
+            else content = JSON.stringify(parsed, null, 2);
+          } catch (_) {}
+        }
+        document.getElementById(fieldId).value = content;
+        showToast(`Archivo "${file.name}" cargado en el campo`);
+        event.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    function saveAssetFromEditor(closeAfter = true) {
+      const id = document.getElementById('ed-id').value;
+      const idx = assets.findIndex(a => a.id === id);
+      if (idx === -1) return;
+
+      const name = document.getElementById('ed-name').value.trim();
+      if (!name) {
+        showToast('El nombre es obligatorio', 'error');
+        return;
+      }
+
+      const tags = document.getElementById('ed-tags').value
+        .split(',').map(t => t.trim()).filter(Boolean)
+        .map(t => t.startsWith('#') ? t.toLowerCase() : '#' + t.toLowerCase());
+
+      const indProjects = document.getElementById('ed-ind-projects').value
+        .split(',').map(p => p.trim()).filter(Boolean);
+
+      const usedForVal = document.getElementById('ed-ind-used-for').value.trim() || document.getElementById('ed-function').value.trim();
+
+      assets[idx] = {
+        ...assets[idx],
+        name,
+        status: document.getElementById('ed-status').value,
+        visibility: document.getElementById('ed-visibility').value,
+        func: document.getElementById('ed-function').value.trim() || usedForVal,
+        ownership: document.getElementById('ed-infra-owner').value,
+        tags,
+        googleAccount: document.getElementById('ed-google-account').value.trim(),
+        regPhone: document.getElementById('ed-reg-phone').value.trim(),
+        socialMain: {
+          platform: document.getElementById('ed-social-main-platform').value,
+          url: document.getElementById('ed-social-main-url').value.trim()
+        },
+        socialSecondary: editorSocialSecondary.filter(s => s.url.trim()),
+        voiceId: document.getElementById('ed-voice-id').value.trim(),
+        voiceParams: document.getElementById('ed-voice-params').value.trim(),
+        aiTools: [...editorAiTools],
+        palette: [...editorPalette],
+        fontPrimary: document.getElementById('ed-font-primary').value.trim(),
+        fontSecondary: document.getElementById('ed-font-secondary').value.trim(),
+        fontBody: document.getElementById('ed-font-body').value.trim(),
+        brandElements: document.getElementById('ed-brand-elements').value,
+        brandStyle: document.getElementById('ed-brand-style').value,
+        links: {
+          drive: document.getElementById('ed-link-drive').value.trim(),
+          terabox: document.getElementById('ed-link-terabox').value.trim(),
+          other: document.getElementById('ed-link-other').value.trim()
+        },
+        contact: {
+          name: document.getElementById('ed-contact-name').value.trim(),
+          phone: document.getElementById('ed-client-phone').value.trim()
+        },
+        ads: {
+          phone: document.getElementById('ed-ads-phone').value.trim(),
+          line1: document.getElementById('ed-ads-line1').value.trim(),
+          line2: document.getElementById('ed-ads-line2').value.trim(),
+          whatsapp: document.getElementById('ed-ads-whatsapp').value.trim(),
+          addr1: document.getElementById('ed-ads-addr1').value.trim(),
+          addr2: document.getElementById('ed-ads-addr2').value.trim()
+        },
+        infra: {
+          website: document.getElementById('ed-infra-website').value.trim(),
+          hosting: document.getElementById('ed-infra-hosting').value.trim(),
+          domainProvider: document.getElementById('ed-infra-domain-prov').value.trim(),
+          renewal: document.getElementById('ed-infra-renewal').value.trim(),
+          regAccount: document.getElementById('ed-infra-reg-account').value.trim(),
+          siteNotes: document.getElementById('ed-infra-site-notes').value,
+          cloudServices: editorCloudServices.filter(c => c.service.trim())
+        },
+        audioSpec: {
+          album: document.getElementById('ed-audio-album').value.trim(),
+          bpm: document.getElementById('ed-audio-bpm').value.trim(),
+          lufs: document.getElementById('ed-audio-lufs').value.trim(),
+          chain: document.getElementById('ed-audio-chain').value
+        },
+        indicatorMeta: {
+          type: document.getElementById('ed-ind-type').value,
+          usedFor: usedForVal,
+          projects: indProjects,
+          aiModel: document.getElementById('ed-ind-ai-model').value.trim() || 'Gemini 2.5 Pro'
+        },
+        stylelock: document.getElementById('ed-stylelock').value,
+        prompt: document.getElementById('ed-prompt').value,
+        blogGuide: document.getElementById('ed-blog-guide').value,
+        privateNotes: document.getElementById('ed-private-notes').value
+      };
+
+      saveAssets();
+      if (closeAfter) {
+        closeModal('modal-editor');
+        renderWorkspace();
+        showToast(`Expediente "${name}" guardado`);
+      }
+    }
+
+    function deleteCurrentAsset() {
+      const id = document.getElementById('ed-id').value;
+      const item = assets.find(a => a.id === id);
+      if (!item) return;
+
+      openConfirmDialog(
+        'Eliminar ficha',
+        `¿Confirmas eliminar "${item.name}" y sus logotipos binarios? Esta acción es permanente.`,
+        async () => {
+          assets = assets.filter(a => a.id !== id);
+          await saveLogoToIDB(id, null, null);
+          saveAssets();
+          closeModal('modal-editor');
+          renderWorkspace();
+          showToast(`"${item.name}" eliminado`);
+        }
+      );
+    }
+
+    function duplicateAsset(id) {
+      const item = assets.find(a => a.id === id);
+      if (!item) return;
+      const copy = JSON.parse(JSON.stringify(item));
+      copy.id = 'asset-' + Date.now();
+      copy.name = `${item.name} (Copia)`;
+      assets.unshift(copy);
+      saveAssets();
+      renderWorkspace();
+      showToast(`Ficha duplicada: "${copy.name}"`);
+    }
+
+    function toggleAssetVisibility(id) {
+      const item = assets.find(a => a.id === id);
+      if (!item) return;
+      item.visibility = item.visibility === 'publico' ? 'privado' : 'publico';
+      saveAssets();
+      renderWorkspace();
+      showToast(`Visibilidad: ${item.visibility === 'publico' ? '🌐 Público Blog' : '🔒 Privado'}`);
+    }
+
+    // ==========================================================================
+    // 8. COMPILADOR "EJECUTAR INDICADOR / CÓDICE" ({{VARIABLES}})
+    // ==========================================================================
+    function extractVariables(text) {
+      if (!text) return [];
+      const regex = /\{\{([A-Z0-9_]+)\}\}/g;
+      const set = new Set();
+      let m;
+      while ((m = regex.exec(text)) !== null) set.add(m[1]);
+      return Array.from(set);
+    }
+
+    function openExecuteModal(id) {
+      const item = assets.find(a => a.id === id);
+      if (!item) return;
+      currentExecutingAsset = item;
+
+      document.getElementById('exec-title').textContent = item.name;
+      const chkStyle = document.getElementById('exec-inc-stylelock');
+      const chkPrompt = document.getElementById('exec-inc-prompt');
+      chkStyle.checked = Boolean(item.stylelock);
+      chkStyle.disabled = !item.stylelock;
+      chkPrompt.checked = Boolean(item.prompt);
+      chkPrompt.disabled = !item.prompt;
+
+      const vars = extractVariables(`${item.stylelock || ''}\n${item.prompt || ''}`);
+      const box = document.getElementById('exec-variables-container');
+      box.innerHTML = '';
+
+      if (vars.length === 0) {
+        box.innerHTML = `<div class="p-3 rounded-lg bg-obsidian border border-borderTech text-xs text-slate-400">Este bloque no requiere variables <code class="text-amberSurgical">{{...}}</code>. Puedes copiar el resultado ensamblado directamente.</div>`;
+      } else {
+        box.innerHTML = `<div class="text-xs font-bold text-amberSurgical mb-2">Variables detectadas (${vars.length}):</div>`;
+        const grid = document.createElement('div');
+        grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+        vars.forEach(v => {
+          const w = document.createElement('div');
+          w.innerHTML = `
+            <label class="block text-[11px] font-mono text-amberSurgical mb-1">{{${v}}}</label>
+            <input type="text" data-var="${v}" oninput="rebuildExecutedPrompt()" placeholder="Ingresa ${v}..."
+                   class="exec-var-input w-full px-3 py-2 rounded-lg bg-obsidian border border-borderTech focus:border-amberSurgical focus:outline-none text-xs text-white" />
+          `;
+          grid.appendChild(w);
+        });
+        box.appendChild(grid);
+      }
+
+      rebuildExecutedPrompt();
+      openModal('modal-execute');
+    }
+
+    function rebuildExecutedPrompt() {
+      if (!currentExecutingAsset) return;
+      const incStyle = document.getElementById('exec-inc-stylelock').checked;
+      const incPrompt = document.getElementById('exec-inc-prompt').checked;
+      const parts = [];
+      if (incStyle && currentExecutingAsset.stylelock) {
+        parts.push(`[STYLE LOCK — ${currentExecutingAsset.name.toUpperCase()}]\n${currentExecutingAsset.stylelock}`);
+      }
+      if (incPrompt && currentExecutingAsset.prompt) {
+        parts.push(currentExecutingAsset.prompt);
+      }
+      let out = parts.join('\n\n---\n\n');
+      document.querySelectorAll('.exec-var-input').forEach(inp => {
+        const val = inp.value.trim();
+        if (val) out = out.replace(new RegExp(`\\{\\{${inp.dataset.var}\\}\\}`, 'g'), val);
+      });
+      document.getElementById('exec-output').value = out;
+      document.getElementById('exec-char-count').textContent = `${out.length} caracteres`;
+    }
+
+    function copyExecutedPrompt() {
+      const txt = document.getElementById('exec-output').value;
+      if (txt) copyText(txt, 'Resultado compilado copiado al portapapeles');
+    }
+
+    // ==========================================================================
+    // 9. MODO BLOG / EXPORTADOR SANITIZADO
+    // ==========================================================================
+    function getSanitizedPublicObject(item) {
+      return {
+        titulo: item.name,
+        vertical: VERTICAL_NAMES[item.vertical] || item.vertical,
+        tipo_indicador: item.vertical === 'indicadores' ? (item.indicatorMeta?.type || 'Prompt') : null,
+        funcion: item.indicatorMeta?.usedFor || item.func,
+        proyectos_aplicados: item.vertical === 'indicadores' ? (item.indicatorMeta?.projects || []) : null,
+        modelo_ia: item.vertical === 'indicadores' ? (item.indicatorMeta?.aiModel || '') : null,
+        paleta_hex: item.palette || [],
+        guia_de_uso: item.blogGuide || 'Indicador maestro estandarizado para flujos CreativeOps.',
+        style_lock_visual: item.stylelock || null,
+        cuerpo_indicador: item.prompt || null
+      };
+    }
+
+    function openBlogHubModal(preselectId = null) {
+      const selector = document.getElementById('blog-asset-selector');
+      selector.innerHTML = '';
+      const sorted = [...assets].sort((a, b) => (b.visibility === 'publico') - (a.visibility === 'publico'));
+      sorted.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.id;
+        opt.textContent = `${a.visibility === 'publico' ? '🌐' : '🔒'} ${a.name}`;
+        if (preselectId && a.id === preselectId) opt.selected = true;
+        selector.appendChild(opt);
+      });
+      renderBlogPreview();
+      openModal('modal-blog');
+    }
+
+    function getSelectedBlogAsset() {
+      return assets.find(a => a.id === document.getElementById('blog-asset-selector').value) || null;
+    }
+
+    function renderBlogPreview() {
+      const item = getSelectedBlogAsset();
+      const card = document.getElementById('blog-preview-card');
+      if (!item) return;
+      const c = getSanitizedPublicObject(item);
+
+      card.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-borderTech pb-3">
+          <div>
+            <span class="text-[11px] font-mono text-emeraldOk">${c.vertical} ${c.tipo_indicador ? `• ${c.tipo_indicador}` : ''} • ${c.funcion}</span>
+            <h3 class="text-lg font-extrabold text-white mt-0.5">${c.titulo}</h3>
+          </div>
+          <div class="flex gap-1.5">
+            ${c.paleta_hex.map(h => `<span class="px-2 py-0.5 rounded text-[10px] font-mono border border-white/10" style="background:${h};color:#fff;text-shadow:0 1px 2px #000">${h}</span>`).join('')}
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">Guía de Uso</h4>
+          <p class="text-xs text-slate-300 leading-relaxed">${c.guia_de_uso}</p>
+        </div>
+        ${c.style_lock_visual ? `
+          <div>
+            <h4 class="text-xs font-mono font-bold text-tealSurgical mb-1">Style Lock Visual</h4>
+            <pre class="p-3 rounded-lg bg-panel border border-borderTech text-xs font-mono text-slate-200 whitespace-pre-wrap">${c.style_lock_visual}</pre>
+          </div>` : ''}
+        ${c.cuerpo_indicador ? `
+          <div>
+            <h4 class="text-xs font-mono font-bold text-amberSurgical mb-1">Indicador / Prompt</h4>
+            <pre class="p-3 rounded-lg bg-panel border border-borderTech text-xs font-mono text-slate-200 whitespace-pre-wrap">${c.cuerpo_indicador}</pre>
+          </div>` : ''}
+      `;
+    }
+
+    function downloadCleanBlogMarkdown() {
+      const item = getSelectedBlogAsset();
+      if (!item) return;
+      const c = getSanitizedPublicObject(item);
+      const md = [
+        `# ${c.titulo}`,
+        `**Sección:** ${c.vertical} | **Función:** ${c.funcion}${c.modelo_ia ? ` | **Modelo IA:** ${c.modelo_ia}` : ''}`,
+        '',
+        '## Guía de Uso',
+        c.guia_de_uso,
+        c.style_lock_visual ? `\n## Style Lock Visual\n\`\`\`text\n${c.style_lock_visual}\n\`\`\`` : '',
+        c.cuerpo_indicador ? `\n## Indicador / Prompt\n\`\`\`text\n${c.cuerpo_indicador}\n\`\`\`` : ''
+      ].filter(Boolean).join('\n');
+      triggerDownload(md, `${slugify(c.titulo)}-blog.md`, 'text/markdown');
+      showToast('Markdown sanitizado descargado');
+    }
+
+    function downloadCleanBlogJson() {
+      const item = getSelectedBlogAsset();
+      if (!item) return;
+      const c = getSanitizedPublicObject(item);
+      triggerDownload(JSON.stringify(c, null, 2), `${slugify(c.titulo)}-blog.json`, 'application/json');
+      showToast('JSON sanitizado descargado');
+    }
+
+    function copyBlogHtmlEmbed() {
+      const item = getSelectedBlogAsset();
+      if (!item) return;
+      const c = getSanitizedPublicObject(item);
+      const html = `<!-- NEXUS STUDIO OS v3.0 — EMBED SANITIZADO -->
+<section style="background:#0B0E14;color:#E2E8F0;border:1px solid #232D3F;border-radius:12px;padding:24px;font-family:system-ui,sans-serif;max-width:820px;margin:24px auto;">
+  <div style="font-size:12px;color:#14B8A6;font-family:monospace;margin-bottom:6px;">${c.vertical} • ${c.funcion}</div>
+  <h3 style="margin:0 0 12px 0;font-size:20px;color:#FFFFFF;">${c.titulo}</h3>
+  <p style="font-size:14px;line-height:1.6;color:#CBD5E1;margin-bottom:16px;">${c.guia_de_uso}</p>
+  ${c.style_lock_visual ? `<div style="margin-bottom:14px;"><strong style="font-size:12px;color:#14B8A6;font-family:monospace;">STYLE LOCK:</strong><pre style="background:#121722;border:1px solid #232D3F;padding:12px;border-radius:8px;white-space:pre-wrap;font-size:12px;color:#F8FAFC;">${c.style_lock_visual}</pre></div>` : ''}
+  ${c.cuerpo_indicador ? `<div><strong style="font-size:12px;color:#F59E0B;font-family:monospace;">INDICADOR IA:</strong><pre style="background:#121722;border:1px solid #232D3F;padding:12px;border-radius:8px;white-space:pre-wrap;font-size:12px;color:#F8FAFC;">${c.cuerpo_indicador}</pre></div>` : ''}
+</section>`;
+      copyText(html, 'HTML Embed sanitizado copiado para tu blog');
+    }
+
+    // ==========================================================================
+    // 10. UTILIDADES Y NOTIFICACIONES (CON TOAST UNDO)
+    // ==========================================================================
+    function copyText(text, msg = 'Copiado') {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(msg);
+    }
+
+    function triggerDownload(content, filename, mime) {
+      const blob = new Blob([content], { type: mime });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function slugify(str) {
+      return (str || 'ficha').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    function openConfirmDialog(title, message, onConfirm) {
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-message').textContent = message;
+      document.getElementById('confirm-action-btn').onclick = () => {
+        closeModal('modal-confirm');
+        onConfirm();
+      };
+      openModal('modal-confirm');
+    }
+
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const cls = type === 'error' ? 'border-crimsonAlert/60 text-crimsonAlert' : 'border-tealSurgical/60 text-white';
+      toast.className = `px-4 py-2.5 rounded-lg bg-panel border ${cls} shadow-2xl text-xs font-semibold flex items-center gap-2 transition-opacity duration-200`;
+      toast.innerHTML = `<span class="w-2 h-2 rounded-full ${type === 'error' ? 'bg-crimsonAlert' : 'bg-tealSurgical'}"></span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 220);
+      }, 2800);
+    }
+
+    function showUndoToast(msg, onUndo) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'px-4 py-2.5 rounded-lg bg-panel border border-amberSurgical shadow-2xl text-xs font-semibold text-white flex items-center gap-3 transition-opacity duration-200';
+      toast.innerHTML = `
+        <span class="w-2 h-2 rounded-full bg-amberSurgical"></span>
+        <span>${msg}</span>
+        <button type="button" class="px-2.5 py-1 rounded bg-amberSurgical text-obsidian font-extrabold text-[11px] hover:bg-amber-400">
+          Deshacer
+        </button>
+      `;
+      toast.querySelector('button').onclick = () => {
+        onUndo();
+        toast.remove();
+      };
+      container.appendChild(toast);
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 220);
+        }
+      }, 5500);
+    }
+
+    window.onload = async function () {
+      await initIndexedDB();
+      loadAssets();
+      setFilterVertical('all');
+    };
+  </script>
+</body>
+</html>
