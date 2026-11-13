@@ -62,6 +62,7 @@ import {
   getStoredPortfolioItems,
   saveStoredPortfolioItems
 } from '../services/cmsService';
+import { AeoPerformanceCharts } from './AeoPerformanceCharts';
 
 interface AdminProps {
   isOpen: boolean;
@@ -1269,6 +1270,9 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
             {/* TAB CONTENT: AEO SEARCH QUERY TELEMETRY & URL HASH CAPTURE */}
             {activeTab === 'aeo' && (
               <div className="space-y-6">
+                {/* Recharts Analytics Dashboard */}
+                <AeoPerformanceCharts />
+
                 {/* Header Card */}
                 <div className="bg-[#121411] border-2 border-black dark:border-zinc-700 p-5 sm:p-6 space-y-5 brutal-shadow-black text-white">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-zinc-800 pb-4">
@@ -1738,6 +1742,37 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                           </button>
                         </div>
 
+
+                        {/* Master Prompt Inspector */}
+                        <div className="space-y-2 font-jetbrains text-xs pt-2 border-t border-zinc-800">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[#00E5FF] font-bold uppercase flex items-center gap-1.5">
+                              <Terminal className="w-3.5 h-3.5" />
+                              PROMPT MAESTRO ACTIVO ({selectedResearchMode === 'investigador-senior' ? 'Investigador Senior' : selectedResearchMode === 'auditoria-premisas' ? 'Auditor de Premisas' : 'Rastreador de Herramientas'}):
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const promptText = selectedResearchMode === 'investigador-senior'
+                                  ? `[ROL]: Actúa como un investigador analítico senior y auditor de datos.\n[CONTEXTO]: Necesito investigar a fondo "${aiTopicInput || 'Tema'}".\n[TAREA]: Desglosa el tema en hechos verificables, consenso actual, controversias activas y vacíos de información.\n[FORMATO]: Utiliza tablas comparativas para posturas opuestas y viñetas para datos duros.`
+                                  : selectedResearchMode === 'auditoria-premisas'
+                                  ? `Analiza la siguiente premisa o estrategia: "${aiTopicInput || 'Premisa'}". Ejecuta auditoría crítica en 4 pasos: Suposiciones ocultas, variables externas, interpretaciones alternativas y protocolo de pruebas.`
+                                  : `Rastrea herramientas para "${aiTopicInput || 'Tema'}" en 2026. Filtra sesgos de marketing: gancho viral, 3 usos concretos, 2 fallas reales, costo real y veredicto objetivo.`;
+                                navigator.clipboard.writeText(promptText);
+                                alert('¡Prompt maestro copiado al portapapeles!');
+                              }}
+                              className="text-[10px] text-zinc-400 hover:text-white underline cursor-pointer"
+                            >
+                              Copiar Prompt
+                            </button>
+                          </div>
+                          <div className="p-3 bg-zinc-950 border border-zinc-800 font-mono text-[11px] text-zinc-300 max-h-28 overflow-y-auto whitespace-pre-wrap">
+                            {selectedResearchMode === 'investigador-senior' && `[ROL]: Actúa como un investigador analítico senior y auditor de datos. [CONTEXTO]: Necesito investigar a fondo "${aiTopicInput || 'Tema'}". [TAREA]: Desglosa el tema en hechos verificables, consenso actual, controversias activas y vacíos de información. [FORMATO]: Utiliza tablas comparativas para posturas opuestas y viñetas para datos duros. [RESTRICCIONES]: Prohibido especular. Distingue evidencia empírica vs teoría.`}
+                            {selectedResearchMode === 'auditoria-premisas' && `Analiza la premisa o estrategia: "${aiTopicInput || 'Premisa'}". Ejecuta auditoría en 4 pasos: 1) Suposiciones ocultas sin evidencia. 2) Variables externas o datos faltantes. 3) 3 interpretaciones alternativas opuestas. 4) Protocolo de 3 pruebas rápidas.`}
+                            {selectedResearchMode === 'rastreador-herramientas' && `Rastrea herramientas de "${aiTopicInput || 'Tema'}" en 2026. Filtra sesgos y extrae: Gancho viral, 3 usos concretos para freelancers, 2 fallas reales, costo real y veredicto objetivo (RENTABLE / SOBREVALORADO).`}
+                          </div>
+                        </div>
+
                         {/* Thumbnail Prompt Master Generator */}
                         <div className="space-y-2 font-jetbrains text-xs pt-2 border-t border-zinc-800">
                           <div className="flex items-center justify-between">
@@ -1764,7 +1799,7 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                           </div>
                         </div>
 
-                        {/* Scheduled Publishing */}
+                        {/* Scheduled Publishing & AI Execution */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-jetbrains text-xs pt-2 border-t border-zinc-800">
                           <div>
                             <label className="block text-zinc-400 mb-1">Programar Publicación (Fecha y Hora):</label>
@@ -1787,6 +1822,47 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                             </button>
                           </div>
                         </div>
+
+                        {/* Live Preview Card & Direct Export to Local Database */}
+                        {blogTitle && (
+                          <div className="mt-4 p-4 bg-zinc-950 border-2 border-[#00E5FF] space-y-3 animate-in fade-in duration-150">
+                            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                              <span className="font-jetbrains text-xs font-bold text-[#00E5FF] flex items-center gap-1.5">
+                                <Eye className="w-4 h-4" />
+                                VISTA PREVIA EN VIVO DEL ARTÍCULO GENERADO
+                              </span>
+                              <span className="px-2 py-0.5 bg-[#00E5FF] text-black font-jetbrains text-[10px] font-bold">
+                                LISTO PARA EXPORTAR
+                              </span>
+                            </div>
+
+                            <div className="space-y-2">
+                              <h5 className="font-anton text-lg text-white tracking-wide">{blogTitle}</h5>
+                              <p className="font-space-grotesk text-xs text-zinc-300 italic">{blogExcerpt}</p>
+                              <div className="flex flex-wrap gap-1 pt-1">
+                                {blogTags.split(',').map((tag, i) => (
+                                  <span key={i} className="px-2 py-0.5 bg-zinc-900 text-[#D4FF00] font-jetbrains text-[10px] border border-zinc-800">
+                                    #{tag.trim()}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="pt-2 flex items-center justify-between gap-3 border-t border-zinc-800">
+                              <span className="text-[11px] font-jetbrains text-zinc-400">
+                                Categoría: <strong className="text-white">{blogCategory}</strong>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={handleSaveBlogPost}
+                                className="px-4 py-2 bg-[#00D26A] hover:bg-[#00b057] text-black font-jetbrains text-xs font-bold border border-black flex items-center gap-1.5 cursor-pointer active:scale-95"
+                              >
+                                <CheckCircle2 className="w-4 h-4" />
+                                <span>💾 EXPORTAR DIRECTAMENTE A LA BASE DE DATOS LOCAL (CMS)</span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                       <form onSubmit={handleSaveBlogPost} className="bg-white dark:bg-zinc-900 border-2 border-black dark:border-zinc-700 p-4 sm:p-5 space-y-4 brutal-shadow-black">

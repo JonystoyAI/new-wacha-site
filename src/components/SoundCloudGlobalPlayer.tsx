@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume1, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, ExternalLink, Disc } from 'lucide-react';
+import { Play, Pause, Volume1, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, ExternalLink, Disc, Activity } from 'lucide-react';
+import { SoundCloudVisualizer } from './SoundCloudVisualizer';
 
 interface SoundCloudGlobalPlayerProps {
   audioActive: boolean;
@@ -12,6 +13,7 @@ export const SoundCloudGlobalPlayer: React.FC<SoundCloudGlobalPlayerProps> = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [showVisualizer, setShowVisualizer] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(85);
   const [currentTrackTitle, setCurrentTrackTitle] = useState<string>('Decrépito Papu // Playlist Oficial');
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -175,8 +177,17 @@ export const SoundCloudGlobalPlayer: React.FC<SoundCloudGlobalPlayerProps> = ({
   return (
     <aside
       aria-label="Reproductor global de SoundCloud"
-      className="fixed bottom-4 left-4 z-40 max-w-[calc(100vw-2rem)] sm:max-w-md font-jetbrains"
+      className="fixed bottom-4 left-4 z-40 max-w-[calc(100vw-2rem)] sm:max-w-md font-jetbrains space-y-2"
     >
+      {showVisualizer && (
+        <SoundCloudVisualizer
+          isPlaying={isPlaying}
+          audioActive={audioActive}
+          currentTrackTitle={currentTrackTitle}
+          onClose={() => setShowVisualizer(false)}
+        />
+      )}
+
       <div className="bg-black text-white border-2 border-black dark:border-[#D4FF00] brutal-shadow-black overflow-hidden transition-all duration-200">
         {/* Header Bar */}
         <div className="px-3 py-2 bg-zinc-950 flex items-center justify-between gap-2 border-b border-zinc-800">
@@ -246,6 +257,19 @@ export const SoundCloudGlobalPlayer: React.FC<SoundCloudGlobalPlayerProps> = ({
             >
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
+
+            {/* Visualizer toggle button */}
+            <button
+              type="button"
+              onClick={() => setShowVisualizer(!showVisualizer)}
+              className={`p-1.5 transition-colors text-xs cursor-pointer ${
+                showVisualizer ? 'bg-[#D4FF00] text-black font-bold' : 'bg-zinc-800 text-[#00E5FF] hover:bg-zinc-700'
+              }`}
+              title="Abrir visualizador Web Audio API reactivo"
+              aria-label="Visualizador Web Audio"
+            >
+              <Activity className="w-3.5 h-3.5" />
+            </button>
 
             {/* Expand / Collapse toggle */}
             <button

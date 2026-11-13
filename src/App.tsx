@@ -16,6 +16,7 @@ import { Admin } from './components/Admin';
 import { SoundCloudGlobalPlayer } from './components/SoundCloudGlobalPlayer';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
+import { CustomerSupportBot } from './components/CustomerSupportBot';
 import { getStoredBlogArticles } from './services/cmsService';
 import { captureAeoQueryFromUrl } from './services/aeoQueryLogger';
 import { CartItem, MerchItem, BlogPost } from './types';
@@ -473,6 +474,9 @@ export default function App() {
         audioActive={audioActive}
         onToggleAudio={() => setAudioActive(!audioActive)}
       />
+
+      {/* Customer Support Virtual Assistant Bot */}
+      <CustomerSupportBot />
 
       {/* Floating Back to Top Button */}
       <BackToTop />
