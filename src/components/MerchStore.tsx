@@ -38,11 +38,35 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
 
   const allProducts = getStoredMerchProducts();
 
+  // Wishlist State stored in localStorage
+  const WISHLIST_STORAGE_KEY = 'wacha_tianguis_wishlist_v1';
+  const [wishlist, setWishlist] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(WISHLIST_STORAGE_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return [];
+  });
+  const [showWishlistOnly, setShowWishlistOnly] = useState<boolean>(false);
+
+  const toggleWishlist = (productId: string) => {
+    const updated = wishlist.includes(productId)
+      ? wishlist.filter(id => id !== productId)
+      : [...wishlist, productId];
+    setWishlist(updated);
+    try {
+      localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(updated));
+    } catch {}
+  };
+
   // Extract unique categories
   const categories = ['todos', ...Array.from(new Set(allProducts.map(p => p.category)))];
 
   // Filter products dynamically
   const filteredProducts = allProducts.filter(product => {
+    if (showWishlistOnly && !wishlist.includes(product.id)) {
+      return false;
+    }
     if (selectedCategory !== 'todos' && product.category !== selectedCategory) {
       return false;
     }
@@ -196,6 +220,19 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
                 </select>
               </div>
 
+              {/* Wishlist Filter Toggle */}
+              <button
+                type="button"
+                onClick={() => setShowWishlistOnly(!showWishlistOnly)}
+                className={`px-3 py-2 border-2 font-jetbrains text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  showWishlistOnly
+                    ? 'bg-[#B8006E] text-white border-black brutal-shadow-black'
+                    : 'bg-zinc-50 dark:bg-zinc-950 text-black dark:text-white border-black dark:border-zinc-700'
+                }`}
+              >
+                <span>❤️ WISHLIST ({wishlist.length})</span>
+              </button>
+
               {/* Reset Filters */}
               {(selectedCategory !== 'todos' || priceRange !== 'all' || availabilityFilter !== 'all' || searchQuery !== '') && (
                 <button
@@ -261,6 +298,21 @@ export const MerchStore: React.FC<MerchStoreProps> = ({
                   <div className="absolute bottom-2 right-2 bg-white dark:bg-black/90 text-black dark:text-[#D4FF00] font-jetbrains text-xs font-bold px-2.5 py-1 border-2 border-black dark:border-zinc-700 shadow-sm">
                     ${product.priceUsd} USD / ${product.priceMxn} MXN
                   </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleWishlist(product.id);
+                    }}
+                    className={`absolute top-2 right-2 p-2 border-2 border-black transition-all cursor-pointer z-20 ${
+                      wishlist.includes(product.id)
+                        ? 'bg-[#B8006E] text-white'
+                        : 'bg-white dark:bg-black text-zinc-700 dark:text-zinc-300 hover:text-[#B8006E]'
+                    }`}
+                    title={wishlist.includes(product.id) ? "Quitar de favoritos" : "Guardar en Wishlist"}
+                  >
+                    ❤️
+                  </button>
                 </div>
 
                 {/* Info */}

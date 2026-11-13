@@ -40,7 +40,7 @@ export const CumbiaLabView: React.FC<CumbiaLabViewProps> = ({
               <span>// LABORATORIO SONORO ANALÓGICO & DISQUERA INDEPENDIENTE</span>
             </div>
             <h1 className="font-anton text-4xl sm:text-6xl text-white uppercase tracking-tight flex flex-wrap items-center gap-3">
-              <span>CUMBIA LAB.</span>
+              <span>CUMBIA DECRÉPITA</span>
               <span className="text-sm sm:text-base font-jetbrains px-3 py-1 bg-[#D4FF00] text-black border border-black font-bold">
                 PROYECTO DE CUMBIA DECRÉPITA
               </span>

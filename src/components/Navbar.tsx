@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { route: 'home', label: 'INICIO', icon: Flame },
     { route: 'blog', label: 'BLOG AEO', icon: BookOpen, title: 'BLOG DE INGENIERÍA, ARTE Y DISEÑO DIGITAL & AEO 2026' },
     { route: 'produccion', label: 'MULTIMEDIA', icon: Clapperboard, title: 'Investigación, Redacción, Animación y Creación de Contenido' },
-    { route: 'cumbia-lab', label: 'CUMBIA LAB.', icon: Disc, title: 'Proyecto de Cumbia Decrépita' },
+    { route: 'cumbia-lab', label: 'CUMBIA DECRÉPITA', icon: Disc, title: 'Proyecto de Cumbia Decrépita' },
     { route: 'tienda', label: 'WACHA EL TIANGUIS', icon: ShoppingBag, title: 'Wacha El tianguis' }
   ];
 

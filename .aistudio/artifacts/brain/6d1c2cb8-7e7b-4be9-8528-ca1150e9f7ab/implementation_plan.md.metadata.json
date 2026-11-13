@@ -1,6 +1,0 @@
-{
-  "summary": "Plan integral de despliegue continuo en GitHub Pages con GitHub Actions, copia automática de CNAME para Vite, y configuración paso a paso de registros DNS (A Records y CNAME) en Porkbun para el dominio del estudio.",
-  "updatedAt": "2026-10-15T21:31:57.943947713Z",
-  "requestFeedback": true,
-  "userFacing": true
-}
