@@ -554,6 +554,77 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
     }
   };
 
+  // Función de depuración solicitada: debugAdminState
+  const debugAdminState = async () => {
+    console.group('🔍 [DEBUG] debugAdminState - Admin & Module Diagnostics');
+    console.log('Timestamp (UTC):', new Date().toISOString());
+    console.log('IAM Authentication Status:', isAuthenticated);
+    console.log('Active Tab:', activeTab);
+    console.log('CMS SubTab:', cmsSubTab);
+
+    // 1. Loaded Modules State & LocalStorage inspection
+    try {
+      const studioOsData = localStorage.getItem('nexus_studio_os_v3_metadata');
+      console.log('[Module: WachasStudioOS] LocalStorage metadata found:', !!studioOsData, studioOsData ? JSON.parse(studioOsData).length + ' fichas' : '0 fichas');
+    } catch (err) {
+      console.error('[Module: WachasStudioOS] Error parsing metadata from LocalStorage:', err);
+    }
+
+    try {
+      const blogArticles = getStoredBlogArticles();
+      const merchProducts = getStoredMerchProducts();
+      const releases = getStoredReleases();
+      const portfolio = getStoredPortfolioItems();
+      console.log('[Module: CMS] Loaded collections:', {
+        articles: blogArticles.length,
+        merch: merchProducts.length,
+        releases: releases.length,
+        portfolio: portfolio.length
+      });
+    } catch (err) {
+      console.error('[Module: CMS] Error fetching CMS collections:', err);
+    }
+
+    try {
+      const aeoLogs = getAeoQueryLogs();
+      console.log('[Module: AEO] Loaded search query logs:', aeoLogs.length);
+    } catch (err) {
+      console.error('[Module: AEO] Error fetching AEO logs:', err);
+    }
+
+    try {
+      const gaConfig = getSavedGA4Config();
+      console.log('[Module: GA4] Saved GA4 Config propertyId:', gaConfig.propertyId || 'Not configured');
+    } catch (err) {
+      console.error('[Module: GA4] Error loading GA4 config:', err);
+    }
+
+    // 2. File Paths & Asset Fetch Diagnostics
+    const targetFilePath = '/assets/aistudio/nexus_studio_os_v2_0_creativeops_dam_infraestructura_91123b2b.html';
+    console.log('[File Path Check] Target Studio OS HTML Asset Path:', targetFilePath);
+    
+    try {
+      const response = await fetch(targetFilePath);
+      console.log('[File Path Check] Fetch response status:', response.status, response.statusText);
+      if (!response.ok) {
+        console.error(`[API/Data Fetch Error] Failed to load HTML asset at ${targetFilePath}. Status: ${response.status}`);
+      } else {
+        const htmlText = await response.text();
+        console.log('[File Path Check] Successfully loaded asset. Content length:', htmlText.length, 'bytes');
+        console.log('[File Path Check] Contains WACHAS STUDIO OS signature:', htmlText.includes('WACHAS STUDIO OS') || htmlText.includes('NEXUS STUDIO OS'));
+      }
+    } catch (fetchErr) {
+      console.error('[API/Data Fetch Error] Network or CORS error while fetching studio OS HTML asset:', fetchErr);
+    }
+
+    console.groupEnd();
+  };
+
+  // Run debugAdminState inside useEffect on mount and when activeTab changes
+  useEffect(() => {
+    debugAdminState();
+  }, [activeTab]);
+
   const handleCopyQuery = (id: string, text: string) => {
     try {
       navigator.clipboard.writeText(text);
@@ -733,6 +804,21 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
     setAuthError(null);
   };
 
+  const handleGenerateSecurePassword = () => {
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const array = new Uint32Array(16);
+    window.crypto.getRandomValues(array);
+    let password = '';
+    for (let i = 0; i < 16; i++) {
+      password += charset[array[i] % charset.length];
+    }
+    setAuthPassword(password);
+    try {
+      navigator.clipboard.writeText(password);
+    } catch {}
+    alert(`¡Contraseña criptográfica segura generada y copiada al portapapeles!\n\n${password}\n\nNota: Al enviar este formulario, Google Password Manager (Cuenta de Google) te ofrecerá automáticamente guardar esta contraseña.`);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -829,6 +915,8 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
                   <User className="w-4 h-4 absolute left-3 top-3 text-zinc-500" />
                   <input
                     type="text"
+                    name="username"
+                    autoComplete="username"
                     required
                     value={authEmail}
                     onChange={(e) => setAuthEmail(e.target.value)}
@@ -840,13 +928,26 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
 
               {/* Password */}
               <div className="space-y-1">
-                <label className="block text-xs font-jetbrains font-bold uppercase tracking-wider text-black dark:text-zinc-300">
-                  Clave de Seguridad (Master Key):
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-jetbrains font-bold uppercase tracking-wider text-black dark:text-zinc-300">
+                    Clave de Seguridad (Master Key):
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleGenerateSecurePassword}
+                    className="text-[11px] font-jetbrains font-bold text-[#00E5FF] hover:underline flex items-center gap-1 cursor-pointer"
+                    title="Genera una contraseña criptográfica segura y habilita el guardado en Google Password Manager"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>Generar Contraseña Segura</span>
+                  </button>
+                </div>
                 <div className="relative">
                   <Key className="w-4 h-4 absolute left-3 top-3 text-zinc-500" />
                   <input
                     type="password"
+                    name="password"
+                    autoComplete="current-password"
                     required
                     value={authPassword}
                     onChange={(e) => setAuthPassword(e.target.value)}
