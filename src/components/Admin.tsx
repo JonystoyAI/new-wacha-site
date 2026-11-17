@@ -804,7 +804,7 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
     setAuthError(null);
   };
 
-  const handleGenerateSecurePassword = () => {
+  const handleGenerateSecurePassword = async () => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
     const array = new Uint32Array(16);
     window.crypto.getRandomValues(array);
@@ -813,10 +813,30 @@ export const Admin: React.FC<AdminProps> = ({ isOpen, onClose }) => {
       password += charset[array[i] % charset.length];
     }
     setAuthPassword(password);
+    if (!authEmail) {
+      setAuthEmail('admin@whacha.site');
+    }
+
     try {
       navigator.clipboard.writeText(password);
     } catch {}
-    alert(`¡Contraseña criptográfica segura generada y copiada al portapapeles!\n\n${password}\n\nNota: Al enviar este formulario, Google Password Manager (Cuenta de Google) te ofrecerá automáticamente guardar esta contraseña.`);
+
+    // Interact with browser's Credential Management API if supported to prompt saving to Google Account / Password Manager
+    if (typeof window !== 'undefined' && 'PasswordCredential' in window && navigator.credentials && typeof navigator.credentials.store === 'function') {
+      try {
+        const cred = new (window as any).PasswordCredential({
+          id: authEmail || 'admin@whacha.site',
+          password: password,
+          name: 'Wacha Studio Admin'
+        });
+        await navigator.credentials.store(cred);
+        console.log('[Credential Management API] Credential store requested successfully.');
+      } catch (credErr) {
+        console.warn('[Credential Management API] Store prompt skipped or unsupported by browser:', credErr);
+      }
+    }
+
+    alert(`¡Contraseña criptográfica segura generada y copiada al portapapeles!\n\n${password}\n\nNota: Se ha invocado la Credential Management API para sugerir el guardado en tu Cuenta de Google.`);
   };
 
   if (!isOpen) return null;
